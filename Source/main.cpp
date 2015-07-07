@@ -30,10 +30,6 @@ int main(int argc, char *argv[])
     }
     glfwMakeContextCurrent(window);
 
-    for(int i = 0; i < 10; i++)
-    {
-        std::cout << "hoi" << std::endl;
-    }
 
     // - initialize GLEW
     glewExperimental = GL_TRUE;
