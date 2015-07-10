@@ -18,5 +18,58 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Renderer\sprite_renderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\texture2D.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\shader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\GameApplication.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\Actor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\ActorFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\TransformComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Renderer\texture2D.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\shader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\sprite_renderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\GameApplication.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\Actor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\ActorFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\TransformComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\ActorComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\ActorComponentDefinitions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="OpenGL.props" />
   </ItemGroup>
 </Project>

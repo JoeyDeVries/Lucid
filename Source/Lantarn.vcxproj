@@ -66,7 +66,28 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Application\GameApplication.cpp" />
+    <ClCompile Include="Components\Actor.cpp" />
+    <ClCompile Include="Components\ActorFactory.cpp" />
+    <ClCompile Include="Components\TransformComponent.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Renderer\shader.cpp" />
+    <ClCompile Include="Renderer\sprite_renderer.cpp" />
+    <ClCompile Include="Renderer\texture2D.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Application\GameApplication.h" />
+    <ClInclude Include="Components\Actor.h" />
+    <ClInclude Include="Components\ActorComponentDefinitions.h" />
+    <ClInclude Include="Components\ActorFactory.h" />
+    <ClInclude Include="Components\ActorComponent.h" />
+    <ClInclude Include="Components\TransformComponent.h" />
+    <ClInclude Include="Renderer\shader.h" />
+    <ClInclude Include="Renderer\sprite_renderer.h" />
+    <ClInclude Include="Renderer\texture2D.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="OpenGL.props" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

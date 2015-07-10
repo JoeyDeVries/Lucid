@@ -10,6 +10,14 @@
 #include <GL/glew.h>
 // GLFW
 #include <GLFW/glfw3.h>
+// GLM
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+
+// Lantarn
+#include "Renderer/shader.h"
+#include "Renderer/texture2D.h"
+#include "Components/Actor.h"
 
 const GLuint GAME_WIDTH = 800, GAME_HEIGHT = 600;
 
@@ -44,6 +52,9 @@ int main(int argc, char *argv[])
     glViewport(0, 0, GAME_WIDTH, GAME_HEIGHT);
     glClearColor(0.3f, 0.2f, 0.1f, 1.0f);
 
+    Shader test;
+    Texture2D tex;
+
     // - game loop
     while (!glfwWindowShouldClose(window))
     {
@@ -58,6 +69,7 @@ int main(int argc, char *argv[])
         glfwSwapBuffers(window);
     }
 
+    
 
 
 
