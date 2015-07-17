@@ -74,10 +74,12 @@
     <ClCompile Include="Renderer\shader.cpp" />
     <ClCompile Include="Renderer\sprite_renderer.cpp" />
     <ClCompile Include="Renderer\texture2D.cpp" />
+    <ClCompile Include="Resources\ResourceManager.cpp" />
     <ClCompile Include="Scene\Camera.cpp" />
     <ClCompile Include="Scene\MatrixStack.cpp" />
     <ClCompile Include="Scene\Scene.cpp" />
     <ClCompile Include="Scene\SceneNode.cpp" />
+    <ClInclude Include="Resources\ResourceManager.h" />
     <ClInclude Include="Scene\Camera.h" />
     <ClInclude Include="Scene\MatrixStack.h" />
     <ClInclude Include="Scene\Scene.h" />
