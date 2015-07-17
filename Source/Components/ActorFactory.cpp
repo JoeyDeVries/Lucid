@@ -28,6 +28,8 @@ std::shared_ptr<Actor> ActorFactory::CreateActor(DEFAULT_ACTOR_TYPES actorType)
     case ACTOR_EMPTY:
         return actor;
     case ACTOR_PLAYER:
+        actor = std::shared_ptr<Actor>(new Actor());
+        actor->setID(++m_lastActorID);
         std::shared_ptr<ActorComponent> component = createComponent("Transform");
         actor->addComponent(component);
         component->setOwner(actor);
@@ -44,7 +46,7 @@ std::shared_ptr<ActorComponent> ActorFactory::createComponent(std::string compon
     {
         ActorComponentCreator creator = findIt->second;
         ActorComponent *component = creator();
-        component->m_type = findIt->first;
+        component->m_Type = findIt->first;
         pComponent.reset();
     }
     else

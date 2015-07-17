@@ -74,6 +74,14 @@
     <ClCompile Include="Renderer\shader.cpp" />
     <ClCompile Include="Renderer\sprite_renderer.cpp" />
     <ClCompile Include="Renderer\texture2D.cpp" />
+    <ClCompile Include="Scene\MatrixStack.cpp" />
+    <ClCompile Include="Scene\Scene.cpp" />
+    <ClCompile Include="Scene\SceneNode.cpp" />
+    <ClInclude Include="Scene\MatrixStack.h" />
+    <ClInclude Include="Scene\Scene.h" />
+    <ClInclude Include="Scene\SceneNode.h">
+      <FileType>CppCode</FileType>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\GameApplication.h" />
@@ -85,6 +93,7 @@
     <ClInclude Include="Renderer\shader.h" />
     <ClInclude Include="Renderer\sprite_renderer.h" />
     <ClInclude Include="Renderer\texture2D.h" />
+    <ClInclude Include="Scene\ISceneNode.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="OpenGL.props" />

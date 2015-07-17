@@ -11,16 +11,16 @@ class ActorComponent
     friend class ActorFactory;
 // DATA
 public:
-    std::string m_type;
+    std::string m_Type;
 protected:
-    std::shared_ptr<Actor> m_owner;
+    std::shared_ptr<Actor> m_Owner;
 // FUNCTIONS
 public:
     virtual ~ActorComponent(void) { }
     virtual bool VInit() = 0;
     virtual void VUpdate(float delta) { }
 private:
-    void setOwner(std::shared_ptr<Actor> actor) { m_owner = actor; }
+    void setOwner(std::shared_ptr<Actor> actor) { m_Owner = actor; }
 };
 
 #endif

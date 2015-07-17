@@ -6,7 +6,7 @@ Texture2D::Texture2D()
     glGenTextures(1, &ID);
 }
 
-void Texture2D::Generate(GLuint width, GLuint height, const GLbyte *data)
+void Texture2D::Generate(GLuint width, GLuint height, const unsigned char *data, GLboolean mipmaps)
 {
     this->Width = width;
     this->Height = height;
@@ -18,6 +18,9 @@ void Texture2D::Generate(GLuint width, GLuint height, const GLbyte *data)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, WrapT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, FilterMin);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, FilterMax);
+    // Mipmap generation
+    if(mipmaps)
+        glGenerateMipmap(GL_TEXTURE_2D);
     // Unbind texture
     glBindTexture(GL_TEXTURE_2D, 0);
 }

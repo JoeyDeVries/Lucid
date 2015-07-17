@@ -17,7 +17,7 @@ public:
     GLenum InternalFormat = GL_RGB; // Format of texture object
     GLenum ImageFormat    = GL_RGB; // Format of loaded image
     // Texture configuration
-    GLenum FilterMin      = GL_LINEAR_MIPMAP_LINEAR; // Filtering mode if texture pixels < screen pixels
+    GLenum FilterMin      = GL_LINEAR; // Filtering mode if texture pixels < screen pixels
     GLenum FilterMax      = GL_LINEAR; // Filtering mode if texture pixels > screen pixels
     GLenum WrapS          = GL_REPEAT; // Wrapping mode on S axis
     GLenum WrapT          = GL_REPEAT; // Wrapping mode on T axis
@@ -27,7 +27,7 @@ private:
 public:
          Texture2D(void);
     // Generates texture from array of image data
-    void Generate(GLuint width, GLuint height, const GLbyte *data);
+    void Generate(GLuint width, GLuint height, const unsigned char *data, GLboolean mipmaps = GL_FALSE);
     // Binds the texture as the current active GL_TEXTURE_2D texture object and texture unit if given
     void Bind(GLbyte unit = -1) const;
 private:

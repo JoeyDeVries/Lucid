@@ -16,11 +16,11 @@ void Actor::Destroy(void)
 
 }
 
-void Actor::Update(float delta)
+void Actor::Update(float deltaTime)
 {
     ActorComponents::iterator it = m_components.begin();
     while (it != m_components.end())
-        (it++)->second->VUpdate(delta);
+        (it++)->second->VUpdate(deltaTime);
 }
 
 unsigned int Actor::GetID(void)
@@ -45,5 +45,10 @@ template<class ComponentType> std::weak_ptr<ComponentType> Actor::GetComponent(s
 
 void Actor::addComponent(std::shared_ptr<ActorComponent> component)
 {
-    m_components[component->m_type] = component;
+    m_components[component->m_Type] = component;
+}
+
+void Actor::setID(unsigned int ID)
+{
+    m_id = ID;
 }
