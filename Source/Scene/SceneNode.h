@@ -1,6 +1,9 @@
+#ifndef SCENE_NODE_H
+#define SCENE_NODE_H
+
 #include "ISceneNode.h"
 
-class SceneNode : ISceneNode
+class SceneNode : public ISceneNode
 {
     friend class Scene;
 protected:
@@ -22,3 +25,5 @@ public:
     virtual bool RemoveChild(unsigned int actorID);
     virtual void RenderChildren(Scene *scene);
 };
+
+#endif

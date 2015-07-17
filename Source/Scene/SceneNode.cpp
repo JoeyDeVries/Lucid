@@ -1,5 +1,6 @@
 #include "SceneNode.h"
 
+#include "Scene.h"
 
 SceneNode::SceneNode(unsigned int ActorID, std::string name, std::string renderPass, glm::mat4 model)
 {
@@ -38,7 +39,7 @@ bool  SceneNode::IsVisible(Scene *scene) const
 
 void  SceneNode::PreRender(Scene *scene)
 {
-    //scene->PushAndSetMatrix(m_Model);
+    scene->PushAndSetMatrix(m_Model);
 }
 
 void  SceneNode::Render(Scene *scene)
@@ -49,7 +50,7 @@ void  SceneNode::Render(Scene *scene)
 
 void  SceneNode::PostRender(Scene *scene)
 {
-    //scene->PopMatrix();
+    scene->PopMatrix();
 }
 
 bool  SceneNode::AddChild(std::shared_ptr<ISceneNode> child)

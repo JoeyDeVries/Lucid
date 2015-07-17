@@ -1,6 +1,5 @@
 #include "Scene.h"
 
-
 Scene::Scene()
 {
     m_Root.reset(new SceneNode(0, "root", "NONE", glm::mat4()));
@@ -29,10 +28,10 @@ void Scene::Update(float deltaTime)
 
 void Scene::Render()
 {
-   /* if (m_Root && m_Camera)
+    if (m_Root && m_Camera)
     {
 
-    }*/
+    }
 }
 
 std::shared_ptr<ISceneNode> Scene::FindActor(unsigned int ActorID)
@@ -66,15 +65,15 @@ bool Scene::RemoveChild(unsigned int ActorID)
 
 void Scene::PushAndSetMatrix(const glm::mat4 model)
 {
-
+    m_MatrixStack.Push(model);
 }
 
 void Scene::PopMatrix()
 {
-
+    m_MatrixStack.Pop();
 }
 
 const glm::mat4& Scene::GetTopMatrix()
 {
-    return glm::mat4();
+    return m_MatrixStack.GetTopMatrix();
 }
