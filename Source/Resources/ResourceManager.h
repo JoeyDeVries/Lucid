@@ -21,7 +21,7 @@ class ResourceManager
 {
     // Cache
     std::map<std::string, std::shared_ptr<Shader>> m_Shaders;
-    std::map<std::string, std::shared_ptr<Texture2D>> m_Shaders;
+    std::map<std::string, std::shared_ptr<Texture2D>> m_Textures;
 
     // Singleton pattern, constructor private
     static std::shared_ptr<ResourceManager> m_Instance;

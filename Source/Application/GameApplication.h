@@ -27,12 +27,13 @@ private:
     GameApplication();
 public:
     // Retrieves a single instance of this object
-    std::shared_ptr<GameApplication> GetInstance()
+    static std::shared_ptr<GameApplication> GetInstance()
     {
         if(!m_Instance)
             m_Instance = std::shared_ptr<GameApplication>(new GameApplication);
         return m_Instance;
     }
+    ~GameApplication();
 
     void Initialize();
     void Update(float deltaTime);

@@ -17,11 +17,14 @@
 #include <SOIL.h>
 
 // Lantarn
+#include "Application/GameApplication.h"
 #include "Renderer/shader.h"
 #include "Renderer/texture2D.h"
 #include "Components/Actor.h"
 
 const GLuint GAME_WIDTH = 800, GAME_HEIGHT = 600;
+
+void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
 
 int main(int argc, char *argv[])
 {
@@ -39,6 +42,9 @@ int main(int argc, char *argv[])
         return -1;
     }
     glfwMakeContextCurrent(window);
+
+    // - callbacks
+    glfwSetKeyCallback(window, key_callback);
 
 
     // - initialize GLEW
@@ -128,13 +134,22 @@ int main(int argc, char *argv[])
     glm::mat4 projection = glm::ortho(0.0f, (GLfloat)GAME_WIDTH, (GLfloat)GAME_HEIGHT, 0.0f, -1.0f, 1.0f);
     shaderSprite.SetMatrix4("projection", projection, true);
     shaderSprite.SetInteger("sprite", 0);
+    
 
+    // Initialize
+    GameApplication::GetInstance()->Initialize();
 
     // - game loop
     while (!glfwWindowShouldClose(window))
     {
         // - events
         glfwPollEvents();
+
+        // - update game 
+        GameApplication::GetInstance()->Update(0.031);
+
+        //// - render game
+        GameApplication::GetInstance()->Render();
         
         // - frame init
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -188,4 +203,20 @@ int main(int argc, char *argv[])
 
     glfwTerminate();
     return 0;
+}
+
+void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode)
+{
+    // When a user presses the escape key, we set the WindowShouldClose property to true, 
+    // closing the application
+    if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
+        glfwSetWindowShouldClose(window, GL_TRUE);
+
+    if (key >= 0 && key < 1024)
+    {
+        if(action == GLFW_PRESS)
+            GameApplication::GetInstance()->ProcessKeyboardDown(key);
+        else
+            GameApplication::GetInstance()->ProcessKeyboardUp(key);
+    }
 }

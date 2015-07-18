@@ -1,6 +1,8 @@
 #include "GameApplication.h"
 #include "../Resources/ResourceManager.h"
 
+std::shared_ptr<GameApplication> GameApplication::m_Instance = std::shared_ptr<GameApplication>();
+
 GameApplication::GameApplication()
 {
     m_Scene = new Scene;
@@ -16,7 +18,7 @@ GameApplication::~GameApplication()
 void GameApplication::Initialize()
 {
     // Load necessary level/actors/textures/shaders
-    ResourceManager::GetInstance()->LoadLevel(GetScene(), "levels/level1");
+    //ResourceManager::GetInstance()->LoadLevel(GetScene(), "levels/level1");
 }
 
 void GameApplication::Update(float deltaTime)
