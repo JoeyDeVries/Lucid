@@ -18,6 +18,7 @@
 
 // Lantarn
 #include "Application/GameApplication.h"
+#include "Resources/ResourceManager.h"
 #include "Renderer/shader.h"
 #include "Renderer/texture2D.h"
 #include "Components/Actor.h"
@@ -138,6 +139,8 @@ int main(int argc, char *argv[])
 
     // Initialize
     GameApplication::GetInstance()->Initialize();
+
+    ResourceManager::GetInstance()->LoadLevel(GameApplication::GetInstance()->GetScene(), "levels/begin.lvl");
 
     // - game loop
     while (!glfwWindowShouldClose(window))

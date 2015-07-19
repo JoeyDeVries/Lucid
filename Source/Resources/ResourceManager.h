@@ -10,8 +10,6 @@
 #include <vector>
 #include <map>
 #include <string>
-#include <iostream>
-#include <fstream>
 
 #include "../Renderer/shader.h"
 #include "../Renderer/texture2D.h"
@@ -36,9 +34,9 @@ public:
     }
 
     // Resource loaders
-    std::shared_ptr<Shader> LoadShader(std::string name, const char* vertexShaderSource, const char* fragmentShaderSource, const char *geometrySource = nullptr);
+    std::shared_ptr<Shader> LoadShader(std::string name, const char* vertexShaderSource, const char* fragmentShaderSource);
     std::shared_ptr<Shader> GetShader(std::string name);
-    std::shared_ptr<Texture2D> LoadTexture(std::string name, const char* textureSource);
+    std::shared_ptr<Texture2D> LoadTexture(std::string name, const char* textureSource, bool alpha = false);
     std::shared_ptr<Texture2D> GetTexture(std::string name);
     bool LoadLevel(Scene* scene, const char* levelSource);
 };
