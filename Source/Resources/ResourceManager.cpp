@@ -159,8 +159,9 @@ bool ResourceManager::LoadLevel(Scene* scene, const char* levelSource)
                     std::shared_ptr<Actor> actor = GameApplication::GetInstance()->CreateActor(DEFAULT_ACTOR_TYPES::ACTOR_STATIC);
                     actor->Position() = glm::vec2(x * blockWidth, y * blockHeight);
                     actor->Scale() = glm::vec2(blockWidth, blockHeight);
+                    actor->Depth() = 1;
                     // Then create scenenode
-                    std::shared_ptr<SceneNode> node(new SceneNode(actor->GetID(), "block", "MAIN", actor->Position(), actor->Scale(), actor->Rotation()));
+                    std::shared_ptr<SceneNode> node(new SceneNode(actor->GetID(), "block", "MAIN", actor->Position(), actor->Depth(), actor->Scale(), actor->Rotation()));
                     Material material; // configure material (note that the relevant materials should be PRE-loaded)
                     // TODO: Use Data-driven development; configure in data materials for each block + use these to pre-load (or create PreLoadLevel() function) them in GameApplication.
                     material.SetShader(GetShader("sprite"));
@@ -183,6 +184,22 @@ bool ResourceManager::LoadLevel(Scene* scene, const char* levelSource)
                 }
             }
         }
+        // once level has loaded, initialize other relevant actors
+        // - player
+        std::shared_ptr<Actor> actor = GameApplication::GetInstance()->CreateActor(DEFAULT_ACTOR_TYPES::ACTOR_PLAYER);
+        actor->Position() = glm::vec2(150.0, 413.0);
+        actor->Depth()    = 0;
+        actor->Scale()    = glm::vec2(65.0);
+        std::shared_ptr<SceneNode> node(new SceneNode(actor->GetID(), "player", "MAIN", actor->Position(), actor->Depth(), actor->Scale()));
+        Material material;
+        material.SetShader(GetShader("sprite"));
+        material.SetDiffuse(GetTexture("player"));
+        node->SetMaterial(material);
+        scene->AddChild(actor->GetID(), node);
+
+        // - background
+        // TODO (only make it NODE, not an actor; special type of SceneNode?)
+
         // next initialize scene (e.g. set default projection matrices for each shader)
         scene->Initialize(); 
     }

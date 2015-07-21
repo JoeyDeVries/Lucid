@@ -22,16 +22,18 @@ protected:
     glm::mat4    m_Model;
     glm::vec2    m_Position;
     glm::vec2    m_Scale;
+    int          m_Depth;
     float        m_Rotation;
     float        m_radius; // for frustum visibility occlusion 
     Material     m_Material;
 public:
     virtual ~ISceneNode() { };
     const unsigned int &ActorID()    const { return m_ActorID; }
-    glm::vec2 const    &Position()   const { return m_Position; }
-    glm::vec2 const    &Scale()      const { return m_Scale; }
-    float const        &Rotation()   const { return m_Rotation; }
-    glm::mat4 const    &Model()      const { return m_Model; }
+    glm::vec2 const    &Position()         { return m_Position; }
+    glm::vec2 const    &Scale()            { return m_Scale; }
+    int const          &Depth()            { return m_Depth; }
+    float const        &Rotation()         { return m_Rotation; }
+    glm::mat4 const    &Model()            { return m_Model; }
     const std::string  &Name()       const { return m_Name; }
     const std::string  &RenderPass() const { return m_RenderPass; }
     Material const     &GetMaterial()      { return m_Material; }
@@ -39,6 +41,7 @@ public:
     virtual void CalculateModel() = 0;
     void SetPosition(glm::vec2 position) { m_Position = position; CalculateModel(); }
     void SetScale(glm::vec2 scale)       { m_Scale    = scale;    CalculateModel(); }
+    void SetDepth(int depth)             { m_Depth    = depth;    CalculateModel(); }
     void SetRotation(float rotation)     { m_Rotation = rotation; CalculateModel(); }
     
     void SetMaterial(Material material) { m_Material = material; }

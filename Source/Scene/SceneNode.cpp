@@ -2,21 +2,22 @@
 
 #include "Scene.h"
 
-SceneNode::SceneNode(unsigned int ActorID, std::string name, std::string renderPass, glm::vec2 position, glm::vec2 scale, float rotation)
+SceneNode::SceneNode(unsigned int ActorID, std::string name, std::string renderPass, glm::vec2 position, int depth, glm::vec2 scale, float rotation)
 {
-    m_ActorID = ActorID;
-    m_Name = name;
+    m_ActorID    = ActorID;
+    m_Name       = name;
     m_RenderPass = renderPass;
-    m_Position = position;
-    m_Scale = scale;
-    m_Rotation = rotation;
+    m_Position   = position;
+    m_Depth      = depth;
+    m_Scale      = scale;
+    m_Rotation   = rotation;
     CalculateModel();
 }
 
 void SceneNode::CalculateModel()
 {
     glm::mat4 model;
-    model = glm::translate(model, glm::vec3(m_Position, 0.0));
+    model = glm::translate(model, glm::vec3(m_Position, m_Depth));
 
     model = glm::translate(model, glm::vec3(0.5f * m_Scale.x, 0.5f * m_Scale.y, 0.0f)); // Move origin of rotation to center of quad
     model = glm::rotate(model, m_Rotation, glm::vec3(0.0f, 0.0f, 1.0f)); // Then rotate

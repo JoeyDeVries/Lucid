@@ -1,7 +1,7 @@
 #include "Actor.h"
 
 
-Actor::Actor(void)
+Actor::Actor(void) : m_Position(0.0), m_Scale(1.0), m_Depth(0)
 {
 
 }
@@ -31,6 +31,11 @@ glm::vec2& Actor::Position()
 glm::vec2& Actor::Scale()
 {
     return m_Scale;
+}
+
+int& Actor::Depth()
+{
+    return m_Depth;
 }
 
 float& Actor::Rotation()

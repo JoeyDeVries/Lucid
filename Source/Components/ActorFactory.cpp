@@ -1,15 +1,16 @@
 #include "ActorFactory.h"
+#include "ControlComponent.h"
 
 #include<iostream>
 
 // actor component creator functions
-ActorComponent* CreateTransformComponent() { return new TransformComponent; }
+ActorComponent* CreateControlComponent() { return new ControlComponent; }
 
 
 
 ActorFactory::ActorFactory(void)
 {
-    m_actorComponentCreators["Transform"] = CreateTransformComponent;
+    m_actorComponentCreators["Control"] = CreateControlComponent;
 }
 
 ActorFactory::~ActorFactory(void)
@@ -28,16 +29,23 @@ std::shared_ptr<Actor> ActorFactory::CreateActor(DEFAULT_ACTOR_TYPES actorType)
     case ACTOR_EMPTY:
         return actor;
     case ACTOR_STATIC:
+    {
         actor = std::shared_ptr<Actor>(new Actor());
         actor->setID(++m_lastActorID);
+        //std::shared_ptr<ActorComponent> component = createComponent("Control");
+        //actor->addComponent(component);
+        //component->setOwner(actor);
         return actor;
+    }
     case ACTOR_PLAYER:
+    {
         actor = std::shared_ptr<Actor>(new Actor());
         actor->setID(++m_lastActorID);
-        std::shared_ptr<ActorComponent> component = createComponent("Transform");
+        std::shared_ptr<ActorComponent> component = createComponent("Control");
         actor->addComponent(component);
         component->setOwner(actor);
         return actor;
+    }
     }
 }
 
@@ -51,7 +59,7 @@ std::shared_ptr<ActorComponent> ActorFactory::createComponent(std::string compon
         ActorComponentCreator creator = findIt->second;
         ActorComponent *component = creator();
         component->m_Type = findIt->first;
-        pComponent.reset();
+        pComponent.reset(component);
     }
     else
     {

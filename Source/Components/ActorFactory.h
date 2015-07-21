@@ -6,7 +6,6 @@
 #include "ActorComponentDefinitions.h"
 #include "Actor.h"
 #include "ActorComponent.h"
-#include "TransformComponent.h"
 
 
 // definitions

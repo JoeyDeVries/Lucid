@@ -69,6 +69,7 @@
     <ClCompile Include="Application\GameApplication.cpp" />
     <ClCompile Include="Components\Actor.cpp" />
     <ClCompile Include="Components\ActorFactory.cpp" />
+    <ClCompile Include="Components\ControlComponent.cpp" />
     <ClCompile Include="Components\TransformComponent.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Renderer\Material.cpp" />
@@ -80,6 +81,7 @@
     <ClCompile Include="Scene\MatrixStack.cpp" />
     <ClCompile Include="Scene\Scene.cpp" />
     <ClCompile Include="Scene\SceneNode.cpp" />
+    <ClInclude Include="Components\ControlComponent.h" />
     <ClInclude Include="Renderer\Renderer.h" />
     <ClInclude Include="Renderer\Material.h" />
     <ClInclude Include="Resources\ResourceManager.h" />

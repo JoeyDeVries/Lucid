@@ -1,6 +1,8 @@
 #include "GameApplication.h"
 #include "../Resources/ResourceManager.h"
 
+#include <iostream>
+
 std::shared_ptr<GameApplication> GameApplication::m_Instance = std::shared_ptr<GameApplication>();
 
 GameApplication::GameApplication()
@@ -25,6 +27,8 @@ void GameApplication::Initialize(float width, float height)
     // Load necessary actors/textures/shaders before loading level
     ResourceManager::GetInstance()->LoadShader("sprite", "shaders/sprite.vs", "shaders/sprite.frag");
     ResourceManager::GetInstance()->LoadTexture("block", "textures/block.png");
+    ResourceManager::GetInstance()->LoadTexture("player", "textures/player.png", true);
+    ResourceManager::GetInstance()->LoadTexture("background", "textures/background.png");
     ResourceManager::GetInstance()->LoadLevel(m_Scene, "levels/begin.lvl");
     //CreateActor(DEFAULT_ACTOR_TYPES::ACTOR_PLAYER);
 }
@@ -55,12 +59,14 @@ void GameApplication::Render()
 void GameApplication::ProcessKeyboardDown(char key)
 {
     m_Keys[key] = true;
+    std::cout << key << std::endl;
 }
 
 void GameApplication::ProcessKeyboardUp(char key)
 {
     m_Keys[key] = false;
     m_KeysPressed[key] = false;
+    std::cout << "OFF:" << key << std::endl;
 }
 
 bool GameApplication::IsKeyPressed(char key, bool check_once)

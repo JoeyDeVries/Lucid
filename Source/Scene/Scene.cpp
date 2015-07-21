@@ -4,7 +4,7 @@
 Scene::Scene()
 {
     m_Renderer.reset(new Renderer);
-    m_Root.reset(new SceneNode(0, "root", "NONE", glm::vec2(0.0)));
+    m_Root.reset(new SceneNode(0, "root", "NONE", glm::vec2(0.0), 0));
     m_Camera.reset(new Camera);
 }
 

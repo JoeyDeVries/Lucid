@@ -11,7 +11,7 @@ protected:
     SceneNodeList m_Children;
     SceneNode *m_Parent;
 public:
-    SceneNode(unsigned int ActorID, std::string name, std::string renderPass, glm::vec2 position, glm::vec2 scale = glm::vec2(1.0), float rotation = 0.0f);
+    SceneNode(unsigned int ActorID, std::string name, std::string renderPass, glm::vec2 position, int depth, glm::vec2 scale = glm::vec2(1.0), float rotation = 0.0f);
     virtual ~SceneNode() { };
 
     virtual void CalculateModel();
