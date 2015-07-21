@@ -16,6 +16,7 @@ class Shader
 // DATA
 public:
     GLuint ID;
+    std::string Name;
 // FUNCTIONS
 public:
     // Constructor

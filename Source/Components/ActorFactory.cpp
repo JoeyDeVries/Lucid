@@ -27,6 +27,10 @@ std::shared_ptr<Actor> ActorFactory::CreateActor(DEFAULT_ACTOR_TYPES actorType)
     {
     case ACTOR_EMPTY:
         return actor;
+    case ACTOR_STATIC:
+        actor = std::shared_ptr<Actor>(new Actor());
+        actor->setID(++m_lastActorID);
+        return actor;
     case ACTOR_PLAYER:
         actor = std::shared_ptr<Actor>(new Actor());
         actor->setID(++m_lastActorID);

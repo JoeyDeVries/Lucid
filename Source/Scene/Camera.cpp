@@ -18,10 +18,10 @@ void Camera::CalculateViewMatrix()
 {
     // Simple approach: calculate the amount of translation based on the target's position (leaving him always in center)
     // TODO: only translate when character outside of some specified bounding box
-    glm::vec3 targetPos = m_Target->Position();
-    float targetScale = m_Target->Scale();
+    glm::vec2 targetPos   = m_Target->Position();
+    glm::vec2 targetScale = m_Target->Scale();
     glm::mat4 view;
-    view = glm::translate(view, -glm::vec3(targetPos.x * targetScale, targetPos.y * targetScale, 0.0));
+    view = glm::translate(view, -glm::vec3(targetPos * targetScale, 0.0));
     m_View = view;
 }
 

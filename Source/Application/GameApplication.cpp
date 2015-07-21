@@ -15,10 +15,25 @@ GameApplication::~GameApplication()
     delete m_ActorFactory;
 }
 
-void GameApplication::Initialize()
+void GameApplication::Initialize(float width, float height)
 {
-    // Load necessary level/actors/textures/shaders
-    //ResourceManager::GetInstance()->LoadLevel(GetScene(), "levels/level1");
+    m_ScreenWidth = width;
+    m_ScreenHeight = height;
+    // Initialize renderer
+    m_Scene->GetRenderer()->Initialize();
+    m_Scene->GetCamera()->SetProjection(width, height);
+    // Load necessary actors/textures/shaders before loading level
+    ResourceManager::GetInstance()->LoadShader("sprite", "shaders/sprite.vs", "shaders/sprite.frag");
+    ResourceManager::GetInstance()->LoadTexture("block", "textures/block.png");
+    ResourceManager::GetInstance()->LoadLevel(m_Scene, "levels/begin.lvl");
+    //CreateActor(DEFAULT_ACTOR_TYPES::ACTOR_PLAYER);
+}
+
+std::shared_ptr<Actor> GameApplication::CreateActor(DEFAULT_ACTOR_TYPES type)
+{
+    std::shared_ptr<Actor> actor = m_ActorFactory->CreateActor(type);
+    m_Actors.push_back(actor);
+    return actor;
 }
 
 void GameApplication::Update(float deltaTime)
@@ -45,6 +60,22 @@ void GameApplication::ProcessKeyboardDown(char key)
 void GameApplication::ProcessKeyboardUp(char key)
 {
     m_Keys[key] = false;
+    m_KeysPressed[key] = false;
+}
+
+bool GameApplication::IsKeyPressed(char key, bool check_once)
+{
+    if (check_once)
+    {
+        if (m_Keys[key] && !m_KeysPressed[key])
+        {
+            m_KeysPressed[key] = true;
+            return true;
+        }
+        else
+            return false;
+    }
+    return m_Keys[key];
 }
 
 

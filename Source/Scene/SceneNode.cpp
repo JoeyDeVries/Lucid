@@ -2,12 +2,45 @@
 
 #include "Scene.h"
 
-SceneNode::SceneNode(unsigned int ActorID, std::string name, std::string renderPass, glm::mat4 model)
+SceneNode::SceneNode(unsigned int ActorID, std::string name, std::string renderPass, glm::vec2 position, glm::vec2 scale, float rotation)
 {
     m_ActorID = ActorID;
     m_Name = name;
     m_RenderPass = renderPass;
+    m_Position = position;
+    m_Scale = scale;
+    m_Rotation = rotation;
+    CalculateModel();
+}
+
+void SceneNode::CalculateModel()
+{
+    glm::mat4 model;
+    model = glm::translate(model, glm::vec3(m_Position, 0.0));
+
+    model = glm::translate(model, glm::vec3(0.5f * m_Scale.x, 0.5f * m_Scale.y, 0.0f)); // Move origin of rotation to center of quad
+    model = glm::rotate(model, m_Rotation, glm::vec3(0.0f, 0.0f, 1.0f)); // Then rotate
+    model = glm::translate(model, glm::vec3(-0.5f * m_Scale.x, -0.5f * m_Scale.y, 0.0f)); // Move origin back
+
+    model = glm::scale(model, glm::vec3(m_Scale, 1.0));
+
     m_Model = model;
+}
+
+void SceneNode::Initialize(Scene * scene)
+{
+    // update projection matrix 
+    if(m_Material.GetShader())
+        m_Material.GetShader()->SetMatrix4("projection", scene->GetCamera()->GetProjection(), true);
+
+    // do the same for all children
+    SceneNodeList::iterator begin = m_Children.begin();
+    SceneNodeList::iterator end   = m_Children.end();
+    while (begin != end)
+    {
+        (*begin)->Initialize(scene);
+        ++begin;
+    }
 }
 
 void SceneNode::Restore(Scene *scene)
@@ -45,7 +78,11 @@ void  SceneNode::PreRender(Scene *scene)
 void  SceneNode::Render(Scene *scene)
 {
     // Render stuff here (could do basic sprite rendering here; and later propagate it to subclasses)
-    // [...] (use Scene's renderer to render stuff ;D)
+    m_Material.GetShader()->Use();
+    m_Material.GetShader()->SetMatrix4("model", m_Model);
+    //m_Material.GetShader()->SetMatrix4("view", scene->Camera()->GetView());
+    m_Material.PreRender();
+    scene->GetRenderer()->RenderQuad();
 }
 
 void  SceneNode::PostRender(Scene *scene)
@@ -87,6 +124,7 @@ void  SceneNode::RenderChildren(Scene *scene)
 
         if ((*begin)->IsVisible(scene))
         {
+            (*begin)->Render(scene);
             (*begin)->RenderChildren(scene);
         }
 

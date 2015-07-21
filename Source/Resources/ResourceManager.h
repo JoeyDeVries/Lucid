@@ -11,9 +11,10 @@
 #include <map>
 #include <string>
 
+#include "../Components/ActorFactory.h"
 #include "../Renderer/shader.h"
 #include "../Renderer/texture2D.h"
-#include "../Scene//Scene.h"
+#include "../Scene/Scene.h"
 
 class ResourceManager
 {
@@ -23,7 +24,7 @@ class ResourceManager
 
     // Singleton pattern, constructor private
     static std::shared_ptr<ResourceManager> m_Instance;
-    ResourceManager() { }
+    ResourceManager();
 public:
     // Retrieves a single instance of this object
     static std::shared_ptr<ResourceManager> GetInstance()
@@ -32,6 +33,7 @@ public:
             m_Instance = std::shared_ptr<ResourceManager>(new ResourceManager);
         return m_Instance;
     }
+    ~ResourceManager();
 
     // Resource loaders
     std::shared_ptr<Shader> LoadShader(std::string name, const char* vertexShaderSource, const char* fragmentShaderSource);

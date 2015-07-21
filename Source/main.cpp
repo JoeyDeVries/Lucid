@@ -138,9 +138,9 @@ int main(int argc, char *argv[])
     
 
     // Initialize
-    GameApplication::GetInstance()->Initialize();
+    GameApplication::GetInstance()->Initialize(GAME_WIDTH, GAME_HEIGHT); // TODO: replace with current framebuffer size, not initial size
 
-    ResourceManager::GetInstance()->LoadLevel(GameApplication::GetInstance()->GetScene(), "levels/begin.lvl");
+    //ResourceManager::GetInstance()->LoadLevel(GameApplication::GetInstance()->GetScene(), "levels/begin.lvl");
 
     // - game loop
     while (!glfwWindowShouldClose(window))
@@ -155,45 +155,25 @@ int main(int argc, char *argv[])
         GameApplication::GetInstance()->Render();
         
         // - frame init
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 
         // - render
-        shaderSprite.Use();
-        glBindVertexArray(VAO);
-        // background
-        texBackground.Bind(0);
-        glm::mat4 model; model = glm::scale(model, glm::vec3(GAME_WIDTH, GAME_HEIGHT, 1.0));
-        shaderSprite.SetMatrix4("model", model);
-        glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-
-        // blocks
-        texBlock.Bind();
-        int lvlWidth = 10;
-        int lvlHeight = 10;
-        float blockWidth = GAME_WIDTH / lvlWidth;
-        float blockHeight = GAME_HEIGHT / lvlHeight;
-        for (unsigned int y = 0; y < lvlHeight; ++y)
-        {
-            for (unsigned int x = 0; x < lvlWidth; ++x)
-            {
-                if (level[y][x] == 1)
-                {
-                    model = glm::mat4(); 
-                    model = glm::translate(model, glm::vec3(x * blockWidth, y * blockHeight, 0.0));
-                    model = glm::scale(model, glm::vec3(blockWidth, blockHeight, 1.0));
-                    shaderSprite.SetMatrix4("model", model);
-                    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-                }
-            }
-        }
+        //shaderSprite.Use();
+        //glBindVertexArray(VAO);
+        //// background
+        //texBackground.Bind(0);
+        //glm::mat4 model; model = glm::scale(model, glm::vec3(GAME_WIDTH, GAME_HEIGHT, 1.0));
+        //shaderSprite.SetMatrix4("model", model);
+        //glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 
         // player
-        texPlayer.Bind();
-        model = glm::mat4();
-        model = glm::translate(model, glm::vec3(150.0, 413.0, 0.0));
-        model = glm::scale(model, glm::vec3(65.0, 65.0, 1.0));
-        shaderSprite.SetMatrix4("model", model);
-        glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+        //texPlayer.Bind();
+        //model = glm::mat4();
+        //model = glm::translate(model, glm::vec3(150.0, 413.0, 0.0));
+        //model = glm::scale(model, glm::vec3(65.0, 65.0, 1.0));
+        //shaderSprite.SetMatrix4("model", model);
+        //glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 
 
         // - frame end: double buffer swap

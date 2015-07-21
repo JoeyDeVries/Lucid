@@ -23,6 +23,21 @@ void Actor::Update(float deltaTime)
         (it++)->second->VUpdate(deltaTime);
 }
 
+glm::vec2& Actor::Position()
+{
+    return m_Position;
+}
+
+glm::vec2& Actor::Scale()
+{
+    return m_Scale;
+}
+
+float& Actor::Rotation()
+{
+    return m_Rotation;
+}
+
 unsigned int Actor::GetID(void)
 {
     return m_id;

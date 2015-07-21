@@ -5,6 +5,7 @@
 #include "SceneNode.h"
 #include "MatrixStack.h"
 #include "Camera.h"
+#include "../Renderer/Renderer.h"
 
 #include <map>
 #include <string>
@@ -19,7 +20,7 @@ class Scene
 protected:
     std::shared_ptr<SceneNode> m_Root;
     std::shared_ptr<Camera> m_Camera;
-    //std::shared_ptr<IRenderer> m_Renderer; // OpenGL renderer class here!
+    std::shared_ptr<Renderer> m_Renderer; // OpenGL renderer class here!
 
     MatrixStack m_MatrixStack;
     SceneActorMap m_ActorMap;
@@ -29,6 +30,7 @@ public:
     Scene();
     virtual ~Scene();
 
+    void Initialize();
     void Restore();
     void Update(float deltaTime);
     void Render();
@@ -37,7 +39,8 @@ public:
     bool AddChild(unsigned int ActorID, std::shared_ptr<ISceneNode> child);
     bool RemoveChild(unsigned int ActorID);
 
-    std::shared_ptr<Camera> Camera() { return m_Camera; }
+    std::shared_ptr<Renderer> GetRenderer() { return m_Renderer; }
+    std::shared_ptr<Camera>   GetCamera()   { return m_Camera; }
 
     void PushAndSetMatrix(const glm::mat4 model);
     void PopMatrix();

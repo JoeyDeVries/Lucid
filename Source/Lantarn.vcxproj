@@ -71,14 +71,17 @@
     <ClCompile Include="Components\ActorFactory.cpp" />
     <ClCompile Include="Components\TransformComponent.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Renderer\Material.cpp" />
+    <ClCompile Include="Renderer\Renderer.cpp" />
     <ClCompile Include="Renderer\shader.cpp" />
-    <ClCompile Include="Renderer\sprite_renderer.cpp" />
     <ClCompile Include="Renderer\texture2D.cpp" />
     <ClCompile Include="Resources\ResourceManager.cpp" />
     <ClCompile Include="Scene\Camera.cpp" />
     <ClCompile Include="Scene\MatrixStack.cpp" />
     <ClCompile Include="Scene\Scene.cpp" />
     <ClCompile Include="Scene\SceneNode.cpp" />
+    <ClInclude Include="Renderer\Renderer.h" />
+    <ClInclude Include="Renderer\Material.h" />
     <ClInclude Include="Resources\ResourceManager.h" />
     <ClInclude Include="Scene\Camera.h" />
     <ClInclude Include="Scene\MatrixStack.h" />
@@ -95,7 +98,6 @@
     <ClInclude Include="Components\ActorComponent.h" />
     <ClInclude Include="Components\TransformComponent.h" />
     <ClInclude Include="Renderer\shader.h" />
-    <ClInclude Include="Renderer\sprite_renderer.h" />
     <ClInclude Include="Renderer\texture2D.h" />
     <ClInclude Include="Scene\ISceneNode.h" />
   </ItemGroup>

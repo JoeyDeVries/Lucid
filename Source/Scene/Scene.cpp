@@ -1,9 +1,11 @@
 #include "Scene.h"
+#include "../Application/GameApplication.h"
 
 Scene::Scene()
 {
-    m_Root.reset(new SceneNode(0, "root", "NONE", glm::mat4()));
-
+    m_Renderer.reset(new Renderer);
+    m_Root.reset(new SceneNode(0, "root", "NONE", glm::vec2(0.0)));
+    m_Camera.reset(new Camera);
 }
 
 Scene::~Scene()
@@ -11,10 +13,20 @@ Scene::~Scene()
 
 }
 
+void Scene::Initialize()
+{
+    // initializes each scene node
+    m_Root->Initialize(this);    
+}
+
 void Scene::Restore()
 {
     if(m_Root)
         m_Root->Restore(this);
+    if (m_Camera)
+    {
+        m_Camera->SetProjection(GameApplication::GetInstance()->ScreenWidth(), GameApplication::GetInstance()->ScreenHeight());
+    }
 }
 
 void Scene::Update(float deltaTime)
@@ -30,7 +42,8 @@ void Scene::Render()
 {
     if (m_Root && m_Camera)
     {
-
+        m_Renderer->PreRender();
+        m_Root->RenderChildren(this);
     }
 }
 

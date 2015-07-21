@@ -10,6 +10,8 @@
 class GameApplication
 {
 private:
+    float m_ScreenWidth, m_ScreenHeight;
+
     char m_Keys[1024];
     char m_KeysPressed[1024];
 
@@ -35,12 +37,16 @@ public:
     }
     ~GameApplication();
 
-    void Initialize();
+    void Initialize(float width, float height);
+    std::shared_ptr<Actor> CreateActor(DEFAULT_ACTOR_TYPES type);
     void Update(float deltaTime);
     void Render();
     void ProcessKeyboardDown(char key);
     void ProcessKeyboardUp(char key);
+    bool IsKeyPressed(char key, bool check_once = false);
 
+    float& ScreenWidth() { return m_ScreenWidth; }
+    float& ScreenHeight() { return m_ScreenHeight; }
     Scene* const GetScene() { return m_Scene; }
 };
 

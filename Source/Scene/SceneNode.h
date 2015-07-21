@@ -11,9 +11,12 @@ protected:
     SceneNodeList m_Children;
     SceneNode *m_Parent;
 public:
-    SceneNode(unsigned int ActorID, std::string name, std::string renderPass, glm::mat4 model);
+    SceneNode(unsigned int ActorID, std::string name, std::string renderPass, glm::vec2 position, glm::vec2 scale = glm::vec2(1.0), float rotation = 0.0f);
     virtual ~SceneNode() { };
 
+    virtual void CalculateModel();
+
+    virtual void Initialize(Scene *scene);
     virtual void Restore(Scene *scene);
     virtual void Update(Scene *scene, float deltaTime);
     virtual bool IsVisible(Scene *scene) const;
