@@ -2,15 +2,26 @@
 
 #include "../Application/GameApplication.h" // Should eventually be done via events to remove this dependancy
 
+#include <iostream>
+#include "../FastDelegate.h"
 
 ControlComponent::ControlComponent()
 {
 
 }
 
+ControlComponent::~ControlComponent()
+{
+    EventListenerDelegate listener = fastdelegate::MakeDelegate(this, &ControlComponent::Test);
+    GameApplication::GetInstance()->GetEventManager()->RemoveListener(listener, Event_DestroyActor::s_EventType);
+}
+
 bool ControlComponent::VInit(void)
 {
     m_Velocity = 100.0;
+    // register a callback function
+    EventListenerDelegate listener = fastdelegate::MakeDelegate(this, &ControlComponent::Test);
+    GameApplication::GetInstance()->GetEventManager()->AddListener(listener, Event_DestroyActor::s_EventType);
     return true;
 }
 
@@ -30,5 +41,11 @@ void ControlComponent::VUpdate(float deltaTime)
 void ControlComponent::SetVelocity(float velocity)
 {
     m_Velocity = velocity;
+}
+
+void ControlComponent::Test(std::shared_ptr<IEventData> eventData)
+{
+    std::shared_ptr<Event_DestroyActor> evtDestroyActor = std::dynamic_pointer_cast<Event_DestroyActor>(eventData);
+    std::cout << "EVENT: ActorDestroyed. Destroyed ActorID:" << evtDestroyActor->GetActorID() << " .. Received ActorID: " << m_Owner->GetID() << std::endl;
 }
 

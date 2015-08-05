@@ -17,7 +17,7 @@ public:
 
     void SetTarget(std::shared_ptr<SceneNode> target) { m_Target = target; }
 
-    void SetProjection(float width, float height, float near = -1.0f, float far = 1.0f);
+    void SetProjection(float width, float height, float near = 0.0f, float far = 10.0f);
     void CalculateViewMatrix();
 
     glm::mat4 GetProjection() { return m_Projection; }

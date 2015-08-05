@@ -18,7 +18,7 @@ class ActorFactory
 {
 // DATA
 private:
-    unsigned int m_lastActorID = 1;
+    unsigned int m_lastActorID = 1; // 0 = no_actor
     actorComponentCreatorMap m_actorComponentCreators;
 // FUNCTIONS
 public:

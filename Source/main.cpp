@@ -23,6 +23,9 @@
 #include "Renderer/texture2D.h"
 #include "Components/Actor.h"
 
+// Physics test
+#include <Box2D/Box2D.h>
+b2Vec2 test;
 const GLuint GAME_WIDTH = 800, GAME_HEIGHT = 600;
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);

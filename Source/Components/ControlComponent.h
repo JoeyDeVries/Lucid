@@ -5,6 +5,7 @@
 
 
 #include "ActorComponent.h"
+#include "Event_DestroyActor.h"
 
 
 class ControlComponent : public ActorComponent
@@ -13,8 +14,10 @@ private:
     float m_Velocity;
 public:
     ControlComponent();
+    ~ControlComponent();
     bool VInit(void);
     void VUpdate(float deltaTime);
+    void Test(std::shared_ptr<IEventData> eventData);
 
     void SetVelocity(float velocity);
 };

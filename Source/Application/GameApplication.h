@@ -6,6 +6,7 @@
 #include "../Scene/Scene.h"
 #include "../Components/ActorFactory.h"
 #include "../Components/Actor.h"
+#include "../Communication/EventManager.h"
 
 class GameApplication
 {
@@ -15,7 +16,9 @@ private:
     char m_Keys[1024];
     char m_KeysPressed[1024];
 
+    // Game-specifics
     Scene *m_Scene;
+    EventManager *m_EventManager;
     ActorFactory *m_ActorFactory;
     std::list<std::shared_ptr<Actor>> m_Actors;
 
@@ -48,6 +51,7 @@ public:
     float& ScreenWidth() { return m_ScreenWidth; }
     float& ScreenHeight() { return m_ScreenHeight; }
     Scene* const GetScene() { return m_Scene; }
+    EventManager* const GetEventManager() { return m_EventManager; }
 };
 
 

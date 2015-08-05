@@ -17,7 +17,7 @@ SceneNode::SceneNode(unsigned int ActorID, std::string name, std::string renderP
 void SceneNode::CalculateModel()
 {
     glm::mat4 model;
-    model = glm::translate(model, glm::vec3(m_Position, m_Depth));
+    model = glm::translate(model, glm::vec3(m_Position, -m_Depth));
 
     model = glm::translate(model, glm::vec3(0.5f * m_Scale.x, 0.5f * m_Scale.y, 0.0f)); // Move origin of rotation to center of quad
     model = glm::rotate(model, m_Rotation, glm::vec3(0.0f, 0.0f, 1.0f)); // Then rotate

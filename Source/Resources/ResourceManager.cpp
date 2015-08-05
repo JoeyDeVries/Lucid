@@ -1,6 +1,8 @@
 #include "ResourceManager.h"
 #include "../Application/GameApplication.h"
 #include "../Renderer/Material.h"
+#include "../Scene/SceneNode.h"
+#include "../Scene/BackgroundNode.h"
 
 #include <SOIL.h>
 
@@ -31,8 +33,8 @@ std::shared_ptr<Shader> ResourceManager::LoadShader(std::string name, const char
     std::ifstream vShaderFile;
     std::ifstream fShaderFile;
     // ensures ifstream objects can throw exceptions:
-    vShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
-    fShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
+    vShaderFile.exceptions(std::ifstream::badbit);
+    fShaderFile.exceptions(std::ifstream::badbit);
     try
     {
         // Open files
@@ -184,24 +186,31 @@ bool ResourceManager::LoadLevel(Scene* scene, const char* levelSource)
                 }
             }
         }
-        // once level has loaded, initialize other relevant actors
-        // - player
-        std::shared_ptr<Actor> actor = GameApplication::GetInstance()->CreateActor(DEFAULT_ACTOR_TYPES::ACTOR_PLAYER);
-        actor->Position() = glm::vec2(150.0, 413.0);
-        actor->Depth()    = 0;
-        actor->Scale()    = glm::vec2(65.0);
-        std::shared_ptr<SceneNode> node(new SceneNode(actor->GetID(), "player", "MAIN", actor->Position(), actor->Depth(), actor->Scale()));
-        Material material;
-        material.SetShader(GetShader("sprite"));
-        material.SetDiffuse(GetTexture("player"));
-        node->SetMaterial(material);
-        scene->AddChild(actor->GetID(), node);
+        //// once level has loaded, initialize other relevant actors
+        //// - background (no need for it to be related to an actor, only for rendering)
+        //std::shared_ptr<Actor> backgroundActor = GameApplication::GetInstance()->CreateActor(DEFAULT_ACTOR_TYPES::ACTOR_EMPTY);
+        //std::shared_ptr<BackgroundNode> backgroundNode(new BackgroundNode(backgroundActor->GetID())); // 0 = no_actor id
+        //Material backgroundMaterial;
+        //backgroundMaterial.SetShader(GetShader("sprite"));
+        //backgroundMaterial.SetDiffuse(GetTexture("background"));
+        //backgroundNode->SetMaterial(backgroundMaterial);
+        //scene->AddChild(0, backgroundNode);
+        //// - player
+        //std::shared_ptr<Actor> actor = GameApplication::GetInstance()->CreateActor(DEFAULT_ACTOR_TYPES::ACTOR_PLAYER);
+        //actor->Position() = glm::vec2(150.0, 413.0);
+        //actor->Depth()    = 0;
+        //actor->Scale()    = glm::vec2(65.0);
+        //std::shared_ptr<SceneNode> node(new SceneNode(actor->GetID(), "player", "MAIN", actor->Position(), actor->Depth(), actor->Scale()));
+        //Material material;
+        //material.SetShader(GetShader("sprite"));
+        //material.SetDiffuse(GetTexture("player"));
+        //node->SetMaterial(material);
+        //scene->AddChild(actor->GetID(), node);
 
-        // - background
-        // TODO (only make it NODE, not an actor; special type of SceneNode?)
+
 
         // next initialize scene (e.g. set default projection matrices for each shader)
-        scene->Initialize(); 
+        //scene->Initialize(); 
     }
 
     return false;

@@ -49,6 +49,7 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>opengl32.lib;SOIL.lib;glfw3.lib;glew32s.lib;Box2D.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -63,13 +64,16 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>opengl32.lib;SOIL.lib;glfw3.lib;glew32s.lib;Box2D.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Application\GameApplication.cpp" />
+    <ClCompile Include="Communication\EventManager.cpp" />
     <ClCompile Include="Components\Actor.cpp" />
     <ClCompile Include="Components\ActorFactory.cpp" />
     <ClCompile Include="Components\ControlComponent.cpp" />
+    <ClCompile Include="Components\Event_DestroyActor.cpp" />
     <ClCompile Include="Components\TransformComponent.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Renderer\Material.cpp" />
@@ -77,14 +81,22 @@
     <ClCompile Include="Renderer\shader.cpp" />
     <ClCompile Include="Renderer\texture2D.cpp" />
     <ClCompile Include="Resources\ResourceManager.cpp" />
+    <ClCompile Include="Scene\BackgroundNode.cpp" />
     <ClCompile Include="Scene\Camera.cpp" />
     <ClCompile Include="Scene\MatrixStack.cpp" />
     <ClCompile Include="Scene\Scene.cpp" />
     <ClCompile Include="Scene\SceneNode.cpp" />
+    <ClInclude Include="Communication\EventManager.h" />
+    <ClInclude Include="Components\Event_DestroyActor.h" />
+    <ClInclude Include="Communication\IEventData.h" />
     <ClInclude Include="Components\ControlComponent.h" />
+    <ClInclude Include="FastDelegate.h" />
+    <ClInclude Include="Physics\Box2DPhysics.h" />
+    <ClInclude Include="Physics\IPhysics.h" />
     <ClInclude Include="Renderer\Renderer.h" />
     <ClInclude Include="Renderer\Material.h" />
     <ClInclude Include="Resources\ResourceManager.h" />
+    <ClInclude Include="Scene\BackgroundNode.h" />
     <ClInclude Include="Scene\Camera.h" />
     <ClInclude Include="Scene\MatrixStack.h" />
     <ClInclude Include="Scene\Scene.h" />
