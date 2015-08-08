@@ -12,6 +12,7 @@ GameApplication::GameApplication()
     m_Scene = new Scene;
     m_EventManager = new EventManager;
     m_ActorFactory = new ActorFactory;
+    m_Physics      = new Box2DPhysics;
 }
 
 GameApplication::~GameApplication()
@@ -19,12 +20,15 @@ GameApplication::~GameApplication()
     delete m_Scene;
     delete m_EventManager;
     delete m_ActorFactory;
+    delete m_Physics;
 }
 
 void GameApplication::Initialize(float width, float height)
 {
     m_ScreenWidth = width;
     m_ScreenHeight = height;
+    // Initialize physics
+    m_Physics->Initialize();
     // Initialize renderer
     m_Scene->GetRenderer()->Initialize();
     m_Scene->GetCamera()->SetProjection(width, height);
@@ -43,15 +47,16 @@ void GameApplication::Initialize(float width, float height)
     m_Scene->AddChild(backgroundActor->GetID(), backgroundNode);
     // - player
     std::shared_ptr<Actor> actor = CreateActor(DEFAULT_ACTOR_TYPES::ACTOR_PLAYER);
-    actor->Position() = glm::vec2(150.0, 413.0);
-    actor->Depth()    = 0;
-    actor->Scale()    = glm::vec2(65.0);
-    std::shared_ptr<SceneNode> node(new SceneNode(actor->GetID(), "player", "MAIN", actor->Position(), actor->Depth(), actor->Scale()));
+    actor->GetPosition() = glm::vec2(150.0, 313.0);
+    actor->Depth()       = 0;
+    actor->GetScale()    = glm::vec2(65.0);
+    std::shared_ptr<SceneNode> node(new SceneNode(actor->GetID(), "player", "MAIN", actor->GetPosition(), actor->Depth(), actor->GetScale()));
     Material material;
     material.SetShader(ResourceManager::GetInstance()->GetShader("sprite"));
     material.SetDiffuse(ResourceManager::GetInstance()->LoadTexture("player", "textures/player.png", true));
     node->SetMaterial(material);
     m_Scene->AddChild(actor->GetID(), node);
+    m_Physics->AddBox(actor, 1.0, true);
 
     // initialize scene (e.g. set default projection matrices for each shader)
     m_Scene->Initialize();
@@ -64,6 +69,15 @@ std::shared_ptr<Actor> GameApplication::CreateActor(DEFAULT_ACTOR_TYPES type)
     m_Actors.push_back(actor);
     return actor;
 }
+
+std::shared_ptr<Actor> GameApplication::GetActor(ActorID actorID)
+{
+    for (auto it = m_Actors.begin(); it != m_Actors.end(); ++it)
+        if((*it)->GetID() == actorID)
+            return (*it);
+    return std::shared_ptr<Actor>();
+}
+
 
 void GameApplication::Update(float deltaTime)
 {
@@ -81,6 +95,13 @@ void GameApplication::Update(float deltaTime)
     // Process all queued events
     m_EventManager->Update();
 
+    // Process physics
+    if (m_Physics)
+    {
+        m_Physics->Update();
+        m_Physics->SyncVisibleScene();
+    }
+
     // Update all scene components
     m_Scene->Update(deltaTime);
 }
@@ -88,6 +109,14 @@ void GameApplication::Update(float deltaTime)
 void GameApplication::Render()
 {
     m_Scene->Render();
+    if (m_Physics)
+    {
+        // prepare stuff for debug drawing (note this is not nice MVC stuff, but it's only for debugging)
+       /* glMatrixMode(GL_PROJECTION);
+        glLoadMatrixf((const GLfloat*)&m_Scene->GetCamera()->GetProjection()[0]);
+        glUseProgram(0);
+        m_Physics->RenderDiagnostics();*/
+    }
 }
 
 void GameApplication::ProcessKeyboardDown(char key)

@@ -2,6 +2,7 @@
 #define SCENE_NODE_H
 
 #include "ISceneNode.h"
+#include "../Communication/IEventData.h"
 
 class SceneNode : public ISceneNode
 {
@@ -27,6 +28,8 @@ public:
     virtual bool AddChild(std::shared_ptr<ISceneNode> child);
     virtual bool RemoveChild(unsigned int actorID);
     virtual void RenderChildren(Scene *scene);
+
+    virtual void ActorMoved(std::shared_ptr<IEventData> eventData);
 };
 
 #endif

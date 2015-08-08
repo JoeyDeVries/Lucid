@@ -23,12 +23,12 @@ void Actor::Update(float deltaTime)
         (it++)->second->VUpdate(deltaTime);
 }
 
-glm::vec2& Actor::Position()
+glm::vec2& Actor::GetPosition()
 {
     return m_Position;
 }
 
-glm::vec2& Actor::Scale()
+glm::vec2& Actor::GetScale()
 {
     return m_Scale;
 }
@@ -38,7 +38,7 @@ int& Actor::Depth()
     return m_Depth;
 }
 
-float& Actor::Rotation()
+float& Actor::GetRotation()
 {
     return m_Rotation;
 }

@@ -1,6 +1,13 @@
 #include "SceneNode.h"
-
 #include "Scene.h"
+
+#include "../Application/GameApplication.h"
+#include "../FastDelegate.h"
+#include "../Physics/Event_ActorMoved.h"
+
+#include <iostream>
+
+const float PI = 3.14159265359;
 
 SceneNode::SceneNode(unsigned int ActorID, std::string name, std::string renderPass, glm::vec2 position, int depth, glm::vec2 scale, float rotation)
 {
@@ -20,7 +27,7 @@ void SceneNode::CalculateModel()
     model = glm::translate(model, glm::vec3(m_Position, -m_Depth));
 
     model = glm::translate(model, glm::vec3(0.5f * m_Scale.x, 0.5f * m_Scale.y, 0.0f)); // Move origin of rotation to center of quad
-    model = glm::rotate(model, m_Rotation, glm::vec3(0.0f, 0.0f, 1.0f)); // Then rotate
+    model = glm::rotate(model, m_Rotation * 180.0f/PI, glm::vec3(0.0f, 0.0f, 1.0f)); // Then rotate
     model = glm::translate(model, glm::vec3(-0.5f * m_Scale.x, -0.5f * m_Scale.y, 0.0f)); // Move origin back
 
     model = glm::scale(model, glm::vec3(m_Scale, 1.0));
@@ -42,6 +49,10 @@ void SceneNode::Initialize(Scene * scene)
         (*begin)->Initialize(scene);
         ++begin;
     }
+
+    // register for ActorMoved events to update render data based on physics
+    EventListenerDelegate listener = fastdelegate::MakeDelegate(this, &SceneNode::ActorMoved);
+    GameApplication::GetInstance()->GetEventManager()->AddListener(listener, Event_ActorMoved::s_EventType);
 }
 
 void SceneNode::Restore(Scene *scene)
@@ -131,5 +142,16 @@ void  SceneNode::RenderChildren(Scene *scene)
 
         (*begin)->PostRender(scene);
         ++begin;
+    }
+}
+
+void  SceneNode::ActorMoved(std::shared_ptr<IEventData> eventData)
+{
+    std::shared_ptr<Event_ActorMoved> eventActorMoved = std::dynamic_pointer_cast<Event_ActorMoved>(eventData);
+    if (eventActorMoved->GetActorID() == ActorID())
+    {
+        //std::cout << "(" << eventActorMoved->GetNewPosition().x << ", " << eventActorMoved->GetNewPosition().y << std::endl;
+        SetPosition(eventActorMoved->GetNewPosition());
+        SetRotation(eventActorMoved->GetNewRotation());
     }
 }

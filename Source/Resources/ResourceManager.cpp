@@ -159,17 +159,19 @@ bool ResourceManager::LoadLevel(Scene* scene, const char* levelSource)
                 {
                     // Create actor
                     std::shared_ptr<Actor> actor = GameApplication::GetInstance()->CreateActor(DEFAULT_ACTOR_TYPES::ACTOR_STATIC);
-                    actor->Position() = glm::vec2(x * blockWidth, y * blockHeight);
-                    actor->Scale() = glm::vec2(blockWidth, blockHeight);
+                    actor->GetPosition() = glm::vec2(x * blockWidth, y * blockHeight);
+                    actor->GetScale() = glm::vec2(blockWidth, blockHeight);
                     actor->Depth() = 1;
                     // Then create scenenode
-                    std::shared_ptr<SceneNode> node(new SceneNode(actor->GetID(), "block", "MAIN", actor->Position(), actor->Depth(), actor->Scale(), actor->Rotation()));
+                    std::shared_ptr<SceneNode> node(new SceneNode(actor->GetID(), "block", "MAIN", actor->GetPosition(), actor->Depth(), actor->GetScale(), actor->GetRotation()));
                     Material material; // configure material (note that the relevant materials should be PRE-loaded)
                     // TODO: Use Data-driven development; configure in data materials for each block + use these to pre-load (or create PreLoadLevel() function) them in GameApplication.
                     material.SetShader(GetShader("sprite"));
                     material.SetDiffuse(GetTexture("block"));
                     node->SetMaterial(material);
                     scene->AddChild(actor->GetID(), node);
+                    // Also define its physics
+                    GameApplication::GetInstance()->GetPhysics()->AddBox(actor, 1.0, y < 7, false);
                     break;
                 }
                 case '2': // color block

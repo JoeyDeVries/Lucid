@@ -7,6 +7,7 @@
 #include "../Components/ActorFactory.h"
 #include "../Components/Actor.h"
 #include "../Communication/EventManager.h"
+#include "../Physics/Box2DPhysics.h"
 
 class GameApplication
 {
@@ -17,10 +18,12 @@ private:
     char m_KeysPressed[1024];
 
     // Game-specifics
-    Scene *m_Scene;
-    EventManager *m_EventManager;
-    ActorFactory *m_ActorFactory;
+    Scene*        m_Scene;
+    EventManager* m_EventManager;
+    ActorFactory* m_ActorFactory;
+    Box2DPhysics* m_Physics;
     std::list<std::shared_ptr<Actor>> m_Actors;
+
 
     // TODO
     virtual void checkOtherInstances();
@@ -42,6 +45,7 @@ public:
 
     void Initialize(float width, float height);
     std::shared_ptr<Actor> CreateActor(DEFAULT_ACTOR_TYPES type);
+    std::shared_ptr<Actor> GetActor(unsigned int actorID);
     void Update(float deltaTime);
     void Render();
     void ProcessKeyboardDown(char key);
@@ -52,6 +56,7 @@ public:
     float& ScreenHeight() { return m_ScreenHeight; }
     Scene* const GetScene() { return m_Scene; }
     EventManager* const GetEventManager() { return m_EventManager; }
+    Box2DPhysics* const GetPhysics() { return m_Physics; }
 };
 
 

@@ -12,6 +12,7 @@ class ControlComponent : public ActorComponent
 {
 private:
     float m_Velocity;
+    bool  m_IsJumping;
 public:
     ControlComponent();
     ~ControlComponent();

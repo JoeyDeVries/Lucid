@@ -76,6 +76,8 @@
     <ClCompile Include="Components\Event_DestroyActor.cpp" />
     <ClCompile Include="Components\TransformComponent.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Physics\Box2DPhysics.cpp" />
+    <ClCompile Include="Physics\Event_ActorMoved.cpp" />
     <ClCompile Include="Renderer\Material.cpp" />
     <ClCompile Include="Renderer\Renderer.cpp" />
     <ClCompile Include="Renderer\shader.cpp" />
@@ -91,7 +93,10 @@
     <ClInclude Include="Communication\IEventData.h" />
     <ClInclude Include="Components\ControlComponent.h" />
     <ClInclude Include="FastDelegate.h" />
+    <ClInclude Include="Physics\Box2DContactListener.h" />
+    <ClInclude Include="Physics\Box2DDebugDrawer.h" />
     <ClInclude Include="Physics\Box2DPhysics.h" />
+    <ClInclude Include="Physics\Event_ActorMoved.h" />
     <ClInclude Include="Physics\IPhysics.h" />
     <ClInclude Include="Renderer\Renderer.h" />
     <ClInclude Include="Renderer\Material.h" />
