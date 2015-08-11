@@ -112,6 +112,33 @@ void Box2DPhysics::AddBox(std::shared_ptr<Actor> actor, float density, bool dyna
     m_ActorIDToBody[actor->GetID()] = body;
 }
 
+void Box2DPhysics::AddPolygon(std::shared_ptr<Actor> actor, std::vector<glm::vec2> vertices, float density, bool dynamic, bool fixedRotation)
+{
+    b2BodyDef bodyDef;
+    bodyDef.position.Set(PixelsToMeters(actor->GetPosition().x + actor->GetScale().x * 0.5), PixelsToMeters(actor->GetPosition().y + actor->GetScale().y * 0.5)); // position should be center of object instead of top-left
+    if(dynamic)
+        bodyDef.type = b2_dynamicBody;
+    bodyDef.fixedRotation = fixedRotation;
+    b2Body* body = m_World->CreateBody(&bodyDef);
+    body->SetUserData(this);
+
+    // create 8 vertices 
+    b2Vec2 verts[8];
+    for(unsigned int i = 0; i < vertices.size(); ++i)
+        verts[i].Set(PixelsToMeters(vertices[i].x * actor->GetScale().x * 0.5), PixelsToMeters(vertices[i].y * actor->GetScale().y * 0.5));
+    b2PolygonShape shape;    
+    shape.Set(verts, 8);
+   
+    b2FixtureDef fixture;
+    fixture.shape = &shape;
+    fixture.density = density;
+    
+    body->CreateFixture(&fixture);
+
+    m_BodyToActorID[body] = actor->GetID();
+    m_ActorIDToBody[actor->GetID()] = body;
+}
+
 void Box2DPhysics::RemoveActor(unsigned int ActorID)
 {
 
@@ -124,7 +151,7 @@ void Box2DPhysics::RenderDiagnostics()
 
 void Box2DPhysics::ApplyForce(unsigned int ActorID, glm::vec2 force, glm::vec2 center)
 {
-    m_ActorIDToBody[ActorID]->ApplyForce(b2Vec2(PixelsToMeters(force.x), PixelsToMeters(force.y)), b2Vec2(PixelsToMeters(center.x), PixelsToMeters(center.y)), true); 
+    m_ActorIDToBody[ActorID]->ApplyForceToCenter(b2Vec2(PixelsToMeters(force.x), PixelsToMeters(force.y)),  true); 
 }
 
 void Box2DPhysics::ApplyImpulse(unsigned int ActorID, glm::vec2 force, glm::vec2 center)

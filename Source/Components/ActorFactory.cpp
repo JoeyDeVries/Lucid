@@ -34,9 +34,9 @@ std::shared_ptr<Actor> ActorFactory::CreateActor(DEFAULT_ACTOR_TYPES actorType)
     {
         actor = std::shared_ptr<Actor>(new Actor());
         actor->setID(++m_lastActorID);
-        std::shared_ptr<ActorComponent> component = createComponent("Control");
+       /* std::shared_ptr<ActorComponent> component = createComponent("Control");
         actor->addComponent(component);
-        component->setOwner(actor);
+        component->setOwner(actor);*/
         return actor;
     }
     case ACTOR_PLAYER:

@@ -104,6 +104,9 @@
     <ClInclude Include="Scene\BackgroundNode.h" />
     <ClInclude Include="Scene\Camera.h" />
     <ClInclude Include="Scene\MatrixStack.h" />
+    <ClInclude Include="Scene\PostProcessNode.h" />
+    <ClInclude Include="Scene\RenderQueueNode.h" />
+    <ClInclude Include="Scene\RootNode.h" />
     <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="Scene\SceneNode.h">
       <FileType>CppCode</FileType>

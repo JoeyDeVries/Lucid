@@ -7,6 +7,7 @@
 #include <map>
 #include <set>
 #include <utility>
+#include <vector>
 
 class Box2DContactListener;
 
@@ -41,6 +42,7 @@ public:
     // integration of physics objects
     virtual void AddSphere(float radius, std::shared_ptr<Actor> actor, float density, bool dynamic = false);
     virtual void AddBox(std::shared_ptr<Actor> actor, float density, bool dynamic = false, bool fixedRotation = true);
+    virtual void AddPolygon(std::shared_ptr<Actor> actor, std::vector<glm::vec2> vertices, float density, bool dynamic = false, bool fixedRotation = true);
     virtual void RemoveActor(unsigned int ActorID);
     // debugging
     virtual void RenderDiagnostics();

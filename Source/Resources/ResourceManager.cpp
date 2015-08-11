@@ -171,7 +171,8 @@ bool ResourceManager::LoadLevel(Scene* scene, const char* levelSource)
                     node->SetMaterial(material);
                     scene->AddChild(actor->GetID(), node);
                     // Also define its physics
-                    GameApplication::GetInstance()->GetPhysics()->AddBox(actor, 1.0, y < 7, false);
+                    //GameApplication::GetInstance()->GetPhysics()->AddBox(actor, 1.0, y < 7, false);
+                    GameApplication::GetInstance()->GetPhysics()->AddBox(actor, 1.0);
                     break;
                 }
                 case '2': // color block

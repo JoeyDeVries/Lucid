@@ -34,7 +34,7 @@ void GameApplication::Initialize(float width, float height)
     m_Scene->GetCamera()->SetProjection(width, height);
     // Load necessary actors/textures/shaders before loading level
     ResourceManager::GetInstance()->LoadShader("sprite", "shaders/sprite.vs", "shaders/sprite.frag");
-    ResourceManager::GetInstance()->LoadTexture("block", "textures/block.png");
+    ResourceManager::GetInstance()->LoadTexture("block", "textures/stone.png");
     ResourceManager::GetInstance()->LoadLevel(m_Scene, "levels/begin.lvl");
     // Create level-independant actors
     // - background (no need for it to be related to an actor, only for rendering)
@@ -56,7 +56,18 @@ void GameApplication::Initialize(float width, float height)
     material.SetDiffuse(ResourceManager::GetInstance()->LoadTexture("player", "textures/player.png", true));
     node->SetMaterial(material);
     m_Scene->AddChild(actor->GetID(), node);
-    m_Physics->AddBox(actor, 1.0, true);
+    // define collision shape (has to be 8 vertices exact) between -1.0 and 1.0
+    std::vector<glm::vec2> vertices;
+    vertices.push_back(glm::vec2(-0.90,  1.00)); // top-left corner
+    vertices.push_back(glm::vec2(-1.00,  0.95)); 
+    vertices.push_back(glm::vec2(-1.00, -0.95)); // bottom-left corner 
+    vertices.push_back(glm::vec2(-0.90, -1.00)); 
+    vertices.push_back(glm::vec2( 0.90, -1.00)); // bottom-rightcorner
+    vertices.push_back(glm::vec2( 1.00, -0.95)); 
+    vertices.push_back(glm::vec2( 1.00,  0.95)); // top-right corner 
+    vertices.push_back(glm::vec2( 0.90,  1.00)); 
+    m_Physics->AddPolygon(actor, vertices, 1.0, true);
+    //m_Physics->AddBox(actor, 1.0, true);
 
     // initialize scene (e.g. set default projection matrices for each shader)
     m_Scene->Initialize();
@@ -112,10 +123,10 @@ void GameApplication::Render()
     if (m_Physics)
     {
         // prepare stuff for debug drawing (note this is not nice MVC stuff, but it's only for debugging)
-       /* glMatrixMode(GL_PROJECTION);
-        glLoadMatrixf((const GLfloat*)&m_Scene->GetCamera()->GetProjection()[0]);
-        glUseProgram(0);
-        m_Physics->RenderDiagnostics();*/
+        //glMatrixMode(GL_PROJECTION);
+        //glLoadMatrixf((const GLfloat*)&m_Scene->GetCamera()->GetProjection()[0]);
+        //glUseProgram(0);
+        //m_Physics->RenderDiagnostics();
     }
 }
 

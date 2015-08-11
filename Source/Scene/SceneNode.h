@@ -29,7 +29,7 @@ public:
     virtual bool RemoveChild(unsigned int actorID);
     virtual void RenderChildren(Scene *scene);
 
-    virtual void ActorMoved(std::shared_ptr<IEventData> eventData);
+    void ActorMoved(std::shared_ptr<IEventData> eventData);
 };
 
 #endif
