@@ -7,6 +7,8 @@ Renderer::Renderer()
 
 void Renderer::Initialize()
 {
+    // Initialize post-processor
+
     // Configure default OpenGL state
     glClearColor(0.3f, 0.2f, 0.1f, 1.0f);
     glEnable(GL_DEPTH_TEST);

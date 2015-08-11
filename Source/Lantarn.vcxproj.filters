@@ -75,6 +75,9 @@
     <ClCompile Include="Physics\Event_ActorMoved.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Scene\RootNode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Renderer\texture2D.h">
@@ -159,12 +162,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Scene\RootNode.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene\PostProcessNode.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene\RenderQueueNode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

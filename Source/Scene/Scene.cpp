@@ -4,7 +4,7 @@
 Scene::Scene()
 {
     m_Renderer.reset(new Renderer);
-    m_Root.reset(new SceneNode(0, "root", "NONE", glm::vec2(0.0), 0));
+    m_Root.reset(new RootNode);
     m_Camera.reset(new Camera);
 }
 
@@ -43,7 +43,7 @@ void Scene::Render()
     if (m_Root && m_Camera)
     {
         m_Renderer->PreRender();
-        m_Root->RenderChildren(this);
+        m_Root->Render(this);
     }
 }
 

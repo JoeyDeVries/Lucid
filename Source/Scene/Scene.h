@@ -2,7 +2,7 @@
 #define SCENE_H
 
 #include "ISceneNode.h"
-#include "SceneNode.h"
+#include "RootNode.h"
 #include "MatrixStack.h"
 #include "Camera.h"
 #include "../Renderer/Renderer.h"
@@ -18,7 +18,7 @@ typedef std::map<unsigned int, std::shared_ptr<ISceneNode>> SceneActorMap; // re
 class Scene
 {
 protected:
-    std::shared_ptr<SceneNode> m_Root;
+    std::shared_ptr<RootNode> m_Root;
     std::shared_ptr<Camera> m_Camera;
     std::shared_ptr<Renderer> m_Renderer; // OpenGL renderer class here!
 

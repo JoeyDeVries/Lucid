@@ -6,7 +6,8 @@
 
 class RootNode : public SceneNode
 {
-    RootNode(std::string name);
+public:
+    RootNode();
 
     virtual void Initialize(Scene *scene);
     virtual void PreRender(Scene *scene);
