@@ -2,12 +2,18 @@
  
 Renderer::Renderer()
 {
+    m_PostProcessor = new PostProcessor;
+}
 
+Renderer::~Renderer()
+{
+    delete m_PostProcessor;
 }
 
 void Renderer::Initialize()
 {
     // Initialize post-processor
+    m_PostProcessor->Initialize();
 
     // Configure default OpenGL state
     glClearColor(0.3f, 0.2f, 0.1f, 1.0f);
@@ -47,4 +53,19 @@ void Renderer::configureQuad()
     glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(GLfloat), (GLvoid*)0);
     glEnableVertexAttribArray(0);
     glBindVertexArray(0); // Unbind VAO
+}
+
+void Renderer::PrePostProcessRender()
+{
+    m_PostProcessor->PreRender();
+}
+
+void Renderer::PostPostProcessRender()
+{
+    m_PostProcessor->PostRender();
+}
+
+void Renderer::PostProcessQuadRender()
+{
+    m_PostProcessor->RenderScreenQuad(this);
 }

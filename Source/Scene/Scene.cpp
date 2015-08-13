@@ -1,11 +1,13 @@
 #include "Scene.h"
 #include "../Application/GameApplication.h"
+#include "../Scene/LightNode.h"
 
 Scene::Scene()
 {
     m_Renderer.reset(new Renderer);
     m_Root.reset(new RootNode);
     m_Camera.reset(new Camera);
+    m_LightManager.reset(new LightManager);
 }
 
 Scene::~Scene()
@@ -61,7 +63,11 @@ bool Scene::AddChild(unsigned int ActorID, std::shared_ptr<ISceneNode> child)
 {
     m_ActorMap[ActorID] = child;
     // cast child into different node types and add to other managers if necessary (like if it is a light node, then add it to light manager)
-    // [...]
+    std::shared_ptr<LightNode> pLight = std::dynamic_pointer_cast<LightNode>(child);
+    if (pLight)
+    {   // child is a LightNode; also add a reference to the LightManager
+         GetLightManager()->AddLight(pLight);  
+    }
     // otherwise add it as child to Root node
     return m_Root->AddChild(child);
 }
@@ -70,7 +76,11 @@ bool Scene::RemoveChild(unsigned int ActorID)
 {
     std::shared_ptr<ISceneNode> kid = FindActor(ActorID);
     // Check if it is any of the different node types (like light) and act accordingly)
-    // [..]
+    std::shared_ptr<LightNode> pLight = std::dynamic_pointer_cast<LightNode>(kid);
+    if (pLight)
+    {    // child is a LightNode; also remove reference to the LightManager
+         GetLightManager()->RemoveLight(pLight);  
+    }
     // Otherwise, erase as normal
     m_ActorMap.erase(ActorID);
     return m_Root->RemoveChild(ActorID);

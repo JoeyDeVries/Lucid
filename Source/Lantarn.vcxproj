@@ -78,17 +78,22 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Physics\Box2DPhysics.cpp" />
     <ClCompile Include="Physics\Event_ActorMoved.cpp" />
+    <ClCompile Include="Renderer\Framebuffer.cpp" />
     <ClCompile Include="Renderer\Material.cpp" />
+    <ClCompile Include="Renderer\PostProcessor.cpp" />
     <ClCompile Include="Renderer\Renderer.cpp" />
     <ClCompile Include="Renderer\shader.cpp" />
     <ClCompile Include="Renderer\texture2D.cpp" />
     <ClCompile Include="Resources\ResourceManager.cpp" />
     <ClCompile Include="Scene\BackgroundNode.cpp" />
     <ClCompile Include="Scene\Camera.cpp" />
+    <ClCompile Include="Scene\LightManager.cpp" />
+    <ClCompile Include="Scene\LightNode.cpp" />
     <ClCompile Include="Scene\MatrixStack.cpp" />
     <ClCompile Include="Scene\RootNode.cpp" />
     <ClCompile Include="Scene\Scene.cpp" />
     <ClCompile Include="Scene\SceneNode.cpp" />
+    <ClCompile Include="Scene\SpriteNode.cpp" />
     <ClInclude Include="Communication\EventManager.h" />
     <ClInclude Include="Components\Event_DestroyActor.h" />
     <ClInclude Include="Communication\IEventData.h" />
@@ -99,17 +104,22 @@
     <ClInclude Include="Physics\Box2DPhysics.h" />
     <ClInclude Include="Physics\Event_ActorMoved.h" />
     <ClInclude Include="Physics\IPhysics.h" />
+    <ClInclude Include="Renderer\Framebuffer.h" />
+    <ClInclude Include="Scene\LightManager.h" />
+    <ClInclude Include="Renderer\PostProcesser.h" />
     <ClInclude Include="Renderer\Renderer.h" />
     <ClInclude Include="Renderer\Material.h" />
     <ClInclude Include="Resources\ResourceManager.h" />
     <ClInclude Include="Scene\BackgroundNode.h" />
     <ClInclude Include="Scene\Camera.h" />
+    <ClInclude Include="Scene\LightNode.h" />
     <ClInclude Include="Scene\MatrixStack.h" />
     <ClInclude Include="Scene\RootNode.h" />
     <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="Scene\SceneNode.h">
       <FileType>CppCode</FileType>
     </ClInclude>
+    <ClInclude Include="Scene\SpriteNode.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\GameApplication.h" />

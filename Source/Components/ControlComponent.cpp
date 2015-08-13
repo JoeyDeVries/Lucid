@@ -40,9 +40,9 @@ void ControlComponent::VUpdate(float deltaTime)
     static int jumpCounter;
     if (GameApplication::GetInstance()->IsKeyPressed(GLFW_KEY_SPACE) && !m_IsJumping)
     {
-        GameApplication::GetInstance()->GetPhysics()->ApplyImpulse(m_Owner->GetID(), glm::vec2(0.0, -1000.0), bodyCenter);
+        GameApplication::GetInstance()->GetPhysics()->ApplyImpulse(m_Owner->GetID(), glm::vec2(0.0, -1500.0), bodyCenter);
         m_IsJumping = true;
-        jumpCounter = 50;
+        jumpCounter = 120;
     }
     if(jumpCounter > 0)
         jumpCounter--;

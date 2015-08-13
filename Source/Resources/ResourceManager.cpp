@@ -1,7 +1,7 @@
 #include "ResourceManager.h"
 #include "../Application/GameApplication.h"
 #include "../Renderer/Material.h"
-#include "../Scene/SceneNode.h"
+#include "../Scene/SpriteNode.h"
 #include "../Scene/BackgroundNode.h"
 
 #include <SOIL.h>
@@ -163,7 +163,7 @@ bool ResourceManager::LoadLevel(Scene* scene, const char* levelSource)
                     actor->GetScale() = glm::vec2(blockWidth, blockHeight);
                     actor->Depth() = 1;
                     // Then create scenenode
-                    std::shared_ptr<SceneNode> node(new SceneNode(actor->GetID(), "block", "MAIN", actor->GetPosition(), actor->Depth(), actor->GetScale(), actor->GetRotation()));
+                    std::shared_ptr<SpriteNode> node(new SpriteNode(actor->GetID(), "block", "MAIN", actor->GetPosition(), actor->Depth(), actor->GetScale(), actor->GetRotation()));
                     Material material; // configure material (note that the relevant materials should be PRE-loaded)
                     // TODO: Use Data-driven development; configure in data materials for each block + use these to pre-load (or create PreLoadLevel() function) them in GameApplication.
                     material.SetShader(GetShader("sprite"));

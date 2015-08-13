@@ -29,9 +29,11 @@ void RootNode::Render(Scene *scene)
 {
     // configure all render passes here
     // - render all children into post-processing framebuffer
-    RenderChildren(scene);
-
+    scene->GetRenderer()->PrePostProcessRender();
+        RenderChildren(scene);
+    scene->GetRenderer()->PostPostProcessRender();
     // - render quad with post-processing effect enabled
+    scene->GetRenderer()->PostProcessQuadRender();
 }
 
 void RootNode::PostRender(Scene *scene)

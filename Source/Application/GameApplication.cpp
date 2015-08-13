@@ -1,6 +1,7 @@
 #include "GameApplication.h"
 #include "../Resources/ResourceManager.h"
 #include "../Scene/BackgroundNode.h"
+#include "../Scene/SpriteNode.h"
 #include "../Components/Event_DestroyActor.h"
 
 #include <iostream>
@@ -50,7 +51,7 @@ void GameApplication::Initialize(float width, float height)
     actor->GetPosition() = glm::vec2(150.0, 313.0);
     actor->Depth()       = 0;
     actor->GetScale()    = glm::vec2(65.0);
-    std::shared_ptr<SceneNode> node(new SceneNode(actor->GetID(), "player", "MAIN", actor->GetPosition(), actor->Depth(), actor->GetScale()));
+    std::shared_ptr<SpriteNode> node(new SpriteNode(actor->GetID(), "player", "MAIN", actor->GetPosition(), actor->Depth(), actor->GetScale()));
     Material material;
     material.SetShader(ResourceManager::GetInstance()->GetShader("sprite"));
     material.SetDiffuse(ResourceManager::GetInstance()->LoadTexture("player", "textures/player.png", true));
@@ -133,14 +134,12 @@ void GameApplication::Render()
 void GameApplication::ProcessKeyboardDown(char key)
 {
     m_Keys[key] = true;
-    //std::cout << key << std::endl;
 }
 
 void GameApplication::ProcessKeyboardUp(char key)
 {
     m_Keys[key] = false;
     m_KeysPressed[key] = false;
-    //std::cout << "OFF:" << key << std::endl;
 }
 
 bool GameApplication::IsKeyPressed(char key, bool check_once)
