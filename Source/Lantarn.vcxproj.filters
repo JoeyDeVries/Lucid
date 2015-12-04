@@ -93,34 +93,34 @@
     <ClCompile Include="Components\Actor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Resources\MapLoader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Resources\tinyxml2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="Physics\Event_PostCollisionAdd.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Physics\Event_PostCollisionRemove.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Components\LightSwitchComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Components\Event_LightStateSwitched.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Components\StateBlockComponent.cpp">
+    <ClCompile Include="Components\CompleteCheckComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Components\Event_LevelComplete.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Components\CompleteCheckComponent.cpp">
+    <ClCompile Include="Components\Event_LightStateSwitched.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\LightSwitchComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\StateBlockComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Animation.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Resources\MapLoader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Resources\tinyxml2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -224,34 +224,34 @@
     <ClInclude Include="Components\Actor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Resources\MapLoader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Resources\tinyxml2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="Physics\Event_PostCollisionAdd.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Physics\Event_PostCollisionRemove.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Components\LightSwitchComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Components\Event_LightStateSwitched.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Components\StateBlockComponent.h">
+    <ClInclude Include="Components\CompleteCheckComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Components\Event_LevelComplete.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Components\CompleteCheckComponent.h">
+    <ClInclude Include="Components\Event_LightStateSwitched.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\LightSwitchComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\StateBlockComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Animation.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Resources\MapLoader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Resources\tinyxml2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

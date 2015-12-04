@@ -72,11 +72,11 @@
     <ClCompile Include="Communication\EventManager.cpp" />
     <ClCompile Include="Components\Actor.cpp" />
     <ClCompile Include="Components\ActorFactory.cpp" />
+    <ClCompile Include="Components\CompleteCheckComponent.cpp" />
     <ClCompile Include="Components\ControlComponent.cpp" />
     <ClCompile Include="Components\Event_DestroyActor.cpp" />
     <ClCompile Include="Components\Event_LevelComplete.cpp" />
     <ClCompile Include="Components\Event_LightStateSwitched.cpp" />
-    <ClCompile Include="Components\CompleteCheckComponent.cpp" />
     <ClCompile Include="Components\LightSwitchComponent.cpp" />
     <ClCompile Include="Components\StateBlockComponent.cpp" />
     <ClCompile Include="Components\TransformComponent.cpp" />
@@ -105,12 +105,12 @@
     <ClCompile Include="Scene\SceneNode.cpp" />
     <ClCompile Include="Scene\SpriteNode.cpp" />
     <ClInclude Include="Communication\EventManager.h" />
+    <ClInclude Include="Components\CompleteCheckComponent.h" />
     <ClInclude Include="Components\Event_DestroyActor.h" />
     <ClInclude Include="Communication\IEventData.h" />
     <ClInclude Include="Components\ControlComponent.h" />
     <ClInclude Include="Components\Event_LevelComplete.h" />
     <ClInclude Include="Components\Event_LightStateSwitched.h" />
-    <ClInclude Include="Components\CompleteCheckComponent.h" />
     <ClInclude Include="Components\LightSwitchComponent.h" />
     <ClInclude Include="Components\StateBlockComponent.h" />
     <ClInclude Include="FastDelegate.h" />
