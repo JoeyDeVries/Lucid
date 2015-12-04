@@ -36,13 +36,14 @@ public:
     void Update(float deltaTime);
     void Render();
 
-    std::shared_ptr<ISceneNode> FindActor(unsigned int ActorID);
+    std::shared_ptr<ISceneNode> GetSceneNode(unsigned int ActorID);
     bool AddChild(unsigned int ActorID, std::shared_ptr<ISceneNode> child);
     bool RemoveChild(unsigned int ActorID);
 
     std::shared_ptr<Renderer>     const GetRenderer()       { return m_Renderer; }
     std::shared_ptr<Camera>       const GetCamera()         { return m_Camera; }
     std::shared_ptr<LightManager> const GetLightManager()   { return m_LightManager; }
+	std::shared_ptr<RootNode>	  const GetRootNode()		{ return m_Root; }
 
     void PushAndSetMatrix(const glm::mat4 model);
     void PopMatrix();

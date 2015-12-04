@@ -2,12 +2,12 @@
 #define LIGHT_MANAGER_H
 #include "../Renderer/shader.h"
 #include "LightNode.h"
-#include <list>
+#include <vector>
 #include <memory>
 
 class LightManager
 {
-    typedef std::list<std::shared_ptr<LightNode>> Lights;
+    typedef std::vector<std::shared_ptr<LightNode>> Lights;
     Lights m_Lights;
 
 public:

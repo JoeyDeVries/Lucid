@@ -11,13 +11,16 @@
 #include <map>
 #include <string>
 
+#include "MapLoader.h"
 #include "../Components/ActorFactory.h"
 #include "../Renderer/shader.h"
 #include "../Renderer/texture2D.h"
+#include "../Renderer/Animation.h"
 #include "../Scene/Scene.h"
 
 class ResourceManager
 {
+private:
     // Cache
     std::map<std::string, std::shared_ptr<Shader>> m_Shaders;
     std::map<std::string, std::shared_ptr<Texture2D>> m_Textures;
@@ -25,6 +28,10 @@ class ResourceManager
     // Singleton pattern, constructor private
     static std::shared_ptr<ResourceManager> m_Instance;
     ResourceManager();
+	// Helper function
+	std::shared_ptr<Actor> AddSpriteNode(Scene* scene, DEFAULT_ACTOR_TYPES type, std::string name, std::string renderpass, float x, float y, float blockwidth, float blockheight, int depth, std::string shader, std::string diffuse, std::string specular, std::string normal, glm::vec3 color = glm::vec3(1.0));
+	// Delegation 
+	MapLoader m_MapLoader;
 public:
     // Retrieves a single instance of this object
     static std::shared_ptr<ResourceManager> GetInstance()
@@ -36,11 +43,12 @@ public:
     ~ResourceManager();
 
     // Resource loaders
-    std::shared_ptr<Shader> LoadShader(std::string name, const char* vertexShaderSource, const char* fragmentShaderSource);
+    std::shared_ptr<Shader> LoadShader(std::string name, const char *vertexShaderSource, const char *fragmentShaderSource);
     std::shared_ptr<Shader> GetShader(std::string name);
-    std::shared_ptr<Texture2D> LoadTexture(std::string name, const char* textureSource, bool alpha = false);
+    std::shared_ptr<Texture2D> LoadTexture(std::string name, const char *textureSource, bool alpha = false);
     std::shared_ptr<Texture2D> GetTexture(std::string name);
-    bool LoadLevel(Scene* scene, const char* levelSource);
+	std::shared_ptr<Animation> LoadAnimation(const char *animPath);
+	bool LoadLevel(Scene* scene, const char *levelSource);
 };
 
 #endif

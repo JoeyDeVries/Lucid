@@ -1,7 +1,8 @@
 #ifndef GAME_APPLICATION_H
 #define GAME_APPLICATION_H
 
-#include <list>
+#include <vector>
+#include <map>
 
 #include "../Scene/Scene.h"
 #include "../Components/ActorFactory.h"
@@ -22,8 +23,8 @@ private:
     EventManager* m_EventManager;
     ActorFactory* m_ActorFactory;
     Box2DPhysics* m_Physics;
-    std::list<std::shared_ptr<Actor>> m_Actors;
-
+    std::map<ActorID, std::shared_ptr<Actor>> m_Actors;
+	std::map<std::string, std::shared_ptr<Actor>> m_ImportantActors;
 
     // TODO
     virtual void checkOtherInstances();
@@ -45,7 +46,10 @@ public:
 
     void Initialize(float width, float height);
     std::shared_ptr<Actor> CreateActor(DEFAULT_ACTOR_TYPES type);
-    std::shared_ptr<Actor> GetActor(unsigned int actorID);
+    std::shared_ptr<Actor> GetActor(ActorID actorID);
+	void				   SetImportantActor(std::string, std::shared_ptr<Actor> actor);
+	std::shared_ptr<Actor> GetImportantActor(std::string);
+
     void Update(float deltaTime);
     void Render();
     void ProcessKeyboardDown(char key);
@@ -57,6 +61,11 @@ public:
     Scene* const GetScene() { return m_Scene; }
     EventManager* const GetEventManager() { return m_EventManager; }
     Box2DPhysics* const GetPhysics() { return m_Physics; }
+
+	float const GetTime() { return glfwGetTime(); }
+
+	// global game event
+	void OnLevelComplete(std::shared_ptr<IEventData> eventData);
 };
 
 

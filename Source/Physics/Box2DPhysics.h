@@ -3,12 +3,15 @@
 #include "IPhysics.h"
 #include "Box2DDebugDrawer.h"
 #include <Box2D/Box2D.h>
+#include "../Components/Actor.h"
 #include <memory>
 #include <map>
 #include <set>
+#include <list>
 #include <utility>
 #include <vector>
 
+class Box2DPhysics;
 class Box2DContactListener;
 
 class Box2DPhysics : public IPhysics
@@ -19,14 +22,12 @@ class Box2DPhysics : public IPhysics
     Box2DContactListener* m_ContactListener;
     Box2DDebugDrawer*     m_DebugDrawer;
     // body-actor relations
-    typedef unsigned int ActorID;
     std::map<ActorID, b2Body*> m_ActorIDToBody;
     std::map<b2Body*, ActorID> m_BodyToActorID;
     // collisions
-    typedef std::pair<b2Body*, b2Body*> CollisionPair;
-    std::set<CollisionPair> m_Collisions;
-    void SendCollisionPairAddEvent(b2Body* body1, b2Body* body2);
-    void SendCollisionPairRemoveEvent(b2Body* body1, b2Body* body2);
+	std::list<b2Contact*> m_Collisions;
+    void SendCollisionAddEvent(b2Contact* contact);
+    void SendCollisionRemoveEvent(b2Contact * contact);
 
 public:
     Box2DPhysics();
@@ -40,16 +41,23 @@ public:
     b2Body* FindBody(ActorID);
     ActorID FindActorID(b2Body*);
     // integration of physics objects
-    virtual void AddSphere(float radius, std::shared_ptr<Actor> actor, float density, bool dynamic = false);
-    virtual void AddBox(std::shared_ptr<Actor> actor, float density, bool dynamic = false, bool fixedRotation = true);
-    virtual void AddPolygon(std::shared_ptr<Actor> actor, std::vector<glm::vec2> vertices, float density, bool dynamic = false, bool fixedRotation = true);
+    virtual void AddSphere(float radius, std::shared_ptr<Actor> actor, float density, bool dynamic = false, bool isSensor = false);
+    virtual void AddBox(std::shared_ptr<Actor> actor, float density, bool dynamic = false, bool fixedRotation = true, bool isSensor = false, float hitBoxScale = 1.0f);
+    void AddPolygon(std::shared_ptr<Actor> actor, std::vector<glm::vec2> vertices, float density, bool dynamic = false, bool fixedRotation = true);
+    void AddCharacter(std::shared_ptr<Actor> actor, float density);
     virtual void RemoveActor(unsigned int ActorID);
     // debugging
-    virtual void RenderDiagnostics();
+    void RenderDiagnostics();
     // physics world modifiers/forces
     virtual void ApplyForce(unsigned int ActorID, glm::vec2 force, glm::vec2 center);
     virtual void ApplyImpulse(unsigned int ActorID, glm::vec2 force, glm::vec2 center);
     virtual void ApplyTorque(unsigned int ActorID, glm::vec2 direction, float newtons);
+	// per body physics data in game-world coordinates
+	glm::vec2 GetLinearVelocity(unsigned int ActorID);
+	float GetBodyMass(unsigned int ActorID);
+	// collision check functions
+	bool IsBodiesColliding(const b2Body* bodyA, const b2Body* bodyB);
+	
 };
 
 #endif

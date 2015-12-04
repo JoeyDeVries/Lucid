@@ -3,10 +3,12 @@
 #include "Box2DContactListener.h"
 #include "Box2DDebugDrawer.h"
 #include "Event_ActorMoved.h"
+#include "Event_PostCollisionAdd.h";
+#include "Event_PostCollisionRemove.h";
 
 // simple conversion functions to convert from pixels to meters and vica versa
 // necessary as Box2D works best with real metrics
-const float M2P = 25.0f;
+const float M2P = 40.0f;
 float PixelsToMeters(float pixel)
 {
     return pixel * (1.0 / M2P);
@@ -56,20 +58,20 @@ void Box2DPhysics::SyncVisibleScene()
 {
     for (std::map<ActorID, b2Body*>::const_iterator it = m_ActorIDToBody.begin(); it != m_ActorIDToBody.end(); ++it)
     {
-        ActorID id = it->first;
+		ActorID id = it->first;
         glm::vec2 bodyPos = glm::vec2(MetersToPixels(it->second->GetPosition().x), MetersToPixels(it->second->GetPosition().y));
         float     bodyRot = it->second->GetAngle();
-        std::shared_ptr<Actor> actor = GameApplication::GetInstance()->GetActor(id);
-        // bodyPos is from center of object, first transform to top-left of object so it corresponds with game-logic 
+		std::shared_ptr<Actor> actor = GameApplication::GetInstance()->GetActor(id);
+		// bodyPos is from center of object, first transform to top-left of object so it corresponds with game-logic 
         bodyPos -= actor->GetScale() * 0.5f;
-        // due to floating point precision I can't directly compare the positions, compare them given some range interval
+		// due to floating point precision I can't directly compare the positions, compare them given some range interval
         if (!IsVec2Equal(actor->GetPosition(), bodyPos)) // something changed, update scene
         {
             // set actor to correct position and start event that actor has moved (scene will listen to this event for render changes)
-            actor->GetPosition() = bodyPos;
-            actor->GetRotation() = bodyRot;
+            actor->SetPosition(bodyPos);
+            actor->SetRotation(bodyRot);
             // send event
-            GameApplication::GetInstance()->GetEventManager()->QueueEvent(std::shared_ptr<Event_ActorMoved>(new Event_ActorMoved(id, bodyPos, bodyRot)));
+			GameApplication::GetInstance()->GetEventManager()->QueueEvent(std::shared_ptr<Event_ActorMoved>(new Event_ActorMoved(id, bodyPos, bodyRot)));
         }
     }
 }
@@ -84,12 +86,12 @@ unsigned int Box2DPhysics::FindActorID(b2Body* body)
     return m_BodyToActorID[body];
 }
 
-void Box2DPhysics::AddSphere(float radius, std::shared_ptr<Actor> actor, float density, bool dynamic)
+void Box2DPhysics::AddSphere(float radius, std::shared_ptr<Actor> actor, float density, bool dynamic, bool isSensor)
 {
 
 }
 
-void Box2DPhysics::AddBox(std::shared_ptr<Actor> actor, float density, bool dynamic, bool fixedRotation)
+void Box2DPhysics::AddBox(std::shared_ptr<Actor> actor, float density, bool dynamic, bool fixedRotation, bool isSensor, float hitboxScale)
 {
     b2BodyDef bodyDef;
     bodyDef.position.Set(PixelsToMeters(actor->GetPosition().x + actor->GetScale().x * 0.5), PixelsToMeters(actor->GetPosition().y + actor->GetScale().y * 0.5)); // position should be center of object instead of top-left
@@ -100,11 +102,12 @@ void Box2DPhysics::AddBox(std::shared_ptr<Actor> actor, float density, bool dyna
     body->SetUserData(this);
 
     b2PolygonShape shape;
-    shape.SetAsBox(PixelsToMeters(actor->GetScale().x * 0.5), PixelsToMeters(actor->GetScale().y * 0.5));
+    shape.SetAsBox(PixelsToMeters(hitboxScale * actor->GetScale().x * 0.5), PixelsToMeters(hitboxScale * actor->GetScale().y * 0.5));
    
     b2FixtureDef fixture;
     fixture.shape = &shape;
     fixture.density = density;
+	fixture.isSensor = isSensor;
     
     body->CreateFixture(&fixture);
 
@@ -139,6 +142,57 @@ void Box2DPhysics::AddPolygon(std::shared_ptr<Actor> actor, std::vector<glm::vec
     m_ActorIDToBody[actor->GetID()] = body;
 }
 
+void Box2DPhysics::AddCharacter(std::shared_ptr<Actor> actor, float density)
+{
+    b2BodyDef bodyDef;
+    bodyDef.position.Set(PixelsToMeters(actor->GetPosition().x + actor->GetScale().x * 0.5), PixelsToMeters(actor->GetPosition().y + actor->GetScale().y * 0.5)); // position should be center of object instead of top-left
+    bodyDef.type = b2_dynamicBody;
+    bodyDef.fixedRotation = true;
+	bodyDef.allowSleep = false;
+    b2Body* body = m_World->CreateBody(&bodyDef);
+    body->SetUserData(this);
+	body->SetBullet(true);
+
+    // Create box top-shape
+    b2PolygonShape boxShape;
+    //boxShape.m_centroid.Set(0.0, -PixelsToMeters(actor->GetScale().x));
+    b2Vec2 vertices[4];
+    vertices[0].Set(PixelsToMeters(-actor->GetScale().x * 0.4), PixelsToMeters(-actor->GetScale().y * 0.5));
+    vertices[1].Set(PixelsToMeters(-actor->GetScale().x * 0.4), PixelsToMeters(actor->GetScale().y * 0.0));
+    vertices[2].Set(PixelsToMeters(actor->GetScale().x * 0.4), PixelsToMeters(actor->GetScale().y * 0.0));
+    vertices[3].Set(PixelsToMeters(actor->GetScale().x * 0.4), PixelsToMeters(-actor->GetScale().y * 0.5));
+    boxShape.Set(vertices, 4);
+    //boxShape.SetAsBox(PixelsToMeters(actor->GetScale().x * 0.5), PixelsToMeters(actor->GetScale().y * 0.5 - 20)); // - half the width for the bottom circle
+    b2FixtureDef fixture;
+    fixture.shape = &boxShape;
+    fixture.density = density;
+    fixture.friction = 0.95f;
+    body->CreateFixture(&fixture);
+    // Create circle bottom-shape
+    b2CircleShape circleShape;
+    circleShape.m_p.Set(0.0f, PixelsToMeters(actor->GetScale().y * 0.5 - actor->GetScale().x * 0.42));
+    circleShape.m_radius = PixelsToMeters(actor->GetScale().x * 0.4);
+    b2FixtureDef fixture2;
+    fixture2.shape = &circleShape;
+    fixture2.density = density;
+    fixture2.friction = 10.0f;
+	// fixture2.restitution = 0.25f;
+    body->CreateFixture(&fixture2);
+
+	// Create bottom sensor to detect floor-collisions
+	b2PolygonShape sensorShape;
+	b2Vec2 origin = b2Vec2(0.0, PixelsToMeters(actor->GetScale().y * 0.3));
+	sensorShape.SetAsBox(PixelsToMeters(actor->GetScale().x * 0.15), PixelsToMeters(actor->GetScale().y * 0.2), origin, 0.0f);
+	b2FixtureDef fixture3;
+	fixture3.shape = &sensorShape;
+	fixture3.isSensor = true;
+	body->CreateFixture(&fixture3);
+
+	
+	m_BodyToActorID[body] = actor->GetID();
+    m_ActorIDToBody[actor->GetID()] = body;    
+}
+
 void Box2DPhysics::RemoveActor(unsigned int ActorID)
 {
 
@@ -164,12 +218,93 @@ void Box2DPhysics::ApplyTorque(unsigned int ActorID, glm::vec2 direction, float 
 
 }
 
-void Box2DPhysics::SendCollisionPairAddEvent(b2Body* body1, b2Body* body2)
+void Box2DPhysics::SendCollisionAddEvent(b2Contact* contact)
 {
-
+	m_Collisions.push_back(contact);
+	// Send collision event to event system
+	GameApplication::GetInstance()->GetEventManager()->QueueEvent(std::shared_ptr<Event_PostCollisionAdd>(new Event_PostCollisionAdd(contact)));
 }
 
-void Box2DPhysics::SendCollisionPairRemoveEvent(b2Body* body1, b2Body* body2)
+void Box2DPhysics::SendCollisionRemoveEvent(b2Contact* contact)
 {
-
+	m_Collisions.remove(contact);
+	// Send collision event to event system
+	GameApplication::GetInstance()->GetEventManager()->QueueEvent(std::shared_ptr<Event_PostCollisionRemove>(new Event_PostCollisionRemove(contact)));
 }
+
+glm::vec2 Box2DPhysics::GetLinearVelocity(unsigned int ActorID)
+{
+	b2Vec2 linVel = FindBody(ActorID)->GetLinearVelocity();
+	return glm::vec2(MetersToPixels(linVel.x), MetersToPixels(linVel.y));
+}
+
+float Box2DPhysics::GetBodyMass(unsigned int ActorID)
+{
+	return MetersToPixels(FindBody(ActorID)->GetMass());
+}
+
+// Check collisions between all fixtures of two bodies
+bool Box2DPhysics::IsBodiesColliding(const b2Body* bodyA, const b2Body* bodyB)
+{
+	// calculate both AABBs and determine collision manually
+	//b2AABB AABBa, AABBb;
+	//AABBa.lowerBound = b2Vec2(FLT_MAX, FLT_MAX);
+	//AABBa.upperBound = b2Vec2(-FLT_MAX, -FLT_MAX);
+	//AABBb.lowerBound = b2Vec2(FLT_MAX, FLT_MAX);
+	//AABBb.upperBound = b2Vec2(-FLT_MAX, -FLT_MAX);
+	//for (const b2Fixture* fixture = bodyA->GetFixtureList(); fixture; fixture = fixture->GetNext())
+	//	if(!fixture->IsSensor())
+	//		AABBa.Combine(AABBa, fixture->GetAABB(0));
+	//for (const b2Fixture* fixture = bodyB->GetFixtureList(); fixture; fixture = fixture->GetNext())
+	//	if(!fixture->IsSensor())
+	//		AABBb.Combine(AABBb, fixture->GetAABB(0));
+	//return AABBa.Contains(AABBb) && AABBb.Contains(AABBa);
+
+	bool isColliding = false;
+	// iterate through both fixture lists to determine if entire bodies collide
+	for (const b2Fixture* fixA = bodyA->GetFixtureList(); fixA; fixA = fixA->GetNext())
+	{
+		for (const b2Fixture* fixB = bodyB->GetFixtureList(); fixB; fixB = fixB->GetNext())
+		{
+			for (auto it = m_Collisions.begin(); it != m_Collisions.end(); ++it)
+			{
+				const b2Fixture* colFixA = (*it)->GetFixtureA();
+				const b2Fixture* colFixB = (*it)->GetFixtureB();
+				// don't verify collisions for sensors
+				/*if (fixA->IsSensor() || fixB->IsSensor())
+					continue;*/
+
+				if (fixA != fixB && (colFixA == fixA && colFixB == fixB) || (colFixA == fixB && colFixB == fixA))
+					isColliding = true;
+			}
+		}
+	}
+	return isColliding;
+}
+
+//bool Box2DPhysics::IsTouchingGround(unsigned int ActorID)
+//{
+//	b2Body* character = FindBody(ActorID);
+//
+//	for (auto it = m_Collisions.begin(); it != m_Collisions.end(); it++)
+//	{
+//		b2Fixture * fixtureA = (*it)->GetFixtureA();
+//		b2Fixture * fixtureB = (*it)->GetFixtureB();
+//
+//		if ((*it)->IsTouching())
+//		{
+//			// make sure only one of the two has a sensor
+//			//if (!(fixtureA->IsSensor() ^ fixtureB->IsSensor()))
+//				//return false;
+//			if (fixtureA->GetBody() == character || character == fixtureB->GetBody())
+//			{	// we have a collision with the character body
+//				if (fixtureA->IsSensor() || fixtureB->IsSensor())
+//					return true;
+//			}
+//		}
+//	}
+//	return false;
+//}
+
+
+

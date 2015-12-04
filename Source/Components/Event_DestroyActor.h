@@ -3,8 +3,6 @@
 
 #include "../Communication/IEventData.h"
 
-typedef unsigned int ActorID;
-
 class Event_DestroyActor : public IEventData
 {
 private:

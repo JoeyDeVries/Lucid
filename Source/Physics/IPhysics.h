@@ -12,8 +12,8 @@ public:
     virtual void Update() = 0;
     virtual void SyncVisibleScene() = 0;
     // integration of physics objects
-    virtual void AddSphere(float radius, std::shared_ptr<Actor> actor, float density, bool dynamic = false) = 0;
-    virtual void AddBox(std::shared_ptr<Actor> actor, float density, bool dynamic = false, bool fixedRotation = true) = 0;
+    virtual void AddSphere(float radius, std::shared_ptr<Actor> actor, float density, bool dynamic = false, bool isSensor = false) = 0;
+    virtual void AddBox(std::shared_ptr<Actor> actor, float density, bool dynamic = false, bool fixedRotation = true, bool isSensor = false, float hitBoxScale = 1.0f) = 0;
     virtual void RemoveActor(unsigned int ActorID) = 0;
     // debugging
     virtual void RenderDiagnostics() = 0;

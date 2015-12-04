@@ -4,8 +4,7 @@
 #include <Box2D/Box2D.h>
 #include <utility>
 
-//#include "Box2DPhysics.h"
-
+#include <iostream>
 
 class Box2DContactListener : public b2ContactListener
 {
@@ -14,15 +13,15 @@ class Box2DContactListener : public b2ContactListener
         b2Body* bodyA = contact->GetFixtureA()->GetBody();
         b2Body* bodyB = contact->GetFixtureB()->GetBody();
         if (bodyA->GetUserData())
-            static_cast<Box2DPhysics*>(bodyA->GetUserData())->SendCollisionPairAddEvent(bodyA, bodyB);
+            static_cast<Box2DPhysics*>(bodyA->GetUserData())->SendCollisionAddEvent(contact);
     }
 
     void EndContact(b2Contact* contact)
     {
-         b2Body* bodyA = contact->GetFixtureA()->GetBody();
+        b2Body* bodyA = contact->GetFixtureA()->GetBody();
         b2Body* bodyB = contact->GetFixtureB()->GetBody();
         if (bodyA->GetUserData())
-            static_cast<Box2DPhysics*>(bodyA->GetUserData())->SendCollisionPairRemoveEvent(bodyA, bodyB);
+            static_cast<Box2DPhysics*>(bodyA->GetUserData())->SendCollisionRemoveEvent(contact);
     }
 };
 

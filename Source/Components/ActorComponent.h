@@ -21,6 +21,7 @@ public:
     virtual void VUpdate(float delta) { }
 private:
     void setOwner(std::shared_ptr<Actor> actor) { m_Owner = actor; }
+	void setType(std::string type) { m_Type = type; }
 };
 
 #endif

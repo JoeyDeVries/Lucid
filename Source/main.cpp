@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_COMPAT_PROFILE);
     glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
-    GLFWwindow *window = glfwCreateWindow(GAME_WIDTH, GAME_HEIGHT, "Lantarn - prototype v0.2153", nullptr, nullptr);
+    GLFWwindow *window = glfwCreateWindow(GAME_WIDTH, GAME_HEIGHT, "Lantern - prototype v0.2153", nullptr, nullptr);
     if (window == nullptr)
     {
         std::cout << "-- failed to initialize GLFW..." << std::endl;
@@ -73,6 +73,8 @@ int main(int argc, char *argv[])
     // deltatime variables
     GLfloat currentFrame = glfwGetTime(), deltaTime = 0.0, lastFrame = 0.0;
 
+	GLuint fps = 0;
+	GLfloat time = 0.0f;
     // - game loop
     while (!glfwWindowShouldClose(window))
     {
@@ -80,6 +82,17 @@ int main(int argc, char *argv[])
         currentFrame = glfwGetTime();
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
+		
+		time += deltaTime;
+		++fps;
+		if (time >= 1.0f)
+		{
+			time = 1.0 - time;
+			glfwSetWindowTitle(window, std::string("Lantern - prototype v0.2153 || FPS: " + std::to_string(fps)).c_str());
+			fps = 0;
+		}
+		
+		
 
         // - events
         glfwPollEvents();

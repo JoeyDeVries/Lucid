@@ -49,7 +49,7 @@ void Scene::Render()
     }
 }
 
-std::shared_ptr<ISceneNode> Scene::FindActor(unsigned int ActorID)
+std::shared_ptr<ISceneNode> Scene::GetSceneNode(unsigned int ActorID)
 {
     SceneActorMap::iterator i = m_ActorMap.find(ActorID);
     if (i == m_ActorMap.end())
@@ -74,7 +74,7 @@ bool Scene::AddChild(unsigned int ActorID, std::shared_ptr<ISceneNode> child)
 
 bool Scene::RemoveChild(unsigned int ActorID)
 {
-    std::shared_ptr<ISceneNode> kid = FindActor(ActorID);
+    std::shared_ptr<ISceneNode> kid = GetSceneNode(ActorID);
     // Check if it is any of the different node types (like light) and act accordingly)
     std::shared_ptr<LightNode> pLight = std::dynamic_pointer_cast<LightNode>(kid);
     if (pLight)

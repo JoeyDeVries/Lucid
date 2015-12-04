@@ -2,7 +2,7 @@
 
 #include "../Application/GameApplication.h"
 
-BackgroundNode::BackgroundNode(unsigned int ActorID) : SceneNode(ActorID, "Background", "BACKGROUND", glm::vec2(0.0), 9.0f)
+BackgroundNode::BackgroundNode(unsigned int ActorID) : SceneNode(ActorID, "Background", "BACKGROUND", glm::vec2(0.0), 0.0f)
 {
 
 }
@@ -24,9 +24,9 @@ void BackgroundNode::Initialize(Scene *scene)
 void BackgroundNode::Render(Scene *scene)
 {
     // Render background
-    m_Material.GetShader()->Use();
-    m_Material.GetShader()->SetMatrix4("model", m_Model);
+    m_Material->GetShader()->Use();
+    m_Material->GetShader()->SetMatrix4("model", m_Model);
     //m_Material.GetShader()->SetMatrix4("view", scene->Camera()->GetView());
-    m_Material.PreRender();
+    m_Material->PreRender();
     scene->GetRenderer()->RenderQuad();
 }

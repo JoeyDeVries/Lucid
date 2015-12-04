@@ -11,6 +11,7 @@
 // 0x1e97f18b, 0xb2ee, 0x40c9, 0x9a, 0x68, 0xae, 0x5b, 0x94, 0x81, 0xc9, 0x14);
 // Generated via: Tools -> Create GUID -> DEFINE ... -> Copy
 typedef unsigned int EventType;
+typedef unsigned int ActorID;
 class IEventData;
 typedef fastdelegate::FastDelegate1<std::shared_ptr<IEventData>> EventListenerDelegate;
 

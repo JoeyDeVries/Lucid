@@ -1,9 +1,10 @@
 #ifndef EVENT_ACTOR_MOVED_H
 #define EVENT_ACTOR_MOVED_H
 #include "../Communication/IEventData.h"
+#include "../Components/Actor.h"
 #include <glm/glm.hpp>
 
-typedef unsigned int ActorID;
+//typedef unsigned int ActorID;
 
 class Event_ActorMoved : public IEventData
 {

@@ -1,16 +1,23 @@
 #include "ActorFactory.h"
 #include "ControlComponent.h"
-
+#include "LightSwitchComponent.h"
+#include "StateBlockComponent.h"
+#include "CompleteCheckComponent.h"
 #include<iostream>
 
 // actor component creator functions
-ActorComponent* CreateControlComponent() { return new ControlComponent; }
-
+ActorComponent* CreateControlComponent()       { return new ControlComponent; }
+ActorComponent* CreateLightSwitchComponent()   { return new LightSwitchComponent; }
+ActorComponent* CreateStateBlockComponent()    { return new StateBlockComponent; }
+ActorComponent* CreateCompleteCheckComponent() { return new CompleteCheckComponent; }
 
 
 ActorFactory::ActorFactory(void)
 {
-    m_actorComponentCreators["Control"] = CreateControlComponent;
+	m_actorComponentCreators["Control"] = CreateControlComponent;
+	m_actorComponentCreators["LightSwitch"] = CreateLightSwitchComponent;
+	m_actorComponentCreators["StateBlock"] = CreateStateBlockComponent;
+	m_actorComponentCreators["CompleteCheck"] = CreateCompleteCheckComponent;
 }
 
 ActorFactory::~ActorFactory(void)
@@ -21,6 +28,7 @@ ActorFactory::~ActorFactory(void)
     //}
 }
 
+// TODO(Joey): Data-driven development should depic the actor types
 std::shared_ptr<Actor> ActorFactory::CreateActor(DEFAULT_ACTOR_TYPES actorType)
 {
     std::shared_ptr<Actor> actor;
@@ -39,15 +47,40 @@ std::shared_ptr<Actor> ActorFactory::CreateActor(DEFAULT_ACTOR_TYPES actorType)
         component->setOwner(actor);*/
         return actor;
     }
+	case ACTOR_STATE_BLOCK:
+	{
+		actor = std::shared_ptr<Actor>(new Actor());
+		actor->setID(++m_lastActorID);
+		std::shared_ptr<ActorComponent> component = createComponent("StateBlock");
+		actor->addComponent(component);
+		component->setOwner(actor);
+		return actor;
+	}
     case ACTOR_PLAYER:
     {
         actor = std::shared_ptr<Actor>(new Actor());
         actor->setID(++m_lastActorID);
         std::shared_ptr<ActorComponent> component = createComponent("Control");
-        actor->addComponent(component);
+		actor->addComponent(component);
         component->setOwner(actor);
         return actor;
     }
+	case ACTOR_LANTERN:
+	{
+		actor = std::shared_ptr<Actor>(new Actor());
+		actor->setID(++m_lastActorID);
+		std::shared_ptr<ActorComponent> component = createComponent("LightSwitch");
+		actor->addComponent(component);
+		component->setOwner(actor);
+		return actor;
+	}
+	case ACTOR_COMPLETE_CHECK:
+		actor = std::shared_ptr<Actor>(new Actor());
+		actor->setID(++m_lastActorID);
+		std::shared_ptr<ActorComponent> component = createComponent("CompleteCheck");
+		actor->addComponent(component);
+		component->setOwner(actor);
+		return actor;
     }
 }
 

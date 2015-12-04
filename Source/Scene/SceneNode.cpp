@@ -22,7 +22,7 @@ SceneNode::SceneNode(unsigned int ActorID, std::string name, std::string renderP
 void SceneNode::CalculateModel()
 {
     glm::mat4 model;
-    model = glm::translate(model, glm::vec3(m_Position, -m_Depth));
+    model = glm::translate(model, glm::vec3(m_Position, -m_Depth)); 
 
     model = glm::translate(model, glm::vec3(0.5f * m_Scale.x, 0.5f * m_Scale.y, 0.0f)); // Move origin of rotation to center of quad
     model = glm::rotate(model, m_Rotation * 180.0f/PI, glm::vec3(0.0f, 0.0f, 1.0f)); // Then rotate
@@ -103,7 +103,7 @@ bool  SceneNode::RemoveChild(unsigned int actorID)
     SceneNodeList::iterator end = m_Children.end();
     while (begin != end)
     {
-        if ((*begin)->ActorID() == actorID)
+        if ((*begin)->GetActorID() == actorID)
         {
             begin = m_Children.erase(begin); // also updates iterator
             return true;

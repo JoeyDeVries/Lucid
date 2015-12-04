@@ -25,26 +25,30 @@ protected:
     int          m_Depth;
     float        m_Rotation;
     float        m_radius; // for frustum visibility occlusion 
-    Material     m_Material;
+
+    std::shared_ptr<Material>  m_Material;
 public:
     virtual ~ISceneNode() { };
-    const unsigned int &ActorID()    const { return m_ActorID; }
-    glm::vec2 const    &Position()         { return m_Position; }
-    glm::vec2 const    &Scale()            { return m_Scale; }
-    int const          &Depth()            { return m_Depth; }
-    float const        &Rotation()         { return m_Rotation; }
-    glm::mat4 const    &Model()            { return m_Model; }
-    const std::string  &Name()       const { return m_Name; }
-    const std::string  &RenderPass() const { return m_RenderPass; }
-    Material const     &GetMaterial()      { return m_Material; }
+    const unsigned int &GetActorID()    const { return m_ActorID; }
+    glm::vec2 const    &GetPosition()         { return m_Position; }
+    glm::vec2 const    &GetScale()            { return m_Scale; }
+    int const          &GetDepth()            { return m_Depth; }
+    float const        &GetRotation()         { return m_Rotation; }
+    glm::mat4 const    &GetModel()            { return m_Model; }
+    const std::string  &GetName()       const { return m_Name; }
+    const std::string  &GetRenderPass() const { return m_RenderPass; }
 
+    std::shared_ptr<Material>  GetMaterial()  { return m_Material; }
+	
     virtual void CalculateModel() = 0;
     void SetPosition(glm::vec2 position) { m_Position = position; CalculateModel(); }
     void SetScale(glm::vec2 scale)       { m_Scale    = scale;    CalculateModel(); }
     void SetDepth(int depth)             { m_Depth    = depth;    CalculateModel(); }
     void SetRotation(float rotation)     { m_Rotation = rotation; CalculateModel(); }
+	void SetName(const std::string& name) { m_Name = name; }
+	void SetRenderPass(const std::string& renderPass) { m_RenderPass = renderPass; }
     
-    void SetMaterial(Material material) { m_Material = material; }
+    void SetMaterial(std::shared_ptr<Material> material) { m_Material = material; }
 
     virtual void Initialize(Scene *scene) = 0;
     virtual void Restore(Scene *scene) = 0;
@@ -57,6 +61,8 @@ public:
     virtual bool AddChild(std::shared_ptr<ISceneNode> child) = 0;
     virtual bool RemoveChild(unsigned int actorID) = 0;
     virtual void RenderChildren(Scene *scene) = 0;
+
+	virtual std::vector<std::shared_ptr<ISceneNode>> GetChildren() const = 0;
 };
 
 #endif

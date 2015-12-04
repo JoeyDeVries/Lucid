@@ -1,7 +1,7 @@
 #include "Material.h"
 
 
-Material::Material()
+Material::Material() : m_ColorOverride(1.0, 1.0, 1.0), m_Alpha(0.0)
 {
 
 }
@@ -26,6 +26,16 @@ void Material::SetNormal(std::shared_ptr<Texture2D> normal)
     m_Normal = normal;
 }
 
+void Material::SetColorOverride(const glm::vec3& color)
+{
+	m_ColorOverride = color;
+}
+
+void Material::SetAlpha(float alpha)
+{
+	m_Alpha = alpha;
+}
+
 void Material::Initialize()
 {
     // Set texture units
@@ -38,8 +48,11 @@ void Material::Initialize()
 
 void Material::PreRender()
 {
-    if (HasDiffuse())
-        m_Diffuse->Bind(0);
+	if (HasDiffuse())
+	{
+		m_Shader->SetVector4f("ColorOverride", glm::vec4(m_ColorOverride, m_Alpha), true);
+		m_Diffuse->Bind(0);
+	}
     if (HasSpecular())
         m_Specular->Bind(1);
     if (HasNormal())

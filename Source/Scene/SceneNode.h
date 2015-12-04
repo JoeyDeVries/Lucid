@@ -28,6 +28,8 @@ public:
     virtual bool AddChild(std::shared_ptr<ISceneNode> child);
     virtual bool RemoveChild(unsigned int actorID);
     virtual void RenderChildren(Scene *scene);
+
+	virtual SceneNodeList GetChildren() const { return m_Children; }
 };
 
 #endif

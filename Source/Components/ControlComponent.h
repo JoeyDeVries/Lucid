@@ -14,11 +14,13 @@ private:
     float m_Velocity;
     bool  m_IsJumping;
 public:
-    ControlComponent();
+	bool  m_OnGround;
+	ControlComponent();
     ~ControlComponent();
-    bool VInit(void);
+    bool VInit();
     void VUpdate(float deltaTime);
-    void Test(std::shared_ptr<IEventData> eventData);
+	void PostCollisionAdd(std::shared_ptr<IEventData> eventData);
+	void PostCollisionRemove(std::shared_ptr<IEventData> eventData);
 
     void SetVelocity(float velocity);
 };

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -18,13 +18,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
@@ -74,17 +74,27 @@
     <ClCompile Include="Components\ActorFactory.cpp" />
     <ClCompile Include="Components\ControlComponent.cpp" />
     <ClCompile Include="Components\Event_DestroyActor.cpp" />
+    <ClCompile Include="Components\Event_LevelComplete.cpp" />
+    <ClCompile Include="Components\Event_LightStateSwitched.cpp" />
+    <ClCompile Include="Components\CompleteCheckComponent.cpp" />
+    <ClCompile Include="Components\LightSwitchComponent.cpp" />
+    <ClCompile Include="Components\StateBlockComponent.cpp" />
     <ClCompile Include="Components\TransformComponent.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Physics\Box2DPhysics.cpp" />
     <ClCompile Include="Physics\Event_ActorMoved.cpp" />
+    <ClCompile Include="Physics\Event_PostCollisionAdd.cpp" />
+    <ClCompile Include="Physics\Event_PostCollisionRemove.cpp" />
+    <ClCompile Include="Renderer\Animation.cpp" />
     <ClCompile Include="Renderer\Framebuffer.cpp" />
     <ClCompile Include="Renderer\Material.cpp" />
     <ClCompile Include="Renderer\PostProcessor.cpp" />
     <ClCompile Include="Renderer\Renderer.cpp" />
     <ClCompile Include="Renderer\shader.cpp" />
     <ClCompile Include="Renderer\texture2D.cpp" />
+    <ClCompile Include="Resources\MapLoader.cpp" />
     <ClCompile Include="Resources\ResourceManager.cpp" />
+    <ClCompile Include="Resources\tinyxml2.cpp" />
     <ClCompile Include="Scene\BackgroundNode.cpp" />
     <ClCompile Include="Scene\Camera.cpp" />
     <ClCompile Include="Scene\LightManager.cpp" />
@@ -98,13 +108,23 @@
     <ClInclude Include="Components\Event_DestroyActor.h" />
     <ClInclude Include="Communication\IEventData.h" />
     <ClInclude Include="Components\ControlComponent.h" />
+    <ClInclude Include="Components\Event_LevelComplete.h" />
+    <ClInclude Include="Components\Event_LightStateSwitched.h" />
+    <ClInclude Include="Components\CompleteCheckComponent.h" />
+    <ClInclude Include="Components\LightSwitchComponent.h" />
+    <ClInclude Include="Components\StateBlockComponent.h" />
     <ClInclude Include="FastDelegate.h" />
     <ClInclude Include="Physics\Box2DContactListener.h" />
     <ClInclude Include="Physics\Box2DDebugDrawer.h" />
     <ClInclude Include="Physics\Box2DPhysics.h" />
     <ClInclude Include="Physics\Event_ActorMoved.h" />
+    <ClInclude Include="Physics\Event_PostCollisionAdd.h" />
+    <ClInclude Include="Physics\Event_PostCollisionRemove.h" />
     <ClInclude Include="Physics\IPhysics.h" />
+    <ClInclude Include="Renderer\Animation.h" />
     <ClInclude Include="Renderer\Framebuffer.h" />
+    <ClInclude Include="Resources\MapLoader.h" />
+    <ClInclude Include="Resources\tinyxml2.h" />
     <ClInclude Include="Scene\LightManager.h" />
     <ClInclude Include="Renderer\PostProcesser.h" />
     <ClInclude Include="Renderer\Renderer.h" />

@@ -5,10 +5,7 @@
 #include <list>
 #include <map>
 
-// Option: make the EventManager a singleton class instead of part of the GameApplication
-// this way, we don't have to re-compile a large part of the game as soon as an event is
-// updated/changed and we only have to include the EventManager
-
+// EventQueue pattern
 class EventManager
 {
     typedef std::list<EventListenerDelegate> EventListenerList; 
