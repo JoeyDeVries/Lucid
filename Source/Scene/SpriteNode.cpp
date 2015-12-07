@@ -43,12 +43,12 @@ void SpriteNode::Update(Scene *scene, float deltaTime)
 
 void SpriteNode::Render(Scene *scene)
 {
-    // Render stuff here (could do basic sprite rendering here; and later propagate it to subclasses)
+	// Render stuff here (could do basic sprite rendering here; and later propagate it to subclasses)
 	if (m_Material)
 	{
 		m_Material->GetShader()->Use();
 		m_Material->GetShader()->SetMatrix4("model", m_Model);
-		//m_Material.GetShader()->SetMatrix4("view", scene->Camera()->GetView());
+		m_Material->GetShader()->SetMatrix4("view", scene->GetCamera()->GetView());
 		m_Material->PreRender();
 
 		if (m_Animation) // if spriteNode has animation(s) set
@@ -59,9 +59,9 @@ void SpriteNode::Render(Scene *scene)
 
 		scene->GetRenderer()->RenderQuad();
 
-		if(m_Animation)
+		if (m_Animation)
 			m_Material->GetShader()->SetInteger("animation", false, true);
-	}
+	}	
 }
 
 void SpriteNode::SetAnimation(bool enable)

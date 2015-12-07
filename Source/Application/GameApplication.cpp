@@ -15,6 +15,7 @@ GameApplication::GameApplication()
     m_EventManager = new EventManager;
     m_ActorFactory = new ActorFactory;
     m_Physics      = new Box2DPhysics;
+	m_Audio		   = new AudioEngine;
 }
 
 GameApplication::~GameApplication()
@@ -28,6 +29,7 @@ GameApplication::~GameApplication()
     delete m_EventManager;
     delete m_ActorFactory;
     delete m_Physics;
+	delete m_Audio;
 }
 
 void GameApplication::Initialize(float width, float height)
@@ -39,20 +41,10 @@ void GameApplication::Initialize(float width, float height)
     // Initialize renderer
     m_Scene->GetRenderer()->Initialize();
     m_Scene->GetCamera()->SetProjection(width, height, 0.0, 50.0f);
-	// TODO(Joey): Not very important, but data-driven development would be a welcome abstraction here while loading levels/entities
-    // Load necessary actors/textures/shaders before loading level
+    // Load default placeholder textures/shaders before loading level
 	ResourceManager::GetInstance()->LoadShader("sprite", "shaders/sprite.vs", "shaders/sprite.frag");
-	ResourceManager::GetInstance()->LoadShader("sprite-anim", "shaders/sprite_animation.vs", "shaders/sprite_animation.frag");
-	ResourceManager::GetInstance()->LoadTexture("block", "textures/stone.png");
-	ResourceManager::GetInstance()->LoadTexture("block_color", "textures/stone_color.png");
     ResourceManager::GetInstance()->LoadTexture("specular", "textures/specular.png");
     ResourceManager::GetInstance()->LoadTexture("normal", "textures/normal.png");
-    ResourceManager::GetInstance()->LoadTexture("block_specular", "textures/stone_specular.png");
-    ResourceManager::GetInstance()->LoadTexture("block_normal", "textures/stone_normal.png");
-	ResourceManager::GetInstance()->LoadTexture("flag", "textures/flag.png", true);
-	ResourceManager::GetInstance()->LoadTexture("flag_normal", "textures/flag_normal.png");
-	ResourceManager::GetInstance()->LoadTexture("light", "textures/light.png", true);
-	ResourceManager::GetInstance()->LoadTexture("light-anim", "textures/animations/fire-anim2.png", true);
     ResourceManager::GetInstance()->LoadLevel(m_Scene, "levels/begin.lvl");
     // Create level-independant actors
     // - background (no need for it to be related to an actor, only for rendering)
@@ -60,40 +52,11 @@ void GameApplication::Initialize(float width, float height)
     std::shared_ptr<BackgroundNode> backgroundNode(new BackgroundNode(backgroundActor->GetID())); // 0 = no_actor id
 	std::shared_ptr<Material> backgroundMaterial = std::shared_ptr<Material>(new Material());
 	backgroundMaterial->SetShader(ResourceManager::GetInstance()->GetShader("sprite"));
-    backgroundMaterial->SetDiffuse(ResourceManager::GetInstance()->LoadTexture("background", "textures/background.png"));
+    backgroundMaterial->SetDiffuse(ResourceManager::GetInstance()->LoadTexture("background", "textures/background2.png"));
     backgroundMaterial->SetSpecular(ResourceManager::GetInstance()->GetTexture("specular"));
-    backgroundMaterial->SetNormal(ResourceManager::GetInstance()->GetTexture("normal"));
+    backgroundMaterial->SetNormal(ResourceManager::GetInstance()->LoadTexture("background_normal", "textures/background2_normal.png"));
     backgroundNode->SetMaterial(backgroundMaterial);
-    m_Scene->AddChild(backgroundActor->GetID(), backgroundNode);
- //   // - player
-    std::shared_ptr<Actor> actor = CreateActor(DEFAULT_ACTOR_TYPES::ACTOR_PLAYER);
-    actor->SetPosition(glm::vec2(150.0, 313.0));
-    actor->SetDepth(48);
-    actor->SetScale(glm::vec2(45.0));
-    std::shared_ptr<SpriteNode> node(new SpriteNode(actor->GetID(), "player", "MAIN", actor->GetPosition(), actor->GetDepth(), actor->GetScale()));
-	std::shared_ptr<Material> material = std::shared_ptr<Material>(new Material());
-    material->SetShader(ResourceManager::GetInstance()->GetShader("sprite"));
-    material->SetDiffuse(ResourceManager::GetInstance()->LoadTexture("player", "textures/player.png", true));
-    material->SetSpecular(ResourceManager::GetInstance()->LoadTexture("player_specular", "textures/player_specular.png"));
-    material->SetNormal(ResourceManager::GetInstance()->LoadTexture("player_normal", "textures/player_normal.png"));
-    node->SetMaterial(material);
-	//// - lantern attached to player
-	std::shared_ptr<Actor> lantern = CreateActor(DEFAULT_ACTOR_TYPES::ACTOR_LANTERN);
-	lantern->SetPosition(glm::vec2(180.0f, 340.0f));
-	lantern->SetDepth(10);
-	std::shared_ptr<LightNode> lanternNode(
-		new LightNode(lantern->GetID(), "lantern", "LIGHT", lantern->GetPosition(), lantern->GetDepth(), lantern->GetScale(),
-			glm::vec3(2.0, 2.0, 2.0), glm::vec3(1.0, 1.0, 1.0), 250.0f)
-		);
-	// ... we don't need a material/shader as light won't be renderable
-	m_Scene->GetLightManager()->AddLight(lanternNode);
-	node->AddChild(lanternNode);
-	m_Scene->AddChild(lantern->GetID(), lanternNode);
-	SetImportantActor("lantern", lantern);
-
-	m_Scene->AddChild(actor->GetID(), node);
-	m_Physics->AddCharacter(actor, 1.0f);
-	SetImportantActor("player", actor);
+    m_Scene->AddChild(backgroundActor->GetID(), backgroundNode);  
 
 	// register for global game event
 	EventListenerDelegate eventListener = fastdelegate::MakeDelegate(this, &GameApplication::OnLevelComplete);
@@ -101,6 +64,10 @@ void GameApplication::Initialize(float width, float height)
 
     // initialize scene (e.g. set default projection matrices for each shader)
     m_Scene->Initialize();
+
+	// set background music TODO(Joey): let it belong to the level/scene
+	m_Audio->PlaySound("audio/ambient2.wav", true, 0.2f);
+
 }
 
 std::shared_ptr<Actor> GameApplication::CreateActor(DEFAULT_ACTOR_TYPES type)
@@ -114,6 +81,8 @@ std::shared_ptr<Actor> GameApplication::CreateActor(DEFAULT_ACTOR_TYPES type)
 std::shared_ptr<Actor> GameApplication::GetActor(ActorID actorID)
 {
 	return m_Actors[actorID];
+	// iterating through a list is too slow for its real-time purpose and query frequency
+	// make a performance-memory tradeoff here by storing actors in a hashmap.
     /*for (auto it = m_Actors.begin(); it != m_Actors.end(); ++it)
         if((*it)->GetID() == actorID)
             return (*it);*/
@@ -208,6 +177,7 @@ void GameApplication::OnLevelComplete(std::shared_ptr<IEventData> eventData)
 	{
 		std::cout << "LEVEL COMPLETE!" << std::endl;
 		std::cout << "INITIATE CLEAN-UP..." << std::endl;
+		m_Audio->PlaySound("audio/end_hit.wav");
 	}
 }
 

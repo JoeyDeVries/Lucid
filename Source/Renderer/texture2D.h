@@ -19,8 +19,8 @@ public:
     // Texture configuration
     GLenum FilterMin      = GL_LINEAR; // Filtering mode if texture pixels < screen pixels
     GLenum FilterMax      = GL_LINEAR; // Filtering mode if texture pixels > screen pixels
-    GLenum WrapS          = GL_REPEAT; // Wrapping mode on S axis
-    GLenum WrapT          = GL_REPEAT; // Wrapping mode on T axis
+    GLenum WrapS          = GL_MIRRORED_REPEAT; // Wrapping mode on S axis
+    GLenum WrapT          = GL_MIRRORED_REPEAT; // Wrapping mode on T axis
 private:
 
 // FUNCTIONS

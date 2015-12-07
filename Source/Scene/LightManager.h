@@ -18,7 +18,7 @@ public:
     void AddLight(std::shared_ptr<LightNode> lightNode);
     void RemoveLight(std::shared_ptr<LightNode> lightNode);
 
-    void UpdateShader(std::shared_ptr<Shader> shader);
+    void UpdateShader(Scene *scene, std::shared_ptr<Shader> shader);
 };
 
 #endif

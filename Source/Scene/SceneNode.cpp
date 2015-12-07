@@ -43,7 +43,6 @@ void SceneNode::Initialize(Scene * scene)
         (*begin)->Initialize(scene);
         ++begin;
     }
-
 }
 
 void SceneNode::Restore(Scene *scene)
@@ -70,7 +69,18 @@ void SceneNode::Update(Scene *scene, float deltaTime)
 
 bool  SceneNode::IsVisible(Scene *scene) const
 {
-    return true;
+	BoundingBox cameraBox = scene->GetCamera()->GetBoundingBox();
+	// determine if current node is within the camera's visible frustum
+	bool visible = true;
+	if(m_Position.x > cameraBox.Center.x + cameraBox.HalfExtents.x)
+		visible = false; // node is outside right camera edge
+	else if(m_Position.x + m_Scale.x < cameraBox.Center.x - cameraBox.HalfExtents.x)
+		visible = false; // node is outside left camera edge
+	else if(m_Position.y > cameraBox.Center.y + cameraBox.HalfExtents.y)
+		visible = false; // node is outside bottom camera edge
+	else if(m_Position.y + m_Scale.y < cameraBox.Center.y - cameraBox.HalfExtents.y)
+		visible = false;
+    return visible;
 }
 
 void  SceneNode::PreRender(Scene *scene)

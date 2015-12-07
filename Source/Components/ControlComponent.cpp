@@ -64,13 +64,13 @@ void ControlComponent::VUpdate(float deltaTime)
 		m_IsJumping = true;
     }
 
-	// TODO(Joey): Rethink Actor->SceneNode relations, this can probably be done in a more 'clean' way
+	// TODO(Joey): Rethink Actor->SceneNode relations, this can probably be done in a more 'elegant' way
 	auto actorNodeChildren = GameApplication::GetInstance()->GetScene()->GetSceneNode(m_Owner->GetID())->GetChildren();
 	for (auto it = actorNodeChildren.begin(); it != actorNodeChildren.end(); ++it)
 	{
 		std::shared_ptr<LightNode> lantern = std::dynamic_pointer_cast<LightNode>((*it));
 		if(lantern) // if one of its children is a lightNode, it is a lantern; set relative position
-			lantern->SetPosition(m_Owner->GetPosition() + glm::vec2(50.0f, 20.0f));
+			lantern->SetPosition(m_Owner->GetPosition() + glm::vec2(20.0f, -10.0f));
 	}
 }
 

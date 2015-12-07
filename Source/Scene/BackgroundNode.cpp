@@ -18,7 +18,7 @@ void BackgroundNode::CalculateModel()
 
 void BackgroundNode::Initialize(Scene *scene)
 {
-    SetScale(glm::vec2(GameApplication::GetInstance()->ScreenWidth(), GameApplication::GetInstance()->ScreenHeight()));
+    SetScale(glm::vec2(scene->GetSceneWidth(), scene->GetSceneHeight()));
 }
 
 void BackgroundNode::Render(Scene *scene)
@@ -26,7 +26,7 @@ void BackgroundNode::Render(Scene *scene)
     // Render background
     m_Material->GetShader()->Use();
     m_Material->GetShader()->SetMatrix4("model", m_Model);
-    //m_Material.GetShader()->SetMatrix4("view", scene->Camera()->GetView());
+    m_Material->GetShader()->SetMatrix4("view", scene->GetCamera()->GetView());
     m_Material->PreRender();
     scene->GetRenderer()->RenderQuad();
 }

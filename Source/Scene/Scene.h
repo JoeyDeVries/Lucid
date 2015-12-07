@@ -7,6 +7,7 @@
 #include "Camera.h"
 #include "LightManager.h"
 #include "../Renderer/Renderer.h"
+#include "../Renderer/TextRenderer.h"
 #include <map>
 #include <string>
 #include <vector>
@@ -21,11 +22,13 @@ protected:
     std::shared_ptr<RootNode> m_Root;
     std::shared_ptr<Camera> m_Camera;
     std::shared_ptr<Renderer> m_Renderer; // OpenGL renderer class here!
-    std::shared_ptr<LightManager> m_LightManager;
+	std::shared_ptr<TextRenderer> m_TextRenderer;
+	std::shared_ptr<LightManager> m_LightManager;
 
     MatrixStack m_MatrixStack;
     SceneActorMap m_ActorMap;
 
+	int m_SceneWidth, m_SceneHeight;
 
 public:
     Scene();
@@ -44,6 +47,11 @@ public:
     std::shared_ptr<Camera>       const GetCamera()         { return m_Camera; }
     std::shared_ptr<LightManager> const GetLightManager()   { return m_LightManager; }
 	std::shared_ptr<RootNode>	  const GetRootNode()		{ return m_Root; }
+
+	int  GetSceneWidth()  const	   { return m_SceneWidth; }
+	int  GetSceneHeight() const    { return m_SceneHeight; }
+	void SetSceneWidth(int width)  { m_SceneWidth = width; }
+	void SetSceneHeight(int height){ m_SceneHeight = height; }
 
     void PushAndSetMatrix(const glm::mat4 model);
     void PopMatrix();

@@ -19,6 +19,8 @@ public:
 	void SetSpecular(const glm::vec3& specular)   { m_Specular = specular; }
 	void SetAttenuation(const float& attenuation) { m_Attenuation = attenuation; }
 
+	bool IsVisible(Scene *scene) const;
+
     //virtual void Initialize(Scene *scene);
     //virtual void Render(Scene *scene);
 };

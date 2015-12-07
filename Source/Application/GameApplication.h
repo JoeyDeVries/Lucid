@@ -9,6 +9,7 @@
 #include "../Components/Actor.h"
 #include "../Communication/EventManager.h"
 #include "../Physics/Box2DPhysics.h"
+#include "../Audio/AudioEngine.h"
 
 class GameApplication
 {
@@ -19,10 +20,11 @@ private:
     char m_KeysPressed[1024];
 
     // Game-specifics
-    Scene*        m_Scene;
-    EventManager* m_EventManager;
-    ActorFactory* m_ActorFactory;
-    Box2DPhysics* m_Physics;
+    Scene        *m_Scene;
+    EventManager *m_EventManager;
+    ActorFactory *m_ActorFactory;
+    Box2DPhysics *m_Physics;
+	AudioEngine  *m_Audio;
     std::map<ActorID, std::shared_ptr<Actor>> m_Actors;
 	std::map<std::string, std::shared_ptr<Actor>> m_ImportantActors;
 

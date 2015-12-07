@@ -39,6 +39,9 @@ bool MapLoader::LoadMap(ResourceManager *resources, Scene *scene, const char * t
 	int height = map->IntAttribute("height");
 	float tileWidth = map->IntAttribute("tilewidth") * levelScale;
 	float tileHeight = map->IntAttribute("tileheight") * levelScale;
+	// set scene dimensions
+	scene->SetSceneWidth(width * tileWidth);
+	scene->SetSceneHeight(height * tileHeight);
 
 	// process tile entities
 	XMLElement *tileset = map->FirstChildElement("tileset");
@@ -182,36 +185,36 @@ bool MapLoader::processGameObject(ResourceManager *resources, Scene *scene, XMLE
 	if (type == "Spawn") // player spawn
 	{
 		// define actor
-		//std::shared_ptr<Actor> actor = GameApplication::GetInstance()->CreateActor(DEFAULT_ACTOR_TYPES::ACTOR_PLAYER);
-		//actor->SetPosition(position);
-		//actor->SetScale(scale);
-		//actor->SetDepth(5); // TODO(Joey): seperate render depth from light depth and customize light depth individually
-		//GameApplication::GetInstance()->SetImportantActor("player", actor);
-		//// set material
-		//material->SetDiffuse(resources->LoadTexture("player", "textures/player.png", true));
-		//material->SetSpecular(resources->LoadTexture("player_specular", "textures/player_specular.png"));
-		//material->SetNormal(resources->LoadTexture("player_normal", "textures/player_normal.png"));
-		//// create node
-		//std::shared_ptr<SpriteNode> node(new SpriteNode(actor->GetID(), "player", "main", position, actor->GetDepth(), scale));
-		//node->SetMaterial(material);
-		//// create lantern and attach to player
-		//std::shared_ptr<Actor> lantern = GameApplication::GetInstance()->CreateActor(DEFAULT_ACTOR_TYPES::ACTOR_LANTERN);
-		//lantern->SetPosition(position + glm::vec2(scale.x * 0.25f, scale.y * 0.5f));
-		//lantern->SetDepth(10); 
-		//GameApplication::GetInstance()->SetImportantActor("lantern", lantern);
-		//std::shared_ptr<LightNode> lanternNode(
-		//	new LightNode(lantern->GetID(), "lantern", "LIGHT", position, actor->GetDepth(), scale,
-		//		glm::vec3(2.0, 2.0, 2.0), glm::vec3(1.0, 1.0, 1.0), 250.0f)
-		//	);
-		//// ... we don't need a material/shader as the lantern itself won't be renderable (TODO(Joey): render lantern; could be interesting)
-		//node->AddChild(lanternNode);
-		//scene->GetLightManager()->AddLight(lanternNode);
-		//scene->AddChild(lantern->GetID(), lanternNode);
-		//// set physics
-		//scene->AddChild(actor->GetID(), node);
-		//// point camera at player spawn
-		//// ... TODO(Joey)
-		//node->SetMaterial(material);
+		std::shared_ptr<Actor> actor = GameApplication::GetInstance()->CreateActor(DEFAULT_ACTOR_TYPES::ACTOR_PLAYER);
+		actor->SetPosition(position);
+		actor->SetScale(scale);
+		actor->SetDepth(5); // TODO(Joey): seperate render depth from light depth and customize light depth individually
+		GameApplication::GetInstance()->SetImportantActor("player", actor);
+		// set material
+		material->SetDiffuse(resources->LoadTexture("player", "textures/player.png", true));
+		material->SetSpecular(resources->LoadTexture("player_specular", "textures/player_specular.png"));
+		material->SetNormal(resources->LoadTexture("player_normal", "textures/player_normal.png"));
+		// create node
+		std::shared_ptr<SpriteNode> node(new SpriteNode(actor->GetID(), "player", "main", position, actor->GetDepth(), actor->GetScale()));
+		node->SetMaterial(material);
+		// create lantern and attach to player
+		std::shared_ptr<Actor> lantern = GameApplication::GetInstance()->CreateActor(DEFAULT_ACTOR_TYPES::ACTOR_LANTERN);
+		lantern->SetPosition(position + scale * 12.0f); // general offset to player pos
+		lantern->SetDepth(10); 
+		GameApplication::GetInstance()->SetImportantActor("lantern", lantern);
+		std::shared_ptr<LightNode> lanternNode(
+			new LightNode(lantern->GetID(), "lantern", "light", lantern->GetPosition(), lantern->GetDepth(), actor->GetScale(),
+				glm::vec3(2.0, 2.0, 2.0), glm::vec3(1.0, 1.0, 1.0), 250.0f)
+			);
+		// ... we don't need a material/shader as the lantern itself won't be renderable (IDEA(Joey): render lantern; could be interesting)
+		node->AddChild(lanternNode);
+		scene->GetLightManager()->AddLight(lanternNode);
+		scene->AddChild(lantern->GetID(), lanternNode);
+		scene->AddChild(actor->GetID(), node);
+		// set physics
+		GameApplication::GetInstance()->GetPhysics()->AddCharacter(actor, 1.0f);
+		// point camera at player spawn
+		GameApplication::GetInstance()->GetScene()->GetCamera()->SetTarget(node);
 
 	}
 	else if (type == "Finish") // end point

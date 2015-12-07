@@ -38,8 +38,7 @@ void RootNode::Render(Scene *scene)
 	std::sort(m_Children.begin(), m_Children.end(), SortSceneNodes);
 	
 	// Update lighting parameters
-	scene->GetLightManager()->UpdateShader(ResourceManager::GetInstance()->GetShader("sprite-anim"));
-	scene->GetLightManager()->UpdateShader(ResourceManager::GetInstance()->GetShader("sprite"));
+	scene->GetLightManager()->UpdateShader(scene, ResourceManager::GetInstance()->GetShader("sprite"));
 
     // configure all render passes here
     // - render all children into post-processing framebuffer
