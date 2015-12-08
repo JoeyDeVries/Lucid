@@ -22,7 +22,6 @@ protected:
     std::shared_ptr<RootNode> m_Root;
     std::shared_ptr<Camera> m_Camera;
     std::shared_ptr<Renderer> m_Renderer; // OpenGL renderer class here!
-	std::shared_ptr<TextRenderer> m_TextRenderer;
 	std::shared_ptr<LightManager> m_LightManager;
 
     MatrixStack m_MatrixStack;

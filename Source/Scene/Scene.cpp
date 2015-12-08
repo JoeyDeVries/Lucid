@@ -8,7 +8,6 @@ Scene::Scene()
     m_Root.reset(new RootNode);
     m_Camera.reset(new Camera);
     m_LightManager.reset(new LightManager);
-	m_TextRenderer.reset(new TextRenderer);
 }
 
 Scene::~Scene()
@@ -18,7 +17,6 @@ Scene::~Scene()
 
 void Scene::Initialize()
 {
-	m_TextRenderer->Initialize();
     // initializes each scene node
     m_Root->Initialize(this);    
 }

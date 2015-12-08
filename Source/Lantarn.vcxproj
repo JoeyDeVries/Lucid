@@ -101,6 +101,7 @@
     <ClCompile Include="Renderer\shader.cpp" />
     <ClCompile Include="Renderer\TextRenderer.cpp" />
     <ClCompile Include="Renderer\texture2D.cpp" />
+    <ClCompile Include="Resources\Font.cpp" />
     <ClCompile Include="Resources\MapLoader.cpp" />
     <ClCompile Include="Resources\ResourceManager.cpp" />
     <ClCompile Include="Resources\tinyxml2.cpp" />
@@ -134,6 +135,7 @@
     <ClInclude Include="Renderer\Animation.h" />
     <ClInclude Include="Renderer\Framebuffer.h" />
     <ClInclude Include="Renderer\TextRenderer.h" />
+    <ClInclude Include="Resources\Font.h" />
     <ClInclude Include="Resources\MapLoader.h" />
     <ClInclude Include="Resources\tinyxml2.h" />
     <ClInclude Include="Scene\LightManager.h" />

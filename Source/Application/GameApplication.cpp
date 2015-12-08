@@ -16,6 +16,7 @@ GameApplication::GameApplication()
     m_ActorFactory = new ActorFactory;
     m_Physics      = new Box2DPhysics;
 	m_Audio		   = new AudioEngine;
+	m_TextRenderer = new TextRenderer;
 }
 
 GameApplication::~GameApplication()
@@ -30,10 +31,12 @@ GameApplication::~GameApplication()
     delete m_ActorFactory;
     delete m_Physics;
 	delete m_Audio;
+	delete m_TextRenderer;
 }
 
 void GameApplication::Initialize(float width, float height)
 {
+
     m_ScreenWidth = width;
     m_ScreenHeight = height;
     // Initialize physics
@@ -65,6 +68,10 @@ void GameApplication::Initialize(float width, float height)
     // initialize scene (e.g. set default projection matrices for each shader)
     m_Scene->Initialize();
 
+	// load font(s) and initialize text-renderer
+	std::shared_ptr<Font> font = ResourceManager::GetInstance()->LoadFont("gui/font.fnt");
+	m_TextRenderer->Initialize(font);
+	
 	// set background music TODO(Joey): let it belong to the level/scene
 	m_Audio->PlaySound("audio/ambient2.wav", true, 0.2f);
 
@@ -132,6 +139,7 @@ void GameApplication::Update(float deltaTime)
 
 void GameApplication::Render()
 {
+    //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     m_Scene->Render();
     if (m_Physics)
     {
@@ -141,6 +149,12 @@ void GameApplication::Render()
         glUseProgram(0);
         //m_Physics->RenderDiagnostics();
     }
+    m_TextRenderer->RenderText("Joey de Vries presents...", glm::vec2(300, 660), 2.5f, glm::vec3(1.0, 0.0, 0.0));
+    m_TextRenderer->RenderText("Lantarn", glm::vec2(570, 340), 4.0f, glm::vec3(1.0, 0.0, 0.0));
+
+
+    // lastly render GUI elements
+    m_TextRenderer->Render(m_Scene->GetCamera()->GetProjection(), m_Scene->GetCamera()->GetView());
 }
 
 void GameApplication::ProcessKeyboardDown(char key)

@@ -12,6 +12,7 @@
 #include <string>
 
 #include "MapLoader.h"
+#include "Font.h"
 #include "../Components/ActorFactory.h"
 #include "../Renderer/shader.h"
 #include "../Renderer/texture2D.h"
@@ -48,6 +49,7 @@ public:
     std::shared_ptr<Texture2D> LoadTexture(std::string name, const char *textureSource, bool alpha = false);
     std::shared_ptr<Texture2D> GetTexture(std::string name);
 	std::shared_ptr<Animation> LoadAnimation(const char *animPath);
+	std::shared_ptr<Font>	   LoadFont(const char *fontPath);
 	bool LoadLevel(Scene* scene, const char *levelSource);
 };
 

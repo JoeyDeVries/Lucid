@@ -25,6 +25,8 @@ private:
     ActorFactory *m_ActorFactory;
     Box2DPhysics *m_Physics;
 	AudioEngine  *m_Audio;
+	TextRenderer *m_TextRenderer;
+
     std::map<ActorID, std::shared_ptr<Actor>> m_Actors;
 	std::map<std::string, std::shared_ptr<Actor>> m_ImportantActors;
 
@@ -63,6 +65,7 @@ public:
     Scene* const GetScene() { return m_Scene; }
     EventManager* const GetEventManager() { return m_EventManager; }
     Box2DPhysics* const GetPhysics() { return m_Physics; }
+	TextRenderer* const GetTextRenderer() { return m_TextRenderer; }
 
 	float const GetTime() { return glfwGetTime(); }
 
