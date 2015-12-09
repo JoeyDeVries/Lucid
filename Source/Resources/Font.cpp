@@ -21,18 +21,14 @@ void Font::Load(std::shared_ptr<Texture2D> fontAtlas, std::map<char, CharInfo> c
 		glm::vec2 pos = glm::vec2(it->second.Offset.x / m_Width, it->second.Offset.y / m_Height); // origin: top-left
 		glm::vec2 width = glm::vec2(it->second.Scale.x / m_Width, it->second.Scale.y / m_Height);
 		glm::vec2 texCoords = glm::vec2(it->second.Position.x / m_Width, it->second.Position.y / m_Height);
-        //texCoords = glm::vec2(texCoords.x, texCoords.y - width.y);
 		// define char render vertices
-		CharRenderInfo renderInfo;
-		renderInfo.Vertices[0] = glm::vec4(pos + glm::vec2(0.0, width.y), texCoords + glm::vec2(0.0, width.y)); // Bottom left
-        renderInfo.Vertices[1] = glm::vec4(pos + glm::vec2(width.x, 0.0), texCoords + glm::vec2(width.x, 0.0)); // Top right
-        renderInfo.Vertices[2] = glm::vec4(pos,                           texCoords);                           // Top left
+		it->second.RenderInfo[0] = glm::vec4(pos + glm::vec2(0.0, width.y), texCoords + glm::vec2(0.0, width.y)); // Bottom left
+        it->second.RenderInfo[1] = glm::vec4(pos + glm::vec2(width.x, 0.0), texCoords + glm::vec2(width.x, 0.0)); // Top right
+        it->second.RenderInfo[2] = glm::vec4(pos,                           texCoords);                           // Top left
 
-        renderInfo.Vertices[3] = glm::vec4(pos + glm::vec2(0.0, width.y), texCoords + glm::vec2(0.0, width.y)); // Bottom left
-        renderInfo.Vertices[4] = glm::vec4(pos + width,                   texCoords + width);                   // Bottom right
-        renderInfo.Vertices[5] = glm::vec4(pos + glm::vec2(width.x, 0.0), texCoords + glm::vec2(width.x, 0.0)); // Top right
-        //renderInfo.XAdvance = it->second.XAdvance / m_Width;
-        m_CharRenderInfo[it->first] = renderInfo;
+        it->second.RenderInfo[3] = glm::vec4(pos + glm::vec2(0.0, width.y), texCoords + glm::vec2(0.0, width.y)); // Bottom left
+        it->second.RenderInfo[4] = glm::vec4(pos + width,                   texCoords + width);                   // Bottom right
+        it->second.RenderInfo[5] = glm::vec4(pos + glm::vec2(width.x, 0.0), texCoords + glm::vec2(width.x, 0.0)); // Top right
 	}
 }
 
@@ -41,10 +37,10 @@ const std::map<char, CharInfo>& Font::GetCharInfo()
 	return m_CharInfo;
 }
 
-const std::map<char, CharRenderInfo>& Font::GetCharRenderInfo()
-{
-	return m_CharRenderInfo;
-}
+//const std::map<char, CharRenderInfo>& Font::GetCharRenderInfo()
+//{
+//	return m_CharRenderInfo;
+//}
 
 std::shared_ptr<Texture2D> Font::GetFontAtlas()
 {

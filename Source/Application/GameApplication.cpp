@@ -149,8 +149,8 @@ void GameApplication::Render()
         glUseProgram(0);
         //m_Physics->RenderDiagnostics();
     }
-    m_TextRenderer->RenderText("Joey de Vries presents...", glm::vec2(300, 660), 2.5f, glm::vec3(1.0, 0.0, 0.0));
-    m_TextRenderer->RenderText("Lantarn", glm::vec2(570, 340), 4.0f, glm::vec3(1.0, 0.0, 0.0));
+    m_TextRenderer->RenderText("Joey de Vries presents...", glm::vec2(300, 660), 2.5f, true, glm::vec3(0.35));
+    m_TextRenderer->RenderText("Lantarn", glm::vec2(570, 340), 4.0f, true, glm::vec3(0.24, 0.05, 0.05));
 
 
     // lastly render GUI elements

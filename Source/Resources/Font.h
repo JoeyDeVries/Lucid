@@ -10,18 +10,14 @@ struct CharInfo {
 	glm::vec2 Scale;
 	glm::vec2 Offset;
 	float XAdvance;	
-};
-
-struct CharRenderInfo {
-	glm::vec4 Vertices[6];
-    //float XAdvance;
+    glm::vec4 RenderInfo[6]; // <vec2 position, vec2 texCoords>
 };
 
 class Font
 {
 private:
 	std::map<char, CharInfo> m_CharInfo;
-	std::map<char, CharRenderInfo> m_CharRenderInfo;
+	//std::map<char, CharRenderInfo> m_CharRenderInfo;
 	std::shared_ptr<Texture2D> m_FontAtlas;
 
 	int m_Width, m_Height;
@@ -32,7 +28,7 @@ public:
 	void Load(std::shared_ptr<Texture2D> fontAtlas, std::map<char, CharInfo> charInfo, int charSize, int width, int height);
 
 	const std::map<char, CharInfo>&       GetCharInfo();
-	const std::map<char, CharRenderInfo>& GetCharRenderInfo();
+	//const std::map<char, CharRenderInfo>& GetCharRenderInfo();
     std::shared_ptr<Texture2D>            GetFontAtlas();
 
     int GetWidth();
