@@ -16,7 +16,7 @@ public:
 
     bool Init();
     void Update(float deltaTime);
-    void RenderBackground(std::shared_ptr<Renderer> renderer, TextRenderer *textRenderer); // override background rendering
+    void RenderBackground(Renderer *renderer, TextRenderer *textRenderer); // override background rendering
 
     void OnActivate();
     void OnDeactivate();

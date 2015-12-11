@@ -1,7 +1,8 @@
 #include "CompleteCheckComponent.h"
-#include "Event_LevelComplete.h"
+//#include "Event_LevelComplete.h"
 #include "../Physics/Event_PostCollisionAdd.h"
 #include "../Application/GameApplication.h"
+#include "../Application/Event_StartLevel.h"
 
 CompleteCheckComponent::CompleteCheckComponent()
 {
@@ -42,7 +43,7 @@ void CompleteCheckComponent::OnPostCollisionAdd(std::shared_ptr<IEventData> even
 		const b2Body* bodyB = contact->GetFixtureB()->GetBody();
 		if ((bodyA == currentBody && bodyB == playerBody) || (bodyA == playerBody && bodyB == currentBody))
 		{	// both relevant bodies collided, send level complete event
-			GameApplication::GetInstance()->GetEventManager()->QueueEvent(std::shared_ptr<Event_LevelComplete>(new Event_LevelComplete));
+			GameApplication::GetInstance()->GetEventManager()->QueueEvent(std::shared_ptr<Event_StartLevel>(new Event_StartLevel("levels/start.tmx")));
 		}
 	}
 }

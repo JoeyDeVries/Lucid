@@ -42,6 +42,7 @@ public:
     bool QueueEvent(const std::shared_ptr<IEventData>& pEvent);
 
     bool Update();
+    void Clear();
 };
 
 

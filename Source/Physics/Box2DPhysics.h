@@ -28,30 +28,33 @@ class Box2DPhysics : public IPhysics
 	std::list<b2Contact*> m_Collisions;
     void SendCollisionAddEvent(b2Contact* contact);
     void SendCollisionRemoveEvent(b2Contact * contact);
-
+    // removal queue
+    std::list<ActorID> m_RemovalQueue;
 public:
     Box2DPhysics();
     ~Box2DPhysics();
 
     // initialization and maintenance of physics world
-    virtual void Initialize();
-    virtual void Update();
-    virtual void SyncVisibleScene();
+    void Initialize();
+    void Update();
+    void SyncVisibleScene();
+    void RemoveQueuedItems();
+    void Reset();
     // body-actor relations
     b2Body* FindBody(ActorID);
     ActorID FindActorID(b2Body*);
     // integration of physics objects
-    virtual void AddSphere(float radius, std::shared_ptr<Actor> actor, float density, bool dynamic = false, bool isSensor = false);
-    virtual void AddBox(std::shared_ptr<Actor> actor, float density, bool dynamic = false, bool fixedRotation = true, bool isSensor = false, float hitBoxScale = 1.0f);
+    void AddSphere(float radius, std::shared_ptr<Actor> actor, float density, bool dynamic = false, bool isSensor = false);
+    void AddBox(std::shared_ptr<Actor> actor, float density, bool dynamic = false, bool fixedRotation = true, bool isSensor = false, float hitBoxScale = 1.0f);
     void AddPolygon(std::shared_ptr<Actor> actor, std::vector<glm::vec2> vertices, float density, bool dynamic = false, bool fixedRotation = true);
     void AddCharacter(std::shared_ptr<Actor> actor, float density);
-    virtual void RemoveActor(unsigned int ActorID);
+    void RemoveActor(unsigned int ActorID);
     // debugging
     void RenderDiagnostics();
     // physics world modifiers/forces
-    virtual void ApplyForce(unsigned int ActorID, glm::vec2 force, glm::vec2 center);
-    virtual void ApplyImpulse(unsigned int ActorID, glm::vec2 force, glm::vec2 center);
-    virtual void ApplyTorque(unsigned int ActorID, glm::vec2 direction, float newtons);
+    void ApplyForce(unsigned int ActorID, glm::vec2 force, glm::vec2 center);
+    void ApplyImpulse(unsigned int ActorID, glm::vec2 force, glm::vec2 center);
+    void ApplyTorque(unsigned int ActorID, glm::vec2 direction, float newtons);
 	// per body physics data in game-world coordinates
 	glm::vec2 GetLinearVelocity(unsigned int ActorID);
 	float GetBodyMass(unsigned int ActorID);

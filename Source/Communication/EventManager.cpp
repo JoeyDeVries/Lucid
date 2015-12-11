@@ -98,3 +98,9 @@ bool EventManager::Update()
     }
     return true;
 }
+
+void EventManager::Clear()
+{
+    m_Queues[0].clear();
+    m_Queues[1].clear();
+}

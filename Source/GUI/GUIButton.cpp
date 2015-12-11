@@ -31,7 +31,7 @@ void GUIButton::CalculateModel()
     m_Model *= glm::scale(glm::vec3(m_Scale, 1.0));
 }
 
-void GUIButton::Render(std::shared_ptr<Renderer> renderer, TextRenderer* textRenderer, std::shared_ptr<Shader> shader)
+void GUIButton::Render(Renderer *renderer, TextRenderer* textRenderer, std::shared_ptr<Shader> shader)
 {
     // shader is passed from top hierarchy, we only control its parameter/rendering configuration
     if (m_BackColor != glm::vec4(1.0f)) // if a back-color is set, render box

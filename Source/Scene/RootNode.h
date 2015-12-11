@@ -11,7 +11,7 @@ public:
 
     virtual void Initialize(Scene *scene);
     virtual void PreRender(Scene *scene);
-    virtual void Render(Scene *scene);
+    virtual void Render(Scene *scene, Renderer *renderer);
     virtual void PostRender(Scene *scene);
 };
 

@@ -36,7 +36,7 @@ void GUIContainer::SetActive(bool active)
         OnDeactivate();
 }
 
-void GUIContainer::Render(std::shared_ptr<Renderer> renderer, TextRenderer *textRenderer, std::shared_ptr<Camera> camera)
+void GUIContainer::Render(Renderer *renderer, TextRenderer *textRenderer, std::shared_ptr<Camera> camera)
 {
     if (m_IsActive)
     {
@@ -66,7 +66,7 @@ void GUIContainer::OnDeactivate()
 
 }
 
-void GUIContainer::RenderBackground(std::shared_ptr<Renderer> renderer, TextRenderer *textRenderer)
+void GUIContainer::RenderBackground(Renderer *renderer, TextRenderer *textRenderer)
 {
     // by default there is no background, initialize in derivated classes if necessary
 }

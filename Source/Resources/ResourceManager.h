@@ -50,7 +50,7 @@ public:
     std::shared_ptr<Texture2D> GetTexture(std::string name);
 	std::shared_ptr<Animation> LoadAnimation(const char *animPath);
 	std::shared_ptr<Font>	   LoadFont(const char *fontPath);
-	bool LoadLevel(Scene* scene, const char *levelSource);
+	bool LoadLevel(Scene* scene, const char *levelSource, float levelScale = 0.5f);
 };
 
 #endif

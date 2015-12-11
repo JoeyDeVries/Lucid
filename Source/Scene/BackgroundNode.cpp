@@ -21,12 +21,12 @@ void BackgroundNode::Initialize(Scene *scene)
     SetScale(glm::vec2(scene->GetSceneWidth(), scene->GetSceneHeight()));
 }
 
-void BackgroundNode::Render(Scene *scene)
+void BackgroundNode::Render(Scene *scene, Renderer *renderer)
 {
     // Render background
     m_Material->GetShader()->Use();
     m_Material->GetShader()->SetMatrix4("model", m_Model);
     m_Material->GetShader()->SetMatrix4("view", scene->GetCamera()->GetView());
     m_Material->PreRender();
-    scene->GetRenderer()->RenderQuad();
+    renderer->RenderQuad();
 }

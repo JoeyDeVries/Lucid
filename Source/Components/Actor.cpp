@@ -13,7 +13,7 @@ Actor::~Actor(void)
 
 void Actor::Destroy(void)
 {
-
+    m_components.clear();
 }
 
 void Actor::Update(float deltaTime)

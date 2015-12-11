@@ -29,24 +29,26 @@ void Camera::SetTarget(std::shared_ptr<SceneNode> target)
 void Camera::CalculateViewMatrix()
 {
 	glm::vec2 center = glm::vec2(m_Width * 0.5f, m_Height * 0.5f);
-    glm::vec2 targetPos   = m_Target->GetPosition();
-    glm::vec2 targetScale = m_Target->GetScale();
-	// define a bounding box around the screen's center
-	glm::vec2 AABBCenter     = m_CameraCenter;
-	glm::vec2 AABBHalfWidths = glm::vec2(m_Width * 0.2f, m_Height * 0.2f);
-	// - check if target is outside AABB and if so change center accordingly 
-	if(targetPos.x + targetScale.x * 0.5 >= AABBCenter.x + AABBHalfWidths.x) // target at right side of box
-		m_CameraCenter.x += (targetPos.x + targetScale.x * 0.5) - (AABBCenter.x + AABBHalfWidths.x);
-	else if (targetPos.x + targetScale.x * 0.5 <= AABBCenter.x - AABBHalfWidths.x) // target at left side of box
-		m_CameraCenter.x -= (AABBCenter.x - AABBHalfWidths.x) - (targetPos.x + targetScale.x * 0.5);
-	if(targetPos.y + targetScale.y * 0.5 >= AABBCenter.y + AABBHalfWidths.y) // target at bottom side of box
-		m_CameraCenter.y += (targetPos.y + targetScale.y * 0.5) - (AABBCenter.y + AABBHalfWidths.y);
-	else if (targetPos.y + targetScale.y * 0.5 <= AABBCenter.y - AABBHalfWidths.y) // target at top side of box
-		m_CameraCenter.y -= (AABBCenter.y - AABBHalfWidths.y) - (targetPos.y + targetScale.y * 0.5);
+    if (m_Target)
+    {
+        glm::vec2 targetPos = m_Target->GetPosition();
+        glm::vec2 targetScale = m_Target->GetScale();
+        // define a bounding box around the screen's center
+        glm::vec2 AABBCenter = m_CameraCenter;
+        glm::vec2 AABBHalfWidths = glm::vec2(m_Width * 0.2f, m_Height * 0.2f);
+        // - check if target is outside AABB and if so change center accordingly 
+        if (targetPos.x + targetScale.x * 0.5 >= AABBCenter.x + AABBHalfWidths.x) // target at right side of box
+            m_CameraCenter.x += (targetPos.x + targetScale.x * 0.5) - (AABBCenter.x + AABBHalfWidths.x);
+        else if (targetPos.x + targetScale.x * 0.5 <= AABBCenter.x - AABBHalfWidths.x) // target at left side of box
+            m_CameraCenter.x -= (AABBCenter.x - AABBHalfWidths.x) - (targetPos.x + targetScale.x * 0.5);
+        if (targetPos.y + targetScale.y * 0.5 >= AABBCenter.y + AABBHalfWidths.y) // target at bottom side of box
+            m_CameraCenter.y += (targetPos.y + targetScale.y * 0.5) - (AABBCenter.y + AABBHalfWidths.y);
+        else if (targetPos.y + targetScale.y * 0.5 <= AABBCenter.y - AABBHalfWidths.y) // target at top side of box
+            m_CameraCenter.y -= (AABBCenter.y - AABBHalfWidths.y) - (targetPos.y + targetScale.y * 0.5);
 
-	//slowly align the camera back to the target center (either always on, or after a given amount of time in the bounding box)
-    m_CurrentPos = glm::mix(m_CurrentPos, m_CameraCenter, 0.04f);
-
+        //slowly align the camera back to the target center (either always on, or after a given amount of time in the bounding box)
+        m_CurrentPos = glm::mix(m_CurrentPos, m_CameraCenter, 0.04f);
+    }
     glm::mat4 view;
 	//view = glm::translate(view, -glm::vec3(-center.x + targetPos.x + 0.5 * targetScale.x, -center.y + targetPos.y + 0.5 * targetScale.y, 0.0)); // center at target matrix
 	view = glm::translate(view, -glm::vec3(-center.x + m_CurrentPos.x, -center.y + m_CurrentPos.y, 0.0));

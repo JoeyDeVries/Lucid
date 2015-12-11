@@ -21,7 +21,6 @@ class Scene
 protected:
     std::shared_ptr<RootNode> m_Root;
     std::shared_ptr<Camera> m_Camera;
-    std::shared_ptr<Renderer> m_Renderer; // OpenGL renderer class here!
 	std::shared_ptr<LightManager> m_LightManager;
 
     MatrixStack m_MatrixStack;
@@ -37,13 +36,12 @@ public:
     void Clear();
     void Restore();
     void Update(float deltaTime);
-    void Render();
+    void Render(Renderer *renderer);
 
     std::shared_ptr<ISceneNode> GetSceneNode(unsigned int ActorID);
     bool AddChild(unsigned int ActorID, std::shared_ptr<ISceneNode> child);
     bool RemoveChild(unsigned int ActorID);
 
-    std::shared_ptr<Renderer>     const GetRenderer()       { return m_Renderer; }
     std::shared_ptr<Camera>       const GetCamera()         { return m_Camera; }
     std::shared_ptr<LightManager> const GetLightManager()   { return m_LightManager; }
 	std::shared_ptr<RootNode>	  const GetRootNode()		{ return m_Root; }

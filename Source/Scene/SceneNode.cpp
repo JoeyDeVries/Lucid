@@ -88,7 +88,7 @@ void  SceneNode::PreRender(Scene *scene)
     scene->PushAndSetMatrix(m_Model);
 }
 
-void  SceneNode::Render(Scene *scene)
+void  SceneNode::Render(Scene *scene, Renderer *renderer)
 {
    
 }
@@ -118,11 +118,12 @@ bool  SceneNode::RemoveChild(unsigned int actorID)
             begin = m_Children.erase(begin); // also updates iterator
             return true;
         }
+        ++begin;
     }
     return false;
 }
 
-void  SceneNode::RenderChildren(Scene *scene)
+void  SceneNode::RenderChildren(Scene *scene, Renderer *renderer)
 {
     SceneNodeList::iterator begin = m_Children.begin();
     SceneNodeList::iterator end = m_Children.end();
@@ -132,8 +133,8 @@ void  SceneNode::RenderChildren(Scene *scene)
 
         if ((*begin)->IsVisible(scene))
         {
-            (*begin)->Render(scene);
-            (*begin)->RenderChildren(scene);
+            (*begin)->Render(scene, renderer);
+            (*begin)->RenderChildren(scene, renderer);
         }
 
         (*begin)->PostRender(scene);

@@ -10,6 +10,12 @@ SpriteNode::SpriteNode(unsigned int ActorID, std::string name, std::string rende
 
 }
 
+SpriteNode::~SpriteNode()
+{
+    EventListenerDelegate listener = fastdelegate::MakeDelegate(this, &SpriteNode::ActorMoved);
+    GameApplication::GetInstance()->GetEventManager()->RemoveListener(listener, Event_ActorMoved::s_EventType);
+}
+
 void SpriteNode::Initialize(Scene *scene)
 {
      // update projection matrix 
@@ -41,7 +47,7 @@ void SpriteNode::Update(Scene *scene, float deltaTime)
     SceneNode::Update(scene, deltaTime);
 }
 
-void SpriteNode::Render(Scene *scene)
+void SpriteNode::Render(Scene *scene, Renderer *renderer)
 {
 	// Render stuff here (could do basic sprite rendering here; and later propagate it to subclasses)
 	if (m_Material)
@@ -57,7 +63,7 @@ void SpriteNode::Render(Scene *scene)
 			m_Animations[m_ActiveAnimation]->ToShader(m_Material->GetShader());
 		}
 
-		scene->GetRenderer()->RenderQuad();
+		renderer->RenderQuad();
 
 		if (m_Animation)
 			m_Material->GetShader()->SetInteger("animation", false, true);

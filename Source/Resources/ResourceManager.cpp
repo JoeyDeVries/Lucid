@@ -117,9 +117,9 @@ std::shared_ptr<Texture2D> ResourceManager::GetTexture(std::string name)
         return std::shared_ptr<Texture2D>();
 }
 
-bool ResourceManager::LoadLevel(Scene* scene, const char* levelSource)
+bool ResourceManager::LoadLevel(Scene* scene, const char* levelSource, float levelScale)
 {
-	return m_MapLoader.LoadMap(this, scene, "levels/start.tmx", 0.5f);
+	return m_MapLoader.LoadMap(this, scene, levelSource, levelScale);
 
  //   std::vector<std::vector<char>> levelData;
  //   std::ifstream fstream;

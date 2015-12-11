@@ -5,6 +5,7 @@
 #include <map>
 
 #include "GameState.h"
+#include "../Renderer/Renderer.h"
 #include "../Scene/Scene.h"
 #include "../Components/ActorFactory.h"
 #include "../Components/Actor.h"
@@ -26,14 +27,15 @@ private:
 
     // Game-specifics
     Scene        *m_Scene;
+    Renderer     *m_Renderer;
     EventManager *m_EventManager;
     ActorFactory *m_ActorFactory;
     Box2DPhysics *m_Physics;
-	AudioEngine  *m_Audio;
-	TextRenderer *m_TextRenderer;
+    AudioEngine  *m_Audio;
+    TextRenderer *m_TextRenderer;
 
-    std::map<ActorID, std::shared_ptr<Actor>> m_Actors;
-	std::map<std::string, std::shared_ptr<Actor>> m_ImportantActors;
+    std::map<ActorID, std::shared_ptr<Actor>>     m_Actors;
+    std::map<std::string, std::shared_ptr<Actor>> m_ImportantActors;
 
     // GUI
     std::map<std::string, std::shared_ptr<GUIContainer>> m_GUIContainers;
@@ -53,7 +55,7 @@ public:
     // Retrieves a single instance of this object
     static std::shared_ptr<GameApplication> GetInstance()
     {
-        if(!m_Instance)
+        if (!m_Instance)
             m_Instance = std::shared_ptr<GameApplication>(new GameApplication);
         return m_Instance;
     }
@@ -62,8 +64,8 @@ public:
     void Initialize(float width, float height);
     std::shared_ptr<Actor> CreateActor(DEFAULT_ACTOR_TYPES type);
     std::shared_ptr<Actor> GetActor(ActorID actorID);
-	void				   SetImportantActor(std::string, std::shared_ptr<Actor> actor);
-	std::shared_ptr<Actor> GetImportantActor(std::string);
+    void				   SetImportantActor(std::string, std::shared_ptr<Actor> actor);
+    std::shared_ptr<Actor> GetImportantActor(std::string);
     void                   ClearActors();
 
     void Update(float deltaTime);
@@ -78,6 +80,7 @@ public:
     float& ScreenWidth() { return m_ScreenWidth; }
     float& ScreenHeight() { return m_ScreenHeight; }
     Scene* const GetScene() { return m_Scene; }
+    Renderer* const GetRenderer() { return m_Renderer; }
     EventManager* const GetEventManager() { return m_EventManager; }
     Box2DPhysics* const GetPhysics() { return m_Physics; }
 	TextRenderer* const GetTextRenderer() { return m_TextRenderer; }

@@ -16,6 +16,7 @@
 // Use dirty bit/flag pattern to only re-calculate this if the local system
 // is marked dirty; otherwise use cached version.
 class Scene;
+class Renderer;
 
 class ISceneNode
 {
@@ -59,12 +60,12 @@ public:
     virtual void Update(Scene *scene, float deltaTime) = 0;
     virtual bool IsVisible(Scene *scene) const = 0;
     virtual void PreRender(Scene *scene) = 0;
-    virtual void Render(Scene *scene) = 0;
+    virtual void Render(Scene *scene, Renderer *renderer) = 0;
     virtual void PostRender(Scene *scene) = 0;
     
     virtual bool AddChild(std::shared_ptr<ISceneNode> child) = 0;
     virtual bool RemoveChild(unsigned int actorID) = 0;
-    virtual void RenderChildren(Scene *scene) = 0;
+    virtual void RenderChildren(Scene *scene, Renderer *renderer) = 0;
 
 	virtual std::vector<std::shared_ptr<ISceneNode>> GetChildren() const = 0;
 };

@@ -25,7 +25,7 @@ public:
     void SetHoverColor(glm::vec4 color);
 
     void CalculateModel();
-    void Render(std::shared_ptr<Renderer> renderer, TextRenderer *textRenderer, std::shared_ptr<Shader> shader);
+    void Render(Renderer *renderer, TextRenderer *textRenderer, std::shared_ptr<Shader> shader);
 };
 
 #endif

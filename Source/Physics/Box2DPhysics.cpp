@@ -43,8 +43,6 @@ void Box2DPhysics::Initialize()
 void Box2DPhysics::Update()
 {
     m_World->Step(1.0f / 60.0f, 6, 2);
-
-    // TODO(Joey): make function that removes bodies that were scheduled for removal as to not remove them instantly
 }
 
 bool IsVec2Equal(glm::vec2 a, glm::vec2 b, float range = 0.005)
@@ -76,6 +74,39 @@ void Box2DPhysics::SyncVisibleScene()
 			GameApplication::GetInstance()->GetEventManager()->QueueEvent(std::shared_ptr<Event_ActorMoved>(new Event_ActorMoved(id, bodyPos, bodyRot)));
         }
     }
+}
+
+void Box2DPhysics::RemoveQueuedItems()
+{
+    for (auto it = m_RemovalQueue.begin(); it != m_RemovalQueue.end(); ++it)
+    {
+        if (m_ActorIDToBody.find(*it) != m_ActorIDToBody.end())
+        {
+            std::vector<b2Contact*> toRemove;
+            for (auto colIt = m_Collisions.begin(); colIt != m_Collisions.end(); ++colIt)
+                if ((*colIt)->GetFixtureA()->GetBody() == m_ActorIDToBody[*it] || (*colIt)->GetFixtureA()->GetBody() == m_ActorIDToBody[*it])
+                    toRemove.push_back(*colIt);
+            for(int i = 0; i < toRemove.size(); ++i)
+                m_Collisions.remove(toRemove[i]);
+            m_World->DestroyBody(m_ActorIDToBody[*it]);
+            m_BodyToActorID.erase(m_ActorIDToBody[*it]);
+            m_ActorIDToBody.erase(*it);
+        }
+    }
+    m_RemovalQueue.clear();
+}
+
+void Box2DPhysics::Reset()
+{
+    b2Body* body = m_World->GetBodyList();
+    while (body)
+    {
+        body = body->GetNext();
+        m_World->DestroyBody(body);
+    }
+
+    m_World->ClearForces();
+    m_Collisions.clear();
 }
 
 b2Body* Box2DPhysics::FindBody(ActorID actorID)
@@ -197,6 +228,7 @@ void Box2DPhysics::AddCharacter(std::shared_ptr<Actor> actor, float density)
 
 void Box2DPhysics::RemoveActor(unsigned int ActorID)
 {
+    m_RemovalQueue.push_back(ActorID);
     //m_World->DestroyBody(m_ActorIDToBody[ActorID]); // TODO(Joey): schedule them for later removal instead of instantly removing them
 }
 

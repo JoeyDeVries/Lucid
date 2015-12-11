@@ -25,8 +25,8 @@ public:
 
     virtual bool Init() = 0;
     virtual void Update(float deltaTime) = 0;
-    virtual void Render(std::shared_ptr<Renderer> renderer, TextRenderer *textRenderer, std::shared_ptr<Camera> camera);
-    virtual void RenderBackground(std::shared_ptr<Renderer> renderer, TextRenderer *textRenderer);
+    virtual void Render(Renderer *renderer, TextRenderer *textRenderer, std::shared_ptr<Camera> camera);
+    virtual void RenderBackground(Renderer *renderer, TextRenderer *textRenderer);
 
     virtual void OnActivate();
     virtual void OnDeactivate();

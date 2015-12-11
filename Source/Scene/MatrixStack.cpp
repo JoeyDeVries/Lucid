@@ -7,6 +7,12 @@ MatrixStack::MatrixStack()
     m_Matrices.push_back(glm::mat4()); // add identity matrix on top of stack
 }
 
+void MatrixStack::Clear()
+{
+    m_Matrices.clear();
+    m_Matrices.push_back(glm::mat4()); // add identity matrix on top of stack
+}
+
 void MatrixStack::Push(glm::mat4 matrix)
 {
     m_Matrices.push_back(matrix);

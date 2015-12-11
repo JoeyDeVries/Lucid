@@ -14,7 +14,8 @@ std::shared_ptr<GameApplication> GameApplication::m_Instance = std::shared_ptr<G
 
 GameApplication::GameApplication() : m_Active(true)
 {
-    m_Scene = new Scene;
+    m_Scene        = new Scene;
+    m_Renderer     = new Renderer;
     m_EventManager = new EventManager;
     m_ActorFactory = new ActorFactory;
     m_Physics      = new Box2DPhysics;
@@ -30,6 +31,7 @@ GameApplication::~GameApplication()
 
 	// clean-up
     delete m_Scene;
+    delete m_Renderer;
     delete m_EventManager;
     delete m_ActorFactory;
     delete m_Physics;
@@ -39,19 +41,17 @@ GameApplication::~GameApplication()
 
 void GameApplication::Initialize(float width, float height)
 {
-
     m_ScreenWidth = width;
     m_ScreenHeight = height;
     // Initialize physics
     m_Physics->Initialize();
     // Initialize renderer
-    m_Scene->GetRenderer()->Initialize();
+    m_Renderer->Initialize();
     m_Scene->GetCamera()->SetProjection(width, height, 0.0, 50.0f);
     // Load default placeholder textures/shaders before loading level
 	ResourceManager::GetInstance()->LoadShader("sprite", "shaders/sprite.vs", "shaders/sprite.frag")->SetInteger("EnableLighting", 1, true);
     ResourceManager::GetInstance()->LoadTexture("specular", "textures/specular.png");
     ResourceManager::GetInstance()->LoadTexture("normal", "textures/normal.png");
-    //ResourceManager::GetInstance()->LoadLevel(m_Scene, "levels/begin.lvl");
     // Create level-independant actors
     // - background (no need for it to be related to an actor, only for rendering)
     std::shared_ptr<Actor> backgroundActor = CreateActor(DEFAULT_ACTOR_TYPES::ACTOR_EMPTY);
@@ -71,9 +71,6 @@ void GameApplication::Initialize(float width, float height)
     GetEventManager()->AddListener(eventListener, Event_StartLevel::s_EventType);
     eventListener = fastdelegate::MakeDelegate(this, &GameApplication::OnQuitGame);
     GetEventManager()->AddListener(eventListener, Event_QuitGame::s_EventType);
-
-    // initialize scene (e.g. set default projection matrices for each shader)
-    //m_Scene->Initialize();
 
 	// load font(s) and initialize text-renderer
 	std::shared_ptr<Font> font = ResourceManager::GetInstance()->LoadFont("gui/font.fnt");
@@ -121,10 +118,14 @@ std::shared_ptr<Actor> GameApplication::GetImportantActor(std::string name)
 }
 void GameApplication::ClearActors()
 {
-    for(auto it = m_Actors.begin(); it != m_Actors.end(); ++it)
+   /* for (auto it = m_Actors.begin(); it != m_Actors.end(); ++it)
+    {
         m_Physics->RemoveActor(it->second->GetID());
+        m_Scene->RemoveChild(it->second->GetID());
+    }
+    m_Physics->RemoveQueuedItems();
     m_Actors.clear();
-    m_ImportantActors.clear();
+    m_ImportantActors.clear();*/
 }
 
 void GameApplication::switchState(GameState state)
@@ -169,6 +170,8 @@ void GameApplication::Update(float deltaTime)
         {
             m_Physics->Update();
             m_Physics->SyncVisibleScene();
+            // process any deletes if occured
+            m_Physics->RemoveQueuedItems();
         }
 
         // Update all scene components
@@ -182,11 +185,11 @@ void GameApplication::Update(float deltaTime)
 
 void GameApplication::Render()
 {
-    m_Scene->GetRenderer()->PreRender(); // TODO(Joey): decouple renderer from scene and link to GameApplication
+    m_Renderer->PreRender(); // TODO(Joey): decouple renderer from scene and link to GameApplication
 
     if (m_GameState == GameState::GAME_MAIN || m_GameState == GameState::GAME_GAME_MENU)
     {
-        m_Scene->Render();
+        m_Scene->Render(m_Renderer);
 
         if (m_Physics)
         {
@@ -206,7 +209,7 @@ void GameApplication::Render()
 
     // lastly render GUI elements
     for (auto it = m_GUIContainers.begin(); it != m_GUIContainers.end(); ++it)
-        it->second->Render(m_Scene->GetRenderer(), m_TextRenderer, m_Scene->GetCamera());
+        it->second->Render(m_Renderer, m_TextRenderer, m_Scene->GetCamera());
     // then render all GUI queued text
     m_TextRenderer->Render(m_Scene->GetCamera()->GetProjection());
 }
@@ -266,8 +269,20 @@ void GameApplication::OnStartLevel(std::shared_ptr<IEventData> eventData)
     std::shared_ptr<Event_StartLevel> pEvent = std::dynamic_pointer_cast<Event_StartLevel>(eventData);
     if (pEvent)
     {
-        ClearActors();
+        // remove current list of actors
+        for (auto it = m_Actors.begin(); it != m_Actors.end(); ++it)
+        {
+            m_Physics->RemoveActor(it->second->GetID());
+            m_Scene->RemoveChild(it->second->GetID());
+            it->second->Destroy();
+        }
+        m_Actors.clear();
+        m_ImportantActors.clear();
+        m_Physics->RemoveQueuedItems();
+        m_Physics->Reset();
+        //ClearActors();
         m_Scene->Clear();
+        m_EventManager->Clear();
         ResourceManager::GetInstance()->LoadLevel(m_Scene, pEvent->GetLevelPath().c_str());
         m_Scene->Initialize();
 

@@ -39,7 +39,7 @@ public:
     virtual void CalculateModel() = 0;
 
     // renders the GUIElement, should be overriden in subclasses
-    virtual void Render(std::shared_ptr<Renderer> renderer, TextRenderer *textRenderer, std::shared_ptr<Shader> shader) = 0;
+    virtual void Render(Renderer *renderer, TextRenderer *textRenderer, std::shared_ptr<Shader> shader) = 0;
 
     bool IsMouseInside(float x, float y);
 

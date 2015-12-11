@@ -22,12 +22,12 @@ public:
     virtual void Update(Scene *scene, float deltaTime);
     virtual bool IsVisible(Scene *scene) const;
     virtual void PreRender(Scene *scene);
-    virtual void Render(Scene *scene);
+    virtual void Render(Scene *scene, Renderer *renderer);
     virtual void PostRender(Scene *scene);
 
     virtual bool AddChild(std::shared_ptr<ISceneNode> child);
     virtual bool RemoveChild(unsigned int actorID);
-    virtual void RenderChildren(Scene *scene);
+    virtual void RenderChildren(Scene *scene, Renderer *renderer);
 
 	virtual SceneNodeList GetChildren() const { return m_Children; }
 };

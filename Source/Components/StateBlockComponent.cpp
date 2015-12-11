@@ -17,9 +17,9 @@ StateBlockComponent::~StateBlockComponent()
 	EventListenerDelegate listener1 = fastdelegate::MakeDelegate(this, &StateBlockComponent::OnLightSwitched);
 	GameApplication::GetInstance()->GetEventManager()->RemoveListener(listener1, Event_LightStateSwitched::s_EventType);
 	EventListenerDelegate listener2 = fastdelegate::MakeDelegate(this, &StateBlockComponent::OnPostCollisionAdd);
-	GameApplication::GetInstance()->GetEventManager()->RemoveListener(listener1, Event_PostCollisionAdd::s_EventType);
+	GameApplication::GetInstance()->GetEventManager()->RemoveListener(listener2, Event_PostCollisionAdd::s_EventType);
 	EventListenerDelegate listener3 = fastdelegate::MakeDelegate(this, &StateBlockComponent::OnPostCollisionRemove);
-	GameApplication::GetInstance()->GetEventManager()->RemoveListener(listener2, Event_PostCollisionRemove::s_EventType);
+	GameApplication::GetInstance()->GetEventManager()->RemoveListener(listener3, Event_PostCollisionRemove::s_EventType);
 }
 
 bool StateBlockComponent::VInit()

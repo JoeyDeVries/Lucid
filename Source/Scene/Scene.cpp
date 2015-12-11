@@ -4,7 +4,6 @@
 
 Scene::Scene()
 {
-    m_Renderer.reset(new Renderer);
     m_Root.reset(new RootNode);
     m_Camera.reset(new Camera);
     m_LightManager.reset(new LightManager);
@@ -25,6 +24,8 @@ void Scene::Clear()
 {
     m_Root.reset(new RootNode);
     m_LightManager.reset(new LightManager);
+    m_ActorMap.clear();
+    m_MatrixStack.Clear();
 }
 
 void Scene::Restore()
@@ -46,12 +47,12 @@ void Scene::Update(float deltaTime)
 
 }
 
-void Scene::Render()
+void Scene::Render(Renderer *renderer)
 {
     if (m_Root && m_Camera)
     {
 		m_Camera->CalculateViewMatrix();
-		m_Root->Render(this);
+		m_Root->Render(this, renderer);
     }
 }
 

@@ -14,10 +14,11 @@ protected:
 	std::map<std::string, std::shared_ptr<Animation>> m_Animations; // <anim-state, animation>
 public:
     SpriteNode(unsigned int ActorID, std::string name, std::string renderPass, glm::vec2 position, int depth, glm::vec2 scale = glm::vec2(1.0), float rotation = 0.0f);
+    ~SpriteNode();
 
     virtual void Initialize(Scene *scene);
     virtual void Update(Scene *scene, float deltaTime);
-    virtual void Render(Scene *scene);
+    virtual void Render(Scene *scene, Renderer *renderer);
 
 	void					   SetAnimation(bool enable);
 	bool					   HasAnimation();

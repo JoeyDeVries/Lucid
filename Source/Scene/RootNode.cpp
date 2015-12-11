@@ -32,7 +32,7 @@ bool SortSceneNodes(std::shared_ptr<ISceneNode> a, std::shared_ptr<ISceneNode> b
 	return a->GetDepth() < b->GetDepth();
 }
 
-void RootNode::Render(Scene *scene)
+void RootNode::Render(Scene *scene, Renderer *renderer)
 {
 	// first sort children before rendering based on depth (shader|material)
 	std::sort(m_Children.begin(), m_Children.end(), SortSceneNodes);
@@ -42,11 +42,11 @@ void RootNode::Render(Scene *scene)
 
     // configure all render passes here
     // - render all children into post-processing framebuffer
-    scene->GetRenderer()->PrePostProcessRender();
-        RenderChildren(scene);
-    scene->GetRenderer()->PostPostProcessRender();
+    renderer->PrePostProcessRender();
+        RenderChildren(scene, renderer);
+    renderer->PostPostProcessRender();
     // - render quad with post-processing effect enabled
-    scene->GetRenderer()->PostProcessQuadRender();
+    renderer->PostProcessQuadRender();
 }
 
 void RootNode::PostRender(Scene *scene)

@@ -63,7 +63,7 @@ void GUIMainMenu::Update(float deltaTime)
     m_FireAnimation->Update(deltaTime);
 }
 
-void GUIMainMenu::RenderBackground(std::shared_ptr<Renderer> renderer, TextRenderer *textRenderer)
+void GUIMainMenu::RenderBackground(Renderer *renderer, TextRenderer *textRenderer)
 {
     // render title
     textRenderer->RenderText("Lantarn", glm::vec2(300.0f, 50.0f), 7.0f, false, glm::vec4(1.0, 1.0, 1.0, 1.0f));
@@ -128,13 +128,13 @@ void GUIMainMenu::ButtonPressed(std::shared_ptr<GUIButton> pButton)
     std::string name = pButton->GetName();
     if (name == "btnStartGame")
     {   // send out start game event
-        std::shared_ptr<IEventData> pEvent(new Event_StartLevel("levels/begin.lvl"));
+        std::shared_ptr<IEventData> pEvent(new Event_StartLevel("levels/start.tmx"));
         GameApplication::GetInstance()->GetEventManager()->QueueEvent(pEvent);
         std::cout << "Button: StartGame event sent. " << std::endl;
     }
     else if (name == "btnContinue")
     {   // send out load game event
-        std::shared_ptr<IEventData> pEvent(new Event_StartLevel("levels/begin.lvl"));
+        std::shared_ptr<IEventData> pEvent(new Event_StartLevel("levels/start.tmx"));
         GameApplication::GetInstance()->GetEventManager()->QueueEvent(pEvent);
         std::cout << "Button: Continue event sent. " << std::endl;
     }

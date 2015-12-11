@@ -14,7 +14,7 @@ public:
 
     virtual void CalculateModel();
     virtual void Initialize(Scene *scene);
-    virtual void Render(Scene *scene);
+    virtual void Render(Scene *scene, Renderer *renderer);
 };
 
 
