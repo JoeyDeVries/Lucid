@@ -21,6 +21,12 @@ void Scene::Initialize()
     m_Root->Initialize(this);    
 }
 
+void Scene::Clear()
+{
+    m_Root.reset(new RootNode);
+    m_LightManager.reset(new LightManager);
+}
+
 void Scene::Restore()
 {
     if(m_Root)
@@ -44,7 +50,6 @@ void Scene::Render()
 {
     if (m_Root && m_Camera)
     {
-        m_Renderer->PreRender();
 		m_Camera->CalculateViewMatrix();
 		m_Root->Render(this);
     }

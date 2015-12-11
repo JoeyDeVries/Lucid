@@ -34,6 +34,15 @@ void AudioEngine::PlaySoundLocation(std::string name, glm::vec2 location, bool l
 	}
 }
 
+void AudioEngine::StopSound(std::string name)
+{
+    m_AudioEngine->removeSoundSource(name.c_str());
+}
+void AudioEngine::StopAll()
+{
+    m_AudioEngine->stopAllSounds();
+}
+
 void AudioEngine::PreLoad()
 {
 	m_AudioEngine->addSoundSourceFromFile("audio/ambient2.wav", irrklang::E_STREAM_MODE::ESM_AUTO_DETECT, true);

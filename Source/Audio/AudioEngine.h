@@ -15,6 +15,8 @@ public:
 
 	void PlaySound(std::string name, bool loop = false, float volume = 1.0f);
 	void PlaySoundLocation(std::string name, glm::vec2 location, bool loop = false, float volume = 1.0f);
+    void StopSound(std::string name);
+    void StopAll();
 	// pre-loads (large) sound-files
 	void PreLoad();
 };

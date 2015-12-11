@@ -29,6 +29,8 @@ b2Vec2 test;
 const GLuint GAME_WIDTH = 800, GAME_HEIGHT = 600;
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
+void mouse_move_callback(GLFWwindow *window, double x, double y);
+void mouse_button_callback(GLFWwindow *window, int button, int action, int mods);
 
 int main(int argc, char *argv[])
 {
@@ -49,7 +51,8 @@ int main(int argc, char *argv[])
 
     // - callbacks
     glfwSetKeyCallback(window, key_callback);
-
+    glfwSetCursorPosCallback(window, mouse_move_callback);
+    glfwSetMouseButtonCallback(window, mouse_button_callback);
 
     // - initialize GLEW
     glewExperimental = GL_TRUE;
@@ -76,7 +79,7 @@ int main(int argc, char *argv[])
 	GLuint fps = 0;
 	GLfloat time = 0.0f;
     // - game loop
-    while (!glfwWindowShouldClose(window))
+    while (!glfwWindowShouldClose(window) && GameApplication::GetInstance()->GetActive())
     {
         // - calculate time spent on last frame
         currentFrame = glfwGetTime();
@@ -129,4 +132,15 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
         else if(action == GLFW_RELEASE)
             GameApplication::GetInstance()->ProcessKeyboardUp(key);
     }
+}
+
+void mouse_move_callback(GLFWwindow *window, double x, double y)
+{
+    GameApplication::GetInstance()->ProcessMouseMove(x, y);
+}
+
+void mouse_button_callback(GLFWwindow *window, int button, int action, int mods)
+{
+    if(action == GLFW_PRESS)
+        GameApplication::GetInstance()->ProcessMouseClick(button = GLFW_MOUSE_BUTTON_LEFT);
 }

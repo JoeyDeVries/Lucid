@@ -34,6 +34,7 @@ public:
     virtual ~Scene();
 
     void Initialize();
+    void Clear();
     void Restore();
     void Update(float deltaTime);
     void Render();

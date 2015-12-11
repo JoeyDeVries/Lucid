@@ -1,7 +1,7 @@
 #include "Material.h"
 
 
-Material::Material() : m_ColorOverride(1.0, 1.0, 1.0), m_Alpha(0.0)
+Material::Material() : m_ColorOverride(1.0, 1.0, 1.0), m_Alpha(1.0)
 {
 
 }

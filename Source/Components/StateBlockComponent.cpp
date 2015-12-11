@@ -53,16 +53,16 @@ void StateBlockComponent::OnLightSwitched(std::shared_ptr<IEventData> eventData)
 		{	// Light state corresponds to color of the block, enable collision
 			GameApplication::GetInstance()->GetPhysics()->FindBody(m_Owner->GetID())->GetFixtureList()[0].SetSensor(false);
 			// Restore original alpha state
-			GameApplication::GetInstance()->GetScene()->GetSceneNode(m_Owner->GetID())->GetMaterial()->SetAlpha(0.0f);
+			GameApplication::GetInstance()->GetScene()->GetSceneNode(m_Owner->GetID())->GetMaterial()->SetAlpha(1.0f);
 		}
 		else
 		{	// Light state is different than color of this block, disable collision
 			GameApplication::GetInstance()->GetPhysics()->FindBody(m_Owner->GetID())->GetFixtureList()[0].SetSensor(true);
 			// Also make them less distinct by making them transparent (if not colored light)
 			if (pEvent->GetLightState() != LightState::WHITE)
-				GameApplication::GetInstance()->GetScene()->GetSceneNode(m_Owner->GetID())->GetMaterial()->SetAlpha(0.9f);
+				GameApplication::GetInstance()->GetScene()->GetSceneNode(m_Owner->GetID())->GetMaterial()->SetAlpha(0.15f);
 			else // if we have a white light, set transparency back to default
-				GameApplication::GetInstance()->GetScene()->GetSceneNode(m_Owner->GetID())->GetMaterial()->SetAlpha(0.0f);
+				GameApplication::GetInstance()->GetScene()->GetSceneNode(m_Owner->GetID())->GetMaterial()->SetAlpha(1.0f);
 		}
 		m_LastLightState = pEvent->GetLightState();
 	}
@@ -106,7 +106,7 @@ void StateBlockComponent::OnPostCollisionRemove(std::shared_ptr<IEventData> even
 			if (m_LastLightState == m_BlockColor)
 			{
 				GameApplication::GetInstance()->GetPhysics()->FindBody(m_Owner->GetID())->GetFixtureList()[0].SetSensor(false);
-				GameApplication::GetInstance()->GetScene()->GetSceneNode(m_Owner->GetID())->GetMaterial()->SetAlpha(0.0f);
+				GameApplication::GetInstance()->GetScene()->GetSceneNode(m_Owner->GetID())->GetMaterial()->SetAlpha(1.0f);
 			}
 		}
 	}

@@ -28,6 +28,11 @@ ResourceManager::~ResourceManager()
 
 std::shared_ptr<Shader> ResourceManager::LoadShader(std::string name, const char* vertexShaderSource, const char* fragmentShaderSource)
 {
+    // first check if shader has been loader already, if so; return earlier loaded texture
+    auto it = m_Shaders.find(name);
+    if (it != m_Shaders.end())
+        return it->second;
+
     std::shared_ptr<Shader> shader(new Shader);
     // 1. Retrieve the vertex/fragment source code from filePath
     std::string vertexCode;

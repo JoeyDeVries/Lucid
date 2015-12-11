@@ -28,6 +28,9 @@ inline bool file_exists(const std::string& name)
 
 bool MapLoader::LoadMap(ResourceManager *resources, Scene *scene, const char * tmxPath, float levelScale)
 {
+    // reset scenegraph
+    
+
 	XMLDocument doc;
 	if(doc.LoadFile(tmxPath) != XML_NO_ERROR)
 	{

@@ -18,6 +18,7 @@ void Camera::SetTarget(std::shared_ptr<SceneNode> target)
 {
 	m_Target = target;
 	m_CameraCenter = target->GetPosition();
+    m_CurrentPos = m_CameraCenter;
 }
 
 
@@ -43,11 +44,12 @@ void Camera::CalculateViewMatrix()
 	else if (targetPos.y + targetScale.y * 0.5 <= AABBCenter.y - AABBHalfWidths.y) // target at top side of box
 		m_CameraCenter.y -= (AABBCenter.y - AABBHalfWidths.y) - (targetPos.y + targetScale.y * 0.5);
 
-	// IDEA(Joey): slowly align the camera back to the target center (either always on, or after a given amount of time in the bounding box)
+	//slowly align the camera back to the target center (either always on, or after a given amount of time in the bounding box)
+    m_CurrentPos = glm::mix(m_CurrentPos, m_CameraCenter, 0.04f);
 
     glm::mat4 view;
 	//view = glm::translate(view, -glm::vec3(-center.x + targetPos.x + 0.5 * targetScale.x, -center.y + targetPos.y + 0.5 * targetScale.y, 0.0)); // center at target matrix
-	view = glm::translate(view, -glm::vec3(-center.x + m_CameraCenter.x, -center.y + m_CameraCenter.y, 0.0));
+	view = glm::translate(view, -glm::vec3(-center.x + m_CurrentPos.x, -center.y + m_CurrentPos.y, 0.0));
     m_View = view;
 }
 

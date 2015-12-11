@@ -11,6 +11,10 @@
 #include <glm/glm.hpp>
 
 
+// TODO(Joey): if using more hierarchy systems: cache parent-child world-transform
+// of current child node and re-calculate from parent when requested.
+// Use dirty bit/flag pattern to only re-calculate this if the local system
+// is marked dirty; otherwise use cached version.
 class Scene;
 
 class ISceneNode

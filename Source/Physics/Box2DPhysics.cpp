@@ -43,6 +43,8 @@ void Box2DPhysics::Initialize()
 void Box2DPhysics::Update()
 {
     m_World->Step(1.0f / 60.0f, 6, 2);
+
+    // TODO(Joey): make function that removes bodies that were scheduled for removal as to not remove them instantly
 }
 
 bool IsVec2Equal(glm::vec2 a, glm::vec2 b, float range = 0.005)
@@ -195,7 +197,7 @@ void Box2DPhysics::AddCharacter(std::shared_ptr<Actor> actor, float density)
 
 void Box2DPhysics::RemoveActor(unsigned int ActorID)
 {
-
+    //m_World->DestroyBody(m_ActorIDToBody[ActorID]); // TODO(Joey): schedule them for later removal instead of instantly removing them
 }
 
 void Box2DPhysics::RenderDiagnostics()
@@ -246,20 +248,6 @@ float Box2DPhysics::GetBodyMass(unsigned int ActorID)
 // Check collisions between all fixtures of two bodies
 bool Box2DPhysics::IsBodiesColliding(const b2Body* bodyA, const b2Body* bodyB)
 {
-	// calculate both AABBs and determine collision manually
-	//b2AABB AABBa, AABBb;
-	//AABBa.lowerBound = b2Vec2(FLT_MAX, FLT_MAX);
-	//AABBa.upperBound = b2Vec2(-FLT_MAX, -FLT_MAX);
-	//AABBb.lowerBound = b2Vec2(FLT_MAX, FLT_MAX);
-	//AABBb.upperBound = b2Vec2(-FLT_MAX, -FLT_MAX);
-	//for (const b2Fixture* fixture = bodyA->GetFixtureList(); fixture; fixture = fixture->GetNext())
-	//	if(!fixture->IsSensor())
-	//		AABBa.Combine(AABBa, fixture->GetAABB(0));
-	//for (const b2Fixture* fixture = bodyB->GetFixtureList(); fixture; fixture = fixture->GetNext())
-	//	if(!fixture->IsSensor())
-	//		AABBb.Combine(AABBb, fixture->GetAABB(0));
-	//return AABBa.Contains(AABBb) && AABBb.Contains(AABBa);
-
 	bool isColliding = false;
 	// iterate through both fixture lists to determine if entire bodies collide
 	for (const b2Fixture* fixA = bodyA->GetFixtureList(); fixA; fixA = fixA->GetNext())
@@ -281,30 +269,5 @@ bool Box2DPhysics::IsBodiesColliding(const b2Body* bodyA, const b2Body* bodyB)
 	}
 	return isColliding;
 }
-
-//bool Box2DPhysics::IsTouchingGround(unsigned int ActorID)
-//{
-//	b2Body* character = FindBody(ActorID);
-//
-//	for (auto it = m_Collisions.begin(); it != m_Collisions.end(); it++)
-//	{
-//		b2Fixture * fixtureA = (*it)->GetFixtureA();
-//		b2Fixture * fixtureB = (*it)->GetFixtureB();
-//
-//		if ((*it)->IsTouching())
-//		{
-//			// make sure only one of the two has a sensor
-//			//if (!(fixtureA->IsSensor() ^ fixtureB->IsSensor()))
-//				//return false;
-//			if (fixtureA->GetBody() == character || character == fixtureB->GetBody())
-//			{	// we have a collision with the character body
-//				if (fixtureA->IsSensor() || fixtureB->IsSensor())
-//					return true;
-//			}
-//		}
-//	}
-//	return false;
-//}
-
 
 

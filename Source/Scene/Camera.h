@@ -18,6 +18,7 @@ protected:
     glm::mat4 m_View;
     std::shared_ptr<SceneNode> m_Target;
 	glm::vec2 m_CameraCenter;
+    glm::vec2 m_CurrentPos; // store current pos for adaptive camera movement to m_CameraCenter
 public:
     Camera();
 

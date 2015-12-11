@@ -75,6 +75,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Application\Event_QuitGame.cpp" />
+    <ClCompile Include="Application\Event_StartLevel.cpp" />
     <ClCompile Include="Application\GameApplication.cpp" />
     <ClCompile Include="Audio\AudioEngine.cpp" />
     <ClCompile Include="Communication\EventManager.cpp" />
@@ -88,6 +90,10 @@
     <ClCompile Include="Components\LightSwitchComponent.cpp" />
     <ClCompile Include="Components\StateBlockComponent.cpp" />
     <ClCompile Include="Components\TransformComponent.cpp" />
+    <ClCompile Include="GUI\GUIButton.cpp" />
+    <ClCompile Include="GUI\GUIContainer.cpp" />
+    <ClCompile Include="GUI\GUIElement.cpp" />
+    <ClCompile Include="GUI\GUIMainMenu.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Physics\Box2DPhysics.cpp" />
     <ClCompile Include="Physics\Event_ActorMoved.cpp" />
@@ -114,6 +120,9 @@
     <ClCompile Include="Scene\Scene.cpp" />
     <ClCompile Include="Scene\SceneNode.cpp" />
     <ClCompile Include="Scene\SpriteNode.cpp" />
+    <ClInclude Include="Application\Event_QuitGame.h" />
+    <ClInclude Include="Application\Event_StartLevel.h" />
+    <ClInclude Include="Application\GameState.h" />
     <ClInclude Include="Audio\AudioEngine.h" />
     <ClInclude Include="Communication\EventManager.h" />
     <ClInclude Include="Components\CompleteCheckComponent.h" />
@@ -125,6 +134,10 @@
     <ClInclude Include="Components\LightSwitchComponent.h" />
     <ClInclude Include="Components\StateBlockComponent.h" />
     <ClInclude Include="FastDelegate.h" />
+    <ClInclude Include="GUI\GUIButton.h" />
+    <ClInclude Include="GUI\GUIContainer.h" />
+    <ClInclude Include="GUI\GUIElement.h" />
+    <ClInclude Include="GUI\GUIMainMenu.h" />
     <ClInclude Include="Physics\Box2DContactListener.h" />
     <ClInclude Include="Physics\Box2DDebugDrawer.h" />
     <ClInclude Include="Physics\Box2DPhysics.h" />
