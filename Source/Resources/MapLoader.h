@@ -23,6 +23,7 @@ private:
 	bool processTileData(Scene *scene, XMLElement *tileData, glm::vec2 pos, glm::vec2 scale, int depth, bool physics);
 	bool processGameObject(ResourceManager *resources, Scene *scene, XMLElement *gameObject, float mapScale);
 	bool processStaticDefaults(ResourceManager *resources, Scene *scene);
+    std::string getProperty(XMLElement *object, std::string property);
 public:
 	MapLoader();
 	~MapLoader();

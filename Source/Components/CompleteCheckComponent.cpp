@@ -29,6 +29,15 @@ void CompleteCheckComponent::VUpdate(float delta)
 
 }
 
+std::string CompleteCheckComponent::GetNextLevelString()
+{
+    return m_NextLevelString;
+}
+void CompleteCheckComponent::SetNextLevelString(std::string levelPath)
+{
+    m_NextLevelString = levelPath;
+}
+
 void CompleteCheckComponent::OnPostCollisionAdd(std::shared_ptr<IEventData> eventData)
 {
 	std::shared_ptr<Event_PostCollisionAdd> data = std::dynamic_pointer_cast<Event_PostCollisionAdd>(eventData);
@@ -43,7 +52,7 @@ void CompleteCheckComponent::OnPostCollisionAdd(std::shared_ptr<IEventData> even
 		const b2Body* bodyB = contact->GetFixtureB()->GetBody();
 		if ((bodyA == currentBody && bodyB == playerBody) || (bodyA == playerBody && bodyB == currentBody))
 		{	// both relevant bodies collided, send level complete event
-			GameApplication::GetInstance()->GetEventManager()->QueueEvent(std::shared_ptr<Event_StartLevel>(new Event_StartLevel("levels/start.tmx")));
+			GameApplication::GetInstance()->GetEventManager()->QueueEvent(std::shared_ptr<Event_StartLevel>(new Event_StartLevel(m_NextLevelString)));
 		}
 	}
 }

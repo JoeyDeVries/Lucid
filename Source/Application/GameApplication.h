@@ -62,6 +62,7 @@ public:
     ~GameApplication();
 
     void Initialize(float width, float height);
+    void CleanUp();
     std::shared_ptr<Actor> CreateActor(DEFAULT_ACTOR_TYPES type);
     std::shared_ptr<Actor> GetActor(ActorID actorID);
     void				   SetImportantActor(std::string, std::shared_ptr<Actor> actor);
@@ -75,6 +76,7 @@ public:
     void ProcessMouseMove(float x, float y);
     void ProcessMouseClick(bool leftButton);
     bool IsKeyPressed(char key, bool check_once = false);
+
 
     bool GetActive() { return m_Active; }
     float& ScreenWidth() { return m_ScreenWidth; }

@@ -8,6 +8,7 @@
 #include "../Scene/SpriteNode.h"
 #include "../Scene/LightNode.h"
 #include "../Components/StateBlockComponent.h"
+#include "../Components/CompleteCheckComponent.h"
 
 
 MapLoader::MapLoader()
@@ -222,21 +223,32 @@ bool MapLoader::processGameObject(ResourceManager *resources, Scene *scene, XMLE
 	}
 	else if (type == "Finish") // end point
 	{
-		// define actor
-		std::shared_ptr<Actor> actor = GameApplication::GetInstance()->CreateActor(DEFAULT_ACTOR_TYPES::ACTOR_COMPLETE_CHECK);
-		actor->SetPosition(position);
-		actor->SetScale(scale);
-		actor->SetDepth(4); 
-		// set material
-		material->SetDiffuse(resources->LoadTexture("flag", "textures/flag.png", true)); 
-		material->SetSpecular(resources->LoadTexture("specular", "textures/specular.png"));
-		material->SetNormal(resources->LoadTexture("flag_normal", "textures/flag_normal.png"));
-		// create node
-		std::shared_ptr<SpriteNode> node(new SpriteNode(actor->GetID(), "finish", "main", position, actor->GetDepth(), scale));
-		node->SetMaterial(material);
-		scene->AddChild(actor->GetID(), node);
-		// set physics
-		GameApplication::GetInstance()->GetPhysics()->AddBox(actor, 1.0, false, true, true, 0.1f);
+        std::string NextLevel = getProperty(gameObject, "NextLevel");
+        if (NextLevel != "")
+        {
+            // define actor
+            std::shared_ptr<Actor> actor = GameApplication::GetInstance()->CreateActor(DEFAULT_ACTOR_TYPES::ACTOR_COMPLETE_CHECK);
+            actor->SetPosition(position);
+            actor->SetScale(scale);
+            actor->SetDepth(4);
+            // set material
+            material->SetDiffuse(resources->LoadTexture("flag", "textures/flag.png", true));
+            material->SetSpecular(resources->LoadTexture("specular", "textures/specular.png"));
+            material->SetNormal(resources->LoadTexture("flag_normal", "textures/flag_normal.png"));
+            // create node
+            std::shared_ptr<SpriteNode> node(new SpriteNode(actor->GetID(), "finish", "main", position, actor->GetDepth(), scale));
+            node->SetMaterial(material);
+            scene->AddChild(actor->GetID(), node);
+            // set physics
+            GameApplication::GetInstance()->GetPhysics()->AddBox(actor, 1.0, false, true, true, 0.1f);
+            // set the next level attribute of the LevelComplete component to the map-defined level path
+            std::weak_ptr<CompleteCheckComponent> pWeakComponent = actor->GetComponent<CompleteCheckComponent>("CompleteCheck");
+            std::shared_ptr<CompleteCheckComponent> pComponent(pWeakComponent);
+            if (pComponent)
+            {
+                pComponent->SetNextLevelString(NextLevel);
+            }
+        }
 	}
 	else if (type == "StateBlock")
 	{
@@ -325,4 +337,21 @@ bool MapLoader::processGameObject(ResourceManager *resources, Scene *scene, XMLE
 		}
 	}
 	return true;
+}
+
+std::string MapLoader::getProperty(XMLElement *object, std::string property)
+{
+    std::string value = "";
+    XMLElement *properties = object->FirstChildElement("properties");
+    if (properties)
+    {
+        XMLElement *element = properties->FirstChildElement("property");
+        while (element)
+        {
+            if(std::string(element->Attribute("name")) == property)
+                value = std::string(element->Attribute("value"));
+            element = element->NextSiblingElement();
+        }
+    }
+    return value;
 }

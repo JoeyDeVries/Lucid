@@ -25,18 +25,7 @@ GameApplication::GameApplication() : m_Active(true)
 
 GameApplication::~GameApplication()
 {
-	// de-register global game events
-	EventListenerDelegate eventListener = fastdelegate::MakeDelegate(this, &GameApplication::OnLevelComplete);
-	GetEventManager()->RemoveListener(eventListener, Event_LevelComplete::s_EventType);
-
-	// clean-up
-    delete m_Scene;
-    delete m_Renderer;
-    delete m_EventManager;
-    delete m_ActorFactory;
-    delete m_Physics;
-	delete m_Audio;
-	delete m_TextRenderer;
+    // can't delete pointers here as other destructors still need GameApplication (for de-registering events for example)
 }
 
 void GameApplication::Initialize(float width, float height)
@@ -83,6 +72,22 @@ void GameApplication::Initialize(float width, float height)
 
     // Start game in main menu
 	switchState(GameState::GAME_MAIN_MENU);
+}
+
+void GameApplication::CleanUp()
+{
+    // de-register global game events
+    EventListenerDelegate eventListener = fastdelegate::MakeDelegate(this, &GameApplication::OnLevelComplete);
+    GetEventManager()->RemoveListener(eventListener, Event_LevelComplete::s_EventType);
+
+    // clean-up
+    delete m_Scene;
+    delete m_Renderer;
+    delete m_EventManager;
+    delete m_ActorFactory;
+    delete m_Physics;
+    delete m_Audio;
+    delete m_TextRenderer;
 }
 
 std::shared_ptr<Actor> GameApplication::CreateActor(DEFAULT_ACTOR_TYPES type)

@@ -26,6 +26,7 @@ public:
     virtual bool Init() = 0;
     virtual void Update(float deltaTime) = 0;
     virtual void Render(Renderer *renderer, TextRenderer *textRenderer, std::shared_ptr<Camera> camera);
+    // template method pattern: allow GUI systems to override RenderBackground
     virtual void RenderBackground(Renderer *renderer, TextRenderer *textRenderer);
 
     virtual void OnActivate();
