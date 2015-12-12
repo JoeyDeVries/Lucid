@@ -36,7 +36,7 @@ void GameApplication::Initialize(float width, float height)
     m_Physics->Initialize();
     // Initialize renderer
     m_Renderer->Initialize();
-    m_Scene->GetCamera()->SetProjection(width, height, 0.0, 50.0f);
+    m_Scene->GetCamera()->SetProjection(width, height, 0.0, 50.0f); // has to be initialized first as its projection is also used by GUI menus
     // Load default placeholder textures/shaders before loading level
 	ResourceManager::GetInstance()->LoadShader("sprite", "shaders/sprite.vs", "shaders/sprite.frag")->SetInteger("EnableLighting", 1, true);
     ResourceManager::GetInstance()->LoadTexture("specular", "textures/specular.png");
@@ -93,8 +93,10 @@ void GameApplication::CleanUp()
 std::shared_ptr<Actor> GameApplication::CreateActor(DEFAULT_ACTOR_TYPES type)
 {
     std::shared_ptr<Actor> actor = m_ActorFactory->CreateActor(type);
-	m_Actors[actor->GetID()] = actor;
-    //m_Actors.push_back(actor);
+    // if we have an emtpy actor type, no need to add it to list of actors.
+    // empty actors act merely as decoration and don't need processing
+    if(type != DEFAULT_ACTOR_TYPES::ACTOR_EMPTY) 
+	    m_Actors[actor->GetID()] = actor;
     return actor;
 }
 

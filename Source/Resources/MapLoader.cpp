@@ -149,7 +149,7 @@ bool MapLoader::processTileData(Scene *scene, XMLElement *tile, glm::vec2 pos, g
 		// retrieve material from gid
 		std::shared_ptr<Material> material = m_IDToMaterial[gid - 1];
 		// create game actor
-		std::shared_ptr<Actor> actor = GameApplication::GetInstance()->CreateActor(DEFAULT_ACTOR_TYPES::ACTOR_STATIC);
+		std::shared_ptr<Actor> actor = GameApplication::GetInstance()->CreateActor(physics ? DEFAULT_ACTOR_TYPES::ACTOR_STATIC : DEFAULT_ACTOR_TYPES::ACTOR_EMPTY);
 		actor->SetPosition(pos);
 		actor->SetScale(scale);
 		actor->SetDepth(depth);

@@ -26,6 +26,15 @@ bool GUIContainer::IsActive()
 {
     return m_IsActive;
 }
+glm::vec2 GUIContainer::GetPosition()
+{
+    return m_Position;
+}
+glm::vec2 GUIContainer::GetScale()
+{
+    return m_Scale;
+}
+
 void GUIContainer::SetActive(bool active)
 {
     bool changed = m_IsActive != active;
@@ -34,6 +43,14 @@ void GUIContainer::SetActive(bool active)
         OnActivate();
     else if(changed)
         OnDeactivate();
+}
+void GUIContainer::SetPosition(glm::vec2 position)
+{
+    m_Position = position;
+}
+void GUIContainer::SetScale(glm::vec2 scale)
+{
+    m_Scale = scale;
 }
 
 void GUIContainer::Render(Renderer *renderer, TextRenderer *textRenderer, std::shared_ptr<Camera> camera)

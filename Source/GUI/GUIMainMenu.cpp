@@ -12,10 +12,12 @@ GUIMainMenu::GUIMainMenu()
 
 bool GUIMainMenu::Init()
 {
+    SetScale(glm::vec2(GameApplication::GetInstance()->ScreenWidth(), GameApplication::GetInstance()->ScreenHeight()));
+
     // start game
     std::shared_ptr<GUIButton> btnStartGame(new GUIButton);
     btnStartGame->SetName("btnStartGame");
-    btnStartGame->SetPosition(glm::vec2(275.0f, 200.0f));
+    btnStartGame->SetPosition(glm::vec2(250.0f, 200.0f));
     btnStartGame->SetScale(glm::vec2(300.0f, 50.0f));
     btnStartGame->SetForeColor(glm::vec4(glm::vec3(0.6f), 1.0f));
     btnStartGame->SetHoverColor(glm::vec4(1.0f));
@@ -23,23 +25,23 @@ bool GUIMainMenu::Init()
     // load game
     std::shared_ptr<GUIButton> btnContinue(new GUIButton);
     btnContinue->SetName("btnContinue");
-    btnContinue->SetPosition(glm::vec2(300.0f, 275.0f));
-    btnContinue->SetScale(glm::vec2(250.0f, 50.0f));
+    btnContinue->SetPosition(glm::vec2(250.0f, 275.0f));
+    btnContinue->SetScale(glm::vec2(300.0f, 50.0f));
     btnContinue->SetForeColor(glm::vec4(glm::vec3(0.6f), 1.0f));
     btnContinue->SetHoverColor(glm::vec4(1.0f));
     btnContinue->SetText("Continue");
     // options
     std::shared_ptr<GUIButton> btnOptions(new GUIButton);
     btnOptions->SetName("btnOptions");
-    btnOptions->SetPosition(glm::vec2(308.0f, 340.0f));
-    btnOptions->SetScale(glm::vec2(250.0f, 75.0f));
+    btnOptions->SetPosition(glm::vec2(250.0f, 340.0f));
+    btnOptions->SetScale(glm::vec2(300.0f, 50.0f));
     btnOptions->SetForeColor(glm::vec4(glm::vec3(0.6f), 1.0f));
     btnOptions->SetHoverColor(glm::vec4(1.0f));
     btnOptions->SetText("Options");
     // quit
     std::shared_ptr<GUIButton> btnQuit(new GUIButton);
     btnQuit->SetName("btnQuit");
-    btnQuit->SetPosition(glm::vec2(275.0f, 415.0f));
+    btnQuit->SetPosition(glm::vec2(250.0f, 415.0f));
     btnQuit->SetScale(glm::vec2(300.0f, 50.0f));
     btnQuit->SetForeColor(glm::vec4(glm::vec3(0.6f), 1.0f));
     btnQuit->SetHoverColor(glm::vec4(1.0f));
@@ -66,7 +68,8 @@ void GUIMainMenu::Update(float deltaTime)
 void GUIMainMenu::RenderBackground(Renderer *renderer, TextRenderer *textRenderer)
 {
     // render title
-    textRenderer->RenderText("Lantarn", glm::vec2(300.0f, 50.0f), 7.0f, false, glm::vec4(1.0, 1.0, 1.0, 1.0f));
+    //textRenderer->RenderText("Lantarn", glm::vec2(300.0f, 50.0f), 7.0f, false, glm::vec4(1.0, 1.0, 1.0, 1.0f));
+    textRenderer->RenderText("Lantarn", glm::vec2(0.0f, 0.0f), 7.0f, false, glm::vec4(1.0, 1.0, 1.0, 1.0f), glm::vec2(m_Scale.x, 100.0f));
 
     // render background image + three animated sprites
     std::shared_ptr<Shader> spriteShader = ResourceManager::GetInstance()->GetShader("sprite");

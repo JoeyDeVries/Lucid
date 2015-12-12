@@ -30,9 +30,12 @@ void SpriteNode::Initialize(Scene *scene)
 		}
 	}
 
-    // register for ActorMoved events to update render data based on physics
-    EventListenerDelegate listener = fastdelegate::MakeDelegate(this, &SpriteNode::ActorMoved);
-    GameApplication::GetInstance()->GetEventManager()->AddListener(listener, Event_ActorMoved::s_EventType);
+    // register for ActorMoved events to update render data based on physics if physics is enabled
+    if (GameApplication::GetInstance()->GetPhysics()->FindBody(m_ActorID))
+    {
+        EventListenerDelegate listener = fastdelegate::MakeDelegate(this, &SpriteNode::ActorMoved);
+        GameApplication::GetInstance()->GetEventManager()->AddListener(listener, Event_ActorMoved::s_EventType);
+    }
 
     // call base intialize function (to initialize all children)
     SceneNode::Initialize(scene);

@@ -1,4 +1,5 @@
 #include "GUIButton.h"
+#include "../Application/GameApplication.h"
 
 GUIButton::GUIButton()
 {
@@ -42,5 +43,5 @@ void GUIButton::Render(Renderer *renderer, TextRenderer* textRenderer, std::shar
     }
     // always render text (GUIButtons are by default text w/ box)
     // TODO(Joey): allow for text to center (should be included in TextRenderer)
-    textRenderer->RenderText(m_Text, m_Position + m_Scale * 0.2f, 3.5f, false, m_MouseEntered ? m_HoverColor : m_ForeColor);
+    textRenderer->RenderText(m_Text, m_Position, 3.5f, false, m_MouseEntered ? m_HoverColor : m_ForeColor, m_Scale);
 }

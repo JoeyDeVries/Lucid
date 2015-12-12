@@ -17,11 +17,19 @@ protected:
     void AddElement(std::shared_ptr<GUIElement> element);
     void RemoveElement(std::shared_ptr<GUIElement> element);
     bool m_IsActive;
+
+    glm::vec2 m_Position;
+    glm::vec2 m_Scale;
 public:
     GUIContainer();
 
     bool IsActive();
+    glm::vec2 GetPosition();
+    glm::vec2 GetScale();
+
     void SetActive(bool active);
+    void SetPosition(glm::vec2 position);
+    void SetScale(glm::vec2 scale);
 
     virtual bool Init() = 0;
     virtual void Update(float deltaTime) = 0;

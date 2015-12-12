@@ -38,7 +38,7 @@ std::shared_ptr<Actor> ActorFactory::CreateActor(DEFAULT_ACTOR_TYPES actorType)
         actor = std::shared_ptr<Actor>(new Actor());
         actor->setID(++m_lastActorID);
         return actor;
-    case ACTOR_STATIC:
+    case ACTOR_STATIC: // for empty (no-interaction) objects (like graphics tiles and/or background)
     {
         actor = std::shared_ptr<Actor>(new Actor());
         actor->setID(++m_lastActorID);

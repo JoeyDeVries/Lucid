@@ -111,12 +111,18 @@ void Box2DPhysics::Reset()
 
 b2Body* Box2DPhysics::FindBody(ActorID actorID)
 {
-    return m_ActorIDToBody[actorID];
+    if(m_ActorIDToBody.find(actorID) != m_ActorIDToBody.end())
+        return m_ActorIDToBody[actorID];
+    else
+        return nullptr;
 }
 
 unsigned int Box2DPhysics::FindActorID(b2Body* body)
 {
-    return m_BodyToActorID[body];
+    if (m_BodyToActorID.find(body) != m_BodyToActorID.end())
+        return m_BodyToActorID.at(body);
+    else
+        return 0;
 }
 
 void Box2DPhysics::AddSphere(float radius, std::shared_ptr<Actor> actor, float density, bool dynamic, bool isSensor)
