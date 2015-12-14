@@ -94,6 +94,7 @@ public:
 	void OnLevelComplete(std::shared_ptr<IEventData> eventData);
     void OnStartLevel(std::shared_ptr<IEventData> eventData);
     void OnQuitGame(std::shared_ptr<IEventData> eventData);
+    void OnDestroyActor(std::shared_ptr<IEventData> eventData);
 };
 
 

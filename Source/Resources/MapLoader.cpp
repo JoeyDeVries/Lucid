@@ -9,6 +9,7 @@
 #include "../Scene/LightNode.h"
 #include "../Components/StateBlockComponent.h"
 #include "../Components/CompleteCheckComponent.h"
+#include "../Components/TextOnTouchComponent.h"
 
 
 MapLoader::MapLoader()
@@ -96,7 +97,7 @@ bool MapLoader::LoadMap(ResourceManager *resources, Scene *scene, const char * t
 		XMLElement *object = gameObjects->FirstChildElement("object");
 		while (object)
 		{
-			if (!processGameObject(resources, scene, object, levelScale))
+			if (!processGameObject(resources, scene, object, glm::vec2(tileWidth, tileHeight), levelScale))
 			{
 				std::cout << "Failed processing GameObject" << std::endl;
 				return false;
@@ -174,7 +175,7 @@ bool MapLoader::processTileData(Scene *scene, XMLElement *tile, glm::vec2 pos, g
 	return true;
 }
 
-bool MapLoader::processGameObject(ResourceManager *resources, Scene *scene, XMLElement *gameObject, float mapScale)
+bool MapLoader::processGameObject(ResourceManager *resources, Scene *scene, XMLElement *gameObject, glm::vec2 tileScale, float mapScale)
 {
 	std::string type = std::string(gameObject->Attribute("type"));
 	int x = gameObject->IntAttribute("x");
@@ -186,41 +187,16 @@ bool MapLoader::processGameObject(ResourceManager *resources, Scene *scene, XMLE
 	// process gameobjects differently based on type
 	std::shared_ptr<Material> material = std::shared_ptr<Material>(new Material());
 	material->SetShader(resources->GetShader("sprite"));
-	if (type == "Spawn") // player spawn
-	{
-		// define actor
-		std::shared_ptr<Actor> actor = GameApplication::GetInstance()->CreateActor(DEFAULT_ACTOR_TYPES::ACTOR_PLAYER);
-		actor->SetPosition(position);
-		actor->SetScale(scale);
-		actor->SetDepth(5); // TODO(Joey): seperate render depth from light depth and customize light depth individually
-		GameApplication::GetInstance()->SetImportantActor("player", actor);
-		// set material
-		material->SetDiffuse(resources->LoadTexture("player", "textures/player.png", true));
-		material->SetSpecular(resources->LoadTexture("player_specular", "textures/player_specular.png"));
-		material->SetNormal(resources->LoadTexture("player_normal", "textures/player_normal.png"));
-		// create node
-		std::shared_ptr<SpriteNode> node(new SpriteNode(actor->GetID(), "player", "main", position, actor->GetDepth(), actor->GetScale()));
-		node->SetMaterial(material);
-		// create lantern and attach to player
-		std::shared_ptr<Actor> lantern = GameApplication::GetInstance()->CreateActor(DEFAULT_ACTOR_TYPES::ACTOR_LANTERN);
-		lantern->SetPosition(position + scale * 12.0f); // general offset to player pos
-		lantern->SetDepth(10); 
-		GameApplication::GetInstance()->SetImportantActor("lantern", lantern);
-		std::shared_ptr<LightNode> lanternNode(
-			new LightNode(lantern->GetID(), "lantern", "light", lantern->GetPosition(), lantern->GetDepth(), actor->GetScale(),
-				glm::vec3(2.0, 2.0, 2.0), glm::vec3(1.0, 1.0, 1.0), 250.0f)
-			);
-		// ... we don't need a material/shader as the lantern itself won't be renderable (IDEA(Joey): render lantern; could be interesting)
-		node->AddChild(lanternNode);
-		scene->GetLightManager()->AddLight(lanternNode);
-		scene->AddChild(lantern->GetID(), lanternNode);
-		scene->AddChild(actor->GetID(), node);
-		// set physics
-		GameApplication::GetInstance()->GetPhysics()->AddCharacter(actor, 1.0f);
-		// point camera at player spawn
-		GameApplication::GetInstance()->GetScene()->GetCamera()->SetTarget(node);
-
-	}
+    if (type == "Deathtouch")
+    {
+        // define actor
+        std::shared_ptr<Actor> actor = GameApplication::GetInstance()->CreateActor(DEFAULT_ACTOR_TYPES::ACTOR_DEATHTOUCH);
+        actor->SetPosition(position);
+        actor->SetScale(scale);
+        actor->SetDepth(4);
+        // deathtouch aren't rendered, but simply act as collision sensors (no need to build scenenode)
+        GameApplication::GetInstance()->GetPhysics()->AddBox(actor, 1.0, false, true, true, 0.5f);
+    }
 	else if (type == "Finish") // end point
 	{
         std::string NextLevel = getProperty(gameObject, "NextLevel");
@@ -250,92 +226,190 @@ bool MapLoader::processGameObject(ResourceManager *resources, Scene *scene, XMLE
             }
         }
 	}
-	else if (type == "StateBlock")
-	{
-		XMLElement *properties = gameObject->FirstChildElement();
-		if (properties)
-		{
-			XMLElement *property = properties->FirstChildElement("property");
-			if (property)
-			{
-				std::string color = std::string(property->Attribute("value"));
-				// define actor
-				std::shared_ptr<Actor> actor = GameApplication::GetInstance()->CreateActor(DEFAULT_ACTOR_TYPES::ACTOR_STATE_BLOCK);
-				actor->SetPosition(position);
-				actor->SetScale(scale);
-				actor->SetDepth(2);
-				// set material
-				material->SetDiffuse(resources->LoadTexture("block_color", "textures/stone_color.png", true));
-				material->SetSpecular(resources->LoadTexture("block_specular", "textures/stone_specular.png"));
-				material->SetNormal(resources->LoadTexture("block_normal", "textures/stone_normal.png"));
-				// create node
-				std::shared_ptr<SpriteNode> node(new SpriteNode(actor->GetID(), "state_block", "main", position, actor->GetDepth(), scale));
-				node->SetMaterial(material);
-				scene->AddChild(actor->GetID(), node);
-				// set physics
-				GameApplication::GetInstance()->GetPhysics()->AddBox(actor, 1.0);
-				GameApplication::GetInstance()->GetPhysics()->FindBody(actor->GetID())->GetFixtureList()[0].SetSensor(true);
+    else if (type == "Light")
+    {
+        XMLElement *properties = gameObject->FirstChildElement("properties");
+        if (properties)
+        {
+            XMLElement *property = properties->FirstChildElement("property");
+            float d_r = property->FloatAttribute("value"); property = property->NextSiblingElement();
+            float d_g = property->FloatAttribute("value"); property = property->NextSiblingElement();
+            float d_b = property->FloatAttribute("value"); property = property->NextSiblingElement();
+            float s_r = property->FloatAttribute("value"); property = property->NextSiblingElement();
+            float s_g = property->FloatAttribute("value"); property = property->NextSiblingElement();
+            float s_b = property->FloatAttribute("value");
+            glm::vec3 diffuse(d_r, d_g, d_b);
+            glm::vec3 specular(s_r, s_g, s_b);
+            // define actor
+            std::shared_ptr<Actor> actor = GameApplication::GetInstance()->CreateActor(DEFAULT_ACTOR_TYPES::ACTOR_STATIC);
+            actor->SetPosition(position);
+            actor->SetScale(scale);
+            actor->SetDepth(9);  // TODO(Joey): seperate render depth from light depth and customize light depth individually
+                                 // set material
+            material->SetDiffuse(resources->LoadTexture("light-anim", "textures/animations/fire-anim.png", true));
+            material->SetSpecular(resources->GetTexture("specular"));
+            material->SetNormal(resources->GetTexture("normal"));
+            // create node
+            std::shared_ptr<LightNode> node(new LightNode(actor->GetID(), "light", "light", position, actor->GetDepth(), scale, diffuse, specular, 250.0f));
+            node->SetMaterial(material);
+            scene->AddChild(actor->GetID(), node);
+            // light has animation, specify animation
+            std::shared_ptr<Animation> lightAnim = resources->LoadAnimation("textures/animations/fire-anim.anim");
+            if (lightAnim)
+            {
+                node->SetAnimation(true);
+                node->AddAnimation(lightAnim);
+            }
+        }
+    }
+    else if (type == "Moveable")
+    {
+        std::string color = getProperty(gameObject, "Color");
+        if (color != "")
+        {
+            glm::vec2 startPos = position;
+            glm::vec2 endPos = position + scale - tileScale;
 
-				// configure state blocks based on color type
-				std::weak_ptr<StateBlockComponent> pWeakComponent = actor->GetComponent<StateBlockComponent>("StateBlock");
-				std::shared_ptr<StateBlockComponent> pComponent = std::shared_ptr<StateBlockComponent>(pWeakComponent);		
-				if (pComponent)
-				{
-					if (color == "R")
-					{
-						material->SetColorOverride(glm::vec3(1.0, 0.5, 0.5));
-						pComponent->SetBlockColor(LightState::RED);
-					}
-					else if (color == "G")
-					{
-						material->SetColorOverride(glm::vec3(0.5, 1.0, 0.5));
-						pComponent->SetBlockColor(LightState::GREEN);
-					}
-					else if (color == "B")
-					{
-						material->SetColorOverride(glm::vec3(0.5, 0.5, 1.0));
-						pComponent->SetBlockColor(LightState::BLUE);
-					}
-				}
-			}
-		}
-	}
-	else if (type == "Light")
-	{
-		XMLElement *properties = gameObject->FirstChildElement("properties");
-		if (properties)
-		{
-			XMLElement *property = properties->FirstChildElement("property");
-			float d_r = property->FloatAttribute("value"); property = property->NextSiblingElement();
-			float d_g = property->FloatAttribute("value"); property = property->NextSiblingElement();
-			float d_b = property->FloatAttribute("value"); property = property->NextSiblingElement();
-			float s_r = property->FloatAttribute("value"); property = property->NextSiblingElement();
-			float s_g = property->FloatAttribute("value"); property = property->NextSiblingElement();
-			float s_b = property->FloatAttribute("value"); 
-			glm::vec3 diffuse(d_r, d_g, d_b);
-			glm::vec3 specular(s_r, s_g, s_b);
-			// define actor
-			std::shared_ptr<Actor> actor = GameApplication::GetInstance()->CreateActor(DEFAULT_ACTOR_TYPES::ACTOR_STATIC);
-			actor->SetPosition(position);
-			actor->SetScale(scale);
-			actor->SetDepth(9);  // TODO(Joey): seperate render depth from light depth and customize light depth individually
-			// set material
-			material->SetDiffuse(resources->LoadTexture("light-anim", "textures/animations/fire-anim.png", true));
-			material->SetSpecular(resources->GetTexture("specular"));
-			material->SetNormal(resources->GetTexture("normal"));
-			// create node
-			std::shared_ptr<LightNode> node(new LightNode(actor->GetID(), "light", "light", position, actor->GetDepth(), scale, diffuse, specular, 250.0f));
-			node->SetMaterial(material);
-			scene->AddChild(actor->GetID(), node);
-			// light has animation, specify animation
-			std::shared_ptr<Animation> lightAnim = resources->LoadAnimation("textures/animations/fire-anim.anim");
-			if (lightAnim)
-			{
-				node->SetAnimation(true);
-				node->AddAnimation(lightAnim);
-			}
-		}
-	}
+            // define actor
+            std::shared_ptr<Actor> actor = GameApplication::GetInstance()->CreateActor(DEFAULT_ACTOR_TYPES::ACTOR_MOVE_LOOP);
+            // set actor/scene/physucs to tile dimensions and not given scale (as this will always be equal or larger than tile dimensions)
+            actor->SetPosition(position);
+            actor->SetScale(tileScale);
+            actor->SetDepth(2);
+            // set material
+            material->SetDiffuse(resources->LoadTexture("block_color", "textures/stone_color.png"));
+            material->SetSpecular(resources->LoadTexture("block_specular", "textures/stone_specular.png"));
+            material->SetNormal(resources->LoadTexture("block_normal", "textures/stone_normal.png"));
+            // create node
+            std::shared_ptr<SpriteNode> node(new SpriteNode(actor->GetID(), "sign", "main", position, actor->GetDepth(), actor->GetScale()));
+            node->SetMaterial(material);
+            scene->AddChild(actor->GetID(), node);
+            // set physics
+            GameApplication::GetInstance()->GetPhysics()->AddBox(actor, 1.0);
+            // set the begin and end positions of the moveloop component
+            std::weak_ptr<TextOnTouchComponent> pWeakComponent = actor->GetComponent<TextOnTouchComponent>("TextOnTouch");
+            std::shared_ptr<TextOnTouchComponent> pComponent(pWeakComponent);
+            if (pComponent)
+            {
+                pComponent->SetDisplayText(DisplayText);
+            }
+        }
+    }
+    else if (type == "Sign")
+    {
+        std::string DisplayText = getProperty(gameObject, "Text");
+        if (DisplayText != "")
+        {
+            // define actor
+            std::shared_ptr<Actor> actor = GameApplication::GetInstance()->CreateActor(DEFAULT_ACTOR_TYPES::ACTOR_SIGNPOST);
+            actor->SetPosition(position);
+            actor->SetScale(scale);
+            actor->SetDepth(4);
+            // set material
+            material->SetDiffuse(resources->LoadTexture("sign", "textures/post.png", true));
+            material->SetSpecular(resources->LoadTexture("specular", "textures/specular.png"));
+            material->SetNormal(resources->LoadTexture("sign_normal", "textures/post_normal.png"));
+            // create node
+            std::shared_ptr<SpriteNode> node(new SpriteNode(actor->GetID(), "sign", "main", position, actor->GetDepth(), scale));
+            node->SetMaterial(material);
+            scene->AddChild(actor->GetID(), node);
+            // set physics
+            GameApplication::GetInstance()->GetPhysics()->AddBox(actor, 1.0, false, true, true, 0.2f);
+            // set the next level attribute of the LevelComplete component to the map-defined level path
+            std::weak_ptr<TextOnTouchComponent> pWeakComponent = actor->GetComponent<TextOnTouchComponent>("TextOnTouch");
+            std::shared_ptr<TextOnTouchComponent> pComponent(pWeakComponent);
+            if (pComponent)
+            {
+                pComponent->SetDisplayText(DisplayText);
+            }
+        }
+    }
+    else if (type == "Spawn") // player spawn
+    {
+        // define actor
+        std::shared_ptr<Actor> actor = GameApplication::GetInstance()->CreateActor(DEFAULT_ACTOR_TYPES::ACTOR_PLAYER);
+        actor->SetPosition(position);
+        actor->SetScale(scale);
+        actor->SetDepth(5); // TODO(Joey): seperate render depth from light depth and customize light depth individually
+        GameApplication::GetInstance()->SetImportantActor("player", actor);
+        // set material
+        material->SetDiffuse(resources->LoadTexture("player", "textures/player.png", true));
+        material->SetSpecular(resources->LoadTexture("player_specular", "textures/player_specular.png"));
+        material->SetNormal(resources->LoadTexture("player_normal", "textures/player_normal.png"));
+        // create node
+        std::shared_ptr<SpriteNode> node(new SpriteNode(actor->GetID(), "player", "main", position, actor->GetDepth(), actor->GetScale()));
+        node->SetMaterial(material);
+        // create lantern and attach to player
+        std::shared_ptr<Actor> lantern = GameApplication::GetInstance()->CreateActor(DEFAULT_ACTOR_TYPES::ACTOR_LANTERN);
+        lantern->SetPosition(position + scale * 12.0f); // general offset to player pos
+        lantern->SetDepth(10);
+        GameApplication::GetInstance()->SetImportantActor("lantern", lantern);
+        std::shared_ptr<LightNode> lanternNode(
+            new LightNode(lantern->GetID(), "lantern", "light", lantern->GetPosition(), lantern->GetDepth(), actor->GetScale(),
+                glm::vec3(2.0, 2.0, 2.0), glm::vec3(1.0, 1.0, 1.0), 250.0f)
+            );
+        // ... we don't need a material/shader as the lantern itself won't be renderable (IDEA(Joey): render lantern; could be interesting)
+        node->AddChild(lanternNode);
+        scene->GetLightManager()->AddLight(lanternNode);
+        scene->AddChild(lantern->GetID(), lanternNode);
+        scene->AddChild(actor->GetID(), node);
+        // set physics
+        GameApplication::GetInstance()->GetPhysics()->AddCharacter(actor, 1.0f);
+        // point camera at player spawn
+        GameApplication::GetInstance()->GetScene()->GetCamera()->SetTarget(node);
+
+    }
+    else if (type == "StateBlock")
+    {
+        XMLElement *properties = gameObject->FirstChildElement();
+        if (properties)
+        {
+            XMLElement *property = properties->FirstChildElement("property");
+            if (property)
+            {
+                std::string color = std::string(property->Attribute("value"));
+                // define actor
+                std::shared_ptr<Actor> actor = GameApplication::GetInstance()->CreateActor(DEFAULT_ACTOR_TYPES::ACTOR_STATE_BLOCK);
+                actor->SetPosition(position);
+                actor->SetScale(scale);
+                actor->SetDepth(2);
+                // set material
+                material->SetDiffuse(resources->LoadTexture("block_color", "textures/stone_color.png"));
+                material->SetSpecular(resources->LoadTexture("block_specular", "textures/stone_specular.png"));
+                material->SetNormal(resources->LoadTexture("block_normal", "textures/stone_normal.png"));
+                // create node
+                std::shared_ptr<SpriteNode> node(new SpriteNode(actor->GetID(), "state_block", "main", position, actor->GetDepth(), scale));
+                node->SetMaterial(material);
+                scene->AddChild(actor->GetID(), node);
+                // set physics
+                GameApplication::GetInstance()->GetPhysics()->AddBox(actor, 1.0);
+                GameApplication::GetInstance()->GetPhysics()->FindBody(actor->GetID())->GetFixtureList()[0].SetSensor(true);
+
+                // configure state blocks based on color type
+                std::weak_ptr<StateBlockComponent> pWeakComponent = actor->GetComponent<StateBlockComponent>("StateBlock");
+                std::shared_ptr<StateBlockComponent> pComponent = std::shared_ptr<StateBlockComponent>(pWeakComponent);
+                if (pComponent)
+                {
+                    if (color == "R")
+                    {
+                        material->SetColorOverride(glm::vec3(1.0, 0.5, 0.5));
+                        pComponent->SetBlockColor(LightState::RED);
+                    }
+                    else if (color == "G")
+                    {
+                        material->SetColorOverride(glm::vec3(0.5, 1.0, 0.5));
+                        pComponent->SetBlockColor(LightState::GREEN);
+                    }
+                    else if (color == "B")
+                    {
+                        material->SetColorOverride(glm::vec3(0.5, 0.5, 1.0));
+                        pComponent->SetBlockColor(LightState::BLUE);
+                    }
+                }
+            }
+        }
+    }
+
 	return true;
 }
 

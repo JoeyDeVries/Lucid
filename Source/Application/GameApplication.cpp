@@ -6,6 +6,7 @@
 #include "../Scene/SpriteNode.h"
 #include "../Components/Event_DestroyActor.h"
 #include "../Components/Event_LevelComplete.h"
+#include "../Components/Event_DestroyActor.h"
 #include "../GUI/GUIMainMenu.h"
 
 #include <iostream>
@@ -60,6 +61,8 @@ void GameApplication::Initialize(float width, float height)
     GetEventManager()->AddListener(eventListener, Event_StartLevel::s_EventType);
     eventListener = fastdelegate::MakeDelegate(this, &GameApplication::OnQuitGame);
     GetEventManager()->AddListener(eventListener, Event_QuitGame::s_EventType);
+    eventListener = fastdelegate::MakeDelegate(this, &GameApplication::OnDestroyActor);
+    GetEventManager()->AddListener(eventListener, Event_DestroyActor::s_EventType);
 
 	// load font(s) and initialize text-renderer
 	std::shared_ptr<Font> font = ResourceManager::GetInstance()->LoadFont("gui/font.fnt");
@@ -303,6 +306,22 @@ void GameApplication::OnQuitGame(std::shared_ptr<IEventData> eventData)
     if (pEvent)
     {
         m_Active = false;
+    }
+}
+
+void GameApplication::OnDestroyActor(std::shared_ptr<IEventData> eventData)
+{
+    std::shared_ptr<Event_DestroyActor> pEvent = std::dynamic_pointer_cast<Event_DestroyActor>(eventData);
+    if (pEvent)
+    {
+        if (pEvent->GetActorID() == m_ImportantActors["player"]->GetID())
+        {
+            std::cout << "Player destroyed... restarting game" << std::endl;
+        }
+        else
+        {   // destroy actor as normal
+
+        }
     }
 }
 

@@ -13,11 +13,12 @@ public:
 	CompleteCheckComponent();
 	~CompleteCheckComponent();
 
+    std::string GetNextLevelString();
+    void SetNextLevelString(std::string levelPath);
+
 	virtual bool VInit();
 	virtual void VUpdate(float delta);
 
-    std::string GetNextLevelString();
-    void SetNextLevelString(std::string levelPath);
 
 	void OnPostCollisionAdd(std::shared_ptr<IEventData> eventData);
 };

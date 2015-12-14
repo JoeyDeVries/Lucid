@@ -3,13 +3,21 @@
 #include "LightSwitchComponent.h"
 #include "StateBlockComponent.h"
 #include "CompleteCheckComponent.h"
+#include "TextOnTouchComponent.h"
+#include "LifeComponent.h"
+#include "DamageTouchComponent.h"
+#include "MoveLoopComponent.h"
 #include<iostream>
 
 // actor component creator functions
-ActorComponent* CreateControlComponent()       { return new ControlComponent; }
-ActorComponent* CreateLightSwitchComponent()   { return new LightSwitchComponent; }
-ActorComponent* CreateStateBlockComponent()    { return new StateBlockComponent; }
-ActorComponent* CreateCompleteCheckComponent() { return new CompleteCheckComponent; }
+ActorComponent *CreateControlComponent()       { return new ControlComponent; }
+ActorComponent *CreateLightSwitchComponent()   { return new LightSwitchComponent; }
+ActorComponent *CreateStateBlockComponent()    { return new StateBlockComponent; }
+ActorComponent *CreateCompleteCheckComponent() { return new CompleteCheckComponent; }
+ActorComponent *CreateTextOnTouchComponent()   { return new TextOnTouchComponent; }
+ActorComponent *CreateLifeComponent()          { return new LifeComponent; }
+ActorComponent *CreateDamageTouchComponent()   { return new DamageTouchComponent; }
+ActorComponent *CreateMoveLoopComponent()      { return new MoveLoopComponent; }
 
 
 ActorFactory::ActorFactory(void)
@@ -18,6 +26,10 @@ ActorFactory::ActorFactory(void)
 	m_actorComponentCreators["LightSwitch"] = CreateLightSwitchComponent;
 	m_actorComponentCreators["StateBlock"] = CreateStateBlockComponent;
 	m_actorComponentCreators["CompleteCheck"] = CreateCompleteCheckComponent;
+    m_actorComponentCreators["TextOnTouch"] = CreateTextOnTouchComponent;
+    m_actorComponentCreators["Life"] = CreateLifeComponent;
+    m_actorComponentCreators["DamageTouch"] = CreateDamageTouchComponent;
+    m_actorComponentCreators["MoveLoop"] = CreateMoveLoopComponent;
 }
 
 ActorFactory::~ActorFactory(void)
@@ -42,46 +54,92 @@ std::shared_ptr<Actor> ActorFactory::CreateActor(DEFAULT_ACTOR_TYPES actorType)
     {
         actor = std::shared_ptr<Actor>(new Actor());
         actor->setID(++m_lastActorID);
-       /* std::shared_ptr<ActorComponent> component = createComponent("Control");
-        actor->addComponent(component);
-        component->setOwner(actor);*/
+        /* std::shared_ptr<ActorComponent> component = createComponent("Control");
+         actor->addComponent(component);
+         component->setOwner(actor);*/
         return actor;
     }
-	case ACTOR_STATE_BLOCK:
-	{
-		actor = std::shared_ptr<Actor>(new Actor());
-		actor->setID(++m_lastActorID);
-		std::shared_ptr<ActorComponent> component = createComponent("StateBlock");
-		actor->addComponent(component);
-		component->setOwner(actor);
-		return actor;
-	}
+    case ACTOR_STATE_BLOCK:
+    {
+        actor = std::shared_ptr<Actor>(new Actor());
+        actor->setID(++m_lastActorID);
+        std::shared_ptr<ActorComponent> component = createComponent("StateBlock");
+        actor->addComponent(component);
+        component->setOwner(actor);
+        return actor;
+    }
     case ACTOR_PLAYER:
     {
         actor = std::shared_ptr<Actor>(new Actor());
         actor->setID(++m_lastActorID);
+        // allow the user to have control over player actors
         std::shared_ptr<ActorComponent> component = createComponent("Control");
-		actor->addComponent(component);
+        actor->addComponent(component);
+        component->setOwner(actor);
+        // give the player actor life
+        std::shared_ptr<ActorComponent> life = createComponent("Life");
+        actor->addComponent(life);
+        life->setOwner(actor);
+        return actor;
+    }
+    case ACTOR_ENEMY:
+    {
+        actor = std::shared_ptr<Actor>(new Actor());
+        actor->setID(++m_lastActorID);
+        // give the enemy actor life
+        std::shared_ptr<ActorComponent> component = createComponent("Life");
+        actor->addComponent(component);
         component->setOwner(actor);
         return actor;
     }
-	case ACTOR_LANTERN:
-	{
-		actor = std::shared_ptr<Actor>(new Actor());
-		actor->setID(++m_lastActorID);
-		std::shared_ptr<ActorComponent> component = createComponent("LightSwitch");
-		actor->addComponent(component);
-		component->setOwner(actor);
-		return actor;
-	}
-	case ACTOR_COMPLETE_CHECK:
-		actor = std::shared_ptr<Actor>(new Actor());
-		actor->setID(++m_lastActorID);
-		std::shared_ptr<ActorComponent> component = createComponent("CompleteCheck");
-		actor->addComponent(component);
-		component->setOwner(actor);
-		return actor;
+    case ACTOR_LANTERN:
+    {
+        actor = std::shared_ptr<Actor>(new Actor());
+        actor->setID(++m_lastActorID);
+        std::shared_ptr<ActorComponent> component = createComponent("LightSwitch");
+        actor->addComponent(component);
+        component->setOwner(actor);
+        return actor;
     }
+    case ACTOR_COMPLETE_CHECK:
+    {
+        actor = std::shared_ptr<Actor>(new Actor());
+        actor->setID(++m_lastActorID);
+        std::shared_ptr<ActorComponent> component = createComponent("CompleteCheck");
+        actor->addComponent(component);
+        component->setOwner(actor);
+        return actor;
+    }
+    case ACTOR_SIGNPOST:
+    {
+        actor = std::shared_ptr<Actor>(new Actor());
+        actor->setID(++m_lastActorID);
+        std::shared_ptr<ActorComponent> component = createComponent("TextOnTouch");
+        actor->addComponent(component);
+        component->setOwner(actor);
+        return actor;
+    }
+    case ACTOR_DEATHTOUCH:
+    {
+        actor = std::shared_ptr<Actor>(new Actor());
+        actor->setID(++m_lastActorID);
+        std::shared_ptr<ActorComponent> component = createComponent("DamageTouch");
+        std::dynamic_pointer_cast<DamageTouchComponent>(component)->SetDamageAmount(1000); // kill actor/player on touch
+        actor->addComponent(component);
+        component->setOwner(actor);
+        return actor;
+    }
+    case ACTOR_MOVE_LOOP:
+    {
+        actor = std::shared_ptr<Actor>(new Actor());
+        actor->setID(++m_lastActorID);
+        std::shared_ptr<ActorComponent> component = createComponent("MoveLoop");
+        actor->addComponent(component);
+        component->setOwner(actor);
+        return actor;
+    }
+    }
+    return actor;
 }
 
 std::shared_ptr<ActorComponent> ActorFactory::createComponent(std::string component)

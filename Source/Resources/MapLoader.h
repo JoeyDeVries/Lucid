@@ -21,7 +21,7 @@ private:
 
 	bool processTileNode(ResourceManager *resources, Scene *scene, XMLElement *tileNode);
 	bool processTileData(Scene *scene, XMLElement *tileData, glm::vec2 pos, glm::vec2 scale, int depth, bool physics);
-	bool processGameObject(ResourceManager *resources, Scene *scene, XMLElement *gameObject, float mapScale);
+	bool processGameObject(ResourceManager *resources, Scene *scene, XMLElement *gameObject, glm::vec2 tileScale, float mapScale);
 	bool processStaticDefaults(ResourceManager *resources, Scene *scene);
     std::string getProperty(XMLElement *object, std::string property);
 public:
