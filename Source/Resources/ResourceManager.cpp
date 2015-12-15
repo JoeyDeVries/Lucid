@@ -120,250 +120,78 @@ std::shared_ptr<Texture2D> ResourceManager::GetTexture(std::string name)
 bool ResourceManager::LoadLevel(Scene* scene, const char* levelSource, float levelScale)
 {
 	return m_MapLoader.LoadMap(this, scene, levelSource, levelScale);
-
- //   std::vector<std::vector<char>> levelData;
- //   std::ifstream fstream;
- //   // ensures ifstream objects can throw exceptions:
- //   fstream.exceptions(std::ifstream::badbit);
- //   try
- //   {
- //       // Open files
- //       fstream.open(levelSource);      
- //       if (fstream)
- //       {
- //           std::string line;
- //           while (std::getline(fstream, line))
- //           {
- //               std::vector<char> row;
- //               std::istringstream sstream(line);
- //               char tileCode;
- //               while (sstream >> tileCode)
- //                   row.push_back(tileCode);
- //               levelData.push_back(row);
- //           }
- //           fstream.close();
- //       }
- //   }
- //   catch (std::ifstream::failure e)
- //   {
- //       std::cout << "ERROR::LEVEL::FILE_NOT_SUCCESFULLY_READ" << std::endl;
- //       return false;
- //   }
-
- //   // determine if any level data was loaded; if so, process each tile and build scene
-	//if (levelData.size() > 0)
-	//{
-	//	float blockWidth = GameApplication::GetInstance()->ScreenWidth() / levelData.size();
-	//	float blockHeight = GameApplication::GetInstance()->ScreenHeight() / levelData[0].size(); // we can safely index [0] as the size of levelData > 0
-
-	//	// process all rows
-	//	for (int y = 0; y < levelData.size(); y++)
-	//	{
-	//		// process each row individually
-	//		for (int x = 0; x < levelData[y].size(); x++)
-	//		{
-	//			char tileCode = levelData[y][x];
-	//			switch (tileCode)
-	//			{ // we need braces as we initialize within switch statement: http://stackoverflow.com/questions/5136295/switch-transfer-of-control-bypasses-initialization-of-when-calling-a-function
-	//			case '0': // empty
-	//			{
-	//				break;
-	//			}
-	//			case '1': // default block
-	//			{
-	//				AddSpriteNode(scene, DEFAULT_ACTOR_TYPES::ACTOR_STATIC, "block", "MAIN", x, y, blockWidth, blockHeight, 1, "sprite", "block", "block_specular", "block_normal");
-	//				//// Create actor
-	//				//std::shared_ptr<Actor> actor = GameApplication::GetInstance()->CreateActor(DEFAULT_ACTOR_TYPES::ACTOR_STATIC);
-	//				//actor->SetPosition(glm::vec2(x * blockWidth, y * blockHeight));
-	//				//actor->SetScale(glm::vec2(blockWidth, blockHeight));
-	//				//actor->SetDepth(1);
-	//				//// Then create scenenode
-	//				//std::shared_ptr<SpriteNode> node(new SpriteNode(actor->GetID(), "block", "MAIN", actor->GetPosition(), actor->GetDepth(), actor->GetScale(), actor->GetRotation()));
-	//				//Material material; // configure material (note that the relevant materials should be PRE-loaded)
-	//				//// TODO(Joey): Use Data-driven development; configure in data materials for each block + use these to pre-load (or create PreLoadLevel() function) them in GameApplication.
-	//				//material.SetShader(GetShader("sprite"));
-	//				//material.SetDiffuse(GetTexture("block"));
-	//				//material.SetSpecular(GetTexture("block_specular"));
-	//				//material.SetNormal(GetTexture("block_normal"));
-	//				//node->SetMaterial(material);
-	//				//scene->AddChild(actor->GetID(), node);
-	//				//// Also define its physics
-	//				////GameApplication::GetInstance()->GetPhysics()->AddBox(actor, 1.0, y < 7, false);
-	//				//GameApplication::GetInstance()->GetPhysics()->AddBox(actor, 1.0);
-	//				break;
-	//			}
-	//			case '2': // color block RED
-	//			{
-	//				//GameApplication::GetInstance()->CreateActor(DEFAULT_ACTOR_TYPES::ACTOR_ENEMY);
-	//				std::shared_ptr<Actor> actor = AddSpriteNode(
-	//					scene, DEFAULT_ACTOR_TYPES::ACTOR_STATE_BLOCK, "state_block", "MAIN", 
-	//					x, y, blockWidth, blockHeight, 1, 
-	//					"sprite", "block_color", "block_specular", "block_normal", glm::vec3(1.0, 0.5, 0.5)
-	//				);
-	//				// Set color type of block 
-	//				std::weak_ptr<StateBlockComponent> pWeakComponent = actor->GetComponent<StateBlockComponent>("StateBlock");
-	//				std::shared_ptr<StateBlockComponent> pComponent = std::shared_ptr<StateBlockComponent>(pWeakComponent);
-	//				if (pComponent)
-	//					pComponent->SetBlockColor(LightState::RED);
-	//				GameApplication::GetInstance()->GetPhysics()->FindBody(actor->GetID())->GetFixtureList()[0].SetSensor(true);
-	//				break;
-	//			}
-	//			case '3': // color block GREEN
-	//			{
-	//				std::shared_ptr<Actor> actor = AddSpriteNode(
-	//					scene, DEFAULT_ACTOR_TYPES::ACTOR_STATE_BLOCK, "state_block", "MAIN",
-	//					x, y, blockWidth, blockHeight, 1,
-	//					"sprite", "block_color", "block_specular", "block_normal", glm::vec3(0.5, 1.0, 0.5)
-	//				);
-	//				// Set color type of block
-	//				std::weak_ptr<StateBlockComponent> pWeakComponent = actor->GetComponent<StateBlockComponent>("StateBlock");
-	//				std::shared_ptr<StateBlockComponent> pComponent = std::shared_ptr<StateBlockComponent>(pWeakComponent);
-	//				if (pComponent)
-	//					pComponent->SetBlockColor(LightState::GREEN);
-	//				GameApplication::GetInstance()->GetPhysics()->FindBody(actor->GetID())->GetFixtureList()[0].SetSensor(true);
-	//				break;
-	//			}
-	//			case '4': // color block BLUE
-	//			{
-	//				std::shared_ptr<Actor> actor = AddSpriteNode(
-	//					scene, DEFAULT_ACTOR_TYPES::ACTOR_STATE_BLOCK, "state_block", "MAIN",
-	//					x, y, blockWidth, blockHeight, 1,
-	//					"sprite", "block_color", "block_specular", "block_normal", glm::vec3(0.5, 0.5, 1.0)
-	//					);
-	//				// Set color type of block
-	//				std::weak_ptr<StateBlockComponent> pWeakComponent = actor->GetComponent<StateBlockComponent>("StateBlock");
-	//				std::shared_ptr<StateBlockComponent> pComponent = std::shared_ptr<StateBlockComponent>(pWeakComponent);
-	//				if (pComponent)
-	//					pComponent->SetBlockColor(LightState::BLUE);
-	//				GameApplication::GetInstance()->GetPhysics()->FindBody(actor->GetID())->GetFixtureList()[0].SetSensor(true);
-	//				break;
-	//			}
-	//			case '9': // end-game flag
-	//			{
-	//				// Create actor
-	//				std::shared_ptr<Actor> actor = GameApplication::GetInstance()->CreateActor(DEFAULT_ACTOR_TYPES::ACTOR_COMPLETE_CHECK);
-	//				actor->SetPosition(glm::vec2(x * blockWidth, y * blockHeight));
-	//				actor->SetScale(glm::vec2(blockWidth, blockHeight));
-	//				actor->SetDepth(1);
-	//				//// Then create scenenode
-	//				std::shared_ptr<SpriteNode> node(
-	//					new SpriteNode(actor->GetID(), "complete", "MAIN", actor->GetPosition(), actor->GetDepth(), actor->GetScale(), actor->GetRotation())
-	//				);
-	//				std::shared_ptr<Material> material = std::shared_ptr<Material>(new Material());								
-	//				material->SetShader(GetShader("sprite"));
-	//				material->SetDiffuse(GetTexture("flag"));
-	//				material->SetSpecular(GetTexture("specular"));
-	//				material->SetNormal(GetTexture("flag_normal"));
-	//				node->SetMaterial(material);
-	//				scene->AddChild(actor->GetID(), node);
-	//				GameApplication::GetInstance()->GetPhysics()->AddBox(actor, 1.0, false, true, true, 0.1f);
-	//				break;
-	//			}
-	//			default:
-	//				break;
-	//			}
-
-	//		}
-	//	}
-		// few lights TODO(Joey): build lights in the level data
-		//std::shared_ptr<Actor> actor = GameApplication::GetInstance()->CreateActor(DEFAULT_ACTOR_TYPES::ACTOR_STATIC);
-		//actor->SetPosition(glm::vec2(170.0f, 180.0f));
-		//actor->SetScale(glm::vec2(50, 50));
-		//actor->SetDepth(9);
-		//std::shared_ptr<LightNode> node(
-		//	new LightNode(actor->GetID(), "light", "LIGHT", actor->GetPosition(), actor->GetDepth(), actor->GetScale(),
-		//		glm::vec3(1.3, 2.0, 2.0), glm::vec3(0.7), 250.0f)
-		//	);
-		//std::shared_ptr<Material> material = std::shared_ptr<Material>(new Material());
-		//material->SetShader(GetShader("sprite"));
-		//material->SetDiffuse(GetTexture("light"));
-		//material->SetSpecular(GetTexture("specular"));
-		//material->SetNormal(GetTexture("normal"));
-		//node->SetMaterial(material);
-		//scene->AddChild(actor->GetID(), node);
-		// second light
-		//std::shared_ptr<Actor> actor2 = GameApplication::GetInstance()->CreateActor(DEFAULT_ACTOR_TYPES::ACTOR_STATIC);
-		//actor2->SetPosition(glm::vec2(400.0f, 300.0f));
-		//actor2->SetScale(glm::vec2(50, 50));
-		//actor2->SetDepth(9);
-		//std::shared_ptr<LightNode> node2(
-		//	new LightNode(actor2->GetID(), "light", "LIGHT", actor2->GetPosition(), actor2->GetDepth(), actor2->GetScale(),
-		//		glm::vec3(1.8, 1.3, 1.3), glm::vec3(0.7), 250.0f)
-		//	);
-		//std::shared_ptr<Material> material2 = std::shared_ptr<Material>(new Material());
-		//material2->SetShader(GetShader("sprite"));
-		//material2->SetDiffuse(GetTexture("light-anim"));
-		//material2->SetSpecular(GetTexture("specular"));
-		//material2->SetNormal(GetTexture("normal"));
-		//node2->SetMaterial(material2);
-		//// load light animation
-		//std::shared_ptr<Animation> lightAnim = LoadAnimation("textures/animations/fire-anim.anim");
-		//if (lightAnim)
-		//{
-		//	node2->SetAnimation(true);
-		//	node2->AddAnimation(lightAnim);
-		//}
-		//scene->AddChild(actor2->GetID(), node2);
-	//}
-
-    //return false;
 }
 
-// helper function
-std::shared_ptr<Actor> ResourceManager::AddSpriteNode(Scene* scene, DEFAULT_ACTOR_TYPES type, std::string name, std::string renderpass, float x, float y, float blockwidth, float blockheight, int depth, std::string shader, std::string diffuse, std::string specular, std::string normal, glm::vec3 color)
-{
-	// Create actor
-	std::shared_ptr<Actor> actor = GameApplication::GetInstance()->CreateActor(type);
-	actor->SetPosition(glm::vec2(x * blockwidth, y * blockheight));
-	actor->SetScale(glm::vec2(blockwidth, blockheight));
-	actor->SetDepth(depth);
-	// Then create scenenode
-	std::shared_ptr<SpriteNode> node(new SpriteNode(actor->GetID(), name, renderpass, actor->GetPosition(), actor->GetDepth(), actor->GetScale(), actor->GetRotation()));
-	std::shared_ptr<Material> material = std::shared_ptr<Material>(new Material()); // configure material (note that the relevant materials should be PRE-loaded)
-					   // TODO(Joey): Use Data-driven development; configure in data materials for each block + use these to pre-load (or create PreLoadLevel() function) them in GameApplication.
-	material->SetShader(GetShader(shader));
-	material->SetDiffuse(GetTexture(diffuse));
-	material->SetSpecular(GetTexture(specular));
-	material->SetNormal(GetTexture(normal));
-	material->SetColorOverride(color);
-	node->SetMaterial(material);
-	scene->AddChild(actor->GetID(), node);
-	// Also define its physics
-	//GameApplication::GetInstance()->GetPhysics()->AddBox(actor, 1.0, y < 7, false);
-	GameApplication::GetInstance()->GetPhysics()->AddBox(actor, 1.0);
-	return actor;
-}
-
-std::shared_ptr<Animation> ResourceManager::LoadAnimation(const char *animPath)
+std::vector<std::shared_ptr<Animation>> ResourceManager::LoadAnimation(const char *animPath)
 {
 	std::ifstream file(animPath);
 	std::string line;
-	std::vector<AnimationData> animData;
-	// first obtain header
-	std::string header;
-	if (std::getline(file, header))
-	{
-		std::stringstream sstream(header);
-		float duration;
-		sstream >> duration;		
-		// then read in each animation frame
-		while (std::getline(file, line))
-		{
-			sstream.str(line);			
-			sstream.clear();
-			AnimationData data;
-			sstream >> data.XOffset;
-			sstream >> data.YOffset;
-			sstream >> data.Width;
-			sstream >> data.Height;
-			animData.push_back(data);
-		}
-		std::shared_ptr<Animation> animation = std::shared_ptr<Animation>(new Animation(animData));
-		animation->SetDuration(duration);
-		animation->Normalize();
-		return animation;
-	}
-	return std::shared_ptr<Animation>();
+    std::vector<std::shared_ptr<Animation>> animations;
+    std::string directory = std::string(animPath).substr(0, std::string(animPath).find_last_of('/'));
+    while (std::getline(file, line))
+    {   // every 5 lines is a new animation
+        // get name
+        std::string name = line;
+        // get texture(s)
+        std::getline(file, line); 
+        std::shared_ptr<Texture2D> diffuse = LoadTexture("animation_" + line, (directory + "/" + line).c_str(), true);     
+        // get duration
+        std::getline(file, line);
+        float duration = std::atof(line.c_str());
+        // get animation dimensions
+        int width = diffuse->Width; int height = diffuse->Height;
+        std::getline(file, line);
+        int nrCols = std::atoi(line.c_str());
+        std::getline(file, line);
+        int nrRows = std::atoi(line.c_str());
+        // for number of rows*cols, calculate individual frame data
+        std::vector<AnimationData> animData;
+        for (int y = 0; y < nrRows; ++y)
+        {
+            for (int x = 0; x < nrCols; ++x)
+            {
+
+                AnimationData data;
+                data.XOffset = x * (width / nrCols); // TODO(Joey): check for int precision loss
+                data.YOffset = y * (height / nrRows);
+                data.Width = width / nrCols;
+                data.Height = height / nrRows;
+                animData.push_back(data);
+            }
+        }
+        std::shared_ptr<Animation> animation(new Animation(animData));
+        animation->SetName(name);
+        animation->SetDiffuse(diffuse);
+        animation->SetSpecular(GetTexture("specular"));
+        animation->SetNormal(GetTexture("normal"));
+        animation->SetDuration(duration);
+        animation->Normalize(width, height);
+        animations.push_back(animation);
+    }
+    return animations;
+	//if (std::getline(file, header))
+	//{
+	//	std::stringstream sstream(header);
+	//	float duration;
+	//	sstream >> duration;		
+	//	// then read in each animation frame
+	//	while (std::getline(file, line))
+	//	{
+	//		sstream.str(line);			
+	//		sstream.clear();
+	//		AnimationData data;
+	//		sstream >> data.XOffset;
+	//		sstream >> data.YOffset;
+	//		sstream >> data.Width;
+	//		sstream >> data.Height;
+	//		animData.push_back(data);
+	//	}
+	//	std::shared_ptr<Animation> animation = std::shared_ptr<Animation>(new Animation(animData));
+	//	animation->SetDuration(duration);
+	//	animation->Normalize();
+	//	return animation;
+	//}
+	//return std::shared_ptr<Animation>();
 }
 
 std::shared_ptr<Font> ResourceManager::LoadFont(const char *fontPath)

@@ -45,7 +45,7 @@ public:
     ActorID FindActorID(b2Body*);
     // integration of physics objects
     void AddSphere(float radius, std::shared_ptr<Actor> actor, float density, bool dynamic = false, bool isSensor = false);
-    void AddBox(std::shared_ptr<Actor> actor, float density, bool dynamic = false, bool fixedRotation = true, bool isSensor = false, float hitBoxScale = 1.0f);
+    void AddBox(std::shared_ptr<Actor> actor, float density, std::string type = "static", bool fixedRotation = true, bool isSensor = false, float hitBoxScale = 1.0f);
     void AddPolygon(std::shared_ptr<Actor> actor, std::vector<glm::vec2> vertices, float density, bool dynamic = false, bool fixedRotation = true);
     void AddCharacter(std::shared_ptr<Actor> actor, float density);
     void RemoveActor(unsigned int ActorID);

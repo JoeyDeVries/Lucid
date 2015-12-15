@@ -130,12 +130,14 @@ void Box2DPhysics::AddSphere(float radius, std::shared_ptr<Actor> actor, float d
 
 }
 
-void Box2DPhysics::AddBox(std::shared_ptr<Actor> actor, float density, bool dynamic, bool fixedRotation, bool isSensor, float hitboxScale)
+void Box2DPhysics::AddBox(std::shared_ptr<Actor> actor, float density, std::string type, bool fixedRotation, bool isSensor, float hitboxScale)
 {
     b2BodyDef bodyDef;
     bodyDef.position.Set(PixelsToMeters(actor->GetPosition().x + actor->GetScale().x * 0.5), PixelsToMeters(actor->GetPosition().y + actor->GetScale().y * 0.5)); // position should be center of object instead of top-left
-    if(dynamic)
+    if(type == "dynamic")
         bodyDef.type = b2_dynamicBody;
+    else if(type == "kinematic")
+        bodyDef.type = b2_kinematicBody;
     bodyDef.fixedRotation = fixedRotation;
     b2Body* body = m_World->CreateBody(&bodyDef);
     body->SetUserData(this);

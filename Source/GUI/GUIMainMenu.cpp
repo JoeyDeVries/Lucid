@@ -55,14 +55,14 @@ bool GUIMainMenu::Init()
 
     // load additional resources
     m_BackgroundTexture = ResourceManager::GetInstance()->LoadTexture("menu_background", "textures/menu_background.png");
-    m_FireAnimation = ResourceManager::GetInstance()->LoadAnimation("textures/animations/fire-anim.anim");
-    ResourceManager::GetInstance()->LoadTexture("light-anim", "textures/animations/fire-anim.png", true);
+    std::shared_ptr<Texture2D> texture = ResourceManager::GetInstance()->LoadTexture("light-anim", "textures/animations/fire-anim.png", true);
+    //m_FireAnimation = ResourceManager::GetInstance()->LoadAnimation("textures/animations/fire-anim.anim");
     return true;
 }
 
 void GUIMainMenu::Update(float deltaTime)
 {
-    m_FireAnimation->Update(deltaTime);
+    //m_FireAnimation->Update(deltaTime);
 }
 
 void GUIMainMenu::RenderBackground(Renderer *renderer, TextRenderer *textRenderer)
@@ -86,27 +86,27 @@ void GUIMainMenu::RenderBackground(Renderer *renderer, TextRenderer *textRendere
     renderer->RenderQuad();
 
     // 2. then individual fire animations
-    spriteShader->SetInteger("animation", 1);
-    m_FireAnimation->ToShader(spriteShader);
-    ResourceManager::GetInstance()->GetTexture("light-anim")->Bind(0);
-    // - light 1
-    model = glm::mat4();
-    model *= glm::translate(glm::vec3(60.0f, 100.0f, 0.0f));
-    model *= glm::scale(glm::vec3(110.0f));
-    spriteShader->SetMatrix4("model", model);
-    renderer->RenderQuad();
-    // - light 2
-    model = glm::mat4();
-    model *= glm::translate(glm::vec3(340.0f, 305.0f, 0.0f));
-    model *= glm::scale(glm::vec3(50.0f));
-    spriteShader->SetMatrix4("model", model);
-    renderer->RenderQuad();
-    // - light 3
-    model = glm::mat4();
-    model *= glm::translate(glm::vec3(570.0f, 275.0f, 0.0f));
-    model *= glm::scale(glm::vec3(50.0f));
-    spriteShader->SetMatrix4("model", model);
-    renderer->RenderQuad();
+    //spriteShader->SetInteger("animation", 1);
+    //m_FireAnimation->ToShader(spriteShader);
+    //ResourceManager::GetInstance()->GetTexture("light-anim")->Bind(0);
+    //// - light 1
+    //model = glm::mat4();
+    //model *= glm::translate(glm::vec3(60.0f, 100.0f, 0.0f));
+    //model *= glm::scale(glm::vec3(110.0f));
+    //spriteShader->SetMatrix4("model", model);
+    //renderer->RenderQuad();
+    //// - light 2
+    //model = glm::mat4();
+    //model *= glm::translate(glm::vec3(340.0f, 305.0f, 0.0f));
+    //model *= glm::scale(glm::vec3(50.0f));
+    //spriteShader->SetMatrix4("model", model);
+    //renderer->RenderQuad();
+    //// - light 3
+    //model = glm::mat4();
+    //model *= glm::translate(glm::vec3(570.0f, 275.0f, 0.0f));
+    //model *= glm::scale(glm::vec3(50.0f));
+    //spriteShader->SetMatrix4("model", model);
+    //renderer->RenderQuad();
 
 
     spriteShader->SetInteger("animation", 0);

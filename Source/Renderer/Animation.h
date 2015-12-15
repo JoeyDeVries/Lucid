@@ -19,16 +19,32 @@ struct AnimationData
 class Animation
 {
 private:
-	std::vector<AnimationData> m_AnimationData;
+    std::string m_Name;
+    std::vector<AnimationData> m_AnimationData;
 	float m_Duration;
 	float m_CurrentTime; // transform to unit interval in calculations or irrelevant? -> (scaled to m_Duration for now)
+    // animation sheets
+    std::shared_ptr<Texture2D> m_Diffuse;
+    std::shared_ptr<Texture2D> m_Specular;
+    std::shared_ptr<Texture2D> m_Normal;
 public:
 	Animation(std::vector<AnimationData> &data);
 
+    std::string GetName();
+    std::shared_ptr<Texture2D> GetDiffuse();
+    std::shared_ptr<Texture2D> GetSpecular();
+    std::shared_ptr<Texture2D> GetNormal();
+
 	void SetDuration(float duration);
+    void SetName(std::string name);
+    void SetDiffuse(std::shared_ptr<Texture2D> diffuse);
+    void SetSpecular(std::shared_ptr<Texture2D> specular);
+    void SetNormal(std::shared_ptr<Texture2D> normal);
+
+    
 
 	void Init(std::shared_ptr<Shader> shader);
-	void Normalize(); // normalizes animation value from pixels to render-texture coordinates
+	void Normalize(int width, int height); // normalizes animation value from pixels to render-texture coordinates
 	void Update(float deltaTime);
 	void ToShader(std::shared_ptr<Shader> shader);
 

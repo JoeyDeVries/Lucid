@@ -5,7 +5,7 @@
 #include "Scene.h"
 
 SpriteNode::SpriteNode(unsigned int ActorID, std::string name, std::string renderPass, glm::vec2 position, int depth, glm::vec2 scale, float rotation)
-    : SceneNode(ActorID, name, renderPass, position, depth, scale, rotation), m_Animation(false), m_ActiveAnimation("default")
+    : SceneNode(ActorID, name, renderPass, position, depth, scale, rotation), m_Animation(false), m_ActiveAnimation("idle")
 {
 
 }
@@ -58,12 +58,15 @@ void SpriteNode::Render(Scene *scene, Renderer *renderer)
 		m_Material->GetShader()->Use();
 		m_Material->GetShader()->SetMatrix4("model", m_Model);
 		m_Material->GetShader()->SetMatrix4("view", scene->GetCamera()->GetView());
-		m_Material->PreRender();
+        m_Material->PreRender();
 
 		if (m_Animation) // if spriteNode has animation(s) set
 		{
-			m_Material->GetShader()->SetInteger("animation", true, true);
+			m_Material->GetShader()->SetInteger("animation", true);
 			m_Animations[m_ActiveAnimation]->ToShader(m_Material->GetShader());
+            //m_Material->SetDiffuse(m_Animations[m_ActiveAnimation]->GetDiffuse());
+            //m_Material->SetSpecular(m_Animations[m_ActiveAnimation]->GetSpecular());
+            //m_Material->SetNormal(m_Animations[m_ActiveAnimation]->GetNormal());
 		}
 
 		renderer->RenderQuad();
@@ -96,6 +99,10 @@ std::shared_ptr<Animation> SpriteNode::GetAnimation(std::string state)
 void SpriteNode::ActivateAnimation(std::string state)
 {
 	m_ActiveAnimation = state;
+    // also set current spritesheets as active
+    m_Material->SetDiffuse(m_Animations[m_ActiveAnimation]->GetDiffuse());
+    m_Material->SetSpecular(m_Animations[m_ActiveAnimation]->GetSpecular());
+    m_Material->SetNormal(m_Animations[m_ActiveAnimation]->GetNormal());
 }
 
 

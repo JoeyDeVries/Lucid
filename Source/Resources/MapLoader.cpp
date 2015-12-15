@@ -10,6 +10,7 @@
 #include "../Components/StateBlockComponent.h"
 #include "../Components/CompleteCheckComponent.h"
 #include "../Components/TextOnTouchComponent.h"
+#include "../Components/MoveLoopComponent.h"
 
 
 MapLoader::MapLoader()
@@ -195,7 +196,7 @@ bool MapLoader::processGameObject(ResourceManager *resources, Scene *scene, XMLE
         actor->SetScale(scale);
         actor->SetDepth(4);
         // deathtouch aren't rendered, but simply act as collision sensors (no need to build scenenode)
-        GameApplication::GetInstance()->GetPhysics()->AddBox(actor, 1.0, false, true, true, 0.5f);
+        GameApplication::GetInstance()->GetPhysics()->AddBox(actor, 1.0, "static", true, true, 0.5f);
     }
 	else if (type == "Finish") // end point
 	{
@@ -216,7 +217,7 @@ bool MapLoader::processGameObject(ResourceManager *resources, Scene *scene, XMLE
             node->SetMaterial(material);
             scene->AddChild(actor->GetID(), node);
             // set physics
-            GameApplication::GetInstance()->GetPhysics()->AddBox(actor, 1.0, false, true, true, 0.1f);
+            GameApplication::GetInstance()->GetPhysics()->AddBox(actor, 1.0, "static", true, true, 0.1f);
             // set the next level attribute of the LevelComplete component to the map-defined level path
             std::weak_ptr<CompleteCheckComponent> pWeakComponent = actor->GetComponent<CompleteCheckComponent>("CompleteCheck");
             std::shared_ptr<CompleteCheckComponent> pComponent(pWeakComponent);
@@ -246,19 +247,21 @@ bool MapLoader::processGameObject(ResourceManager *resources, Scene *scene, XMLE
             actor->SetScale(scale);
             actor->SetDepth(9);  // TODO(Joey): seperate render depth from light depth and customize light depth individually
                                  // set material
-            material->SetDiffuse(resources->LoadTexture("light-anim", "textures/animations/fire-anim.png", true));
-            material->SetSpecular(resources->GetTexture("specular"));
-            material->SetNormal(resources->GetTexture("normal"));
+            std::shared_ptr<Texture2D> texture = resources->LoadTexture("light-anim", "textures/animations/fire-anim2.png", true);
+            //material->SetDiffuse(resources->LoadTexture("light-anim", "textures/animations/fire-anim2.png", true));
+            //material->SetSpecular(resources->GetTexture("specular"));
+            //material->SetNormal(resources->GetTexture("normal"));
             // create node
             std::shared_ptr<LightNode> node(new LightNode(actor->GetID(), "light", "light", position, actor->GetDepth(), scale, diffuse, specular, 250.0f));
             node->SetMaterial(material);
             scene->AddChild(actor->GetID(), node);
             // light has animation, specify animation
-            std::shared_ptr<Animation> lightAnim = resources->LoadAnimation("textures/animations/fire-anim.anim");
-            if (lightAnim)
+            std::vector<std::shared_ptr<Animation>> lightAnim = resources->LoadAnimation("textures/lights/light.anim");
+            if(lightAnim.size() > 0)
             {
                 node->SetAnimation(true);
-                node->AddAnimation(lightAnim);
+                node->AddAnimation(lightAnim[0], lightAnim[0]->GetName());
+                node->ActivateAnimation("idle");
             }
         }
     }
@@ -285,13 +288,14 @@ bool MapLoader::processGameObject(ResourceManager *resources, Scene *scene, XMLE
             node->SetMaterial(material);
             scene->AddChild(actor->GetID(), node);
             // set physics
-            GameApplication::GetInstance()->GetPhysics()->AddBox(actor, 1.0);
+            GameApplication::GetInstance()->GetPhysics()->AddBox(actor, 1.0, "kinematic");
             // set the begin and end positions of the moveloop component
-            std::weak_ptr<TextOnTouchComponent> pWeakComponent = actor->GetComponent<TextOnTouchComponent>("TextOnTouch");
-            std::shared_ptr<TextOnTouchComponent> pComponent(pWeakComponent);
+            std::weak_ptr<MoveLoopComponent> pWeakComponent = actor->GetComponent<MoveLoopComponent>("MoveLoop");
+            std::shared_ptr<MoveLoopComponent> pComponent(pWeakComponent);
             if (pComponent)
             {
-                pComponent->SetDisplayText(DisplayText);
+                pComponent->SetBeginPosition(startPos);
+                pComponent->SetEndPosition(endPos);
             }
         }
     }
@@ -314,7 +318,7 @@ bool MapLoader::processGameObject(ResourceManager *resources, Scene *scene, XMLE
             node->SetMaterial(material);
             scene->AddChild(actor->GetID(), node);
             // set physics
-            GameApplication::GetInstance()->GetPhysics()->AddBox(actor, 1.0, false, true, true, 0.2f);
+            GameApplication::GetInstance()->GetPhysics()->AddBox(actor, 1.0, "static", true, true, 0.2f);
             // set the next level attribute of the LevelComplete component to the map-defined level path
             std::weak_ptr<TextOnTouchComponent> pWeakComponent = actor->GetComponent<TextOnTouchComponent>("TextOnTouch");
             std::shared_ptr<TextOnTouchComponent> pComponent(pWeakComponent);
@@ -339,6 +343,16 @@ bool MapLoader::processGameObject(ResourceManager *resources, Scene *scene, XMLE
         // create node
         std::shared_ptr<SpriteNode> node(new SpriteNode(actor->GetID(), "player", "main", position, actor->GetDepth(), actor->GetScale()));
         node->SetMaterial(material);
+        // get player animations
+        std::vector<std::shared_ptr<Animation>> animations = resources->LoadAnimation("textures/player/player.anim");
+        for(int i = 0; i < animations.size(); ++i)
+        {
+            node->SetAnimation(true);
+            node->AddAnimation(animations[i], animations[i]->GetName());
+        }
+        if(animations.size() > 0)
+            node->ActivateAnimation("idle");
+        // ---------------------------------------------
         // create lantern and attach to player
         std::shared_ptr<Actor> lantern = GameApplication::GetInstance()->CreateActor(DEFAULT_ACTOR_TYPES::ACTOR_LANTERN);
         lantern->SetPosition(position + scale * 12.0f); // general offset to player pos

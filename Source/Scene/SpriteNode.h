@@ -22,7 +22,7 @@ public:
 
 	void					   SetAnimation(bool enable);
 	bool					   HasAnimation();
-	void					   AddAnimation(std::shared_ptr<Animation> animation, std::string state = "default");
+	void					   AddAnimation(std::shared_ptr<Animation> animation, std::string state = "idle");
 	std::shared_ptr<Animation> GetAnimation(std::string state);
 	void					   ActivateAnimation(std::string state);	
 

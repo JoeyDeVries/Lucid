@@ -39,6 +39,7 @@ void ControlComponent::VUpdate(float deltaTime)
     Box2DPhysics *physics = GameApplication::GetInstance()->GetPhysics();
     // Gets input from resourcemanager (TODO: later manage input via events, to remove dependancy on GameApplication: listen to keypresses/releases)
 	float max = m_Velocity;
+    bool moved = false;
 	if (GameApplication::GetInstance()->IsKeyPressed(GLFW_KEY_D))
 	{
 		b2Vec2 vel = physics->FindBody(m_Owner->GetID())->GetLinearVelocity();
@@ -47,7 +48,7 @@ void ControlComponent::VUpdate(float deltaTime)
 		/*else
 			if(vel.x <= max)
 				physics->ApplyImpulse(m_Owner->GetID(), glm::vec2(m_Velocity * 7.0f, 0.0), bodyCenter);*/
-			
+		moved = true;
 	}
 	if (GameApplication::GetInstance()->IsKeyPressed(GLFW_KEY_A))
 	{
@@ -57,11 +58,23 @@ void ControlComponent::VUpdate(float deltaTime)
 		/*else
 			if(vel.x >= -max)
 				physics->ApplyImpulse(m_Owner->GetID(), glm::vec2(-m_Velocity * 7.0f, 0.0), bodyCenter);*/
+        moved = true;
 	}
     if (GameApplication::GetInstance()->IsKeyPressed(GLFW_KEY_SPACE) && !m_IsJumping)
     {
-        GameApplication::GetInstance()->GetPhysics()->ApplyImpulse(m_Owner->GetID(), glm::vec2(0.0, -750.0), bodyCenter);
+        GameApplication::GetInstance()->GetPhysic   s()->ApplyImpulse(m_Owner->GetID(), glm::vec2(0.0, -750.0), bodyCenter);
 		m_IsJumping = true;
+    }
+
+    // TODO(Joey): state machine
+    std::shared_ptr<ISceneNode> node = GameApplication::GetInstance()->GetScene()->GetSceneNode(m_Owner->GetID());
+    std::shared_ptr<SpriteNode> sprite = std::dynamic_pointer_cast<SpriteNode>(node);
+    if (sprite)
+    {
+        if (moved)
+            sprite->ActivateAnimation("walk");
+        else
+            sprite->ActivateAnimation("idle");
     }
 
 	// TODO(Joey): Rethink Actor->SceneNode relations, this can probably be done in a more 'elegant' way
