@@ -82,6 +82,7 @@
     <ClCompile Include="Communication\EventManager.cpp" />
     <ClCompile Include="Components\Actor.cpp" />
     <ClCompile Include="Components\ActorFactory.cpp" />
+    <ClCompile Include="Components\AIComponent.cpp" />
     <ClCompile Include="Components\CompleteCheckComponent.cpp" />
     <ClCompile Include="Components\ControlComponent.cpp" />
     <ClCompile Include="Components\DamageTouchComponent.cpp" />
@@ -129,6 +130,7 @@
     <ClInclude Include="Application\GameState.h" />
     <ClInclude Include="Audio\AudioEngine.h" />
     <ClInclude Include="Communication\EventManager.h" />
+    <ClInclude Include="Components\AIComponent.h" />
     <ClInclude Include="Components\CompleteCheckComponent.h" />
     <ClInclude Include="Components\DamageTouchComponent.h" />
     <ClInclude Include="Components\Event_DestroyActor.h" />

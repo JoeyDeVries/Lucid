@@ -7,6 +7,7 @@
 #include "LifeComponent.h"
 #include "DamageTouchComponent.h"
 #include "MoveLoopComponent.h"
+#include "AIComponent.h"
 #include<iostream>
 
 // actor component creator functions
@@ -18,6 +19,7 @@ ActorComponent *CreateTextOnTouchComponent()   { return new TextOnTouchComponent
 ActorComponent *CreateLifeComponent()          { return new LifeComponent; }
 ActorComponent *CreateDamageTouchComponent()   { return new DamageTouchComponent; }
 ActorComponent *CreateMoveLoopComponent()      { return new MoveLoopComponent; }
+ActorComponent *CreateAIComponent()            { return new AIComponent; }
 
 
 ActorFactory::ActorFactory(void)
@@ -30,6 +32,7 @@ ActorFactory::ActorFactory(void)
     m_actorComponentCreators["Life"] = CreateLifeComponent;
     m_actorComponentCreators["DamageTouch"] = CreateDamageTouchComponent;
     m_actorComponentCreators["MoveLoop"] = CreateMoveLoopComponent;
+    m_actorComponentCreators["AI"] = CreateAIComponent;
 }
 
 ActorFactory::~ActorFactory(void)
@@ -90,6 +93,12 @@ std::shared_ptr<Actor> ActorFactory::CreateActor(DEFAULT_ACTOR_TYPES actorType)
         std::shared_ptr<ActorComponent> component = createComponent("Life");
         actor->addComponent(component);
         component->setOwner(actor);
+        std::shared_ptr<ActorComponent> moveComponent = createComponent("MoveLoop");
+        actor->addComponent(moveComponent);
+        moveComponent->setOwner(actor);
+        std::shared_ptr<ActorComponent> aiComponent = createComponent("AI");
+        actor->addComponent(aiComponent);
+        aiComponent->setOwner(actor);
         return actor;
     }
     case ACTOR_LANTERN:

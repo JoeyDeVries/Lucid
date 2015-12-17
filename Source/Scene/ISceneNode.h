@@ -42,6 +42,8 @@ public:
     glm::mat4 const    &GetModel()            { return m_Model; }
     const std::string  &GetName()       const { return m_Name; }
     const std::string  &GetRenderPass() const { return m_RenderPass; }
+    
+    glm::vec2 GetCenter() { return m_Position + m_Scale * 0.5f; }
 
     std::shared_ptr<Material>  GetMaterial()  { return m_Material; }
 	

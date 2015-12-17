@@ -11,6 +11,7 @@
 #include "../Components/CompleteCheckComponent.h"
 #include "../Components/TextOnTouchComponent.h"
 #include "../Components/MoveLoopComponent.h"
+#include "../Components/AIComponent.h"
 
 
 MapLoader::MapLoader()
@@ -198,6 +199,47 @@ bool MapLoader::processGameObject(ResourceManager *resources, Scene *scene, XMLE
         // deathtouch aren't rendered, but simply act as collision sensors (no need to build scenenode)
         GameApplication::GetInstance()->GetPhysics()->AddBox(actor, 1.0, "static", true, true, 0.5f);
     }
+    else if (type == "Enemy")
+    {
+        // define actor
+        std::shared_ptr<Actor> actor = GameApplication::GetInstance()->CreateActor(DEFAULT_ACTOR_TYPES::ACTOR_ENEMY);
+        actor->SetPosition(position);
+        actor->SetScale(tileScale);
+        actor->SetDepth(4);
+        // create node
+        std::shared_ptr<SpriteNode> node(new SpriteNode(actor->GetID(), "enemy", "main", actor->GetPosition(), actor->GetDepth(), actor->GetScale()));
+        node->SetMaterial(material);
+        scene->AddChild(actor->GetID(), node);
+        // set physics
+        GameApplication::GetInstance()->GetPhysics()->AddBox(actor, 1.0, "dynamic", true, true, 0.5f);
+        // load animation
+        std::vector<std::shared_ptr<Animation>> animations = resources->LoadAnimation("textures/enemies/blob.anim");
+        for (int i = 0; i < animations.size(); ++i)
+        {
+            node->SetAnimation(true);
+            node->AddAnimation(animations[i], animations[i]->GetName());
+            node->ActivateAnimation("idle");
+        }
+        // configure components
+        glm::vec2 beginPos = actor->GetPosition();
+        glm::vec2 endPos = beginPos + scale - glm::vec2(tileScale);
+        std::weak_ptr<MoveLoopComponent> pWeakMoveComponent = actor->GetComponent<MoveLoopComponent>("MoveLoop");
+        std::shared_ptr<MoveLoopComponent> pMoveComponent(pWeakMoveComponent);
+        if (pMoveComponent)
+        {
+            pMoveComponent->SetBeginPosition(beginPos);
+            pMoveComponent->SetEndPosition(endPos);
+            pMoveComponent->SetSpeed(0.075f);
+        }
+        std::weak_ptr<AIComponent> pWeakAIComponent = actor->GetComponent<AIComponent>("AI");
+        std::shared_ptr<AIComponent> pAIComponent(pWeakAIComponent);
+        if (pAIComponent)
+        {
+           pAIComponent->SetBeginPosition(beginPos);
+           pAIComponent->SetEndPosition(endPos);
+           pAIComponent->SetAttackRadius(100.0f);
+        }
+    }
 	else if (type == "Finish") // end point
 	{
         std::string NextLevel = getProperty(gameObject, "NextLevel");
@@ -245,9 +287,9 @@ bool MapLoader::processGameObject(ResourceManager *resources, Scene *scene, XMLE
             std::shared_ptr<Actor> actor = GameApplication::GetInstance()->CreateActor(DEFAULT_ACTOR_TYPES::ACTOR_STATIC);
             actor->SetPosition(position);
             actor->SetScale(scale);
-            actor->SetDepth(9);  // TODO(Joey): seperate render depth from light depth and customize light depth individually
+            actor->SetDepth(10);  // TODO(Joey): seperate render depth from light depth and customize light depth individually
                                  // set material
-            std::shared_ptr<Texture2D> texture = resources->LoadTexture("light-anim", "textures/animations/fire-anim2.png", true);
+            //std::shared_ptr<Texture2D> texture = resources->LoadTexture("light-anim", "textures/animations/fire-anim2.png", true);
             //material->SetDiffuse(resources->LoadTexture("light-anim", "textures/animations/fire-anim2.png", true));
             //material->SetSpecular(resources->GetTexture("specular"));
             //material->SetNormal(resources->GetTexture("normal"));
@@ -334,7 +376,7 @@ bool MapLoader::processGameObject(ResourceManager *resources, Scene *scene, XMLE
         std::shared_ptr<Actor> actor = GameApplication::GetInstance()->CreateActor(DEFAULT_ACTOR_TYPES::ACTOR_PLAYER);
         actor->SetPosition(position);
         actor->SetScale(scale);
-        actor->SetDepth(5); // TODO(Joey): seperate render depth from light depth and customize light depth individually
+        actor->SetDepth(6); // TODO(Joey): seperate render depth from light depth and customize light depth individually
         GameApplication::GetInstance()->SetImportantActor("player", actor);
         // set material
         material->SetDiffuse(resources->LoadTexture("player", "textures/player.png", true));
@@ -386,7 +428,7 @@ bool MapLoader::processGameObject(ResourceManager *resources, Scene *scene, XMLE
                 std::shared_ptr<Actor> actor = GameApplication::GetInstance()->CreateActor(DEFAULT_ACTOR_TYPES::ACTOR_STATE_BLOCK);
                 actor->SetPosition(position);
                 actor->SetScale(scale);
-                actor->SetDepth(2);
+                actor->SetDepth(5);
                 // set material
                 material->SetDiffuse(resources->LoadTexture("block_color", "textures/stone_color.png"));
                 material->SetSpecular(resources->LoadTexture("block_specular", "textures/stone_specular.png"));

@@ -3,7 +3,7 @@
 
 #include <iostream>
 
-LightManager::LightManager()
+LightManager::LightManager() : m_FocusType("")
 {
 
 }
@@ -22,6 +22,16 @@ void LightManager::RemoveLight(std::shared_ptr<LightNode> lightNode)
 	m_Lights.erase(std::remove(m_Lights.begin(), m_Lights.end(), lightNode));
 }
 
+void LightManager::FocusOnLightType(std::string name)
+{
+    m_FocusType = name;
+}
+
+void LightManager::RemoveFocus()
+{
+    m_FocusType = "";
+}
+
 void LightManager::UpdateShader(Scene *scene, std::shared_ptr<Shader> shader)
 {
 	float time = GameApplication::GetInstance()->GetTime();
@@ -30,6 +40,8 @@ void LightManager::UpdateShader(Scene *scene, std::shared_ptr<Shader> shader)
 	int nr_active = 0;
 	for(int i = 0; i < m_Lights.size(); ++i)
 	{
+        if(m_FocusType != "" && m_Lights[i]->GetName() != m_FocusType) // if focus, only render focussed lights
+            continue;
 		if (m_Lights[i]->IsVisible(scene))
 		{
 			float value = std::sin(GameApplication::GetInstance()->GetTime() * 4.0f + (i * m_Lights.size()) + (rand() % 100) / 200.0f) * (0.03 + (rand() % 100) / 1500.0f) + 1.0;

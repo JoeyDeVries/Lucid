@@ -13,7 +13,7 @@ typedef unsigned int ActorID;
 
 class ActorComponent;
 
-class Actor // Should NOT be subclassed: all variaty comes from its components. It's only purpose is to manage its components
+class Actor // Should NOT be subclassed: all variaty comes from its components. Its only purpose is to manage its components
 {
     friend class ActorFactory;
     typedef std::map<std::string, std::shared_ptr<ActorComponent>> ActorComponents;
@@ -42,6 +42,8 @@ public:
 	const int&         GetDepth()    { return m_Depth; }
 	const float&       GetRotation() { return m_Rotation; }
 	const unsigned int GetID()       { return m_id; }
+
+    glm::vec2 GetCenter() { return m_Position + m_Scale * 0.5f; }
 
 	void SetPosition(glm::vec2 pos)  { m_Position = pos; }
 	void SetScale(glm::vec2 scale)   { m_Scale = scale; }

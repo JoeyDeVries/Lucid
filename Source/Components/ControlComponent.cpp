@@ -62,7 +62,7 @@ void ControlComponent::VUpdate(float deltaTime)
 	}
     if (GameApplication::GetInstance()->IsKeyPressed(GLFW_KEY_SPACE) && !m_IsJumping)
     {
-        GameApplication::GetInstance()->GetPhysic   s()->ApplyImpulse(m_Owner->GetID(), glm::vec2(0.0, -750.0), bodyCenter);
+        GameApplication::GetInstance()->GetPhysics()->ApplyImpulse(m_Owner->GetID(), glm::vec2(0.0, -750.0), bodyCenter);
 		m_IsJumping = true;
     }
 

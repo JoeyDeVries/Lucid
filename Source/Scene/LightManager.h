@@ -9,6 +9,7 @@ class LightManager
 {
     typedef std::vector<std::shared_ptr<LightNode>> Lights;
     Lights m_Lights;
+    std::string m_FocusType;
 
 public:
     LightManager();
@@ -17,6 +18,9 @@ public:
 
     void AddLight(std::shared_ptr<LightNode> lightNode);
     void RemoveLight(std::shared_ptr<LightNode> lightNode);
+
+    void FocusOnLightType(std::string type);
+    void RemoveFocus();
 
     void UpdateShader(Scene *scene, std::shared_ptr<Shader> shader);
 };
