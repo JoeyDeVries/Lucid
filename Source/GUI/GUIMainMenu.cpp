@@ -118,7 +118,7 @@ void GUIMainMenu::RenderBackground(Renderer *renderer, TextRenderer *textRendere
 void GUIMainMenu::OnActivate()
 {
     GameApplication::GetInstance()->GetAudio()->StopAll();
-    GameApplication::GetInstance()->GetAudio()->PlaySound("audio/menu.mp3", true);
+    //GameApplication::GetInstance()->GetAudio()->PlaySound("audio/menu.mp3", true);
 }
 
 void GUIMainMenu::OnDeactivate()

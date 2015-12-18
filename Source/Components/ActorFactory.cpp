@@ -99,6 +99,9 @@ std::shared_ptr<Actor> ActorFactory::CreateActor(DEFAULT_ACTOR_TYPES actorType)
         std::shared_ptr<ActorComponent> aiComponent = createComponent("AI");
         actor->addComponent(aiComponent);
         aiComponent->setOwner(actor);
+        std::shared_ptr<ActorComponent> dmgComponent = createComponent("DamageTouch");
+        actor->addComponent(dmgComponent);
+        dmgComponent->setOwner(actor);
         return actor;
     }
     case ACTOR_LANTERN:

@@ -12,6 +12,7 @@
 #include "../Components/TextOnTouchComponent.h"
 #include "../Components/MoveLoopComponent.h"
 #include "../Components/AIComponent.h"
+#include "../Components/DamageTouchComponent.h"
 
 
 MapLoader::MapLoader()
@@ -211,7 +212,7 @@ bool MapLoader::processGameObject(ResourceManager *resources, Scene *scene, XMLE
         node->SetMaterial(material);
         scene->AddChild(actor->GetID(), node);
         // set physics
-        GameApplication::GetInstance()->GetPhysics()->AddBox(actor, 1.0, "dynamic", true, true, 0.5f);
+        GameApplication::GetInstance()->GetPhysics()->AddBox(actor, 1.0, "kinematic", true, true, 0.5f);
         // load animation
         std::vector<std::shared_ptr<Animation>> animations = resources->LoadAnimation("textures/enemies/blob.anim");
         for (int i = 0; i < animations.size(); ++i)
@@ -238,6 +239,12 @@ bool MapLoader::processGameObject(ResourceManager *resources, Scene *scene, XMLE
            pAIComponent->SetBeginPosition(beginPos);
            pAIComponent->SetEndPosition(endPos);
            pAIComponent->SetAttackRadius(100.0f);
+        }
+        std::weak_ptr<DamageTouchComponent> pWeakDmgComponent = actor->GetComponent<DamageTouchComponent>("DamageTouch");
+        std::shared_ptr<DamageTouchComponent> pDmgComponent(pWeakDmgComponent);
+        if (pDmgComponent)
+        {
+            pDmgComponent->SetDamageAmount(25.0f);
         }
     }
 	else if (type == "Finish") // end point

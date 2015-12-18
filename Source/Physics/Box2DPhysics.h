@@ -57,6 +57,7 @@ public:
     void ApplyTorque(unsigned int ActorID, glm::vec2 direction, float newtons);
 	// per body physics data in game-world coordinates
 	glm::vec2 GetLinearVelocity(unsigned int ActorID);
+    void SetLinearVelocity(unsigned ActorID, glm::vec2 velocity);
 	float GetBodyMass(unsigned int ActorID);
 	// collision check functions
 	bool IsBodiesColliding(const b2Body* bodyA, const b2Body* bodyB);

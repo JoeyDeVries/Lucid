@@ -279,6 +279,10 @@ glm::vec2 Box2DPhysics::GetLinearVelocity(unsigned int ActorID)
 	b2Vec2 linVel = FindBody(ActorID)->GetLinearVelocity();
 	return glm::vec2(MetersToPixels(linVel.x), MetersToPixels(linVel.y));
 }
+void Box2DPhysics::SetLinearVelocity(unsigned int ActorID, glm::vec2 velocity)
+{
+    FindBody(ActorID)->SetLinearVelocity(b2Vec2(PixelsToMeters(velocity.x), PixelsToMeters(velocity.y)));
+}
 
 float Box2DPhysics::GetBodyMass(unsigned int ActorID)
 {

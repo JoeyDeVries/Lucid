@@ -58,7 +58,7 @@ void MoveLoopComponent::VUpdate(float deltaTime)
     if (!m_Paused)
     {
         // first check if we need to switch movement direction
-        if (m_CurrentPosition >= 1.0f || m_CurrentPosition <= 0.0f)
+        if (m_CurrentPosition > 1.0f || m_CurrentPosition < 0.0f)
             m_Forward = !m_Forward;
 
         // lerp between begin and end position and reverse if end position is reached (get current pos from m_Owner)
@@ -69,6 +69,8 @@ void MoveLoopComponent::VUpdate(float deltaTime)
         glm::vec2 newPos = glm::mix(m_BeginPosition, m_EndPosition, std::max(std::min(m_CurrentPosition, 1.0f), 0.0f));
         glm::vec2 diff = newPos - m_Owner->GetPosition();
 
-        GameApplication::GetInstance()->GetPhysics()->FindBody(m_Owner->GetID())->SetLinearVelocity(b2Vec2(diff.x, diff.y));
+        diff *= glm::vec2(40.0f); // TODO(Joey): generalize physics M2P magic number
+        //std::cout << "(" << diff.x << ", " << diff.y << ")" << std::endl;
+        GameApplication::GetInstance()->GetPhysics()->SetLinearVelocity(m_Owner->GetID(), diff);
     }
 }
