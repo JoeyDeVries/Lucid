@@ -107,6 +107,7 @@
     <ClCompile Include="Renderer\Animation.cpp" />
     <ClCompile Include="Renderer\Framebuffer.cpp" />
     <ClCompile Include="Renderer\Material.cpp" />
+    <ClCompile Include="Renderer\ParticleEmitter.cpp" />
     <ClCompile Include="Renderer\PostProcessor.cpp" />
     <ClCompile Include="Renderer\Renderer.cpp" />
     <ClCompile Include="Renderer\shader.cpp" />
@@ -157,6 +158,7 @@
     <ClInclude Include="Physics\IPhysics.h" />
     <ClInclude Include="Renderer\Animation.h" />
     <ClInclude Include="Renderer\Framebuffer.h" />
+    <ClInclude Include="Renderer\ParticleEmitter.h" />
     <ClInclude Include="Renderer\TextRenderer.h" />
     <ClInclude Include="Resources\Font.h" />
     <ClInclude Include="Resources\MapLoader.h" />

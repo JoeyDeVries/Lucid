@@ -37,9 +37,6 @@ void RootNode::Render(Scene *scene, Renderer *renderer)
 	// first sort children before rendering based on depth (shader|material)
 	std::sort(m_Children.begin(), m_Children.end(), SortSceneNodes);
 	
-	// Update lighting parameters
-	scene->GetLightManager()->UpdateShader(scene, ResourceManager::GetInstance()->GetShader("sprite"));
-
     // configure all render passes here
     // - render all children into post-processing framebuffer
     renderer->PrePostProcessRender();

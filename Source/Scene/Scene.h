@@ -8,6 +8,7 @@
 #include "LightManager.h"
 #include "../Renderer/Renderer.h"
 #include "../Renderer/TextRenderer.h"
+#include "../Renderer/ParticleEmitter.h"
 #include <map>
 #include <string>
 #include <vector>
@@ -19,11 +20,12 @@ typedef std::map<unsigned int, std::shared_ptr<ISceneNode>> SceneActorMap; // re
 class Scene
 {
 protected:
-    std::shared_ptr<RootNode> m_Root;
-    std::shared_ptr<Camera> m_Camera;
-	std::shared_ptr<LightManager> m_LightManager;
+    std::shared_ptr<RootNode>        m_Root;
+    std::shared_ptr<Camera>          m_Camera;
+	std::shared_ptr<LightManager>    m_LightManager;
+    std::shared_ptr<ParticleEmitter> m_ParticleEmitter; 
 
-    MatrixStack m_MatrixStack;
+    MatrixStack   m_MatrixStack;
     SceneActorMap m_ActorMap;
 
 	int m_SceneWidth, m_SceneHeight;

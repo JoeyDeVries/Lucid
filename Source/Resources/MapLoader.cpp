@@ -7,6 +7,7 @@
 #include "../Components/Actor.h"
 #include "../Scene/SpriteNode.h"
 #include "../Scene/LightNode.h"
+#include "../Scene/BackgroundNode.h"
 #include "../Components/StateBlockComponent.h"
 #include "../Components/CompleteCheckComponent.h"
 #include "../Components/TextOnTouchComponent.h"
@@ -21,14 +22,6 @@ MapLoader::MapLoader()
 
 MapLoader::~MapLoader()
 {
-}
-
-inline bool file_exists(const std::string& name) 
-{
-	std::ifstream f(name.c_str());
-	bool exists = f.good();
-	f.close();
-	return exists;
 }
 
 bool MapLoader::LoadMap(ResourceManager *resources, Scene *scene, const char * tmxPath, float levelScale)
@@ -50,6 +43,10 @@ bool MapLoader::LoadMap(ResourceManager *resources, Scene *scene, const char * t
 	// set scene dimensions
 	scene->SetSceneWidth(width * tileWidth);
 	scene->SetSceneHeight(height * tileHeight);
+
+    // get map properties and process static objects
+    processStaticDefaults(resources, scene, map);
+
 
 	// process tile entities
 	XMLElement *tileset = map->FirstChildElement("tileset");
@@ -126,20 +123,8 @@ bool MapLoader::processTileNode(ResourceManager *resources, Scene *scene, XMLEle
 	material->SetShader(resources->GetShader("sprite"));
 	material->SetDiffuse(texture);
 	// - check if specular/normal texture exists and if so, add to material; otherwise use default
-	std::string imgDir    = imageSource.substr(0, imageSource.find_last_of("\\/"));
-	std::string filename  = imageSource.substr(imageSource.find_last_of("\\/") + 1);
-	std::string file      = filename.substr(0, filename.find_last_of("."));
-	std::string extension = filename.substr(filename.find_last_of(".") + 1);
-	std::string specPath  = imgDir + "/" + file + "_specular" + "." + extension;
-	std::string normPath  = imgDir + "/" + file + "_normal" + "." + extension;
-	if(file_exists(specPath))
-		material->SetSpecular(resources->LoadTexture("tex_node_" + std::to_string(id) + "_specular", specPath.c_str()));
-	else
-		material->SetSpecular(resources->GetTexture("specular")); 
-	if (file_exists(normPath))
-		material->SetNormal(resources->LoadTexture("tex_node_" + std::to_string(id) + "_normal", normPath.c_str()));
-	else
-		material->SetNormal(resources->GetTexture("normal"));	  
+	material->SetSpecular(getSpecularMapIfExists(resources, imageSource));
+	material->SetNormal(getNormalMapIfExists(resources, imageSource));
 	// store material properties for re-use by data objects
 	m_IDToMaterial[id] = material;
 	return true;
@@ -512,6 +497,29 @@ bool MapLoader::processGameObject(ResourceManager *resources, Scene *scene, XMLE
 	return true;
 }
 
+bool MapLoader::processStaticDefaults(ResourceManager *resources, Scene *scene, XMLElement *map)
+{
+    // load background
+    std::string backgroundPath = getProperty(map, "background");
+    if (backgroundPath != "")
+    {
+        // define actor
+        std::shared_ptr<Actor> actor = GameApplication::GetInstance()->CreateActor(DEFAULT_ACTOR_TYPES::ACTOR_EMPTY);
+        // set material
+        std::shared_ptr<Material> material = std::shared_ptr<Material>(new Material());
+        material->SetShader(resources->GetShader("sprite"));
+        material->SetDiffuse(resources->LoadTexture("background", backgroundPath.c_str()));
+        material->SetSpecular(getSpecularMapIfExists(resources, backgroundPath));
+        material->SetNormal(getNormalMapIfExists(resources, backgroundPath));
+        // create node
+        std::shared_ptr<BackgroundNode> node(new BackgroundNode(actor->GetID()));
+        node->SetMaterial(material);
+        scene->AddChild(actor->GetID(), node);
+    }
+
+    return true;
+}
+
 std::string MapLoader::getProperty(XMLElement *object, std::string property)
 {
     std::string value = "";
@@ -527,4 +535,41 @@ std::string MapLoader::getProperty(XMLElement *object, std::string property)
         }
     }
     return value;
+}
+
+inline bool file_exists(const std::string& name)
+{
+    std::ifstream f(name.c_str());
+    bool exists = f.good();
+    f.close();
+    return exists;
+}
+
+
+std::shared_ptr<Texture2D> MapLoader::getSpecularMapIfExists(ResourceManager *resources, std::string diffusePath)
+{
+    // - check if specular texture exists and if so, return
+    std::string imgDir = diffusePath.substr(0, diffusePath.find_last_of("\\/"));
+    std::string filename = diffusePath.substr(diffusePath.find_last_of("\\/") + 1);
+    std::string file = filename.substr(0, filename.find_last_of("."));
+    std::string extension = filename.substr(filename.find_last_of(".") + 1);
+    std::string specPath = imgDir + "/" + file + "_specular" + "." + extension;
+    if (file_exists(specPath))
+        return resources->LoadTexture("tex_node_" + specPath, specPath.c_str());
+    else
+        return resources->GetTexture("specular");
+}
+
+std::shared_ptr<Texture2D> MapLoader::getNormalMapIfExists(ResourceManager *resources, std::string diffusePath)
+{
+    // - check if normal texture exists and if so, return
+    std::string imgDir = diffusePath.substr(0, diffusePath.find_last_of("\\/"));
+    std::string filename = diffusePath.substr(diffusePath.find_last_of("\\/") + 1);
+    std::string file = filename.substr(0, filename.find_last_of("."));
+    std::string extension = filename.substr(filename.find_last_of(".") + 1);
+    std::string normalPath = imgDir + "/" + file + "_normal" + "." + extension;
+    if (file_exists(normalPath))
+        return resources->LoadTexture("tex_node_" + normalPath, normalPath.c_str());
+    else
+        return resources->GetTexture("normal"); // return default normal texture
 }

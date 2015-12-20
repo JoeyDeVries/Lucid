@@ -1,5 +1,6 @@
 #include "Scene.h"
 #include "../Application/GameApplication.h"
+#include "../Resources/ResourceManager.h"
 #include "../Scene/LightNode.h"
 
 Scene::Scene()
@@ -7,6 +8,7 @@ Scene::Scene()
     m_Root.reset(new RootNode);
     m_Camera.reset(new Camera);
     m_LightManager.reset(new LightManager);
+    m_ParticleEmitter.reset(new ParticleEmitter);
 }
 
 Scene::~Scene()
@@ -18,6 +20,8 @@ void Scene::Initialize()
 {
     // initializes each scene node
     m_Root->Initialize(this);    
+
+    m_ParticleEmitter->Init(300, m_Camera->GetProjection());
 }
 
 void Scene::Clear()
@@ -26,6 +30,7 @@ void Scene::Clear()
     m_LightManager.reset(new LightManager);
     m_ActorMap.clear();
     m_MatrixStack.Clear();
+    m_ParticleEmitter.reset(new ParticleEmitter);
 }
 
 void Scene::Restore()
@@ -45,6 +50,7 @@ void Scene::Update(float deltaTime)
 
     m_Root->Update(this, deltaTime);
 
+    m_ParticleEmitter->Update(this, deltaTime, 2); // 600 particles are required (nrParticles * newParticles == 600 should be true)
 }
 
 void Scene::Render(Renderer *renderer)
@@ -52,7 +58,14 @@ void Scene::Render(Renderer *renderer)
     if (m_Root && m_Camera)
     {
 		m_Camera->CalculateViewMatrix();
+
+        // Update lighting parameters
+        GetLightManager()->UpdateShader(this, ResourceManager::GetInstance()->GetShader("sprite"));
+        GetLightManager()->UpdateShader(this, m_ParticleEmitter->GetShader());
+
 		m_Root->Render(this, renderer);
+
+        m_ParticleEmitter->Render(renderer, m_Camera->GetView());
     }
 }
 

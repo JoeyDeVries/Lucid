@@ -22,8 +22,11 @@ private:
 	bool processTileNode(ResourceManager *resources, Scene *scene, XMLElement *tileNode);
 	bool processTileData(ResourceManager *resources, Scene *scene, XMLElement *tileData, glm::vec2 pos, glm::vec2 scale, int depth, bool physics);
 	bool processGameObject(ResourceManager *resources, Scene *scene, XMLElement *gameObject, glm::vec2 tileScale, float mapScale);
-	bool processStaticDefaults(ResourceManager *resources, Scene *scene);
+	bool processStaticDefaults(ResourceManager *resources, Scene *scene, XMLElement *map);
+
     std::string getProperty(XMLElement *object, std::string property);
+    std::shared_ptr<Texture2D> getSpecularMapIfExists(ResourceManager *resources, std::string diffusePath);
+    std::shared_ptr<Texture2D> getNormalMapIfExists(ResourceManager *resources, std::string diffusePath);
 public:
 	MapLoader();
 	~MapLoader();

@@ -44,14 +44,14 @@ void GameApplication::Initialize(float width, float height)
     ResourceManager::GetInstance()->LoadTexture("normal", "textures/normal.png");
     // Create level-independant actors
     // - background (no need for it to be related to an actor, only for rendering)
-    std::shared_ptr<Actor> backgroundActor = CreateActor(DEFAULT_ACTOR_TYPES::ACTOR_EMPTY);
-    std::shared_ptr<BackgroundNode> backgroundNode(new BackgroundNode(backgroundActor->GetID())); // 0 = no_actor id
-	std::shared_ptr<Material> backgroundMaterial = std::shared_ptr<Material>(new Material());
-	backgroundMaterial->SetShader(ResourceManager::GetInstance()->GetShader("sprite"));
-    backgroundMaterial->SetDiffuse(ResourceManager::GetInstance()->LoadTexture("background", "textures/background2.png"));
-    backgroundMaterial->SetSpecular(ResourceManager::GetInstance()->GetTexture("specular"));
-    backgroundMaterial->SetNormal(ResourceManager::GetInstance()->LoadTexture("background_normal", "textures/background2_normal.png"));
-    backgroundNode->SetMaterial(backgroundMaterial);
+ //   std::shared_ptr<Actor> backgroundActor = CreateActor(DEFAULT_ACTOR_TYPES::ACTOR_EMPTY);
+ //   std::shared_ptr<BackgroundNode> backgroundNode(new BackgroundNode(backgroundActor->GetID())); // 0 = no_actor id
+	//std::shared_ptr<Material> backgroundMaterial = std::shared_ptr<Material>(new Material());
+	//backgroundMaterial->SetShader(ResourceManager::GetInstance()->GetShader("sprite"));
+ //   backgroundMaterial->SetDiffuse(ResourceManager::GetInstance()->LoadTexture("background", "textures/background2.png"));
+ //   backgroundMaterial->SetSpecular(ResourceManager::GetInstance()->GetTexture("specular"));
+ //   backgroundMaterial->SetNormal(ResourceManager::GetInstance()->LoadTexture("background_normal", "textures/background2_normal.png"));
+ //   backgroundNode->SetMaterial(backgroundMaterial);
     //m_Scene->AddChild(backgroundActor->GetID(), backgroundNode);  
 
 	// register for global game event

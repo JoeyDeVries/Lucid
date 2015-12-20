@@ -2,7 +2,7 @@
 
 #include "../Application/GameApplication.h"
 
-BackgroundNode::BackgroundNode(unsigned int ActorID) : SceneNode(ActorID, "Background", "BACKGROUND", glm::vec2(0.0), 0.0f)
+BackgroundNode::BackgroundNode(unsigned int ActorID) : SceneNode(ActorID, "Background", "BACKGROUND", glm::vec2(0.0), 0)
 {
 
 }
