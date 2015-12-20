@@ -6,7 +6,7 @@
 
 #include <iostream>
 
-StateBlockComponent::StateBlockComponent() : m_BlockColor(LightState::RED), m_LastLightState(LightState::WHITE), m_PlayerContact(false)
+StateBlockComponent::StateBlockComponent() : m_BlockColor(LightState::WHITE), m_LastLightState(LightState::WHITE), m_PlayerContact(false)
 {
 
 }
@@ -47,7 +47,7 @@ void StateBlockComponent::SetBlockColor(LightState blockColor)
 void StateBlockComponent::OnLightSwitched(std::shared_ptr<IEventData> eventData)
 {
 	std::shared_ptr<Event_LightStateSwitched> pEvent = std::dynamic_pointer_cast<Event_LightStateSwitched>(eventData);
-	if (pEvent)
+	if (m_BlockColor != LightState::WHITE && pEvent)
 	{
 		if (pEvent->GetLightState() == m_BlockColor && !m_PlayerContact)
 		{	// Light state corresponds to color of the block, enable collision

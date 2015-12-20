@@ -169,29 +169,6 @@ std::vector<std::shared_ptr<Animation>> ResourceManager::LoadAnimation(const cha
         animations.push_back(animation);
     }
     return animations;
-	//if (std::getline(file, header))
-	//{
-	//	std::stringstream sstream(header);
-	//	float duration;
-	//	sstream >> duration;		
-	//	// then read in each animation frame
-	//	while (std::getline(file, line))
-	//	{
-	//		sstream.str(line);			
-	//		sstream.clear();
-	//		AnimationData data;
-	//		sstream >> data.XOffset;
-	//		sstream >> data.YOffset;
-	//		sstream >> data.Width;
-	//		sstream >> data.Height;
-	//		animData.push_back(data);
-	//	}
-	//	std::shared_ptr<Animation> animation = std::shared_ptr<Animation>(new Animation(animData));
-	//	animation->SetDuration(duration);
-	//	animation->Normalize();
-	//	return animation;
-	//}
-	//return std::shared_ptr<Animation>();
 }
 
 std::shared_ptr<Font> ResourceManager::LoadFont(const char *fontPath)

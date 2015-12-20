@@ -29,8 +29,8 @@ public:
     void SetEndPosition(glm::vec2 position);
     void SetAttacking(bool attacking);
 
-    bool VInit();
-    void VUpdate(float deltaTime);
+    bool VInit() override;
+    void VUpdate(float deltaTime) override;
 };
 
 #endif

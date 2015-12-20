@@ -70,7 +70,7 @@ void AIComponent::VUpdate(float deltaTime)
             m_Attacking = true;
             oldPos = m_Owner->GetPosition();
             // check if the actor has a moveloop component, and disable it during player vicinity
-            std::cout << "Start attacking player" << std::endl;
+            //std::cout << "Start attacking player" << std::endl;
             std::weak_ptr<MoveLoopComponent> pWeak = m_Owner->GetComponent<MoveLoopComponent>("MoveLoop");
             if (!pWeak.expired())
             {
@@ -81,14 +81,14 @@ void AIComponent::VUpdate(float deltaTime)
         // move to player
         glm::vec2 force = glm::normalize(difference) * glm::vec2(1500.0f) * deltaTime;
         GameApplication::GetInstance()->GetPhysics()->SetLinearVelocity(m_Owner->GetID(), force);
-        std::cout << "(" << force.x << ", " << force.y << ")" << std::endl;
+        //std::cout << "(" << force.x << ", " << force.y << ")" << std::endl;
     }
     else
     {
         if (m_Attacking)
         {   // player left attack vicinity
             m_Attacking = false;
-            std::cout << "stop attacking player" << std::endl;
+            //std::cout << "stop attacking player" << std::endl;
             
             // intitiate restore operations before resuming move loop control
             restoreIterations = 60; // restore in 1 frame

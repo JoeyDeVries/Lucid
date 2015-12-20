@@ -78,7 +78,7 @@ bool MapLoader::LoadMap(ResourceManager *resources, Scene *scene, const char * t
 			// calculate scale, position based on column/rows and depth
 			glm::vec2 pos = glm::vec2(columnCounter * tileWidth, rowCounter * tileHeight);
 			glm::vec2 scale = glm::vec2(tileWidth, tileHeight);
-			if (!processTileData(scene, tile, pos, scale, depth, name == "Physics"))
+			if (!processTileData(resources, scene, tile, pos, scale, depth, name == "Physics"))
 			{
 				std::cout << "Failed processing TileData" << std::endl;
 				return false;
@@ -145,7 +145,7 @@ bool MapLoader::processTileNode(ResourceManager *resources, Scene *scene, XMLEle
 	return true;
 }
 
-bool MapLoader::processTileData(Scene *scene, XMLElement *tile, glm::vec2 pos, glm::vec2 scale, int depth, bool physics)
+bool MapLoader::processTileData(ResourceManager *resources, Scene *scene, XMLElement *tile, glm::vec2 pos, glm::vec2 scale, int depth, bool physics)
 {
 	int gid = tile->IntAttribute("gid"); // note: GID are 1-based indices, 0 means empty tile
 	if (gid != 0)
@@ -174,6 +174,19 @@ bool MapLoader::processTileData(Scene *scene, XMLElement *tile, glm::vec2 pos, g
 		{
 			GameApplication::GetInstance()->GetPhysics()->AddBox(actor, 1.0f);
 		}
+        // determine if an animation has been set, and if so load it in
+        // NOTE(Joey): not possible as individual tiles can't have individual properties
+        //std::string animation = getProperty(tile, "Animation");
+        //if (animation != "")
+        //{
+        //    std::vector<std::shared_ptr<Animation>> animations = resources->LoadAnimation(animation.c_str());
+        //    for (std::shared_ptr<Animation> anim : animations)
+        //    {
+        //        node->AddAnimation(anim, anim->GetName());
+        //        node->SetAnimation(true);
+        //        node->ActivateAnimation("idle");
+        //    }
+        //}
 	}
 	return true;
 }
@@ -282,30 +295,32 @@ bool MapLoader::processGameObject(ResourceManager *resources, Scene *scene, XMLE
         if (properties)
         {
             XMLElement *property = properties->FirstChildElement("property");
-            float d_r = property->FloatAttribute("value"); property = property->NextSiblingElement();
-            float d_g = property->FloatAttribute("value"); property = property->NextSiblingElement();
-            float d_b = property->FloatAttribute("value"); property = property->NextSiblingElement();
-            float s_r = property->FloatAttribute("value"); property = property->NextSiblingElement();
-            float s_g = property->FloatAttribute("value"); property = property->NextSiblingElement();
-            float s_b = property->FloatAttribute("value");
+            std::string animation = getProperty(gameObject, "Animation");
+            float d_r = std::atof(getProperty(gameObject, "D_R").c_str());
+            float d_g = std::atof(getProperty(gameObject, "D_G").c_str());
+            float d_b = std::atof(getProperty(gameObject, "D_B").c_str());
+            float s_r = std::atof(getProperty(gameObject, "S_R").c_str());
+            float s_g = std::atof(getProperty(gameObject, "S_G").c_str());
+            float s_b = std::atof(getProperty(gameObject, "S_B").c_str());
             glm::vec3 diffuse(d_r, d_g, d_b);
             glm::vec3 specular(s_r, s_g, s_b);
             // define actor
             std::shared_ptr<Actor> actor = GameApplication::GetInstance()->CreateActor(DEFAULT_ACTOR_TYPES::ACTOR_STATIC);
             actor->SetPosition(position);
             actor->SetScale(scale);
-            actor->SetDepth(10);  // TODO(Joey): seperate render depth from light depth and customize light depth individually
-                                 // set material
-            //std::shared_ptr<Texture2D> texture = resources->LoadTexture("light-anim", "textures/animations/fire-anim2.png", true);
-            //material->SetDiffuse(resources->LoadTexture("light-anim", "textures/animations/fire-anim2.png", true));
-            //material->SetSpecular(resources->GetTexture("specular"));
-            //material->SetNormal(resources->GetTexture("normal"));
+            actor->SetDepth(10);  
+            if (animation == "")
+            {
+                material->SetDiffuse(resources->LoadTexture("light-animz", "textures/lights/fire-anim.png", true));
+                material->SetSpecular(resources->GetTexture("specular"));
+                material->SetNormal(resources->GetTexture("normal"));
+            }
             // create node
             std::shared_ptr<LightNode> node(new LightNode(actor->GetID(), "light", "light", position, actor->GetDepth(), scale, diffuse, specular, 250.0f));
             node->SetMaterial(material);
             scene->AddChild(actor->GetID(), node);
             // light has animation, specify animation
-            std::vector<std::shared_ptr<Animation>> lightAnim = resources->LoadAnimation("textures/lights/light.anim");
+            std::vector<std::shared_ptr<Animation>> lightAnim = resources->LoadAnimation(animation.c_str());
             if(lightAnim.size() > 0)
             {
                 node->SetAnimation(true);
@@ -345,6 +360,27 @@ bool MapLoader::processGameObject(ResourceManager *resources, Scene *scene, XMLE
             {
                 pComponent->SetBeginPosition(startPos);
                 pComponent->SetEndPosition(endPos);
+            }
+            // set color state
+            std::weak_ptr<StateBlockComponent> pWeakStateComponent = actor->GetComponent<StateBlockComponent>("StateBlock");
+            std::shared_ptr<StateBlockComponent> pStateComponent(pWeakStateComponent);
+            if (pComponent)
+            {
+                if (color == "R")
+                {
+                    pStateComponent->SetBlockColor(LightState::RED);
+                    material->SetColorOverride(glm::vec3(1.0, 0.5, 0.5));
+                }
+                else if (color == "G")
+                {
+                    pStateComponent->SetBlockColor(LightState::GREEN);
+                    material->SetColorOverride(glm::vec3(0.5, 1.0, 0.5));
+                }
+                else if (color == "B")
+                {
+                    pStateComponent->SetBlockColor(LightState::BLUE);
+                    material->SetColorOverride(glm::vec3(0.5, 0.5, 1.0));
+                }
             }
         }
     }

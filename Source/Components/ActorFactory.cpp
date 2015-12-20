@@ -148,6 +148,9 @@ std::shared_ptr<Actor> ActorFactory::CreateActor(DEFAULT_ACTOR_TYPES actorType)
         std::shared_ptr<ActorComponent> component = createComponent("MoveLoop");
         actor->addComponent(component);
         component->setOwner(actor);
+        std::shared_ptr<ActorComponent> stateComponent = createComponent("StateBlock");
+        actor->addComponent(stateComponent);
+        stateComponent->setOwner(actor);
         return actor;
     }
     }
