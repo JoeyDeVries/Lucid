@@ -8,7 +8,7 @@ GUIGameMenu::GUIGameMenu()
 
 bool GUIGameMenu::Init()
 {
-
+    return true;
 }
 
 void GUIGameMenu::Update(float deltaTime)

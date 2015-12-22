@@ -19,7 +19,7 @@ void GUISceneIntro::SetIntroText(std::string text)
 
 bool GUISceneIntro::Init()
 {
-
+    return true;
 }
 
 void GUISceneIntro::Update(float deltaTime)
