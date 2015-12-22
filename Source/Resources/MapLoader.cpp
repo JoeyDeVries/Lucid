@@ -8,6 +8,7 @@
 #include "../Scene/SpriteNode.h"
 #include "../Scene/LightNode.h"
 #include "../Scene/BackgroundNode.h"
+#include "../Scene/TextNode.h"
 #include "../Components/StateBlockComponent.h"
 #include "../Components/CompleteCheckComponent.h"
 #include "../Components/TextOnTouchComponent.h"
@@ -493,6 +494,26 @@ bool MapLoader::processGameObject(ResourceManager *resources, Scene *scene, XMLE
             }
         }
     }
+    else if (type == "Text")
+    {
+        std::string Text = getProperty(gameObject, "Text");
+        if(Text != "")
+        {
+            float R = std::atof(getProperty(gameObject, "R").c_str());
+            float G = std::atof(getProperty(gameObject, "G").c_str());
+            float B = std::atof(getProperty(gameObject, "B").c_str());
+            int fontScale = std::atoi(getProperty(gameObject, "Scale").c_str());
+            glm::vec4 color(R,G,B, 1.0f);
+            // define actor
+            std::shared_ptr<Actor> actor = GameApplication::GetInstance()->CreateActor(DEFAULT_ACTOR_TYPES::ACTOR_EMPTY);
+            // create node
+            std::shared_ptr<TextNode> node(new TextNode(actor->GetID(), position, scale));
+            node->SetText(Text);
+            node->SetColor(color);
+            node->SetFontScale(fontScale);
+            scene->AddChild(actor->GetID(), node);
+        }
+    }
 
 	return true;
 }
@@ -516,6 +537,10 @@ bool MapLoader::processStaticDefaults(ResourceManager *resources, Scene *scene, 
         node->SetMaterial(material);
         scene->AddChild(actor->GetID(), node);
     }
+    // load intro text from map
+    std::string introText = getProperty(map, "IntroText");
+    if(introText != "")
+        scene->SetSceneIntro(introText);
 
     return true;
 }

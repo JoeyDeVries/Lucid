@@ -210,8 +210,8 @@ void GameApplication::Render()
             //m_Physics->RenderDiagnostics();
         }
 
-        m_TextRenderer->RenderText("Joey de Vries presents...", glm::vec2(300, 660), 2.5f, true, glm::vec4(0.35, 0.35, 0.35, 1.0));
-        m_TextRenderer->RenderText("Lantarn", glm::vec2(570, 340), 6.0f, true, glm::vec4(0.24, 0.05, 0.05, 0.25));
+        //m_TextRenderer->RenderText("Joey de Vries presents...", glm::vec2(300, 660), 2.5f, true, glm::vec4(0.35, 0.35, 0.35, 1.0));
+        //m_TextRenderer->RenderText("Lantarn", glm::vec2(570, 340), 6.0f, true, glm::vec4(0.24, 0.05, 0.05, 0.25));
 
         // render all gameplay-related text (clears queue before GUI text rendering)
         m_TextRenderer->Render(m_Scene->GetCamera()->GetProjection(), m_Scene->GetCamera()->GetView());

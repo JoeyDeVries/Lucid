@@ -95,10 +95,12 @@
     <ClCompile Include="Components\StateBlockComponent.cpp" />
     <ClCompile Include="Components\TextOnTouchComponent.cpp" />
     <ClCompile Include="Components\TransformComponent.cpp" />
+    <ClCompile Include="GUI\GUIGameMenu.cpp" />
     <ClCompile Include="GUI\GUIButton.cpp" />
     <ClCompile Include="GUI\GUIContainer.cpp" />
     <ClCompile Include="GUI\GUIElement.cpp" />
     <ClCompile Include="GUI\GUIMainMenu.cpp" />
+    <ClCompile Include="GUI\GUISceneIntro.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Physics\Box2DPhysics.cpp" />
     <ClCompile Include="Physics\Event_ActorMoved.cpp" />
@@ -126,6 +128,7 @@
     <ClCompile Include="Scene\Scene.cpp" />
     <ClCompile Include="Scene\SceneNode.cpp" />
     <ClCompile Include="Scene\SpriteNode.cpp" />
+    <ClCompile Include="Scene\TextNode.cpp" />
     <ClInclude Include="Application\Event_QuitGame.h" />
     <ClInclude Include="Application\Event_StartLevel.h" />
     <ClInclude Include="Application\GameState.h" />
@@ -145,10 +148,12 @@
     <ClInclude Include="Components\StateBlockComponent.h" />
     <ClInclude Include="Components\TextOnTouchComponent.h" />
     <ClInclude Include="FastDelegate.h" />
+    <ClInclude Include="GUI\GUIGameMenu.h" />
     <ClInclude Include="GUI\GUIButton.h" />
     <ClInclude Include="GUI\GUIContainer.h" />
     <ClInclude Include="GUI\GUIElement.h" />
     <ClInclude Include="GUI\GUIMainMenu.h" />
+    <ClInclude Include="GUI\GUISceneIntro.h" />
     <ClInclude Include="Physics\Box2DContactListener.h" />
     <ClInclude Include="Physics\Box2DDebugDrawer.h" />
     <ClInclude Include="Physics\Box2DPhysics.h" />
@@ -163,6 +168,7 @@
     <ClInclude Include="Resources\Font.h" />
     <ClInclude Include="Resources\MapLoader.h" />
     <ClInclude Include="Resources\tinyxml2.h" />
+    <ClInclude Include="Scene\TextNode.h" />
     <ClInclude Include="Scene\LightManager.h" />
     <ClInclude Include="Renderer\PostProcesser.h" />
     <ClInclude Include="Renderer\Renderer.h" />

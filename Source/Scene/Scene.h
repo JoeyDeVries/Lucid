@@ -29,7 +29,7 @@ protected:
     SceneActorMap m_ActorMap;
 
 	int m_SceneWidth, m_SceneHeight;
-
+    std::string m_SceneIntro;
 public:
     Scene();
     virtual ~Scene();
@@ -48,10 +48,12 @@ public:
     std::shared_ptr<LightManager> const GetLightManager()   { return m_LightManager; }
 	std::shared_ptr<RootNode>	  const GetRootNode()		{ return m_Root; }
 
-	int  GetSceneWidth()  const	   { return m_SceneWidth; }
-	int  GetSceneHeight() const    { return m_SceneHeight; }
-	void SetSceneWidth(int width)  { m_SceneWidth = width; }
-	void SetSceneHeight(int height){ m_SceneHeight = height; }
+	int         GetSceneWidth()  const { return m_SceneWidth; }
+	int         GetSceneHeight() const { return m_SceneHeight; }
+    std::string GetSceneIntro()        { return m_SceneIntro; }
+	void SetSceneWidth(int width)         { m_SceneWidth = width; }
+	void SetSceneHeight(int height)       { m_SceneHeight = height; }
+    void SetSceneIntro(std::string intro) { m_SceneIntro = intro; }
 
     void PushAndSetMatrix(const glm::mat4 model);
     void PopMatrix();
