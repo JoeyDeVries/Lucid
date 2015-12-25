@@ -12,7 +12,8 @@ class Renderer;
 enum POST_PROCESS_EFFECT
 {
     POST_PROCESS_NONE,
-    POST_PROCESS_WHITESCALE,
+    POST_PROCESS_GRAYSCALE,
+    POST_PROCESS_INVERT,
     POST_PROCESS_BLUR,
     POST_PROCESS_SHAKE,
     POST_PROCESS_FLASH,
@@ -32,7 +33,8 @@ public:
     void PostRender();
     void RenderScreenQuad(Renderer* renderer);
 
-    void EnableEffect(POST_PROCESS_EFFECT effect, float duration = 0.0f);
+    void EnableEffect(POST_PROCESS_EFFECT effect);
+    void DisableEffect(POST_PROCESS_EFFECT effect);
 };
 
 

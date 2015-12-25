@@ -37,7 +37,34 @@ void PostProcessor::RenderScreenQuad(Renderer* renderer)
     renderer->RenderQuad();
 }
 
-void PostProcessor::EnableEffect(POST_PROCESS_EFFECT effect, float duration)
+void PostProcessor::EnableEffect(POST_PROCESS_EFFECT effect)
 {
-    m_Shader->SetInteger("effect", effect, true);
+    switch (effect)
+    {
+    case POST_PROCESS_EFFECT::POST_PROCESS_BLUR:
+        m_Shader->SetInteger("blur", true, true);
+        break;
+    case POST_PROCESS_EFFECT::POST_PROCESS_GRAYSCALE:
+        m_Shader->SetInteger("grayscale", true, true);
+        break;
+    case POST_PROCESS_EFFECT::POST_PROCESS_INVERT:
+        m_Shader->SetInteger("invert", true, true);
+        break;
+    }
+}
+
+void PostProcessor::DisableEffect(POST_PROCESS_EFFECT effect)
+{
+    switch (effect)
+    {
+    case POST_PROCESS_EFFECT::POST_PROCESS_BLUR:
+        m_Shader->SetInteger("blur", false, true);
+        break;
+    case POST_PROCESS_EFFECT::POST_PROCESS_GRAYSCALE:
+        m_Shader->SetInteger("grayscale", false, true);
+        break;
+    case POST_PROCESS_EFFECT::POST_PROCESS_INVERT:
+        m_Shader->SetInteger("invert", false, true);
+        break;
+    }
 }

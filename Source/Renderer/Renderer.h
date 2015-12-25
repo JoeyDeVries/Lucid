@@ -24,6 +24,9 @@ public:
     virtual void PrePostProcessRender();
     virtual void PostPostProcessRender();
     virtual void PostProcessQuadRender();
+
+    virtual void EnableEffect(POST_PROCESS_EFFECT effect);
+    virtual void DisableEffect(POST_PROCESS_EFFECT effect);
 };
 
 #endif

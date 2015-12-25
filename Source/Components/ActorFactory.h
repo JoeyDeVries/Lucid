@@ -11,9 +11,9 @@
 // definitions
 typedef ActorComponent *(*ActorComponentCreator)(void);
 typedef std::map<std::string, ActorComponentCreator> actorComponentCreatorMap;
-
-
-
+ 
+   
+ 
 class ActorFactory
 {
 // DATA

@@ -31,17 +31,17 @@ bool GUIMainMenu::Init()
     btnContinue->SetHoverColor(glm::vec4(1.0f));
     btnContinue->SetText("Continue");
     // options
-    std::shared_ptr<GUIButton> btnOptions(new GUIButton);
-    btnOptions->SetName("btnOptions");
-    btnOptions->SetPosition(glm::vec2(250.0f, 340.0f));
-    btnOptions->SetScale(glm::vec2(300.0f, 50.0f));
-    btnOptions->SetForeColor(glm::vec4(glm::vec3(0.6f), 1.0f));
-    btnOptions->SetHoverColor(glm::vec4(1.0f));
-    btnOptions->SetText("Options");
+    //std::shared_ptr<GUIButton> btnOptions(new GUIButton);
+    //btnOptions->SetName("btnOptions");
+    //btnOptions->SetPosition(glm::vec2(250.0f, 340.0f));
+    //btnOptions->SetScale(glm::vec2(300.0f, 50.0f));
+    //btnOptions->SetForeColor(glm::vec4(glm::vec3(0.6f), 1.0f));
+    //btnOptions->SetHoverColor(glm::vec4(1.0f));
+    //btnOptions->SetText("Options");
     // quit
     std::shared_ptr<GUIButton> btnQuit(new GUIButton);
     btnQuit->SetName("btnQuit");
-    btnQuit->SetPosition(glm::vec2(250.0f, 415.0f));
+    btnQuit->SetPosition(glm::vec2(250.0f, 350.0f));
     btnQuit->SetScale(glm::vec2(300.0f, 50.0f));
     btnQuit->SetForeColor(glm::vec4(glm::vec3(0.6f), 1.0f));
     btnQuit->SetHoverColor(glm::vec4(1.0f));
@@ -50,7 +50,7 @@ bool GUIMainMenu::Init()
     // add elements to container control
     AddElement(btnStartGame);
     AddElement(btnContinue);
-    AddElement(btnOptions);
+    //AddElement(btnOptions);
     AddElement(btnQuit);
 
     // load additional resources
@@ -141,10 +141,10 @@ void GUIMainMenu::ButtonPressed(std::shared_ptr<GUIButton> pButton)
         GameApplication::GetInstance()->GetEventManager()->QueueEvent(pEvent);
         std::cout << "Button: Continue event sent. " << std::endl;
     }
-    else if (name == "btnOptions")
-    {   // send out load game event
-        std::cout << "Button: Options pressed. " << std::endl;
-    }
+    //else if (name == "btnOptions")
+    //{   // send out load game event
+    //    std::cout << "Button: Options pressed. " << std::endl;
+    //}
     else if(name == "btnQuit")
     {   // send out game quit event
         std::shared_ptr<IEventData> pEvent(new Event_QuitGame());

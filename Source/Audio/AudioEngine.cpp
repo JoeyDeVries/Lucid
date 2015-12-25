@@ -16,6 +16,8 @@ void AudioEngine::PlaySound(std::string name, bool loop, float volume)
 	// engine's update call; at the end of each frame. This allows us to only query
 	// the driver at one point of time and allows us to dismiss/combine overlapping
 	// audio requests.
+    if(loop && m_AudioEngine->isCurrentlyPlaying(m_AudioEngine->getSoundSource(name.c_str())))
+        return;
 	irrklang::ISound *sound = m_AudioEngine->play2D(name.c_str(), loop, true);
 	if (sound)
 	{

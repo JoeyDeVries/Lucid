@@ -9,8 +9,8 @@ Camera::Camera()
 
 void Camera::SetProjection(float width, float height, float near, float far)
 {
-    this->m_Width = width;
-    this->m_Height = height;
+    m_Width = width;
+    m_Height = height;
     m_Projection = glm::ortho(0.0f, width, height, 0.0f, near, far);
 }
 

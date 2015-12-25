@@ -19,6 +19,8 @@ void GUISceneIntro::SetIntroText(std::string text)
 
 bool GUISceneIntro::Init()
 {
+    SetScale(glm::vec2(GameApplication::GetInstance()->ScreenWidth(), GameApplication::GetInstance()->ScreenHeight()));
+    m_BackgroundTexture = ResourceManager::GetInstance()->LoadTexture("intro_background", "textures/backgrounds/intro_background.jpg", false);
     return true;
 }
 
@@ -26,19 +28,20 @@ void GUISceneIntro::Update(float deltaTime)
 {
     if (m_IsActive)
     {
-        if (m_TimeActive < 5.0f)
+        if (m_TimeActive < 10.0f)
         {
-            m_TextAlpha += deltaTime * 0.2f;
+            m_TextAlpha += deltaTime * 0.1f;
         }
-        else if (m_TimeActive > 30.0f)
+        else if (m_TimeActive > 20.0f && m_TimeActive < 25.0f)
         {
             m_Alpha -= deltaTime * 0.2f;
             m_TextAlpha -= deltaTime * 0.2f;
         }
-        else if (m_TimeActive > 35.0f)
+        else if (m_TimeActive > 25.0f)
         {
             SetActive(false);
         }
+        SetActive(false);
 
         m_TimeActive += deltaTime;
     }
@@ -60,19 +63,20 @@ void GUISceneIntro::RenderBackground(Renderer *renderer, TextRenderer *textRende
     renderer->RenderQuad();
     // 2. then text
     std::vector<std::string> subTexts;
-    int charsPerNewline = 50;
+    int charsPerNewline = 40;
     std::string line;
     for(int i = 0; i < m_IntroText.size() ; ++i)
     {
-        if (i % charsPerNewline == 0)
+        if (i % charsPerNewline == 0 || i == m_IntroText.size() - 1)
         {
-            subTexts.push_back(line);
+            if(line != "")
+                subTexts.push_back(line);
             line = std::string();
         }
         line += m_IntroText[i];
     }
     for(int i = 0; i < subTexts.size(); ++i)
-        textRenderer->RenderText(subTexts[i], glm::vec2(100.0f, 50.0f * i), 3.0f, false, glm::vec4(1.0f, 1.0f, 1.0f, m_TextAlpha), glm::vec2(m_Scale.x - 200.0f, 50.0f)); 
+        textRenderer->RenderText(subTexts[i], glm::vec2(100.0f, 100.0f + 30.0f * i), 3.0f, false, glm::vec4(0.05f, 0.05f, 0.0f, m_TextAlpha), glm::vec2(m_Scale.x - 200.0f, 30.0f));
 
     spriteShader->SetInteger("EnableLighting", 1);
 }
@@ -86,7 +90,7 @@ void GUISceneIntro::OnActivate()
 
 void GUISceneIntro::OnDeactivate()
 {
-
+    GameApplication::GetInstance()->SwitchState(GameState::GAME_MAIN); // go to game
 }
 
 

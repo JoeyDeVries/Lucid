@@ -20,8 +20,8 @@ private:
     bool m_Active;
     float m_ScreenWidth, m_ScreenHeight;
 
-    char m_Keys[1024];
-    char m_KeysPressed[1024];
+    bool m_Keys[1024];
+    bool m_KeysPressed[1024];
 
     GameState m_GameState;
 
@@ -39,9 +39,6 @@ private:
 
     // GUI
     std::map<std::string, std::shared_ptr<GUIContainer>> m_GUIContainers;
-
-    // State
-    void switchState(GameState state = GameState::GAME_NONE);
 
     // TODO(Joey): default OS initialization requirements
     virtual void checkOtherInstances();
@@ -71,22 +68,25 @@ public:
 
     void Update(float deltaTime);
     void Render();
-    void ProcessKeyboardDown(char key);
-    void ProcessKeyboardUp(char key);
+    void ProcessKeyboardDown(short key);
+    void ProcessKeyboardUp(short key);
     void ProcessMouseMove(float x, float y);
     void ProcessMouseClick(bool leftButton);
     bool IsKeyPressed(char key, bool check_once = false);
 
+    // State
+    void SwitchState(GameState state = GameState::GAME_NONE);
 
-    bool GetActive() { return m_Active; }
-    float& ScreenWidth() { return m_ScreenWidth; }
-    float& ScreenHeight() { return m_ScreenHeight; }
-    Scene* const GetScene() { return m_Scene; }
-    Renderer* const GetRenderer() { return m_Renderer; }
+
+    bool                GetActive() { return m_Active; }
+    float&              ScreenWidth() { return m_ScreenWidth; }
+    float&              ScreenHeight() { return m_ScreenHeight; }
+    Scene*        const GetScene() { return m_Scene; }
+    Renderer*     const GetRenderer() { return m_Renderer; }
     EventManager* const GetEventManager() { return m_EventManager; }
     Box2DPhysics* const GetPhysics() { return m_Physics; }
 	TextRenderer* const GetTextRenderer() { return m_TextRenderer; }
-    AudioEngine*        const GetAudio() { return m_Audio; }
+    AudioEngine*  const GetAudio() { return m_Audio; }
 
 	float const GetTime() { return glfwGetTime(); }
 

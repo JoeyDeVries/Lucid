@@ -69,3 +69,12 @@ void Renderer::PostProcessQuadRender()
 {
     m_PostProcessor->RenderScreenQuad(this);
 }
+
+void Renderer::EnableEffect(POST_PROCESS_EFFECT effect)
+{
+    m_PostProcessor->EnableEffect(effect);
+}
+void Renderer::DisableEffect(POST_PROCESS_EFFECT effect)
+{
+    m_PostProcessor->DisableEffect(effect);
+}

@@ -95,9 +95,9 @@
     <ClCompile Include="Components\StateBlockComponent.cpp" />
     <ClCompile Include="Components\TextOnTouchComponent.cpp" />
     <ClCompile Include="Components\TransformComponent.cpp" />
+    <ClCompile Include="GUI\GUIContainer.cpp" />
     <ClCompile Include="GUI\GUIGameMenu.cpp" />
     <ClCompile Include="GUI\GUIButton.cpp" />
-    <ClCompile Include="GUI\GUIContainer.cpp" />
     <ClCompile Include="GUI\GUIElement.cpp" />
     <ClCompile Include="GUI\GUIMainMenu.cpp" />
     <ClCompile Include="GUI\GUISceneIntro.cpp" />
