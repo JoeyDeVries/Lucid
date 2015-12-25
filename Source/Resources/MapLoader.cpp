@@ -27,9 +27,7 @@ MapLoader::~MapLoader()
 
 bool MapLoader::LoadMap(ResourceManager *resources, Scene *scene, const char * tmxPath, float levelScale)
 {
-    // reset scenegraph
-    
-
+    scene->SetScenePath(std::string(tmxPath));
 	XMLDocument doc;
 	if(doc.LoadFile(tmxPath) != XML_NO_ERROR)
 	{

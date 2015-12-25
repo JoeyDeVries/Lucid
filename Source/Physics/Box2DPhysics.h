@@ -14,6 +14,12 @@
 class Box2DPhysics;
 class Box2DContactListener;
 
+struct BodyUserData
+{
+    Box2DPhysics*       Physics;
+    DEFAULT_ACTOR_TYPES Type;
+};
+
 class Box2DPhysics : public IPhysics
 {
     friend Box2DContactListener;

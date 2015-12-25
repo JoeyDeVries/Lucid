@@ -46,17 +46,15 @@ ActorFactory::~ActorFactory(void)
 // TODO(Joey): Data-driven development should depic the actor types
 std::shared_ptr<Actor> ActorFactory::CreateActor(DEFAULT_ACTOR_TYPES actorType)
 {
-    std::shared_ptr<Actor> actor;
+    std::shared_ptr<Actor> actor(new Actor());
+    actor->setType(actorType);
+    actor->setID(++m_lastActorID);
     switch (actorType)
     {
     case ACTOR_EMPTY: // for empty (no-interaction) objects (like background)
-        actor = std::shared_ptr<Actor>(new Actor());
-        actor->setID(++m_lastActorID);
         return actor;
     case ACTOR_STATIC: // for empty (no-interaction) objects (like graphics tiles and/or background)
     {
-        actor = std::shared_ptr<Actor>(new Actor());
-        actor->setID(++m_lastActorID);
         /* std::shared_ptr<ActorComponent> component = createComponent("Control");
          actor->addComponent(component);
          component->setOwner(actor);*/
@@ -64,8 +62,6 @@ std::shared_ptr<Actor> ActorFactory::CreateActor(DEFAULT_ACTOR_TYPES actorType)
     }
     case ACTOR_STATE_BLOCK:
     {
-        actor = std::shared_ptr<Actor>(new Actor());
-        actor->setID(++m_lastActorID);
         std::shared_ptr<ActorComponent> component = createComponent("StateBlock");
         actor->addComponent(component);
         component->setOwner(actor);
@@ -73,8 +69,6 @@ std::shared_ptr<Actor> ActorFactory::CreateActor(DEFAULT_ACTOR_TYPES actorType)
     }
     case ACTOR_PLAYER:
     {
-        actor = std::shared_ptr<Actor>(new Actor());
-        actor->setID(++m_lastActorID);
         // allow the user to have control over player actors
         std::shared_ptr<ActorComponent> component = createComponent("Control");
         actor->addComponent(component);
@@ -87,8 +81,6 @@ std::shared_ptr<Actor> ActorFactory::CreateActor(DEFAULT_ACTOR_TYPES actorType)
     }
     case ACTOR_ENEMY:
     {
-        actor = std::shared_ptr<Actor>(new Actor());
-        actor->setID(++m_lastActorID);
         // give the enemy actor life
         std::shared_ptr<ActorComponent> component = createComponent("Life");
         actor->addComponent(component);
@@ -106,8 +98,6 @@ std::shared_ptr<Actor> ActorFactory::CreateActor(DEFAULT_ACTOR_TYPES actorType)
     }
     case ACTOR_LANTERN:
     {
-        actor = std::shared_ptr<Actor>(new Actor());
-        actor->setID(++m_lastActorID);
         std::shared_ptr<ActorComponent> component = createComponent("LightSwitch");
         actor->addComponent(component);
         component->setOwner(actor);
@@ -115,8 +105,6 @@ std::shared_ptr<Actor> ActorFactory::CreateActor(DEFAULT_ACTOR_TYPES actorType)
     }
     case ACTOR_COMPLETE_CHECK:
     {
-        actor = std::shared_ptr<Actor>(new Actor());
-        actor->setID(++m_lastActorID);
         std::shared_ptr<ActorComponent> component = createComponent("CompleteCheck");
         actor->addComponent(component);
         component->setOwner(actor);
@@ -124,8 +112,6 @@ std::shared_ptr<Actor> ActorFactory::CreateActor(DEFAULT_ACTOR_TYPES actorType)
     }
     case ACTOR_SIGNPOST:
     {
-        actor = std::shared_ptr<Actor>(new Actor());
-        actor->setID(++m_lastActorID);
         std::shared_ptr<ActorComponent> component = createComponent("TextOnTouch");
         actor->addComponent(component);
         component->setOwner(actor);
@@ -133,8 +119,6 @@ std::shared_ptr<Actor> ActorFactory::CreateActor(DEFAULT_ACTOR_TYPES actorType)
     }
     case ACTOR_DEATHTOUCH:
     {
-        actor = std::shared_ptr<Actor>(new Actor());
-        actor->setID(++m_lastActorID);
         std::shared_ptr<ActorComponent> component = createComponent("DamageTouch");
         std::dynamic_pointer_cast<DamageTouchComponent>(component)->SetDamageAmount(1000); // kill actor/player on touch
         actor->addComponent(component);
@@ -143,8 +127,6 @@ std::shared_ptr<Actor> ActorFactory::CreateActor(DEFAULT_ACTOR_TYPES actorType)
     }
     case ACTOR_MOVE_LOOP:
     {
-        actor = std::shared_ptr<Actor>(new Actor());
-        actor->setID(++m_lastActorID);
         std::shared_ptr<ActorComponent> component = createComponent("MoveLoop");
         actor->addComponent(component);
         component->setOwner(actor);
@@ -153,6 +135,8 @@ std::shared_ptr<Actor> ActorFactory::CreateActor(DEFAULT_ACTOR_TYPES actorType)
         stateComponent->setOwner(actor);
         return actor;
     }
+    default:
+        actor.reset();
     }
     return actor;
 }

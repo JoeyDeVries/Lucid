@@ -18,8 +18,9 @@ class Actor // Should NOT be subclassed: all variaty comes from its components. 
     friend class ActorFactory;
     typedef std::map<std::string, std::shared_ptr<ActorComponent>> ActorComponents;
 private:
-    ActorID		    m_id;
-    ActorComponents m_components;
+    ActorID		        m_id;
+    ActorComponents     m_components;
+    DEFAULT_ACTOR_TYPES m_Type;
 
     glm::vec2 m_Position;
     glm::vec2 m_Scale;
@@ -31,17 +32,20 @@ private:
     void addComponent(std::shared_ptr<ActorComponent> component);
     // Sets the ID of the current actor
     void setID(ActorID id);
+    // Sets the type of actor 
+    void setType(DEFAULT_ACTOR_TYPES type) { m_Type = type; }
 public:
     Actor(void);
     ~Actor(void);
     void Destroy(void);
     void Update(float deltaTime);
 
-	const glm::vec2&   GetPosition() { return m_Position; }
-	const glm::vec2&   GetScale()    { return m_Scale; }
-	const int&         GetDepth()    { return m_Depth; }
-	const float&       GetRotation() { return m_Rotation; }
-	const unsigned int GetID()       { return m_id; }
+    DEFAULT_ACTOR_TYPES GetType()     { return m_Type; }
+	const glm::vec2&    GetPosition() { return m_Position; }
+	const glm::vec2&    GetScale()    { return m_Scale; }
+	const int&          GetDepth()    { return m_Depth; }
+	const float&        GetRotation() { return m_Rotation; }
+	const unsigned int  GetID()       { return m_id; }
 
     glm::vec2 GetCenter() { return m_Position + m_Scale * 0.5f; }
 

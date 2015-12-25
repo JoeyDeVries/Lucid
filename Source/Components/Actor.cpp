@@ -1,7 +1,7 @@
 #include "Actor.h"
 
 
-Actor::Actor(void) : m_Position(0.0), m_Scale(1.0), m_Depth(0)
+Actor::Actor() :  m_Position(0.0), m_Scale(1.0), m_Depth(0)
 {
 
 }

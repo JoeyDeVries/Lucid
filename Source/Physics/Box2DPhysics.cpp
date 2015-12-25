@@ -140,7 +140,11 @@ void Box2DPhysics::AddBox(std::shared_ptr<Actor> actor, float density, std::stri
         bodyDef.type = b2_kinematicBody;
     bodyDef.fixedRotation = fixedRotation;
     b2Body* body = m_World->CreateBody(&bodyDef);
-    body->SetUserData(this);
+
+    BodyUserData *userData = new BodyUserData;
+    userData->Physics = this;
+    userData->Type = actor->GetType();
+    body->SetUserData((void*)userData);
 
     b2PolygonShape shape;
     shape.SetAsBox(PixelsToMeters(hitboxScale * actor->GetScale().x * 0.5), PixelsToMeters(hitboxScale * actor->GetScale().y * 0.5));
@@ -164,7 +168,11 @@ void Box2DPhysics::AddPolygon(std::shared_ptr<Actor> actor, std::vector<glm::vec
         bodyDef.type = b2_dynamicBody;
     bodyDef.fixedRotation = fixedRotation;
     b2Body* body = m_World->CreateBody(&bodyDef);
-    body->SetUserData(this);
+    
+    BodyUserData *userData = new BodyUserData;
+    userData->Physics = this;
+    userData->Type = actor->GetType();
+    body->SetUserData((void*)userData);
 
     // create 8 vertices 
     b2Vec2 verts[8];
@@ -191,8 +199,12 @@ void Box2DPhysics::AddCharacter(std::shared_ptr<Actor> actor, float density)
     bodyDef.fixedRotation = true;
 	bodyDef.allowSleep = false;
     b2Body* body = m_World->CreateBody(&bodyDef);
-    body->SetUserData(this);
 	body->SetBullet(true);
+
+    BodyUserData *userData = new BodyUserData;
+    userData->Physics = this;
+    userData->Type = actor->GetType();
+    body->SetUserData((void*)userData);
 
     // Create box top-shape
     b2PolygonShape boxShape;

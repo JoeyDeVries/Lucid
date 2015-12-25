@@ -13,7 +13,9 @@ class Box2DContactListener : public b2ContactListener
         b2Body* bodyA = contact->GetFixtureA()->GetBody();
         b2Body* bodyB = contact->GetFixtureB()->GetBody();
         if (bodyA->GetUserData())
-            static_cast<Box2DPhysics*>(bodyA->GetUserData())->SendCollisionAddEvent(contact);
+            static_cast<BodyUserData*>(bodyA->GetUserData())->Physics->SendCollisionAddEvent(contact);
+
+        std::cout << "collision start: " << static_cast<BodyUserData*>(bodyA->GetUserData())->Type << " : " << static_cast<BodyUserData*>(bodyB->GetUserData())->Type << std::endl;
     }
 
     void EndContact(b2Contact* contact)
@@ -21,7 +23,7 @@ class Box2DContactListener : public b2ContactListener
         b2Body* bodyA = contact->GetFixtureA()->GetBody();
         b2Body* bodyB = contact->GetFixtureB()->GetBody();
         if (bodyA->GetUserData())
-            static_cast<Box2DPhysics*>(bodyA->GetUserData())->SendCollisionRemoveEvent(contact);
+            static_cast<BodyUserData*>(bodyA->GetUserData())->Physics->SendCollisionRemoveEvent(contact);
     }
 };
 

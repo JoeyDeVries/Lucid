@@ -297,7 +297,6 @@ void GameApplication::OnStartLevel(std::shared_ptr<IEventData> eventData)
         m_ImportantActors.clear();
         m_Physics->RemoveQueuedItems();
         m_Physics->Reset();
-        //ClearActors();
         m_Scene->Clear();
         m_EventManager->Clear();
         ResourceManager::GetInstance()->LoadLevel(m_Scene, pEvent->GetLevelPath().c_str());
@@ -324,10 +323,29 @@ void GameApplication::OnDestroyActor(std::shared_ptr<IEventData> eventData)
         if (pEvent->GetActorID() == m_ImportantActors["player"]->GetID())
         {
             std::cout << "Player destroyed... restarting game" << std::endl;
+
+            // remove current list of actors
+            for (auto it = m_Actors.begin(); it != m_Actors.end(); ++it)
+            {
+                m_Physics->RemoveActor(it->second->GetID());
+                m_Scene->RemoveChild(it->second->GetID());
+                it->second->Destroy();
+            }
+            m_Actors.clear();
+            m_ImportantActors.clear();
+            m_Physics->RemoveQueuedItems();
+            m_Physics->Reset();
+            m_Scene->Clear();
+            m_EventManager->Clear();
+            ResourceManager::GetInstance()->LoadLevel(m_Scene, m_Scene->GetScenePath().c_str());
+            m_Scene->Initialize();
         }
         else
         {   // destroy actor as normal
-
+            m_Physics->RemoveActor(pEvent->GetActorID());
+            m_Scene->RemoveChild(pEvent->GetActorID());
+            m_Actors[pEvent->GetActorID()]->Destroy();
+            m_Actors.erase(pEvent->GetActorID());
         }
     }
 }
