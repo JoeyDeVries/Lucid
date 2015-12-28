@@ -5,6 +5,8 @@
 #include "../Application/Event_StartLevel.h"
 #include "../Application/Event_QuitGame.h"
 
+#include <fstream>
+
 GUIMainMenu::GUIMainMenu()
 {
 
@@ -118,7 +120,7 @@ void GUIMainMenu::RenderBackground(Renderer *renderer, TextRenderer *textRendere
 void GUIMainMenu::OnActivate()
 {
     GameApplication::GetInstance()->GetAudio()->StopAll();
-    //GameApplication::GetInstance()->GetAudio()->PlaySound("audio/menu.mp3", true);
+    GameApplication::GetInstance()->GetAudio()->PlaySound("audio/menu.mp3", true);
 }
 
 void GUIMainMenu::OnDeactivate()
@@ -136,15 +138,23 @@ void GUIMainMenu::ButtonPressed(std::shared_ptr<GUIButton> pButton)
         std::cout << "Button: StartGame event sent. " << std::endl;
     }
     else if (name == "btnContinue")
-    {   // send out load game event
-        std::shared_ptr<IEventData> pEvent(new Event_StartLevel("levels/start.tmx"));
-        GameApplication::GetInstance()->GetEventManager()->QueueEvent(pEvent);
-        std::cout << "Button: Continue event sent. " << std::endl;
+    {   // send out load game event (with level loaded from savefile)
+        std::ifstream file("save.dat");
+        std::string level;
+        std::getline(file, level);
+        if (level != "")
+        {
+            std::shared_ptr<IEventData> pEvent(new Event_StartLevel(level));
+            GameApplication::GetInstance()->GetEventManager()->QueueEvent(pEvent);
+        }
+        else
+        {
+            std::shared_ptr<IEventData> pEvent(new Event_StartLevel("levels/tutorial.tmx"));
+            GameApplication::GetInstance()->GetEventManager()->QueueEvent(pEvent);
+        }
+        file.close();
+        SetActive(false);
     }
-    //else if (name == "btnOptions")
-    //{   // send out load game event
-    //    std::cout << "Button: Options pressed. " << std::endl;
-    //}
     else if(name == "btnQuit")
     {   // send out game quit event
         std::shared_ptr<IEventData> pEvent(new Event_QuitGame());

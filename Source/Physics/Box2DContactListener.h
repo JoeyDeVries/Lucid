@@ -15,7 +15,7 @@ class Box2DContactListener : public b2ContactListener
         if (bodyA->GetUserData())
             static_cast<BodyUserData*>(bodyA->GetUserData())->Physics->SendCollisionAddEvent(contact);
 
-        std::cout << "collision start: " << static_cast<BodyUserData*>(bodyA->GetUserData())->Type << " : " << static_cast<BodyUserData*>(bodyB->GetUserData())->Type << std::endl;
+        //std::cout << "collision start: " << static_cast<BodyUserData*>(bodyA->GetUserData())->Type << " : " << static_cast<BodyUserData*>(bodyB->GetUserData())->Type << std::endl;
     }
 
     void EndContact(b2Contact* contact)

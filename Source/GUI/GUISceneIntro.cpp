@@ -41,7 +41,8 @@ void GUISceneIntro::Update(float deltaTime)
         {
             SetActive(false);
         }
-        SetActive(false);
+        else
+            SetActive(false);
 
         m_TimeActive += deltaTime;
     }
@@ -63,7 +64,7 @@ void GUISceneIntro::RenderBackground(Renderer *renderer, TextRenderer *textRende
     renderer->RenderQuad();
     // 2. then text
     std::vector<std::string> subTexts;
-    int charsPerNewline = 40;
+    int charsPerNewline = 50;
     std::string line;
     for(int i = 0; i < m_IntroText.size() ; ++i)
     {
@@ -76,7 +77,7 @@ void GUISceneIntro::RenderBackground(Renderer *renderer, TextRenderer *textRende
         line += m_IntroText[i];
     }
     for(int i = 0; i < subTexts.size(); ++i)
-        textRenderer->RenderText(subTexts[i], glm::vec2(100.0f, 100.0f + 30.0f * i), 3.0f, false, glm::vec4(0.05f, 0.05f, 0.0f, m_TextAlpha), glm::vec2(m_Scale.x - 200.0f, 30.0f));
+        textRenderer->RenderText(subTexts[i], glm::vec2(150.0f, 100.0f + 30.0f * i), 2.0f, false, glm::vec4(0.65f, 0.65f, 0.65f, m_TextAlpha), glm::vec2(m_Scale.x - 300.0f, 30.0f));
 
     spriteShader->SetInteger("EnableLighting", 1);
 }
@@ -86,6 +87,7 @@ void GUISceneIntro::OnActivate()
     m_Alpha = 1.0f;
     m_TextAlpha = 0.0f;
     m_TimeActive = 0.0f;
+    GameApplication::GetInstance()->GetAudio()->PlaySound("audio/scene_intro.mp3");
 }
 
 void GUISceneIntro::OnDeactivate()

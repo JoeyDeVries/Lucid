@@ -40,29 +40,24 @@ void ControlComponent::VUpdate(float deltaTime)
     // Gets input from resourcemanager (TODO: later manage input via events, to remove dependancy on GameApplication: listen to keypresses/releases)
 	float max = m_Velocity;
     bool moved = false;
-	if (GameApplication::GetInstance()->IsKeyPressed(GLFW_KEY_D))
+    b2Vec2 vel = physics->FindBody(m_Owner->GetID())->GetLinearVelocity();
+    if (GameApplication::GetInstance()->IsKeyPressed(GLFW_KEY_D))
 	{
-		b2Vec2 vel = physics->FindBody(m_Owner->GetID())->GetLinearVelocity();
-		//if(m_OnGround)
-			physics->FindBody(m_Owner->GetID())->SetLinearVelocity(b2Vec2(m_Velocity, vel.y));
-		/*else
-			if(vel.x <= max)
-				physics->ApplyImpulse(m_Owner->GetID(), glm::vec2(m_Velocity * 7.0f, 0.0), bodyCenter);*/
+		if(vel.x <= max)
+			physics->ApplyImpulse(m_Owner->GetID(), glm::vec2(m_Velocity * 500.0f * deltaTime, 0.0), bodyCenter);
 		moved = true;
 	}
 	if (GameApplication::GetInstance()->IsKeyPressed(GLFW_KEY_A))
 	{
-		b2Vec2 vel = physics->FindBody(m_Owner->GetID())->GetLinearVelocity();
-		//if(m_OnGround)
-			physics->FindBody(m_Owner->GetID())->SetLinearVelocity(b2Vec2(-m_Velocity, vel.y));
-		/*else
-			if(vel.x >= -max)
-				physics->ApplyImpulse(m_Owner->GetID(), glm::vec2(-m_Velocity * 7.0f, 0.0), bodyCenter);*/
+		if(vel.x >= -max)
+			physics->ApplyImpulse(m_Owner->GetID(), glm::vec2(-m_Velocity * 500.0f * deltaTime, 0.0), bodyCenter);
         moved = true;
 	}
     if (GameApplication::GetInstance()->IsKeyPressed(GLFW_KEY_SPACE) && !m_IsJumping)
     {
-        GameApplication::GetInstance()->GetPhysics()->ApplyImpulse(m_Owner->GetID(), glm::vec2(0.0, -750.0), bodyCenter);
+        GameApplication::GetInstance()->GetAudio()->PlaySound("audio/jump.mp3");
+        if(vel.y >= -5.0f)
+            GameApplication::GetInstance()->GetPhysics()->ApplyImpulse(m_Owner->GetID(), glm::vec2(0.0, -750.0), bodyCenter);
 		m_IsJumping = true;
     }
 
@@ -85,6 +80,8 @@ void ControlComponent::VUpdate(float deltaTime)
 		if(lantern) // if one of its children is a lightNode, it is a lantern; set relative position
 			lantern->SetPosition(m_Owner->GetPosition() + glm::vec2(20.0f, -10.0f));
 	}
+
+    GameApplication::GetInstance()->GetAudio()->SetPlayerPosition(m_Owner->GetPosition());
 }
 
 void ControlComponent::SetVelocity(float velocity)
@@ -106,9 +103,6 @@ void ControlComponent::PostCollisionAdd(std::shared_ptr<IEventData> eventData)
 		const b2Fixture* fixtureA = contact->GetFixtureA();
 		const b2Fixture* fixtureB = contact->GetFixtureB();
 
-	/*	if (fixtureA->IsSensor() && fixtureB->IsSensor())
-			return;*/
-
 		if (contact->IsTouching())
 		{
 			if (fixtureA->GetBody() == character || character == fixtureB->GetBody())
@@ -119,17 +113,14 @@ void ControlComponent::PostCollisionAdd(std::shared_ptr<IEventData> eventData)
 					// only do stuff if a single one is a sensor
 					if ((fixtureA->IsSensor() && !fixtureB->IsSensor()) || (!fixtureA->IsSensor() && fixtureB->IsSensor()))
 					{
-						NrGroundCollisionsAdd++;
-						m_OnGround = true;
+						//NrGroundCollisionsAdd++;
+						//m_OnGround = true;
 						m_IsJumping = false;
 						//std::cout << "On ground" << std::endl;
 					}
 				}
 			}
 		}
-
-		// prevents collision events between sensors (happens when blocks become un-collidable)
-	
 	}
 }
 
@@ -154,18 +145,11 @@ void ControlComponent::PostCollisionRemove(std::shared_ptr<IEventData> eventData
 					NrGroundCollisionsRemove++;
 					if (NrGroundCollisionsRemove >= NrGroundCollisionsAdd)
 					{	// prevents user getting stuck at floor due to multiple ground-collisions between each block
-						m_OnGround = false;
-						//std::cout << "Off ground" << std::endl;
-
-						// TODO(Joey): geef extra userdata(enum) van type block en do : if(color_block && player_sensor) { do extra GroundCollisionRemove; }
+						//m_OnGround = false;
 					}
 				}
 			}
 		}
-
-		// prevents collision events between sensors (happens when blocks become un-collidable)
-		/*if (fixtureA->IsSensor() && fixtureB->IsSensor())
-			m_IsJumping = false;*/
 	}
 	
 }

@@ -2,8 +2,10 @@
 #include "../Application/GameApplication.h"
 #include "../Resources/ResourceManager.h"
 #include "../Application/Event_QuitGame.h"
+#include "../Application/Event_StartLevel.h"
 
 #include <iostream>
+#include <fstream>
 
 GUIGameMenu::GUIGameMenu()
 {
@@ -91,18 +93,20 @@ void GUIGameMenu::ButtonPressed(std::shared_ptr<GUIButton> pButton)
 {
     std::string name = pButton->GetName();
     if (name == "btnContinue")
-    {   // send out load game event
-        std::cout << "Button: Continue pressed. " << std::endl;
+    {   // continue game as usual       
         SetActive(false);
     }
     else if (name == "btnSave")
-    {   // send out load game event
-        std::cout << "Button: save pressed. " << std::endl;
+    {    // send out load game event (with level loaded from savefile)
+        std::ofstream file;
+        file.open("save.dat", std::ios::trunc);
+        file << GameApplication::GetInstance()->GetScene()->GetScenePath();
+        file.close();
+        SetActive(false);
     }
     else if (name == "btnQuit")
     {   // send out game quit event
         std::shared_ptr<IEventData> pEvent(new Event_QuitGame());
         GameApplication::GetInstance()->GetEventManager()->QueueEvent(pEvent);
-        std::cout << "Button: Quit event sent. " << std::endl;
     }
 }

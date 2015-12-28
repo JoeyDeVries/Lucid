@@ -76,7 +76,7 @@ void GUIContainer::Render(Renderer *renderer, TextRenderer *textRenderer, std::s
 
 void GUIContainer::OnActivate()
 {
-
+    
 }
 void GUIContainer::OnDeactivate()
 {

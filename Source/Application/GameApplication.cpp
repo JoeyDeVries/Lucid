@@ -121,17 +121,6 @@ std::shared_ptr<Actor> GameApplication::GetImportantActor(std::string name)
 	else
 		return std::shared_ptr<Actor>();
 }
-void GameApplication::ClearActors()
-{
-   /* for (auto it = m_Actors.begin(); it != m_Actors.end(); ++it)
-    {
-        m_Physics->RemoveActor(it->second->GetID());
-        m_Scene->RemoveChild(it->second->GetID());
-    }
-    m_Physics->RemoveQueuedItems();
-    m_Actors.clear();
-    m_ImportantActors.clear();*/
-}
 
 void GameApplication::SwitchState(GameState state)
 {
@@ -156,8 +145,8 @@ void GameApplication::SwitchState(GameState state)
 		break;
 	}
     case GameState::GAME_MAIN:
-        // JOEY(TODO): m_GUIContainers["game_overlay"]->SetActive(true);  // listens to all game-relevant events and acts accordingly
-        m_Audio->PlaySound("audio/ambient2.wav", true, 0.3f);
+        // JOEY(TODO): m_GUIContainers["game_overlay"]->SetActive(true);  // listens to all game-relevant events and act accordingly
+        m_Audio->PlaySound("audio/ambient2.mp3", true, 0.5f);
         break;
     case GameState::GAME_GAME_MENU:
         m_GUIContainers["game_menu"]->SetActive(true);
@@ -213,7 +202,8 @@ void GameApplication::Render()
         {
             // prepare stuff for debug drawing (note this is not nice MVC stuff, but it's only for debugging)
             glMatrixMode(GL_PROJECTION);
-            glLoadMatrixf((const GLfloat*)&m_Scene->GetCamera()->GetProjection()[0]);
+            glm::mat4 viewProjection = m_Scene->GetCamera()->GetProjection() * m_Scene->GetCamera()->GetView();
+            glLoadMatrixf((const GLfloat*)&viewProjection[0]);
             glUseProgram(0);
             //m_Physics->RenderDiagnostics();
         }
@@ -277,7 +267,6 @@ void GameApplication::OnLevelComplete(std::shared_ptr<IEventData> eventData)
 	{
 		std::cout << "LEVEL COMPLETE!" << std::endl;
 		std::cout << "INITIATE CLEAN-UP..." << std::endl;
-		m_Audio->PlaySound("audio/end_hit.wav");
 	}
 }
 
@@ -297,6 +286,7 @@ void GameApplication::OnStartLevel(std::shared_ptr<IEventData> eventData)
         m_ImportantActors.clear();
         m_Physics->RemoveQueuedItems();
         m_Physics->Reset();
+        m_Audio->StopAll();
         m_Scene->Clear();
         m_EventManager->Clear();
         ResourceManager::GetInstance()->LoadLevel(m_Scene, pEvent->GetLevelPath().c_str());
@@ -322,8 +312,6 @@ void GameApplication::OnDestroyActor(std::shared_ptr<IEventData> eventData)
     {
         if (pEvent->GetActorID() == m_ImportantActors["player"]->GetID())
         {
-            std::cout << "Player destroyed... restarting game" << std::endl;
-
             // remove current list of actors
             for (auto it = m_Actors.begin(); it != m_Actors.end(); ++it)
             {
@@ -335,8 +323,11 @@ void GameApplication::OnDestroyActor(std::shared_ptr<IEventData> eventData)
             m_ImportantActors.clear();
             m_Physics->RemoveQueuedItems();
             m_Physics->Reset();
+            m_Audio->StopAll();
             m_Scene->Clear();
             m_EventManager->Clear();
+            GetAudio()->PlaySound("audio/death.mp3");
+
             ResourceManager::GetInstance()->LoadLevel(m_Scene, m_Scene->GetScenePath().c_str());
             m_Scene->Initialize();
         }

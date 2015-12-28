@@ -3,6 +3,8 @@
 AudioEngine::AudioEngine()
 {
 	m_AudioEngine = irrklang::createIrrKlangDevice();
+    m_AudioEngine->setDefault3DSoundMinDistance(5.0f);
+    m_AudioEngine->setRolloffFactor(0.25f);
 }
 
 AudioEngine::~AudioEngine()
@@ -45,10 +47,13 @@ void AudioEngine::StopAll()
     m_AudioEngine->stopAllSounds();
 }
 
+void AudioEngine::SetPlayerPosition(glm::vec2 position)
+{
+    m_AudioEngine->setListenerPosition(irrklang::vec3df(position.x, position.y, 0.0f), irrklang::vec3df(0.0f, 0.0f, 0.0f)); 
+}
+
 void AudioEngine::PreLoad()
 {
 	m_AudioEngine->addSoundSourceFromFile("audio/ambient2.wav", irrklang::E_STREAM_MODE::ESM_AUTO_DETECT, true);
 	m_AudioEngine->addSoundSourceFromFile("audio/end_hit.wav", irrklang::E_STREAM_MODE::ESM_AUTO_DETECT, true);
-
-
 }

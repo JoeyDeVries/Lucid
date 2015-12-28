@@ -311,6 +311,7 @@ bool MapLoader::processGameObject(ResourceManager *resources, Scene *scene, XMLE
                 node->AddAnimation(lightAnim[0], lightAnim[0]->GetName());
                 node->ActivateAnimation("idle");
             }
+            GameApplication::GetInstance()->GetAudio()->PlaySoundLocation("audio/fire.mp3", actor->GetPosition(), true);
         }
     }
     else if (type == "Moveable")
@@ -368,6 +369,28 @@ bool MapLoader::processGameObject(ResourceManager *resources, Scene *scene, XMLE
             }
         }
     }
+    else if (type == "Prop")
+    {
+        std::string Texture = getProperty(gameObject, "Image");
+        if (Texture != "")
+        {
+            // define actor
+            std::shared_ptr<Actor> actor = GameApplication::GetInstance()->CreateActor(DEFAULT_ACTOR_TYPES::ACTOR_STATIC);
+            actor->SetPosition(position);
+            actor->SetScale(scale);
+            actor->SetDepth(3);
+            // set material
+            material->SetDiffuse(resources->LoadTexture(Texture, Texture.c_str(), true));
+            material->SetSpecular(getSpecularMapIfExists(resources, Texture));
+            material->SetNormal(getNormalMapIfExists(resources, Texture));
+            // create node
+            std::shared_ptr<SpriteNode> node(new SpriteNode(actor->GetID(), "prop", "main", actor->GetPosition(), actor->GetDepth(), actor->GetScale()));
+            node->SetMaterial(material);
+            scene->AddChild(actor->GetID(), node);
+            // set physics
+            GameApplication::GetInstance()->GetPhysics()->AddBox(actor, 1.0, "dynamic", false);
+        }
+    }
     else if (type == "Sign")
     {
         std::string DisplayText = getProperty(gameObject, "Text");
@@ -402,7 +425,7 @@ bool MapLoader::processGameObject(ResourceManager *resources, Scene *scene, XMLE
         // define actor
         std::shared_ptr<Actor> actor = GameApplication::GetInstance()->CreateActor(DEFAULT_ACTOR_TYPES::ACTOR_PLAYER);
         actor->SetPosition(position);
-        actor->SetScale(scale);
+        actor->SetScale(scale + glm::vec2(1.0f)); // small scale change to prevent exact collisions between (state) blocks
         actor->SetDepth(6); // TODO(Joey): seperate render depth from light depth and customize light depth individually
         GameApplication::GetInstance()->SetImportantActor("player", actor);
         // set material

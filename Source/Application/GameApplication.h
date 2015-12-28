@@ -64,7 +64,6 @@ public:
     std::shared_ptr<Actor> GetActor(ActorID actorID);
     void				   SetImportantActor(std::string, std::shared_ptr<Actor> actor);
     std::shared_ptr<Actor> GetImportantActor(std::string);
-    void                   ClearActors();
 
     void Update(float deltaTime);
     void Render();

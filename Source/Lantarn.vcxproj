@@ -94,7 +94,6 @@
     <ClCompile Include="Components\MoveLoopComponent.cpp" />
     <ClCompile Include="Components\StateBlockComponent.cpp" />
     <ClCompile Include="Components\TextOnTouchComponent.cpp" />
-    <ClCompile Include="Components\TransformComponent.cpp" />
     <ClCompile Include="GUI\GUIContainer.cpp" />
     <ClCompile Include="GUI\GUIGameMenu.cpp" />
     <ClCompile Include="GUI\GUIButton.cpp" />
@@ -191,7 +190,6 @@
     <ClInclude Include="Components\ActorComponentDefinitions.h" />
     <ClInclude Include="Components\ActorFactory.h" />
     <ClInclude Include="Components\ActorComponent.h" />
-    <ClInclude Include="Components\TransformComponent.h" />
     <ClInclude Include="Renderer\shader.h" />
     <ClInclude Include="Renderer\texture2D.h" />
     <ClInclude Include="Scene\ISceneNode.h" />

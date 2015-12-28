@@ -3,7 +3,7 @@
 #include "../Application/GameApplication.h"
 
 
-LightSwitchComponent::LightSwitchComponent() : m_LightState(LightState::WHITE)
+LightSwitchComponent::LightSwitchComponent() : m_LightState(LightState::OFF)
 {
 	
 }
@@ -45,6 +45,7 @@ void LightSwitchComponent::VUpdate(float deltaTime)
 	// check if light state changed and if so, update actor and send event
 	if (old != m_LightState)
 	{
+        GameApplication::GetInstance()->GetAudio()->PlaySound("audio/light_switch.mp3");
 		// chance values accordingly in accompying LightNode
 		std::shared_ptr<LightNode> lightNode = std::dynamic_pointer_cast<LightNode>(
 			GameApplication::GetInstance()->GetScene()->GetSceneNode(m_Owner->GetID())

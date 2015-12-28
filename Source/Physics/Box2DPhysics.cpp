@@ -223,12 +223,12 @@ void Box2DPhysics::AddCharacter(std::shared_ptr<Actor> actor, float density)
     body->CreateFixture(&fixture);
     // Create circle bottom-shape
     b2CircleShape circleShape;
-    circleShape.m_p.Set(0.0f, PixelsToMeters(actor->GetScale().y * 0.5 - actor->GetScale().x * 0.42));
-    circleShape.m_radius = PixelsToMeters(actor->GetScale().x * 0.4);
+    circleShape.m_p.Set(0.0f, PixelsToMeters(actor->GetScale().y * 0.5 - actor->GetScale().x * 0.43));
+    circleShape.m_radius = PixelsToMeters(actor->GetScale().x * 0.43);
     b2FixtureDef fixture2;
     fixture2.shape = &circleShape;
     fixture2.density = density;
-    fixture2.friction = 10.0f;
+    fixture2.friction = 1.9f;
 	// fixture2.restitution = 0.25f;
     body->CreateFixture(&fixture2);
 
