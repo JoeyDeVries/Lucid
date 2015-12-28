@@ -366,7 +366,7 @@ bool MapLoader::processGameObject(ResourceManager *resources, Scene *scene, XMLE
                     pStateComponent->SetBlockColor(LightState::BLUE);
                     material->SetColorOverride(glm::vec3(0.5, 0.5, 1.0));
                 }
-            }
+            } 
         }
     }
     else if (type == "Prop")
