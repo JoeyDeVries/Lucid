@@ -48,8 +48,8 @@ void TextOnTouchComponent::VUpdate(float deltaTime)
     if (m_IsActive)
     {
         glm::vec2 centerBox = glm::vec2(300.0f, 50.0f);
-        glm::vec2 position = m_Owner->GetPosition() - glm::vec2(centerBox.x * 0.5f - m_Owner->GetScale().x * 0.5f, m_Owner->GetScale().y * 0.5f);
-        GameApplication::GetInstance()->GetTextRenderer()->RenderText(m_DisplayText, position, 2.0f, true, glm::vec4(1.0f), centerBox);
+        glm::vec2 position = m_Owner->GetPosition() - glm::vec2(centerBox.x * 0.5f - m_Owner->GetScale().x * 0.5f, m_Owner->GetScale().y);
+        GameApplication::GetInstance()->GetTextRenderer()->RenderText(m_DisplayText, position, 1.8f, true, glm::vec4(0.75f), centerBox);
     }
 }
 

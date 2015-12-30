@@ -133,7 +133,7 @@ void GUIMainMenu::ButtonPressed(std::shared_ptr<GUIButton> pButton)
     std::string name = pButton->GetName();
     if (name == "btnStartGame")
     {   // send out start game event
-        std::shared_ptr<IEventData> pEvent(new Event_StartLevel("levels/start.tmx"));
+        std::shared_ptr<IEventData> pEvent(new Event_StartLevel("levels/tutorial.tmx"));
         GameApplication::GetInstance()->GetEventManager()->QueueEvent(pEvent);
         std::cout << "Button: StartGame event sent. " << std::endl;
     }

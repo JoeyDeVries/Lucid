@@ -10,6 +10,7 @@ class SpriteNode : public SceneNode
 {
 protected:
 	bool m_Animation;
+    bool m_Reverse;
 	std::string m_ActiveAnimation;
 	std::map<std::string, std::shared_ptr<Animation>> m_Animations; // <anim-state, animation>
 public:
@@ -22,6 +23,8 @@ public:
 
 	void					   SetAnimation(bool enable);
 	bool					   HasAnimation();
+    void                       SetReverse(bool reverse);
+    bool                       GetReverse();
 	void					   AddAnimation(std::shared_ptr<Animation> animation, std::string state = "idle");
 	std::shared_ptr<Animation> GetAnimation(std::string state);
 	void					   ActivateAnimation(std::string state);	

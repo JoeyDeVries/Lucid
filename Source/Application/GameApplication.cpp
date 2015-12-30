@@ -146,7 +146,7 @@ void GameApplication::SwitchState(GameState state)
 	}
     case GameState::GAME_MAIN:
         // JOEY(TODO): m_GUIContainers["game_overlay"]->SetActive(true);  // listens to all game-relevant events and act accordingly
-        m_Audio->PlaySound("audio/ambient2.mp3", true, 0.5f);
+        //m_Audio->PlaySound("audio/ambient2.mp3", true, 0.5f);
         break;
     case GameState::GAME_GAME_MENU:
         m_GUIContainers["game_menu"]->SetActive(true);

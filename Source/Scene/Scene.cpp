@@ -22,6 +22,9 @@ void Scene::Initialize()
     m_Root->Initialize(this);    
 
     m_ParticleEmitter->Init(300, m_Camera->GetProjection());
+
+    if(m_AmbientPath != "")
+        GameApplication::GetInstance()->GetAudio()->PlaySound(m_AmbientPath, true, 0.5f);
 }
 
 void Scene::Clear()

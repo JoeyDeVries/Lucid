@@ -3,7 +3,7 @@
 #include "../Application/GameApplication.h"
 
 
-LightSwitchComponent::LightSwitchComponent() : m_LightState(LightState::OFF)
+LightSwitchComponent::LightSwitchComponent() : m_LightState(LightState::OFF), m_Initialized(false)
 {
 	
 }
@@ -14,7 +14,7 @@ LightSwitchComponent::~LightSwitchComponent()
 }
 
 bool LightSwitchComponent::VInit()
-{
+{ 
 	return true;
 }
 
@@ -43,7 +43,7 @@ void LightSwitchComponent::VUpdate(float deltaTime)
 		m_LightState = LightState::OFF;
 	}
 	// check if light state changed and if so, update actor and send event
-	if (old != m_LightState)
+	if (old != m_LightState || !m_Initialized)
 	{
         GameApplication::GetInstance()->GetAudio()->PlaySound("audio/light_switch.mp3");
 		// chance values accordingly in accompying LightNode
@@ -72,5 +72,6 @@ void LightSwitchComponent::VUpdate(float deltaTime)
 			}
 		}
 		GameApplication::GetInstance()->GetEventManager()->QueueEvent(std::shared_ptr<Event_LightStateSwitched>(new Event_LightStateSwitched(m_LightState)));
+        m_Initialized = true;
 	}
 }

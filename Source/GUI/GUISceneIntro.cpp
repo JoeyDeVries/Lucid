@@ -32,17 +32,17 @@ void GUISceneIntro::Update(float deltaTime)
         {
             m_TextAlpha += deltaTime * 0.1f;
         }
-        else if (m_TimeActive > 20.0f && m_TimeActive < 25.0f)
+        else if (m_TimeActive > 10.0f && m_TimeActive < 12.0f)
         {
-            m_Alpha -= deltaTime * 0.2f;
-            m_TextAlpha -= deltaTime * 0.2f;
+            m_Alpha -= deltaTime * 0.5f;
+            m_TextAlpha -= deltaTime * 0.5f;
         }
-        else if (m_TimeActive > 25.0f)
+        else if (m_TimeActive > 12.0f)
         {
             SetActive(false);
         }
-        else
-            SetActive(false);
+        //else
+            //SetActive(false);
 
         m_TimeActive += deltaTime;
     }

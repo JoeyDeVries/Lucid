@@ -37,6 +37,8 @@ void ControlComponent::VUpdate(float deltaTime)
 {
     glm::vec2 bodyCenter = m_Owner->GetPosition() + m_Owner->GetScale() * 0.5f;
     Box2DPhysics *physics = GameApplication::GetInstance()->GetPhysics();
+    std::shared_ptr<ISceneNode> node = GameApplication::GetInstance()->GetScene()->GetSceneNode(m_Owner->GetID());
+    std::shared_ptr<SpriteNode> sprite = std::dynamic_pointer_cast<SpriteNode>(node);
     // Gets input from resourcemanager (TODO: later manage input via events, to remove dependancy on GameApplication: listen to keypresses/releases)
 	float max = m_Velocity;
     bool moved = false;
@@ -46,12 +48,16 @@ void ControlComponent::VUpdate(float deltaTime)
 		if(vel.x <= max)
 			physics->ApplyImpulse(m_Owner->GetID(), glm::vec2(m_Velocity * 500.0f * deltaTime, 0.0), bodyCenter);
 		moved = true;
+        if(sprite)
+            sprite->SetReverse(false);
 	}
 	if (GameApplication::GetInstance()->IsKeyPressed(GLFW_KEY_A))
 	{
 		if(vel.x >= -max)
 			physics->ApplyImpulse(m_Owner->GetID(), glm::vec2(-m_Velocity * 500.0f * deltaTime, 0.0), bodyCenter);
         moved = true;
+        if (sprite)
+            sprite->SetReverse(true);
 	}
     if (GameApplication::GetInstance()->IsKeyPressed(GLFW_KEY_SPACE) && !m_IsJumping)
     {
@@ -62,8 +68,6 @@ void ControlComponent::VUpdate(float deltaTime)
     }
 
     // TODO(Joey): state machine
-    std::shared_ptr<ISceneNode> node = GameApplication::GetInstance()->GetScene()->GetSceneNode(m_Owner->GetID());
-    std::shared_ptr<SpriteNode> sprite = std::dynamic_pointer_cast<SpriteNode>(node);
     if (sprite)
     {
         if (moved)
@@ -77,8 +81,13 @@ void ControlComponent::VUpdate(float deltaTime)
 	for (auto it = actorNodeChildren.begin(); it != actorNodeChildren.end(); ++it)
 	{
 		std::shared_ptr<LightNode> lantern = std::dynamic_pointer_cast<LightNode>((*it));
-		if(lantern) // if one of its children is a lightNode, it is a lantern; set relative position
-			lantern->SetPosition(m_Owner->GetPosition() + glm::vec2(20.0f, -10.0f));
+        if (lantern) // if one of its children is a lightNode, it is a lantern; set relative position
+        {
+            glm::vec2 offset(20.0f, - 10.0f);
+            if(sprite && sprite->GetReverse())
+                offset = -offset;
+            lantern->SetPosition(m_Owner->GetPosition() + offset);
+        }
 	}
 
     GameApplication::GetInstance()->GetAudio()->SetPlayerPosition(m_Owner->GetPosition());

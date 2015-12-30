@@ -195,7 +195,7 @@ bool MapLoader::processGameObject(ResourceManager *resources, Scene *scene, XMLE
         actor->SetScale(scale);
         actor->SetDepth(4);
         // deathtouch aren't rendered, but simply act as collision sensors (no need to build scenenode)
-        GameApplication::GetInstance()->GetPhysics()->AddBox(actor, 1.0, "static", true, true, 0.5f);
+        GameApplication::GetInstance()->GetPhysics()->AddBox(actor, 1.0, "static", true, true, 0.8f);
     }
     else if (type == "Enemy")
     {
@@ -255,9 +255,9 @@ bool MapLoader::processGameObject(ResourceManager *resources, Scene *scene, XMLE
             actor->SetScale(scale);
             actor->SetDepth(4);
             // set material
-            material->SetDiffuse(resources->LoadTexture("flag", "textures/flag.png", true));
+            material->SetDiffuse(resources->LoadTexture("flag", "textures/objects/flag.png", true));
             material->SetSpecular(resources->LoadTexture("specular", "textures/specular.png"));
-            material->SetNormal(resources->LoadTexture("flag_normal", "textures/flag_normal.png"));
+            material->SetNormal(resources->LoadTexture("flag_normal", "textures/objects/flag_normal.png"));
             // create node
             std::shared_ptr<SpriteNode> node(new SpriteNode(actor->GetID(), "finish", "main", position, actor->GetDepth(), scale));
             node->SetMaterial(material);
@@ -329,9 +329,9 @@ bool MapLoader::processGameObject(ResourceManager *resources, Scene *scene, XMLE
             actor->SetScale(tileScale);
             actor->SetDepth(2);
             // set material
-            material->SetDiffuse(resources->LoadTexture("block_color", "textures/stone_color.png"));
-            material->SetSpecular(resources->LoadTexture("block_specular", "textures/stone_specular.png"));
-            material->SetNormal(resources->LoadTexture("block_normal", "textures/stone_normal.png"));
+            material->SetDiffuse(resources->LoadTexture("block_color", "textures/objects/stone_color.png"));
+            material->SetSpecular(resources->LoadTexture("block_specular", "textures/objects/stone_specular.png"));
+            material->SetNormal(resources->LoadTexture("block_normal", "textures/objects/stone_normal.png"));
             // create node
             std::shared_ptr<SpriteNode> node(new SpriteNode(actor->GetID(), "sign", "main", position, actor->GetDepth(), actor->GetScale()));
             node->SetMaterial(material);
@@ -366,7 +366,7 @@ bool MapLoader::processGameObject(ResourceManager *resources, Scene *scene, XMLE
                     pStateComponent->SetBlockColor(LightState::BLUE);
                     material->SetColorOverride(glm::vec3(0.5, 0.5, 1.0));
                 }
-            } 
+            }
         }
     }
     else if (type == "Prop")
@@ -378,7 +378,7 @@ bool MapLoader::processGameObject(ResourceManager *resources, Scene *scene, XMLE
             std::shared_ptr<Actor> actor = GameApplication::GetInstance()->CreateActor(DEFAULT_ACTOR_TYPES::ACTOR_STATIC);
             actor->SetPosition(position);
             actor->SetScale(scale);
-            actor->SetDepth(3);
+            actor->SetDepth(5);
             // set material
             material->SetDiffuse(resources->LoadTexture(Texture, Texture.c_str(), true));
             material->SetSpecular(getSpecularMapIfExists(resources, Texture));
@@ -402,9 +402,9 @@ bool MapLoader::processGameObject(ResourceManager *resources, Scene *scene, XMLE
             actor->SetScale(scale);
             actor->SetDepth(4);
             // set material
-            material->SetDiffuse(resources->LoadTexture("sign", "textures/post.png", true));
+            material->SetDiffuse(resources->LoadTexture("sign", "textures/objects/post.png", true));
             material->SetSpecular(resources->LoadTexture("specular", "textures/specular.png"));
-            material->SetNormal(resources->LoadTexture("sign_normal", "textures/post_normal.png"));
+            material->SetNormal(resources->LoadTexture("sign_normal", "textures/objects/post_normal.png"));
             // create node
             std::shared_ptr<SpriteNode> node(new SpriteNode(actor->GetID(), "sign", "main", position, actor->GetDepth(), scale));
             node->SetMaterial(material);
@@ -429,9 +429,9 @@ bool MapLoader::processGameObject(ResourceManager *resources, Scene *scene, XMLE
         actor->SetDepth(6); // TODO(Joey): seperate render depth from light depth and customize light depth individually
         GameApplication::GetInstance()->SetImportantActor("player", actor);
         // set material
-        material->SetDiffuse(resources->LoadTexture("player", "textures/player.png", true));
-        material->SetSpecular(resources->LoadTexture("player_specular", "textures/player_specular.png"));
-        material->SetNormal(resources->LoadTexture("player_normal", "textures/player_normal.png"));
+  /*      material->SetDiffuse(resources->LoadTexture("player", "textures/player/player.png", true));
+        material->SetSpecular(resources->LoadTexture("player_specular", "textures/player/player_specular.png"));
+        material->SetNormal(resources->LoadTexture("player_normal", "textures/player/player_normal.png"));*/
         // create node
         std::shared_ptr<SpriteNode> node(new SpriteNode(actor->GetID(), "player", "main", position, actor->GetDepth(), actor->GetScale()));
         node->SetMaterial(material);
@@ -480,9 +480,9 @@ bool MapLoader::processGameObject(ResourceManager *resources, Scene *scene, XMLE
                 actor->SetScale(scale);
                 actor->SetDepth(5);
                 // set material
-                material->SetDiffuse(resources->LoadTexture("block_color", "textures/stone_color.png"));
-                material->SetSpecular(resources->LoadTexture("block_specular", "textures/stone_specular.png"));
-                material->SetNormal(resources->LoadTexture("block_normal", "textures/stone_normal.png"));
+                material->SetDiffuse(resources->LoadTexture("block_color", "textures/objects/stone_color.png"));
+                material->SetSpecular(resources->LoadTexture("block_specular", "textures/objects/stone_specular.png"));
+                material->SetNormal(resources->LoadTexture("block_normal", "textures/objects/stone_normal.png"));
                 // create node
                 std::shared_ptr<SpriteNode> node(new SpriteNode(actor->GetID(), "state_block", "main", position, actor->GetDepth(), scale));
                 node->SetMaterial(material);
@@ -562,6 +562,10 @@ bool MapLoader::processStaticDefaults(ResourceManager *resources, Scene *scene, 
     std::string introText = getProperty(map, "IntroText");
     if(introText != "")
         scene->SetSceneIntro(introText);
+    // load ambient audio path
+    std::string audioPath = getProperty(map, "Ambient");
+    if(audioPath != "")
+        scene->SetAmbientPath(audioPath);
 
     return true;
 }

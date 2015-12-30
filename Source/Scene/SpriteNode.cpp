@@ -5,7 +5,7 @@
 #include "Scene.h"
 
 SpriteNode::SpriteNode(unsigned int ActorID, std::string name, std::string renderPass, glm::vec2 position, int depth, glm::vec2 scale, float rotation)
-    : SceneNode(ActorID, name, renderPass, position, depth, scale, rotation), m_Animation(false), m_ActiveAnimation("idle")
+    : SceneNode(ActorID, name, renderPass, position, depth, scale, rotation), m_Animation(false), m_Reverse(false), m_ActiveAnimation("idle")
 {
 
 }
@@ -23,6 +23,7 @@ void SpriteNode::Initialize(Scene *scene)
 	{
 		m_Material->Initialize();
 		m_Material->GetShader()->SetMatrix4("projection", scene->GetCamera()->GetProjection());
+        m_Material->GetShader()->SetInteger("Reverse", false);
 		if (m_Animation)
 		{
 			// (assuming this remains same for all state animations, otherwise update this each time anim state changes)
@@ -69,10 +70,15 @@ void SpriteNode::Render(Scene *scene, Renderer *renderer)
             //m_Material->SetNormal(m_Animations[m_ActiveAnimation]->GetNormal());
 		}
 
+        if(m_Reverse)
+            m_Material->GetShader()->SetInteger("reverse", true);
+
 		renderer->RenderQuad();
 
+        if(m_Reverse)
+            m_Material->GetShader()->SetInteger("reverse", false);
 		if (m_Animation)
-			m_Material->GetShader()->SetInteger("animation", false, true);
+			m_Material->GetShader()->SetInteger("animation", false);
 	}	
 }
 
@@ -80,10 +86,18 @@ void SpriteNode::SetAnimation(bool enable)
 {
 	m_Animation = enable;
 }
-
 bool SpriteNode::HasAnimation()
 {
 	return m_Animation;
+}
+
+void SpriteNode::SetReverse(bool reverse)
+{   
+    m_Reverse = reverse;
+}
+bool SpriteNode::GetReverse()
+{
+    return m_Reverse;
 }
 
 void SpriteNode::AddAnimation(std::shared_ptr<Animation> animation, std::string state)

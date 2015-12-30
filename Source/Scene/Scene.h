@@ -31,6 +31,7 @@ protected:
 	int m_SceneWidth, m_SceneHeight;
     std::string m_SceneIntro;
     std::string m_ScenePath;
+    std::string m_AmbientPath;
 public:
     Scene();
     virtual ~Scene();
@@ -53,10 +54,12 @@ public:
 	int         GetSceneHeight() const { return m_SceneHeight; }
     std::string GetSceneIntro()        { return m_SceneIntro; }
     std::string GetScenePath()         { return m_ScenePath; }
+    std::string GetAmbientPath()       { return m_AmbientPath; }
 	void SetSceneWidth(int width)         { m_SceneWidth = width; }
 	void SetSceneHeight(int height)       { m_SceneHeight = height; }
     void SetSceneIntro(std::string intro) { m_SceneIntro = intro; }
     void SetScenePath(std::string path)   { m_ScenePath = path; }
+    void SetAmbientPath(std::string path) { m_AmbientPath = path; }
 
     void PushAndSetMatrix(const glm::mat4 model);
     void PopMatrix();

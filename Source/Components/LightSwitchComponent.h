@@ -9,6 +9,8 @@ class LightSwitchComponent : public ActorComponent
 {
 private:
 	LightState m_LightState;
+    // disables the light the first update run (light is off by default)
+    bool m_Initialized; 
 public:
 	LightSwitchComponent();
 	~LightSwitchComponent();
