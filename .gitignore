@@ -13,7 +13,9 @@
 x64/
 build/
 bld/
-[Bb]in/
+[Bb]in/*.dll
+[Bb]in/*.dat
+[Bb]in/textures/source/
 [Oo]bj/
 Assets/
 Temp/
@@ -58,6 +60,8 @@ dlldata.c
 *.pidb
 *.svclog
 *.scc
+*.dropbox
+*.exe
 
 # Chutzpah Test files
 _Chutzpah*
