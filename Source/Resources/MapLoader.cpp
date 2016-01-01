@@ -425,7 +425,7 @@ bool MapLoader::processGameObject(ResourceManager *resources, Scene *scene, XMLE
         // define actor
         std::shared_ptr<Actor> actor = GameApplication::GetInstance()->CreateActor(DEFAULT_ACTOR_TYPES::ACTOR_PLAYER);
         actor->SetPosition(position);
-        actor->SetScale(scale + glm::vec2(1.0f)); // small scale change to prevent exact collisions between (state) blocks
+        actor->SetScale(scale + glm::vec2(15.0f)); // small scale change to prevent exact collisions between (state) blocks
         actor->SetDepth(6); // TODO(Joey): seperate render depth from light depth and customize light depth individually
         GameApplication::GetInstance()->SetImportantActor("player", actor);
         // set material
@@ -460,7 +460,7 @@ bool MapLoader::processGameObject(ResourceManager *resources, Scene *scene, XMLE
         scene->AddChild(lantern->GetID(), lanternNode);
         scene->AddChild(actor->GetID(), node);
         // set physics
-        GameApplication::GetInstance()->GetPhysics()->AddCharacter(actor, 1.0f);
+        GameApplication::GetInstance()->GetPhysics()->AddCharacter(actor, 1.7f);
         // point camera at player spawn
         GameApplication::GetInstance()->GetScene()->GetCamera()->SetTarget(node);
 

@@ -42,7 +42,7 @@ void GUISceneIntro::Update(float deltaTime)
             SetActive(false);
         }
         //else
-            //SetActive(false);
+            SetActive(false);
 
         m_TimeActive += deltaTime;
     }

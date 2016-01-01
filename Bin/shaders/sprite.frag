@@ -4,6 +4,7 @@ out vec4 color;
 in VS_OUT
 {
     vec2 TexCoords;
+	vec2 TexCoords_NR;
     vec3 FragPos;
 } fs_in;
 
@@ -24,7 +25,7 @@ void main()
     if(EnableLighting)
     {
         // sample per-fragment normal
-        vec3 normal = normalize(vec3(texture(tNormal, fs_in.TexCoords).rgb * 2.0 - 1.0));        
+        vec3 normal = normalize(vec3(texture(tNormal, fs_in.TexCoords_NR).rgb * 2.0 - 1.0));        
         // Blinn-Phong lighting    
         vec3 ambient = COLOR_AMBIENT;
         vec3 diffuse = vec3(0.0);

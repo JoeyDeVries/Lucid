@@ -210,10 +210,10 @@ void Box2DPhysics::AddCharacter(std::shared_ptr<Actor> actor, float density)
     b2PolygonShape boxShape;
     //boxShape.m_centroid.Set(0.0, -PixelsToMeters(actor->GetScale().x));
     b2Vec2 vertices[4];
-    vertices[0].Set(PixelsToMeters(-actor->GetScale().x * 0.4), PixelsToMeters(-actor->GetScale().y * 0.5));
-    vertices[1].Set(PixelsToMeters(-actor->GetScale().x * 0.4), PixelsToMeters(actor->GetScale().y * 0.0));
-    vertices[2].Set(PixelsToMeters(actor->GetScale().x * 0.4), PixelsToMeters(actor->GetScale().y * 0.0));
-    vertices[3].Set(PixelsToMeters(actor->GetScale().x * 0.4), PixelsToMeters(-actor->GetScale().y * 0.5));
+    vertices[0].Set(PixelsToMeters(-actor->GetScale().x * 0.2), PixelsToMeters(-actor->GetScale().y * 0.5));
+    vertices[1].Set(PixelsToMeters(-actor->GetScale().x * 0.2), PixelsToMeters(actor->GetScale().y * 0.2));
+    vertices[2].Set(PixelsToMeters(actor->GetScale().x * 0.2), PixelsToMeters(actor->GetScale().y * 0.2));
+    vertices[3].Set(PixelsToMeters(actor->GetScale().x * 0.2), PixelsToMeters(-actor->GetScale().y * 0.5));
     boxShape.Set(vertices, 4);
     //boxShape.SetAsBox(PixelsToMeters(actor->GetScale().x * 0.5), PixelsToMeters(actor->GetScale().y * 0.5 - 20)); // - half the width for the bottom circle
     b2FixtureDef fixture;
@@ -223,8 +223,8 @@ void Box2DPhysics::AddCharacter(std::shared_ptr<Actor> actor, float density)
     body->CreateFixture(&fixture);
     // Create circle bottom-shape
     b2CircleShape circleShape;
-    circleShape.m_p.Set(0.0f, PixelsToMeters(actor->GetScale().y * 0.5 - actor->GetScale().x * 0.43));
-    circleShape.m_radius = PixelsToMeters(actor->GetScale().x * 0.43);
+    circleShape.m_p.Set(0.0f, PixelsToMeters(actor->GetScale().y * 0.46 - actor->GetScale().x * 0.20));
+    circleShape.m_radius = PixelsToMeters(actor->GetScale().x * 0.23);
     b2FixtureDef fixture2;
     fixture2.shape = &circleShape;
     fixture2.density = density;
@@ -234,8 +234,8 @@ void Box2DPhysics::AddCharacter(std::shared_ptr<Actor> actor, float density)
 
 	// Create bottom sensor to detect floor-collisions
 	b2PolygonShape sensorShape;
-	b2Vec2 origin = b2Vec2(0.0, PixelsToMeters(actor->GetScale().y * 0.3));
-	sensorShape.SetAsBox(PixelsToMeters(actor->GetScale().x * 0.15), PixelsToMeters(actor->GetScale().y * 0.2), origin, 0.0f);
+	b2Vec2 origin = b2Vec2(0.0, PixelsToMeters(actor->GetScale().y * 0.44));
+	sensorShape.SetAsBox(PixelsToMeters(actor->GetScale().x * 0.05), PixelsToMeters(actor->GetScale().y * 0.05), origin, 0.0f);
 	b2FixtureDef fixture3;
 	fixture3.shape = &sensorShape;
 	fixture3.isSensor = true;

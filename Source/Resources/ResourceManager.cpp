@@ -162,8 +162,9 @@ std::vector<std::shared_ptr<Animation>> ResourceManager::LoadAnimation(const cha
         std::shared_ptr<Animation> animation(new Animation(animData));
         animation->SetName(name);
         animation->SetDiffuse(diffuse);
-        animation->SetSpecular(GetTexture("specular"));
+        animation->SetSpecular(GetTexture("specular")); // Due to SOIL not always properly loading non-powers-of-two textures (diffuse seems to work for some reason) I leave the specular/normal of animations out for now; 
         animation->SetNormal(GetTexture("normal"));
+
         animation->SetDuration(duration);
         animation->Normalize(width, height);
         animations.push_back(animation);

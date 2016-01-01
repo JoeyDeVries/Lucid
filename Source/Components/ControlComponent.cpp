@@ -70,7 +70,9 @@ void ControlComponent::VUpdate(float deltaTime)
     // TODO(Joey): state machine
     if (sprite)
     {
-        if (moved)
+        if (m_IsJumping)
+            sprite->ActivateAnimation("jump");
+        else if (moved)
             sprite->ActivateAnimation("walk");
         else
             sprite->ActivateAnimation("idle");
@@ -83,9 +85,9 @@ void ControlComponent::VUpdate(float deltaTime)
 		std::shared_ptr<LightNode> lantern = std::dynamic_pointer_cast<LightNode>((*it));
         if (lantern) // if one of its children is a lightNode, it is a lantern; set relative position
         {
-            glm::vec2 offset(20.0f, - 10.0f);
+            glm::vec2 offset(12.0f, 10.0f);
             if(sprite && sprite->GetReverse())
-                offset = -offset;
+                offset = glm::vec2(-offset.x, offset.y);
             lantern->SetPosition(m_Owner->GetPosition() + offset);
         }
 	}
@@ -126,6 +128,10 @@ void ControlComponent::PostCollisionAdd(std::shared_ptr<IEventData> eventData)
 						//m_OnGround = true;
 						m_IsJumping = false;
 						//std::cout << "On ground" << std::endl;
+                        std::shared_ptr<ISceneNode> node = GameApplication::GetInstance()->GetScene()->GetSceneNode(m_Owner->GetID());
+                        std::shared_ptr<SpriteNode> sprite = std::dynamic_pointer_cast<SpriteNode>(node);
+                        if(sprite)
+                            sprite->ActivateAnimation("idle");
 					}
 				}
 			}

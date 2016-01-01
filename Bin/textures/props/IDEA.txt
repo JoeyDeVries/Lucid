@@ -1,0 +1,3 @@
+rock
+shovel
+wood/plank/broken-ladder
