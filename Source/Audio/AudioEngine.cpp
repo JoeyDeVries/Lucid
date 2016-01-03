@@ -3,8 +3,8 @@
 AudioEngine::AudioEngine()
 {
 	m_AudioEngine = irrklang::createIrrKlangDevice();
-    m_AudioEngine->setDefault3DSoundMinDistance(5.0f);
-    m_AudioEngine->setRolloffFactor(0.25f);
+    m_AudioEngine->setDefault3DSoundMinDistance(10.0f);
+    m_AudioEngine->setRolloffFactor(0.2f);
 }
 
 AudioEngine::~AudioEngine()

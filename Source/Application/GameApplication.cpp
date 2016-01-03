@@ -340,20 +340,3 @@ void GameApplication::OnDestroyActor(std::shared_ptr<IEventData> eventData)
         }
     }
 }
-
-
-
-void GameApplication::checkOtherInstances()
-{
-    // TODO
-}
-
-void GameApplication::checkStorage()
-{
-    // TODO
-}
-
-void GameApplication::checkRAM()
-{
-    // TODO
-}
