@@ -1,11 +1,17 @@
+/*******************************************************************
+** Copyright (C) 2014-2015 {Joey de Vries} {joey.d.vries@gmail.com}
+**
+** This code is part of Lucid.
+** https://github.com/JoeyDeVries/Lucid
+**
+** Lucid is free software: you can redistribute it and/or modify it
+** under the terms of the CC BY-NC 4.0 license as published by
+** Creative Commons, either version 4 of the License, or (at your
+** option) any later version.
+*******************************************************************/
 #ifndef RESOURCE_MANAGER_H
 #define RESOURCE_MANAGER_H
-/*
-    Loads Shaders/Textures from file
-    Should also be able to load a level file that further points to multiple resources;
-    ResourceManager should then be able to build an entire SceneGraph of renderable SceneNodes
-    from this level file, the LoadLevel function gets a Scene pointer to fill.
-*/
+
 #include <memory>
 #include <vector>
 #include <map>
@@ -19,6 +25,12 @@
 #include "../Renderer/Animation.h"
 #include "../Scene/Scene.h"
 
+/*
+    Loads Shaders/Textures from file
+    Should also be able to load a level file that further points to multiple resources;
+    ResourceManager should then be able to build an entire SceneGraph of renderable SceneNodes
+    from this level file, the LoadLevel function gets a Scene pointer to fill.
+*/
 class ResourceManager
 {
 private:
