@@ -12,7 +12,9 @@
 #ifndef ACTOR_COMPONENT_DEFINITIONS_H
 #define ACTOR_COMPONENT_DEFINITIONS_H
 
-// default actor types
+/*
+    The default types of actors available.
+*/
 enum DEFAULT_ACTOR_TYPES {
     ACTOR_EMPTY,
     ACTOR_STATIC,
@@ -25,5 +27,4 @@ enum DEFAULT_ACTOR_TYPES {
     ACTOR_DEATHTOUCH,
     ACTOR_MOVE_LOOP,
 };
-
 #endif

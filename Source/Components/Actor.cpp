@@ -11,7 +11,6 @@
 *******************************************************************/
 #include "Actor.h"
 
-
 Actor::Actor() :  m_Position(0.0), m_Scale(1.0), m_Depth(0)
 {
 
@@ -35,20 +34,7 @@ void Actor::Update(float deltaTime)
 }
 
 // NOTE(Joey): See header note
-//template<class ComponentType> std::weak_ptr<ComponentType> Actor::GetComponent(std::string type)
-//{
-//    ActorComponents::iterator findIt = m_components.find(type);
-//    if (findIt != m_components.end())
-//    {
-//        std::shared_ptr<ComponentType> pBase(findIt->second);
-//        // cast to subclass version of the pointer
-//        std::shared_ptr<ComponentType> pSub(std::tr1::static_pointer_cast<ComponentType>(pBase));
-//        std::weak_ptr<ComponentType> pWeakSub(pSub); // convert strong pointer to weak pointer
-//        return pWeakSub;
-//	}
-//    else
-//        return std::weak_ptr<ComponentType>();
-//}
+//template<class ComponentType> std::weak_ptr<ComponentType> Actor::GetComponent(std::string type);
 
 void Actor::addComponent(std::shared_ptr<ActorComponent> component)
 {
