@@ -68,7 +68,7 @@ bool EventManager::TriggerEvent(const std::shared_ptr<IEventData>& pEvent) const
 
 bool EventManager::QueueEvent(const std::shared_ptr<IEventData>& pEvent)
 {
-    // only process events if there are any event listeners assosciated with it
+    // only process events if there are any event listeners associated with it
     auto findIt = m_EventListeners.find(pEvent->GetEventType());
     if (findIt != m_EventListeners.end())
     {

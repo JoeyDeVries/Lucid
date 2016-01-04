@@ -14,6 +14,7 @@
 AudioEngine::AudioEngine()
 {
 	m_AudioEngine = irrklang::createIrrKlangDevice();
+    // specify the audio fall-off factor as Lucid isn't based on real-world parameters
     m_AudioEngine->setDefault3DSoundMinDistance(10.0f);
     m_AudioEngine->setRolloffFactor(0.2f);
 }
@@ -28,7 +29,7 @@ void AudioEngine::PlaySound(std::string name, bool loop, float volume)
 	// IDEA(Joey): create ring buffer of audio play requests that are only played during 
 	// engine's update call; at the end of each frame. This allows us to only query
 	// the driver at one point of time and allows us to dismiss/combine overlapping
-	// audio requests.
+	// audio requests...
     if(loop && m_AudioEngine->isCurrentlyPlaying(m_AudioEngine->getSoundSource(name.c_str())))
         return;
 	irrklang::ISound *sound = m_AudioEngine->play2D(name.c_str(), loop, true);
@@ -65,6 +66,9 @@ void AudioEngine::SetPlayerPosition(glm::vec2 position)
 
 void AudioEngine::PreLoad()
 {
-	m_AudioEngine->addSoundSourceFromFile("audio/ambient2.wav", irrklang::E_STREAM_MODE::ESM_AUTO_DETECT, true);
+    m_AudioEngine->addSoundSourceFromFile("audio/audio/death.mp3", irrklang::E_STREAM_MODE::ESM_AUTO_DETECT, true);
+    m_AudioEngine->addSoundSourceFromFile("audio/audio/death.mp3", irrklang::E_STREAM_MODE::ESM_AUTO_DETECT, true);
+    m_AudioEngine->addSoundSourceFromFile("audio/audio/death.mp3", irrklang::E_STREAM_MODE::ESM_AUTO_DETECT, true);
+    m_AudioEngine->addSoundSourceFromFile("audio/audio/death.mp3", irrklang::E_STREAM_MODE::ESM_AUTO_DETECT, true);
 	m_AudioEngine->addSoundSourceFromFile("audio/end_hit.wav", irrklang::E_STREAM_MODE::ESM_AUTO_DETECT, true);
 }

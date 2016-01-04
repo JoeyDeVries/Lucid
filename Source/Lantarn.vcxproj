@@ -43,10 +43,12 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <IncludePath>D:\Dropbox\OpenGL\Libraries\Includes;$(IncludePath)</IncludePath>
     <LibraryPath>D:\Dropbox\OpenGL\Libraries\Libs;$(LibraryPath)</LibraryPath>
+    <IntDir>$(SolutionDir)\Debug</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <IncludePath>D:\Dropbox\OpenGL\Libraries\Includes;$(IncludePath)</IncludePath>
     <LibraryPath>D:\Dropbox\OpenGL\Libraries\Libs;$(LibraryPath)</LibraryPath>
+    <IntDir>$(SolutionDir)\Release</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -146,7 +148,7 @@
     <ClInclude Include="Components\MoveLoopComponent.h" />
     <ClInclude Include="Components\StateBlockComponent.h" />
     <ClInclude Include="Components\TextOnTouchComponent.h" />
-    <ClInclude Include="FastDelegate.h" />
+    <ClInclude Include="Communication\FastDelegate.h" />
     <ClInclude Include="GUI\GUIGameMenu.h" />
     <ClInclude Include="GUI\GUIButton.h" />
     <ClInclude Include="GUI\GUIContainer.h" />

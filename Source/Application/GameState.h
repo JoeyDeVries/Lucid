@@ -13,7 +13,7 @@
 #define GAME_STATE_H
 
 /*
-    represents the different states of the game
+    Represents the different states of the game.
 */
 enum GameState {
     GAME_NONE,
@@ -22,5 +22,4 @@ enum GameState {
 	GAME_INTRO,
     GAME_GAME_MENU,
 };
-
 #endif

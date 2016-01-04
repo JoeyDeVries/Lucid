@@ -19,12 +19,15 @@
 #include "../Communication/EventManager.h"
 #include "../Physics/Box2DPhysics.h"
 #include "../Audio/AudioEngine.h"
-#include "../GUI/GUIContainer.h"
 
 #include "GameState.h"
 
+#include <memory>
 #include <vector>
 #include <map>
+#include <string>
+
+class GUIContainer;
 
 /*
     the (singleton) application class for the game; manages the coupling
@@ -33,7 +36,7 @@
 class GameApplication
 {
 private:
-    // Game state
+    // game state
     float m_ScreenWidth, m_ScreenHeight; // the screen width/height in pixels the game runs in
     bool  m_Active;                      // whether the game is currently active
     bool  m_Keys[1024];                  // ASCII keyboard keys currently pressed
@@ -43,7 +46,7 @@ private:
     std::map<ActorID, std::shared_ptr<Actor>>     m_Actors;          // a list of all the game's actors/entities
     std::map<std::string, std::shared_ptr<Actor>> m_ImportantActors; // a smaller actor list relating actor names to actors' memory 
 
-    // Game-sub systems
+    // game-sub systems
     Scene        *m_Scene;        // the game's scene graph and render system
     Renderer     *m_Renderer;     // the game's render-specific logic
     EventManager *m_EventManager; // the game's sub-system communication system
@@ -55,11 +58,11 @@ private:
     // GUI
     std::map<std::string, std::shared_ptr<GUIContainer>> m_GUIContainers; // contains all the game's GUI items
 
-    // Singleton pattern, constructor private
+    // singleton pattern, constructor private
     static std::shared_ptr<GameApplication> m_Instance;
     GameApplication();
 public:
-    // Retrieves a single instance of this object
+    // retrieves a single instance of this object
     static std::shared_ptr<GameApplication> GetInstance()
     {
         if (!m_Instance)
@@ -130,6 +133,4 @@ public:
     // event logic fires whenever a game actor is destroyed
     void OnDestroyActor(std::shared_ptr<IEventData> eventData);
 };
-
-
 #endif

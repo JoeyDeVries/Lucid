@@ -13,12 +13,15 @@
 
 #include "Event_StartLevel.h"
 #include "Event_QuitGame.h"
+
 #include "../Resources/ResourceManager.h"
 #include "../Scene/BackgroundNode.h"
 #include "../Scene/SpriteNode.h"
 #include "../Components/Event_DestroyActor.h"
 #include "../Components/Event_LevelComplete.h"
 #include "../Components/Event_DestroyActor.h"
+#include "../Communication/EventManager.h"
+#include "../GUI/GUIContainer.h"
 #include "../GUI/GUIMainMenu.h"
 #include "../GUI/GUISceneIntro.h"
 #include "../GUI/GUIGameMenu.h"
@@ -157,8 +160,6 @@ void GameApplication::SwitchState(GameState state)
 		break;
 	}
     case GameState::GAME_MAIN:
-        // JOEY(TODO): m_GUIContainers["game_overlay"]->SetActive(true);  // listens to all game-relevant events and act accordingly
-        //m_Audio->PlaySound("audio/ambient2.mp3", true, 0.5f);
         break;
     case GameState::GAME_GAME_MENU:
         m_GUIContainers["game_menu"]->SetActive(true);

@@ -31,5 +31,4 @@ public:
     // copies the event 
     virtual std::shared_ptr<IEventData> Copy() const { return std::shared_ptr<IEventData>(new Event_QuitGame()); }
 };
-
 #endif

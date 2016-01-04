@@ -35,5 +35,4 @@ public:
     // returns the path to the level/map data
     virtual const std::string GetLevelPath() const { return m_LevelPath; }
 };
-
 #endif
