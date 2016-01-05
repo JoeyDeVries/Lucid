@@ -11,13 +11,21 @@
 *******************************************************************/
 #include "GUIGameMenu.h"
 
+#include "GUIButton.h"
+
 #include "../Application/GameApplication.h"
-#include "../Resources/ResourceManager.h"
 #include "../Application/Event_QuitGame.h"
 #include "../Application/Event_StartLevel.h"
+#include "../Resources/ResourceManager.h"
+#include "../Renderer/TextRenderer.h"
+#include "../Renderer/Renderer.h"
+#include "../Renderer/PostProcesser.h"
+#include "../Renderer/Texture2D.h"
+#include "../Renderer/shader.h"
+#include "../Renderer/Animation.h"
 
-#include <iostream>
 #include <fstream>
+#include <memory>
 
 GUIGameMenu::GUIGameMenu()
 {
@@ -26,6 +34,7 @@ GUIGameMenu::GUIGameMenu()
 
 bool GUIGameMenu::Init()
 {
+    // full screen 
     SetScale(glm::vec2(GameApplication::GetInstance()->ScreenWidth(), GameApplication::GetInstance()->ScreenHeight()));
 
     // continue game
@@ -76,7 +85,7 @@ void GUIGameMenu::RenderBackground(Renderer *renderer, TextRenderer *textRendere
     spriteShader->SetMatrix4("view", glm::mat4());
     spriteShader->SetInteger("EnableLighting", 0);
     spriteShader->SetVector4f("ColorOverride", glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
-    // 1. first render background
+    // render background
     glm::mat4 model;
     model *= glm::scale(glm::vec3(m_Scale, 1.0f));
     spriteShader->SetMatrix4("model", model);

@@ -11,11 +11,17 @@
 *******************************************************************/
 #include "GUIMainMenu.h"
 
-#include <iostream>
+#include "GUIButton.h"
+
 #include "../Resources/ResourceManager.h"
 #include "../Application/GameApplication.h"
 #include "../Application/Event_StartLevel.h"
 #include "../Application/Event_QuitGame.h"
+#include "../Renderer/TextRenderer.h"
+#include "../Renderer/Renderer.h"
+#include "../Renderer/Texture2D.h"
+#include "../Renderer/shader.h"
+#include "../Renderer/Animation.h"
 
 #include <fstream>
 
@@ -26,6 +32,7 @@ GUIMainMenu::GUIMainMenu()
 
 bool GUIMainMenu::Init()
 {
+    // full screen
     SetScale(glm::vec2(GameApplication::GetInstance()->ScreenWidth(), GameApplication::GetInstance()->ScreenHeight()));
 
     // start game
@@ -44,14 +51,6 @@ bool GUIMainMenu::Init()
     btnContinue->SetForeColor(glm::vec4(glm::vec3(0.6f), 1.0f));
     btnContinue->SetHoverColor(glm::vec4(1.0f));
     btnContinue->SetText("Continue");
-    // options
-    //std::shared_ptr<GUIButton> btnOptions(new GUIButton);
-    //btnOptions->SetName("btnOptions");
-    //btnOptions->SetPosition(glm::vec2(250.0f, 340.0f));
-    //btnOptions->SetScale(glm::vec2(300.0f, 50.0f));
-    //btnOptions->SetForeColor(glm::vec4(glm::vec3(0.6f), 1.0f));
-    //btnOptions->SetHoverColor(glm::vec4(1.0f));
-    //btnOptions->SetText("Options");
     // quit
     std::shared_ptr<GUIButton> btnQuit(new GUIButton);
     btnQuit->SetName("btnQuit");
@@ -64,26 +63,22 @@ bool GUIMainMenu::Init()
     // add elements to container control
     AddElement(btnStartGame);
     AddElement(btnContinue);
-    //AddElement(btnOptions);
     AddElement(btnQuit);
 
     // load additional resources
     m_BackgroundTexture = ResourceManager::GetInstance()->LoadTexture("menu_background", "textures/menu_background.png");
-    std::shared_ptr<Texture2D> texture = ResourceManager::GetInstance()->LoadTexture("light-anim", "textures/animations/fire-anim.png", true);
-    //m_FireAnimation = ResourceManager::GetInstance()->LoadAnimation("textures/animations/fire-anim.anim");
     return true;
 }
 
 void GUIMainMenu::Update(float deltaTime)
 {
-    //m_FireAnimation->Update(deltaTime);
+
 }
 
 void GUIMainMenu::RenderBackground(Renderer *renderer, TextRenderer *textRenderer)
 {
     // render title
-    //textRenderer->RenderText("Lantarn", glm::vec2(300.0f, 50.0f), 7.0f, false, glm::vec4(1.0, 1.0, 1.0, 1.0f));
-    textRenderer->RenderText("Lantarn", glm::vec2(0.0f, 0.0f), 7.0f, false, glm::vec4(1.0, 1.0, 1.0, 1.0f), glm::vec2(m_Scale.x, 100.0f));
+    textRenderer->RenderText("Lucid", glm::vec2(0.0f, 0.0f), 7.0f, false, glm::vec4(1.0, 1.0, 1.0, 1.0f), glm::vec2(m_Scale.x, 100.0f));
 
     // render background image + three animated sprites
     std::shared_ptr<Shader> spriteShader = ResourceManager::GetInstance()->GetShader("sprite");
@@ -92,36 +87,12 @@ void GUIMainMenu::RenderBackground(Renderer *renderer, TextRenderer *textRendere
     spriteShader->SetMatrix4("view", glm::mat4());
     spriteShader->SetInteger("EnableLighting", 0);
     spriteShader->SetVector4f("ColorOverride", glm::vec4(1.0f));
-    // 1. first render background
+    // render background
     glm::mat4 model;
     model *= glm::scale(glm::vec3(800.0f, 600.0f, 1.0f));
     spriteShader->SetMatrix4("model", model);
     m_BackgroundTexture->Bind(0);
     renderer->RenderQuad();
-
-    // 2. then individual fire animations
-    //spriteShader->SetInteger("animation", 1);
-    //m_FireAnimation->ToShader(spriteShader);
-    //ResourceManager::GetInstance()->GetTexture("light-anim")->Bind(0);
-    //// - light 1
-    //model = glm::mat4();
-    //model *= glm::translate(glm::vec3(60.0f, 100.0f, 0.0f));
-    //model *= glm::scale(glm::vec3(110.0f));
-    //spriteShader->SetMatrix4("model", model);
-    //renderer->RenderQuad();
-    //// - light 2
-    //model = glm::mat4();
-    //model *= glm::translate(glm::vec3(340.0f, 305.0f, 0.0f));
-    //model *= glm::scale(glm::vec3(50.0f));
-    //spriteShader->SetMatrix4("model", model);
-    //renderer->RenderQuad();
-    //// - light 3
-    //model = glm::mat4();
-    //model *= glm::translate(glm::vec3(570.0f, 275.0f, 0.0f));
-    //model *= glm::scale(glm::vec3(50.0f));
-    //spriteShader->SetMatrix4("model", model);
-    //renderer->RenderQuad();
-
 
     spriteShader->SetInteger("animation", 0);
 
@@ -147,7 +118,6 @@ void GUIMainMenu::ButtonPressed(std::shared_ptr<GUIButton> pButton)
     {   // send out start game event
         std::shared_ptr<IEventData> pEvent(new Event_StartLevel("levels/tutorial.tmx"));
         GameApplication::GetInstance()->GetEventManager()->QueueEvent(pEvent);
-        std::cout << "Button: StartGame event sent. " << std::endl;
     }
     else if (name == "btnContinue")
     {   // send out load game event (with level loaded from savefile)
@@ -171,6 +141,5 @@ void GUIMainMenu::ButtonPressed(std::shared_ptr<GUIButton> pButton)
     {   // send out game quit event
         std::shared_ptr<IEventData> pEvent(new Event_QuitGame());
         GameApplication::GetInstance()->GetEventManager()->QueueEvent(pEvent);
-        std::cout << "Button: Quit event sent. " << std::endl;
     }
 }

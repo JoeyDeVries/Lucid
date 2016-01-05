@@ -105,9 +105,6 @@
     <ClCompile Include="Components\CompleteCheckComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Components\Event_LevelComplete.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Components\Event_LightStateSwitched.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -282,9 +279,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Components\CompleteCheckComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Components\Event_LevelComplete.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Components\Event_LightStateSwitched.h">

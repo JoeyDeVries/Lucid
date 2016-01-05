@@ -13,7 +13,12 @@
 
 #include "../Application/GameApplication.h"
 #include "../Resources/ResourceManager.h"
+#include "../Renderer/TextRenderer.h"
+#include "../Renderer/Renderer.h"
+#include "../Renderer/Shader.h"
+#include "../Renderer/Texture2D.h"
 
+#include <memory>
 
 GUISceneIntro::GUISceneIntro() : m_IntroText(""), m_TimeActive(0.0f), m_Alpha(1.0f), m_TextAlpha(1.0f)
 {
@@ -49,12 +54,12 @@ void GUISceneIntro::Update(float deltaTime)
             m_Alpha -= deltaTime * 0.5f;
             m_TextAlpha -= deltaTime * 0.5f;
         }
-        else if (m_TimeActive > 12.0f)
+        else if (m_TimeActive > 15.0f)
         {
             SetActive(false);
         }
         //else
-            SetActive(false);
+            //SetActive(false);
 
         m_TimeActive += deltaTime;
     }

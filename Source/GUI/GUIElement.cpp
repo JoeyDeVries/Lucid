@@ -11,9 +11,9 @@
 *******************************************************************/
 #include "GUIElement.h"
 
-#include <iostream>
-
 #include "../Application/GameApplication.h"
+
+#include <iostream>
 
 GUIElement::GUIElement() : m_MouseEntered(false), m_ForeColor(1.0f), m_BackColor(1.0f)
 {
@@ -82,7 +82,7 @@ bool GUIElement::IsMouseInside(float x, float y)
         inside = false;
     else if (x < AABBCenter.x - AABBHalfWidths.x) // target at left side of box
         inside = false;
-    if (y > AABBCenter.y + AABBHalfWidths.y)       // target at bottom side of box
+    if (y > AABBCenter.y + AABBHalfWidths.y)      // target at bottom side of box
         inside = false;
     else if (y < AABBCenter.y - AABBHalfWidths.y) // target at top side of box
         inside = false;

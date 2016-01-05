@@ -89,7 +89,6 @@
     <ClCompile Include="Components\ControlComponent.cpp" />
     <ClCompile Include="Components\DamageTouchComponent.cpp" />
     <ClCompile Include="Components\Event_DestroyActor.cpp" />
-    <ClCompile Include="Components\Event_LevelComplete.cpp" />
     <ClCompile Include="Components\Event_LightStateSwitched.cpp" />
     <ClCompile Include="Components\LifeComponent.cpp" />
     <ClCompile Include="Components\LightSwitchComponent.cpp" />
@@ -141,7 +140,6 @@
     <ClInclude Include="Components\Event_DestroyActor.h" />
     <ClInclude Include="Communication\IEventData.h" />
     <ClInclude Include="Components\ControlComponent.h" />
-    <ClInclude Include="Components\Event_LevelComplete.h" />
     <ClInclude Include="Components\Event_LightStateSwitched.h" />
     <ClInclude Include="Components\LifeComponent.h" />
     <ClInclude Include="Components\LightSwitchComponent.h" />
