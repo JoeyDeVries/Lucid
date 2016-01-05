@@ -82,7 +82,6 @@ void MoveLoopComponent::VUpdate(float deltaTime)
         glm::vec2 diff = newPos - m_Owner->GetPosition();
 
         diff *= glm::vec2(40.0f); // TODO(Joey): generalize physics M2P magic number
-        //std::cout << "(" << diff.x << ", " << diff.y << ")" << std::endl;
         GameApplication::GetInstance()->GetPhysics()->SetLinearVelocity(m_Owner->GetID(), diff);
     }
 }

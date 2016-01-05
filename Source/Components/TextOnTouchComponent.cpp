@@ -11,9 +11,9 @@
 *******************************************************************/
 #include "TextOnTouchComponent.h"
 
-#include "../Application/GameApplication.h"
-#include "../Physics/Event_PostCollisionAdd.h"
 #include "../Physics/Event_PostCollisionRemove.h"
+#include "../Physics/Event_PostCollisionAdd.h"
+#include "../Application/GameApplication.h"
 
 TextOnTouchComponent::TextOnTouchComponent() : m_DisplayText(""), m_IsActive(false)
 {
@@ -56,7 +56,7 @@ bool TextOnTouchComponent::VInit()
 
 void TextOnTouchComponent::VUpdate(float deltaTime)
 {
-    // not completely MVC, but seeing as text gets enqueued for later rendering this is oké
+    // not completely MVC, but seeing as text gets enqueued (much more efficient) for later rendering this is ok
     if (m_IsActive)
     {
         glm::vec2 centerBox = glm::vec2(300.0f, 50.0f);

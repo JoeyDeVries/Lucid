@@ -10,8 +10,8 @@
 ** option) any later version.
 *******************************************************************/
 #include "DamageTouchComponent.h"
-
 #include "LifeComponent.h"
+
 #include "../Application/GameApplication.h"
 #include "../Physics/Event_PostCollisionAdd.h"
 
@@ -58,17 +58,19 @@ void DamageTouchComponent::OnPostCollisionAdd(std::shared_ptr<IEventData> eventD
         std::shared_ptr<Event_PostCollisionAdd> pEvent = std::dynamic_pointer_cast<Event_PostCollisionAdd>(eventData);
         if (pEvent)
         {
+            // for now we only focus checking for player collisions. By removing the player-specific check and simply
+            // check the other collided body if it owns a LifeComponent we generalize this for all actors.
             std::shared_ptr<Actor> player = GameApplication::GetInstance()->GetImportantActor("player");
             const b2Body *currBody = GameApplication::GetInstance()->GetPhysics()->FindBody(m_Owner->GetID());
             const b2Body *playerBody = GameApplication::GetInstance()->GetPhysics()->FindBody(player->GetID());
             if (GameApplication::GetInstance()->GetPhysics()->IsBodiesColliding(currBody, playerBody))
-            {   // player has been damaged, get life component; deduce life (component will send event if player died)
+            {   // other actor has been damaged, get life component; deduce life (component will send event if player died)
                 std::weak_ptr<LifeComponent> pWeakComponent = player->GetComponent<LifeComponent>("Life");
-                std::shared_ptr<LifeComponent> pComponent(pWeakComponent);
-                if (pComponent)
-                {
+                std::shared_ptr<LifeComponent> pComponent(pWeakComponent);               
+                if (pComponent)  
+                {    // only if other actor has a life component, deal damage
                     pComponent->Damage(m_DamageAmount);
-                    // also put delay on next damage tick
+                    // put delay on next damage tick
                     m_TimeSinceLastDamage = 1.0f;
                 }
             }

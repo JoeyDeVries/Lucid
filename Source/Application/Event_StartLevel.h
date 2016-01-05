@@ -15,7 +15,7 @@
 #include "../Communication/IEventData.h"
 
 /*
-    fires whenever a (new) level should be started/loaded
+    Fires whenever a (new) level should be started/loaded
 */
 class Event_StartLevel : public IEventData
 {

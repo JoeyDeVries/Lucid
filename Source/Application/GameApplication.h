@@ -30,7 +30,7 @@
 class GUIContainer;
 
 /*
-    the (singleton) application class for the game; manages the coupling
+    The (singleton) application class for the game; manages the coupling
     and de-coupling of all game sub-systems and connects their logic.
 */
 class GameApplication
@@ -124,8 +124,6 @@ public:
     // returns the game's running time
 	float const GetTime() { return glfwGetTime(); }
 
-	// event logic fires whenever a game level has been completed
-	void OnLevelComplete(std::shared_ptr<IEventData> eventData);
     // event logic fires whenever a game level should be loaded/initialized
     void OnStartLevel(std::shared_ptr<IEventData> eventData);
     // event logic fires whenever the game should quit

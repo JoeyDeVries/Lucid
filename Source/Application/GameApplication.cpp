@@ -18,7 +18,7 @@
 #include "../Scene/BackgroundNode.h"
 #include "../Scene/SpriteNode.h"
 #include "../Components/Event_DestroyActor.h"
-#include "../Components/Event_LevelComplete.h"
+//#include "../Components/Event_LevelComplete.h"
 #include "../Components/Event_DestroyActor.h"
 #include "../Communication/EventManager.h"
 #include "../GUI/GUIContainer.h"
@@ -63,9 +63,7 @@ void GameApplication::Initialize(float width, float height)
     ResourceManager::GetInstance()->LoadTexture("normal", "textures/normal.png");
 
     // register for global game event
-	EventListenerDelegate eventListener = fastdelegate::MakeDelegate(this, &GameApplication::OnLevelComplete);
-	GetEventManager()->AddListener(eventListener, Event_LevelComplete::s_EventType);
-    eventListener = fastdelegate::MakeDelegate(this, &GameApplication::OnStartLevel);
+    EventListenerDelegate eventListener = fastdelegate::MakeDelegate(this, &GameApplication::OnStartLevel);
     GetEventManager()->AddListener(eventListener, Event_StartLevel::s_EventType);
     eventListener = fastdelegate::MakeDelegate(this, &GameApplication::OnQuitGame);
     GetEventManager()->AddListener(eventListener, Event_QuitGame::s_EventType);
@@ -89,10 +87,6 @@ void GameApplication::Initialize(float width, float height)
 
 void GameApplication::CleanUp()
 {
-    // de-register global game events
-    EventListenerDelegate eventListener = fastdelegate::MakeDelegate(this, &GameApplication::OnLevelComplete);
-    GetEventManager()->RemoveListener(eventListener, Event_LevelComplete::s_EventType);
-
     // clean-up
     delete m_Scene;
     delete m_Renderer;
@@ -270,17 +264,6 @@ bool GameApplication::IsKeyPressed(char key, bool check_once)
             return false;
     }
     return m_Keys[key];
-}
-
-// global game events
-void GameApplication::OnLevelComplete(std::shared_ptr<IEventData> eventData)
-{
-	std::shared_ptr<Event_LevelComplete> pEvent = std::dynamic_pointer_cast<Event_LevelComplete>(eventData);
-	if (pEvent)
-	{
-		std::cout << "LEVEL COMPLETE!" << std::endl;
-		std::cout << "INITIATE CLEAN-UP..." << std::endl;
-	}
 }
 
 void GameApplication::OnStartLevel(std::shared_ptr<IEventData> eventData)

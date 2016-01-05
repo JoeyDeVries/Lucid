@@ -10,9 +10,10 @@
 ** option) any later version.
 *******************************************************************/
 #include "LifeComponent.h"
-
 #include "Event_DestroyActor.h"
+
 #include "../Application/GameApplication.h"
+
 #include <algorithm>
 #include <memory>
 

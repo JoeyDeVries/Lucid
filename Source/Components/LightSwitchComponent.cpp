@@ -11,9 +11,7 @@
 *******************************************************************/
 #include "LightSwitchComponent.h"
 
-#include "Event_LightStateSwitched.h"
 #include "../Application/GameApplication.h"
-
 
 LightSwitchComponent::LightSwitchComponent() : m_LightState(LightState::OFF), m_Initialized(false)
 {
@@ -58,7 +56,7 @@ void LightSwitchComponent::VUpdate(float deltaTime)
 	if (old != m_LightState || !m_Initialized)
 	{
         GameApplication::GetInstance()->GetAudio()->PlaySound("audio/light_switch.mp3");
-		// chance values accordingly in accompying LightNode
+		// chance values accordingly in accompying LightNode (if any)
 		std::shared_ptr<LightNode> lightNode = std::dynamic_pointer_cast<LightNode>(
 			GameApplication::GetInstance()->GetScene()->GetSceneNode(m_Owner->GetID())
 		);

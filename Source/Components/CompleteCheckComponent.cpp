@@ -12,8 +12,9 @@
 #include "CompleteCheckComponent.h"
 
 #include "../Physics/Event_PostCollisionAdd.h"
-#include "../Application/GameApplication.h"
 #include "../Application/Event_StartLevel.h"
+#include "../Application/GameApplication.h"
+#include "../Physics/Box2DPhysics.h"
 
 CompleteCheckComponent::CompleteCheckComponent()
 {
@@ -37,7 +38,7 @@ bool CompleteCheckComponent::VInit()
 
 void CompleteCheckComponent::VUpdate(float delta)
 {
-
+    // logic occurs in post collision event handler
 }
 
 std::string CompleteCheckComponent::GetNextLevelString()

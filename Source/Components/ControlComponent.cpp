@@ -11,14 +11,13 @@
 *******************************************************************/
 #include "ControlComponent.h"
 
-#include "../Application/GameApplication.h" // Should eventually be done via events to remove this dependancy
-
-#include <iostream>
-#include <algorithm>
+#include "../Application/GameApplication.h" 
 #include "../Physics/Event_PostCollisionAdd.h" 
 #include "../Physics/Event_PostCollisionRemove.h" 
 
-ControlComponent::ControlComponent() : m_Velocity(0.0), m_IsJumping(false), m_OnGround(false)
+#include <algorithm>
+
+ControlComponent::ControlComponent() : m_Velocity(0.0), m_IsJumping(false), m_NrGroundCollisionsAdd(0), m_NrGroundCollisionsRemove(0)
 {
 
 }
@@ -28,8 +27,6 @@ ControlComponent::~ControlComponent()
 	// remove callback functions from event queue
     EventListenerDelegate listener1 = fastdelegate::MakeDelegate(this, &ControlComponent::PostCollisionAdd);
     GameApplication::GetInstance()->GetEventManager()->RemoveListener(listener1, Event_PostCollisionAdd::s_EventType);
-    EventListenerDelegate listener2 = fastdelegate::MakeDelegate(this, &ControlComponent::PostCollisionRemove);
-    GameApplication::GetInstance()->GetEventManager()->RemoveListener(listener2, Event_PostCollisionRemove::s_EventType);
 }
 
 bool ControlComponent::VInit(void)
@@ -38,18 +35,17 @@ bool ControlComponent::VInit(void)
     // register callback functions
 	EventListenerDelegate listener = fastdelegate::MakeDelegate(this, &ControlComponent::PostCollisionAdd);
 	GameApplication::GetInstance()->GetEventManager()->AddListener(listener, Event_PostCollisionAdd::s_EventType);
-	EventListenerDelegate listener2 = fastdelegate::MakeDelegate(this, &ControlComponent::PostCollisionRemove);
-	GameApplication::GetInstance()->GetEventManager()->AddListener(listener2, Event_PostCollisionRemove::s_EventType);
     return true;
 }
 
 void ControlComponent::VUpdate(float deltaTime)
 {
+    // pre-calculate relevant state
     glm::vec2 bodyCenter = m_Owner->GetPosition() + m_Owner->GetScale() * 0.5f;
     Box2DPhysics *physics = GameApplication::GetInstance()->GetPhysics();
     std::shared_ptr<ISceneNode> node = GameApplication::GetInstance()->GetScene()->GetSceneNode(m_Owner->GetID());
     std::shared_ptr<SpriteNode> sprite = std::dynamic_pointer_cast<SpriteNode>(node);
-    // Gets input from resourcemanager (TODO: later manage input via events, to remove dependancy on GameApplication: listen to keypresses/releases)
+    // apply forces based on user input
 	float max = m_Velocity;
     bool moved = false;
     b2Vec2 vel = physics->FindBody(m_Owner->GetID())->GetLinearVelocity();
@@ -77,7 +73,6 @@ void ControlComponent::VUpdate(float deltaTime)
 		m_IsJumping = true;
     }
 
-    // TODO(Joey): state machine
     if (sprite)
     {
         if (m_IsJumping)
@@ -88,7 +83,7 @@ void ControlComponent::VUpdate(float deltaTime)
             sprite->ActivateAnimation("idle");
     }
 
-	// TODO(Joey): Rethink Actor->SceneNode relations, this can probably be done in a more 'elegant' way
+	// rethink Actor->SceneNode relations, this can probably be done in a more 'elegant' way
 	auto actorNodeChildren = GameApplication::GetInstance()->GetScene()->GetSceneNode(m_Owner->GetID())->GetChildren();
 	for (auto it = actorNodeChildren.begin(); it != actorNodeChildren.end(); ++it)
 	{
@@ -110,10 +105,6 @@ void ControlComponent::SetVelocity(float velocity)
     m_Velocity = velocity;
 }
 
-// static in assuming we only have a single control component - TODO(Joey): Make it ControlComponent specific
-static int NrGroundCollisionsAdd = 0;
-static int NrGroundCollisionsRemove = 0;
-
 void ControlComponent::PostCollisionAdd(std::shared_ptr<IEventData> eventData)
 {
 	std::shared_ptr<Event_PostCollisionAdd> data = std::dynamic_pointer_cast<Event_PostCollisionAdd>(eventData);
@@ -134,10 +125,7 @@ void ControlComponent::PostCollisionAdd(std::shared_ptr<IEventData> eventData)
 					// only do stuff if a single one is a sensor
 					if ((fixtureA->IsSensor() && !fixtureB->IsSensor()) || (!fixtureA->IsSensor() && fixtureB->IsSensor()))
 					{
-						//NrGroundCollisionsAdd++;
-						//m_OnGround = true;
 						m_IsJumping = false;
-						//std::cout << "On ground" << std::endl;
                         std::shared_ptr<ISceneNode> node = GameApplication::GetInstance()->GetScene()->GetSceneNode(m_Owner->GetID());
                         std::shared_ptr<SpriteNode> sprite = std::dynamic_pointer_cast<SpriteNode>(node);
                         if(sprite)
@@ -149,32 +137,4 @@ void ControlComponent::PostCollisionAdd(std::shared_ptr<IEventData> eventData)
 	}
 }
 
-void ControlComponent::PostCollisionRemove(std::shared_ptr<IEventData> eventData)
-{
-	std::shared_ptr<Event_PostCollisionRemove> data = std::dynamic_pointer_cast<Event_PostCollisionRemove>(eventData);
-	if(eventData)
-	{
-		const b2Contact* contact = data->GetContact();
-		b2Body* character = GameApplication::GetInstance()->GetPhysics()->FindBody(m_Owner->GetID());
-		const b2Fixture* fixtureA = contact->GetFixtureA();
-		const b2Fixture* fixtureB = contact->GetFixtureB();		
 
-		if (fixtureA->GetBody() == character || character == fixtureB->GetBody())
-		{	// one of the collision removals is the character, if it is the sensor; we're not on the ground anymore
-			bool fixtureAIsPlayer = fixtureA->GetBody() == character;
-			if ((fixtureAIsPlayer && fixtureA->IsSensor()) || (!fixtureAIsPlayer && fixtureB->IsSensor()))
-			{
-				// only do stuff if a single one is a sensor
-				if ((fixtureA->IsSensor() && !fixtureB->IsSensor()) || (!fixtureA->IsSensor() && fixtureB->IsSensor()))
-				{
-					NrGroundCollisionsRemove++;
-					if (NrGroundCollisionsRemove >= NrGroundCollisionsAdd)
-					{	// prevents user getting stuck at floor due to multiple ground-collisions between each block
-						//m_OnGround = false;
-					}
-				}
-			}
-		}
-	}
-	
-}
