@@ -16,6 +16,7 @@
 #include "../Application/GameApplication.h"
 #include "../Physics/Event_PostCollisionAdd.h"
 #include "../Physics/Event_PostCollisionRemove.h"
+#include "../Communication/EventManager.h"
 
 #include <iostream>
 

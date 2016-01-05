@@ -11,6 +11,7 @@
 *******************************************************************/
 #ifndef EVENT_MANAGER_H
 #define EVENT_MANAGER_H
+
 #include "IEventData.h"
 
 #include <memory>

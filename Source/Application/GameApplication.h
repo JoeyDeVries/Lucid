@@ -16,9 +16,9 @@
 #include "../Scene/Scene.h"
 #include "../Components/ActorFactory.h"
 #include "../Components/Actor.h"
-#include "../Communication/EventManager.h"
+//#include "../Communication/EventManager.h"
 #include "../Physics/Box2DPhysics.h"
-#include "../Audio/AudioEngine.h"
+//#include "../Audio/AudioEngine.h"
 
 #include "GameState.h"
 
@@ -28,6 +28,8 @@
 #include <string>
 
 class GUIContainer;
+class AudioEngine;
+class EventManager;
 
 /*
     The (singleton) application class for the game; manages the coupling

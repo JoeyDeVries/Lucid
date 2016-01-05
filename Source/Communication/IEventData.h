@@ -19,7 +19,7 @@
 
 // don't use global enum of event types but use Global UID's attached to each specific event type
 // this way there is no need to recompile a large array of files for every event type change
-// {1E97F18B-B2EE-40C9-9A68-AE5B9481C914} TODO for each event; pick first number as EventType
+// {1E97F18B-B2EE-40C9-9A68-AE5B9481C914} 
 // DEFINE_GUID(<<name>>, 
 // 0x1e97f18b, 0xb2ee, 0x40c9, 0x9a, 0x68, 0xae, 0x5b, 0x94, 0x81, 0xc9, 0x14);
 // Generated via: Tools -> Create GUID -> DEFINE ... -> Copy

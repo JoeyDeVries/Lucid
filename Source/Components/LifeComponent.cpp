@@ -13,6 +13,7 @@
 #include "Event_DestroyActor.h"
 
 #include "../Application/GameApplication.h"
+#include "../Communication/EventManager.h"
 
 #include <algorithm>
 #include <memory>

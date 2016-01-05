@@ -14,6 +14,7 @@
 
 #include "../Application/GameApplication.h"
 #include "../Physics/Event_PostCollisionAdd.h"
+#include "../Communication/EventManager.h"
 
 DamageTouchComponent::DamageTouchComponent() : m_DamageAmount(0), m_TimeSinceLastDamage(0.0f)
 {

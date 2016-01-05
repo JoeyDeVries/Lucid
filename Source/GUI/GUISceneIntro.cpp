@@ -17,6 +17,7 @@
 #include "../Renderer/Renderer.h"
 #include "../Renderer/Shader.h"
 #include "../Renderer/Texture2D.h"
+#include "../Audio/AudioEngine.h"
 
 #include <memory>
 

@@ -14,6 +14,7 @@
 #include "../Physics/Event_PostCollisionRemove.h"
 #include "../Physics/Event_PostCollisionAdd.h"
 #include "../Application/GameApplication.h"
+#include "../Communication/EventManager.h"
 
 TextOnTouchComponent::TextOnTouchComponent() : m_DisplayText(""), m_IsActive(false)
 {

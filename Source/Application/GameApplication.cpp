@@ -21,6 +21,7 @@
 //#include "../Components/Event_LevelComplete.h"
 #include "../Components/Event_DestroyActor.h"
 #include "../Communication/EventManager.h"
+#include "../Audio/AudioEngine.h"
 #include "../GUI/GUIContainer.h"
 #include "../GUI/GUIMainMenu.h"
 #include "../GUI/GUISceneIntro.h"

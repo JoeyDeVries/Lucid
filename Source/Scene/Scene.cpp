@@ -14,6 +14,7 @@
 #include "../Application/GameApplication.h"
 #include "../Resources/ResourceManager.h"
 #include "../Scene/LightNode.h"
+#include "../Audio/AudioEngine.h"
 
 Scene::Scene()
 {

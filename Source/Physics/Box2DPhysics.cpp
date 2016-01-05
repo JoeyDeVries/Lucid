@@ -11,12 +11,16 @@
 *******************************************************************/
 #include "Box2DPhysics.h"
 
-#include "../Application/GameApplication.h"
+
+
+#include "Event_PostCollisionRemove.h";
+#include "Event_PostCollisionAdd.h";
 #include "Box2DContactListener.h"
 #include "Box2DDebugDrawer.h"
 #include "Event_ActorMoved.h"
-#include "Event_PostCollisionAdd.h";
-#include "Event_PostCollisionRemove.h";
+
+#include "../Application/GameApplication.h"
+#include "../Communication/EventManager.h"
 
 // simple conversion functions to convert from pixels to meters and vica versa
 // necessary as Box2D works best with real metrics

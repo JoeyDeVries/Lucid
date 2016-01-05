@@ -27,6 +27,8 @@
 #include "../Components/MoveLoopComponent.h"
 #include "../Components/AIComponent.h"
 #include "../Components/DamageTouchComponent.h"
+#include "../Audio/AudioEngine.h"
+
 
 
 MapLoader::MapLoader()

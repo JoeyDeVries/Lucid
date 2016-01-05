@@ -22,6 +22,8 @@
 #include "../Renderer/Texture2D.h"
 #include "../Renderer/shader.h"
 #include "../Renderer/Animation.h"
+#include "../Audio/AudioEngine.h"
+#include "../Communication/EventManager.h"
 
 #include <fstream>
 
