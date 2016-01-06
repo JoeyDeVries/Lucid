@@ -12,6 +12,9 @@
 #include "PostProcesser.h"
 
 #include "Renderer.h"
+#include "texture2D.h"
+#include "Framebuffer.h"
+#include "shader.h"
 
 #include "../Resources/ResourceManager.h"
 #include "../Application/GameApplication.h"

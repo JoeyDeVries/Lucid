@@ -11,6 +11,7 @@
 *******************************************************************/
 #include "Font.h"
 
+#include "../Renderer/texture2D.h"
 
 Font::Font() : m_Width(0), m_Height(0)
 {
@@ -47,11 +48,6 @@ const std::map<char, CharInfo>& Font::GetCharInfo()
 {
 	return m_CharInfo;
 }
-
-//const std::map<char, CharRenderInfo>& Font::GetCharRenderInfo()
-//{
-//	return m_CharRenderInfo;
-//}
 
 std::shared_ptr<Texture2D> Font::GetFontAtlas()
 {

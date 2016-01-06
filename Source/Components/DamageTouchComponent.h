@@ -11,6 +11,7 @@
 *******************************************************************/
 #ifndef DAMAGE_TOUCH_COMPONENT_H
 #define DAMAGE_TOUCH_COMPONENT_H
+
 #include "ActorComponent.h"
 
 #include "../Communication/IEventData.h"

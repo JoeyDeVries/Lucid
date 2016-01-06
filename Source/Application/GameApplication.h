@@ -12,15 +12,15 @@
 #ifndef GAME_APPLICATION_H
 #define GAME_APPLICATION_H
 
-#include "../Renderer/Renderer.h"
+#include "GameState.h"
+
+//#include "../Renderer/Renderer.h"
 #include "../Scene/Scene.h"
 #include "../Components/ActorFactory.h"
 #include "../Components/Actor.h"
 //#include "../Communication/EventManager.h"
-#include "../Physics/Box2DPhysics.h"
+//#include "../Physics/Box2DPhysics.h"
 //#include "../Audio/AudioEngine.h"
-
-#include "GameState.h"
 
 #include <memory>
 #include <vector>
@@ -30,6 +30,8 @@
 class GUIContainer;
 class AudioEngine;
 class EventManager;
+class Box2DPhysics;
+class Renderer;
 
 /*
     The (singleton) application class for the game; manages the coupling
@@ -124,7 +126,7 @@ public:
     AudioEngine*  const GetAudio() { return m_Audio; }
 
     // returns the game's running time
-	float const GetTime() { return glfwGetTime(); }
+	float const GetTime();
 
     // event logic fires whenever a game level should be loaded/initialized
     void OnStartLevel(std::shared_ptr<IEventData> eventData);

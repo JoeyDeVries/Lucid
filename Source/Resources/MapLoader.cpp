@@ -12,15 +12,16 @@
 #include "MapLoader.h"
 
 #include "ResourceManager.h"
-#include <iostream>
-#include <fstream>
 
 #include "../Application/GameApplication.h"
+#include "../Components/ActorFactory.h"
 #include "../Components/Actor.h"
+#include "../Scene/Scene.h"
 #include "../Scene/SpriteNode.h"
 #include "../Scene/LightNode.h"
 #include "../Scene/BackgroundNode.h"
 #include "../Scene/TextNode.h"
+#include "../Renderer/Material.h"
 #include "../Components/StateBlockComponent.h"
 #include "../Components/CompleteCheckComponent.h"
 #include "../Components/TextOnTouchComponent.h"
@@ -28,8 +29,10 @@
 #include "../Components/AIComponent.h"
 #include "../Components/DamageTouchComponent.h"
 #include "../Audio/AudioEngine.h"
+#include "../Physics/Box2DPhysics.h"
 
-
+#include <iostream>
+#include <fstream>
 
 MapLoader::MapLoader()
 {
@@ -172,19 +175,6 @@ bool MapLoader::processTileData(ResourceManager *resources, Scene *scene, XMLEle
 		{
 			GameApplication::GetInstance()->GetPhysics()->AddBox(actor, 1.0f);
 		}
-        // determine if an animation has been set, and if so load it in
-        // NOTE(Joey): not possible as individual tiles can't have individual properties
-        //std::string animation = getProperty(tile, "Animation");
-        //if (animation != "")
-        //{
-        //    std::vector<std::shared_ptr<Animation>> animations = resources->LoadAnimation(animation.c_str());
-        //    for (std::shared_ptr<Animation> anim : animations)
-        //    {
-        //        node->AddAnimation(anim, anim->GetName());
-        //        node->SetAnimation(true);
-        //        node->ActivateAnimation("idle");
-        //    }
-        //}
 	}
 	return true;
 }
@@ -442,10 +432,6 @@ bool MapLoader::processGameObject(ResourceManager *resources, Scene *scene, XMLE
         actor->SetScale(scale + glm::vec2(15.0f)); // small scale change to prevent exact collisions between (state) blocks
         actor->SetDepth(6); // TODO(Joey): seperate render depth from light depth and customize light depth individually
         GameApplication::GetInstance()->SetImportantActor("player", actor);
-        // set material
-  /*      material->SetDiffuse(resources->LoadTexture("player", "textures/player/player.png", true));
-        material->SetSpecular(resources->LoadTexture("player_specular", "textures/player/player_specular.png"));
-        material->SetNormal(resources->LoadTexture("player_normal", "textures/player/player_normal.png"));*/
         // create node
         std::shared_ptr<SpriteNode> node(new SpriteNode(actor->GetID(), "player", "main", position, actor->GetDepth(), actor->GetScale()));
         node->SetMaterial(material);

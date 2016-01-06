@@ -11,22 +11,24 @@
 *******************************************************************/
 #include "ResourceManager.h"
 
+#include <SOIL.h>
+
 #include "../Application/GameApplication.h"
+#include "../Renderer/texture2D.h"
+#include "../Renderer/Animation.h"
+#include "../Renderer/shader.h"
+#include "../Scene/Scene.h"
 #include "../Renderer/Material.h"
 #include "../Scene/SpriteNode.h"
 #include "../Scene/BackgroundNode.h"
 #include "../Scene/LightNode.h"
 #include "../Components/StateBlockComponent.h"
 
-#include <SOIL.h>
-
 #include <iostream>
 #include <fstream>
 #include <sstream>
 
 std::shared_ptr<ResourceManager> ResourceManager::m_Instance = std::shared_ptr<ResourceManager>();
-
-
 
 ResourceManager::ResourceManager()
 {

@@ -11,11 +11,16 @@
 *******************************************************************/
 #include "ControlComponent.h"
 
+#define GLEW_STATIC
+#include <GL/glew.h> // required to link GL before linking GLFW
+#include <glfw/glfw3.h>
+
 #include "../Application/GameApplication.h" 
 #include "../Physics/Event_PostCollisionAdd.h" 
 #include "../Physics/Event_PostCollisionRemove.h" 
-#include "../Audio/AudioEngine.h"
 #include "../Communication/EventManager.h"
+#include "../Physics/Box2DPhysics.h"
+#include "../Audio/AudioEngine.h"
 
 #include <algorithm>
 

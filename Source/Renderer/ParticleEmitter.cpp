@@ -131,7 +131,9 @@ void ParticleEmitter::Render(Renderer *renderer, glm::mat4 view)
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
-
+// NOTE(Joey): seeing as I make the assumption here that this game only has one particle emitter 
+// I can keep these variables global. If multiple (more general) particle emitters are developed
+// in the future it is advised to embed these into the emitter per-instance state.
 std::random_device rd;
 std::mt19937 e2(rd());
 std::uniform_real_distribution<float> dist(0, 1);

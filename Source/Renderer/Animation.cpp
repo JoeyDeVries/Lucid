@@ -11,6 +11,8 @@
 *******************************************************************/
 #include "Animation.h"
 
+#include "texture2D.h"
+#include "shader.h"
 
 Animation::Animation(std::vector<AnimationData> &data) : m_Duration(1.0f)
 {
@@ -85,8 +87,4 @@ void Animation::ToShader(std::shared_ptr<Shader> shader)
 	int current_frame = static_cast<int>(unit * nr_frames);
 	// send relevant animation data to shader
 	shader->SetVector4f("animationData", m_AnimationData[current_frame].ToVec4(), true);
-	// bind relevant sheets
-	/*m_SpriteSheet_Diffuse.Bind(0); // will be done by Material
-	m_SpriteSheet_Diffuse.Bind(1);
-	m_SpriteSheet_Diffuse.Bind(2);*/
 }

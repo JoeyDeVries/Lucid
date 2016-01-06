@@ -12,6 +12,7 @@
 #include "MoveLoopComponent.h"
 
 #include "../Application/GameApplication.h"
+#include "../Physics/Box2DPhysics.h"
 
 #include <iostream>
 

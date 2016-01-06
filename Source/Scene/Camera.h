@@ -11,40 +11,50 @@
 *******************************************************************/
 #ifndef CAMERA_H
 #define CAMERA_H
-#include <memory>
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include "SceneNode.h"
 
+#include <glm/glm.hpp>
+
+#include <memory>
+
+class SceneNode;
+
+/*
+    Defines a 2D AABB for fast collision/boundary checks
+*/
 struct BoundingBox {
 	glm::vec2 Center;
 	glm::vec2 HalfExtents;
 };
 
+/* 
+    Follows a target node by re-calculating a proper view matrix each frame. Uses adaptive
+    camera movement based around a Bounding Box region surrounding the target node.
+*/
 class Camera
 {
 protected:
-    float m_Width, m_Height;
-    glm::mat4 m_Projection;
-    glm::mat4 m_View;
-    std::shared_ptr<SceneNode> m_Target;
-	glm::vec2 m_CameraCenter;
-    glm::vec2 m_CurrentPos; // store current pos for adaptive camera movement to m_CameraCenter
+    std::shared_ptr<SceneNode> m_Target; // the target node to follow
+
+    float     m_Width, m_Height; // the width and height of the game
+    glm::mat4 m_Projection;      // the projection matrix of the scene
+    glm::mat4 m_View;            // the per-frame generated view matrix
+	glm::vec2 m_CameraCenter;    // the center of the camera within the bounding box
+    glm::vec2 m_CurrentPos;      // stores the current position for adaptive camera movement to m_CameraCenter
 public:
     Camera();
 
-    void SetTarget(std::shared_ptr<SceneNode> target);
-
-    void SetProjection(float width, float height, float near = 0.0f, float far = 10.0f);
-    void CalculateViewMatrix();
-	
-	BoundingBox GetBoundingBox();
-
+    // getters
     glm::mat4 GetProjection();
     glm::mat4 GetView();
+
+    // calculates the bounding box aligned to the target scene node
+    BoundingBox GetBoundingBox();
+
+    // specifies the target scene node to follow
+    void SetTarget(std::shared_ptr<SceneNode> target);
+    // sets the projection matrix of the scene
+    void SetProjection(float width, float height, float near = 0.0f, float far = 10.0f);
+    // (re-)calculates the view matrix
+    void CalculateViewMatrix();	
 };
-
-
-
-
 #endif

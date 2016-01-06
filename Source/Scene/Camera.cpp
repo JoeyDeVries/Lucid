@@ -11,6 +11,10 @@
 *******************************************************************/
 #include "Camera.h"
 
+#include <glm/gtc/matrix_transform.hpp>
+
+#include "SceneNode.h"
+
 Camera::Camera()
 {
     m_Projection = glm::mat4();

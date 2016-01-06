@@ -11,6 +11,8 @@
 *******************************************************************/
 #include "SceneNode.h"
 
+#include <glm/gtc/matrix_transform.hpp>
+
 #include "Scene.h"
 
 #include "../Application/GameApplication.h"

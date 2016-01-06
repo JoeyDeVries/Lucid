@@ -222,14 +222,12 @@ void Box2DPhysics::AddCharacter(std::shared_ptr<Actor> actor, float density)
 
     // Create box top-shape
     b2PolygonShape boxShape;
-    //boxShape.m_centroid.Set(0.0, -PixelsToMeters(actor->GetScale().x));
     b2Vec2 vertices[4];
     vertices[0].Set(PixelsToMeters(-actor->GetScale().x * 0.2), PixelsToMeters(-actor->GetScale().y * 0.5));
     vertices[1].Set(PixelsToMeters(-actor->GetScale().x * 0.2), PixelsToMeters(actor->GetScale().y * 0.2));
     vertices[2].Set(PixelsToMeters(actor->GetScale().x * 0.2), PixelsToMeters(actor->GetScale().y * 0.2));
     vertices[3].Set(PixelsToMeters(actor->GetScale().x * 0.2), PixelsToMeters(-actor->GetScale().y * 0.5));
     boxShape.Set(vertices, 4);
-    //boxShape.SetAsBox(PixelsToMeters(actor->GetScale().x * 0.5), PixelsToMeters(actor->GetScale().y * 0.5 - 20)); // - half the width for the bottom circle
     b2FixtureDef fixture;
     fixture.shape = &boxShape;
     fixture.density = density;
@@ -243,7 +241,6 @@ void Box2DPhysics::AddCharacter(std::shared_ptr<Actor> actor, float density)
     fixture2.shape = &circleShape;
     fixture2.density = density;
     fixture2.friction = 1.9f;
-	// fixture2.restitution = 0.25f;
     body->CreateFixture(&fixture2);
 
 	// Create bottom sensor to detect floor-collisions
@@ -263,7 +260,6 @@ void Box2DPhysics::AddCharacter(std::shared_ptr<Actor> actor, float density)
 void Box2DPhysics::RemoveActor(unsigned int ActorID)
 {
     m_RemovalQueue.push_back(ActorID);
-    //m_World->DestroyBody(m_ActorIDToBody[ActorID]); // TODO(Joey): schedule them for later removal instead of instantly removing them
 }
 
 void Box2DPhysics::RenderDiagnostics()
@@ -318,26 +314,23 @@ float Box2DPhysics::GetBodyMass(unsigned int ActorID)
 // Check collisions between all fixtures of two bodies
 bool Box2DPhysics::IsBodiesColliding(const b2Body* bodyA, const b2Body* bodyB)
 {
-	bool isColliding = false;
-	// iterate through both fixture lists to determine if entire bodies collide
-	for (const b2Fixture* fixA = bodyA->GetFixtureList(); fixA; fixA = fixA->GetNext())
-	{
-		for (const b2Fixture* fixB = bodyB->GetFixtureList(); fixB; fixB = fixB->GetNext())
-		{
-			for (auto it = m_Collisions.begin(); it != m_Collisions.end(); ++it)
-			{
-				const b2Fixture* colFixA = (*it)->GetFixtureA();
-				const b2Fixture* colFixB = (*it)->GetFixtureB();
-				// don't verify collisions for sensors
-				/*if (fixA->IsSensor() || fixB->IsSensor())
-					continue;*/
+    bool isColliding = false;
+    // iterate through both fixture lists to determine if entire bodies collide
+    for (const b2Fixture* fixA = bodyA->GetFixtureList(); fixA; fixA = fixA->GetNext())
+    {
+        for (const b2Fixture* fixB = bodyB->GetFixtureList(); fixB; fixB = fixB->GetNext())
+        {
+            for (auto it = m_Collisions.begin(); it != m_Collisions.end(); ++it)
+            {
+                const b2Fixture* colFixA = (*it)->GetFixtureA();
+                const b2Fixture* colFixB = (*it)->GetFixtureB();
 
-				if (fixA != fixB && (colFixA == fixA && colFixB == fixB) || (colFixA == fixB && colFixB == fixA))
-					isColliding = true;
-			}
-		}
-	}
-	return isColliding;
+                if (fixA != fixB && (colFixA == fixA && colFixB == fixB) || (colFixA == fixB && colFixB == fixA))
+                    isColliding = true;
+            }
+        }
+    }
+    return isColliding;
 }
 
 

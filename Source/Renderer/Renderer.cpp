@@ -10,7 +10,10 @@
 ** option) any later version.
 *******************************************************************/
 #include "Renderer.h"
- 
+
+#define GLEW_STATIC
+#include <GL/glew.h>
+
 Renderer::Renderer()
 {
     m_PostProcessor = new PostProcessor;

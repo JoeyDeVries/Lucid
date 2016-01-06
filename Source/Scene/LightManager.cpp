@@ -14,6 +14,7 @@
 #include "../Application/GameApplication.h"
 
 #include <iostream>
+#include <algorithm>
 
 LightManager::LightManager() : m_FocusType("")
 {

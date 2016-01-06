@@ -11,9 +11,14 @@
 *******************************************************************/
 #include "Framebuffer.h"
 
+#define GLEW_STATIC
+#include <GL/glew.h>
+
+#include "texture2D.h"
+
 #include <iostream>
 
-Framebuffer::Framebuffer(GLuint width, GLuint height) : m_Width(width), m_Height(height)
+Framebuffer::Framebuffer(unsigned int width, unsigned int height) : m_Width(width), m_Height(height)
 { 
     m_ColorBuffer.reset(new Texture2D);
     m_DepthBuffer.reset(new Texture2D);
@@ -48,27 +53,23 @@ std::shared_ptr<Texture2D> const Framebuffer::GetDepthBuffer()
     return m_DepthBuffer;
 }
 
-// Update the texture used as the color buffer
 void Framebuffer::UpdateColorBufferTexture(std::shared_ptr<Texture2D> texture)
 {
     m_ColorBuffer = texture;
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_ColorBuffer->ID, 0);
 }
 
-// Binds the current framebuffer (without clearing)
 void Framebuffer::Bind()
 {
     glBindFramebuffer(GL_FRAMEBUFFER, m_FBO);
 }
     
-// Bind to framebuffer and clear buffers 
 void Framebuffer::BeginRender()
 {
     glBindFramebuffer(GL_FRAMEBUFFER, m_FBO);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
-// Unbind framebuffer to store data in buffers
 void Framebuffer::EndRender()
 {
     glBindFramebuffer(GL_FRAMEBUFFER, 0);

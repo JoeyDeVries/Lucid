@@ -11,9 +11,14 @@
 *******************************************************************/
 #include "TextRenderer.h"
 
-#include "../Resources/ResourceManager.h"
+#define GLEW_STATIC
+#include <GL/glew.h>
 
-#include <iostream>
+#include "../Resources/ResourceManager.h"
+#include "../Resources/Font.h"
+
+#include "texture2D.h"
+#include "shader.h"
 
 TextRenderer::TextRenderer()
 {
@@ -43,7 +48,6 @@ bool TextRenderer::Initialize(std::shared_ptr<Font> font)
             glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 2 * sizeof(glm::vec4), (GLvoid*)(sizeof(glm::vec4)));
         glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
-
 
 	return true;
 }

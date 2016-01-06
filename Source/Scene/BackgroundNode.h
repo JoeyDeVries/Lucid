@@ -12,21 +12,25 @@
 #ifndef BACKGROUND_NODE_H
 #define BACKGROUND_NODE_H
 
-#include "Scene.h"
 #include "SceneNode.h"
-#include "Camera.h"
 
+class Scene;
+
+/*
+    A SceneNode dedicated to rendering backgrounds. Defines a custom CalculateModel()
+    function to ignore positional and rotational transformations. Can be extended to
+    include/render 2D parallax maps.
+*/
 class BackgroundNode : public SceneNode
 {
-private:
-    std::shared_ptr<Camera> m_Camera;
 public:
     BackgroundNode(unsigned int ActorID);
 
+    // calculates the model matrix for the background node, ignoring positions and rotations
     virtual void CalculateModel();
+    // initializes the background node
     virtual void Initialize(Scene *scene);
+    // renders the background node
     virtual void Render(Scene *scene, Renderer *renderer);
 };
-
-
 #endif

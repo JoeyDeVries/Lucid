@@ -16,6 +16,7 @@
 #include "../Application/GameApplication.h"
 #include "../Communication/EventManager.h"
 #include "../Physics/Event_ActorMoved.h"
+#include "../Physics/Box2DPhysics.h"
 
 SpriteNode::SpriteNode(unsigned int ActorID, std::string name, std::string renderPass, glm::vec2 position, int depth, glm::vec2 scale, float rotation)
     : SceneNode(ActorID, name, renderPass, position, depth, scale, rotation), m_Animation(false), m_Reverse(false), m_ActiveAnimation("idle")

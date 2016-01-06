@@ -11,16 +11,22 @@
 *******************************************************************/
 #include "GameApplication.h"
 
+#define GLEW_STATIC
+#include <GL/glew.h>    // required to link GL before linking GLFW
+#include <glfw/glfw3.h> // for glfwGetTime();
+
 #include "Event_StartLevel.h"
 #include "Event_QuitGame.h"
 
 #include "../Resources/ResourceManager.h"
+#include "../Renderer/Renderer.h"
 #include "../Scene/BackgroundNode.h"
 #include "../Scene/SpriteNode.h"
 #include "../Components/Event_DestroyActor.h"
 //#include "../Components/Event_LevelComplete.h"
 #include "../Components/Event_DestroyActor.h"
 #include "../Communication/EventManager.h"
+#include "../Physics/Box2DPhysics.h"
 #include "../Audio/AudioEngine.h"
 #include "../GUI/GUIContainer.h"
 #include "../GUI/GUIMainMenu.h"
@@ -265,6 +271,11 @@ bool GameApplication::IsKeyPressed(char key, bool check_once)
             return false;
     }
     return m_Keys[key];
+}
+
+const float GameApplication::GetTime()
+{
+    return glfwGetTime();
 }
 
 void GameApplication::OnStartLevel(std::shared_ptr<IEventData> eventData)

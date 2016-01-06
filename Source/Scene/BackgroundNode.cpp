@@ -11,7 +11,13 @@
 *******************************************************************/
 #include "BackgroundNode.h"
 
-#include "../Application/GameApplication.h"
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+
+#include "Scene.h"
+
+#include "../Renderer/Renderer.h"
+#include "../Renderer/shader.h"
 
 BackgroundNode::BackgroundNode(unsigned int ActorID) : SceneNode(ActorID, "Background", "BACKGROUND", glm::vec2(0.0), 0)
 {
