@@ -36,6 +36,7 @@ public:
     virtual const std::string GetName() const { return "Event_ActorMoved"; }
     // copies the event 
     virtual std::shared_ptr<IEventData> Copy() const { return std::shared_ptr<IEventData>(new Event_ActorMoved(m_ActorID, m_NewPosition, m_Rotation)); }
+
     // getters
 	const ActorID   GetActorID()     const { return m_ActorID; }
 	const glm::vec2 GetNewPosition() const { return m_NewPosition; }
