@@ -13,6 +13,9 @@
 
 #include "Scene.h"
 #include "../Resources/ResourceManager.h"
+#include "../Scene/LightManager.h"
+#include "../Renderer/Renderer.h"
+#include "../Renderer/Material.h"
 
 #include <algorithm>
 
@@ -39,7 +42,7 @@ void RootNode::PreRender(Scene *scene)
 }
 
 // sorting predicate used for sorting the scene nodes
-// NOTE(Joey): build render queue for if sprites require too much performance:
+// IDEA(Joey): build render queue if sprites require too much performance:
 //     store all nodes in list keyed by shader ID
 //     then sort nodes in list by textures used
 //     furthermore, store textures in texture atlas and send corresponding

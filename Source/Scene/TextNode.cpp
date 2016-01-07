@@ -12,6 +12,7 @@
 #include "TextNode.h"
 
 #include "../Application/GameApplication.h"
+#include "../Renderer/TextRenderer.h"
 
 TextNode::TextNode(unsigned int ActorID, glm::vec2 position, glm::vec2 scale) 
     : SceneNode(ActorID, "text", "TEXT", position, 0, scale, 0.0f), m_Text(""), m_Centered(false)

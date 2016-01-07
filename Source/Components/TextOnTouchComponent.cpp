@@ -15,6 +15,7 @@
 #include "../Physics/Event_PostCollisionAdd.h"
 #include "../Application/GameApplication.h"
 #include "../Communication/EventManager.h"
+#include "../Renderer/TextRenderer.h"
 #include "../Physics/Box2DPhysics.h"
 
 TextOnTouchComponent::TextOnTouchComponent() : m_DisplayText(""), m_IsActive(false)

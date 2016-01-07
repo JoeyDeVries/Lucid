@@ -13,6 +13,8 @@
 
 #include "../Application/GameApplication.h"
 #include "../Resources/ResourceManager.h"
+#include "../Scene/Camera.h"
+#include "../Scene/Scene.h"
 
 
 LightNode::LightNode(unsigned int ActorID, std::string name, std::string renderPass, glm::vec2 position, float depth, glm::vec2 scale, glm::vec3 diffuse, glm::vec3 specular, float attenuation)

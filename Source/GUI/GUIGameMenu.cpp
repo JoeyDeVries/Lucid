@@ -24,6 +24,8 @@
 #include "../Renderer/shader.h"
 #include "../Renderer/Animation.h"
 #include "../Communication/EventManager.h"
+#include "../Scene/Camera.h"
+#include "../Scene/Scene.h"
 
 #include <fstream>
 #include <memory>

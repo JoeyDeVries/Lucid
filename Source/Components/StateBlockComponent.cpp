@@ -18,6 +18,8 @@
 #include "../Physics/Event_PostCollisionRemove.h"
 #include "../Communication/EventManager.h"
 #include "../Physics/Box2DPhysics.h"
+#include "../Renderer/Material.h"
+#include "../Scene/Scene.h"
 
 #include <iostream>
 

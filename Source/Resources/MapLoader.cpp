@@ -21,6 +21,7 @@
 #include "../Scene/LightNode.h"
 #include "../Scene/BackgroundNode.h"
 #include "../Scene/TextNode.h"
+#include "../Renderer/Renderer.h"
 #include "../Renderer/Material.h"
 #include "../Components/StateBlockComponent.h"
 #include "../Components/CompleteCheckComponent.h"
@@ -30,6 +31,8 @@
 #include "../Components/DamageTouchComponent.h"
 #include "../Audio/AudioEngine.h"
 #include "../Physics/Box2DPhysics.h"
+#include "../Scene/Camera.h"
+#include "../Scene/LightManager.h"
 
 #include <iostream>
 #include <fstream>

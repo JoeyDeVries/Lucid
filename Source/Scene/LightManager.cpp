@@ -11,9 +11,12 @@
 *******************************************************************/
 #include "LightManager.h"
 
-#include "../Application/GameApplication.h"
+#include "LightNode.h"
 
-#include <iostream>
+#include "../Application/GameApplication.h"
+#include "../Renderer/shader.h"
+#include "../Scene/Scene.h"
+
 #include <algorithm>
 
 LightManager::LightManager() : m_FocusType("")

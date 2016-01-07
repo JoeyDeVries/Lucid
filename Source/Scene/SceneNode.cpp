@@ -16,6 +16,7 @@
 #include "Scene.h"
 
 #include "../Application/GameApplication.h"
+#include "../Scene/Camera.h"
 
 #include <iostream>
 

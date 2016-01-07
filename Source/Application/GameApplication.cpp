@@ -20,6 +20,8 @@
 
 #include "../Resources/ResourceManager.h"
 #include "../Renderer/Renderer.h"
+#include "../Renderer//shader.h"
+#include "../Scene/Scene.h"
 #include "../Scene/BackgroundNode.h"
 #include "../Scene/SpriteNode.h"
 #include "../Components/Event_DestroyActor.h"
@@ -32,6 +34,8 @@
 #include "../GUI/GUIMainMenu.h"
 #include "../GUI/GUISceneIntro.h"
 #include "../GUI/GUIGameMenu.h"
+#include "../Scene/Camera.h"
+#include "../Renderer/TextRenderer.h"
 
 #include <iostream>
 

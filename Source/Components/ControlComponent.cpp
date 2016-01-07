@@ -21,6 +21,8 @@
 #include "../Communication/EventManager.h"
 #include "../Physics/Box2DPhysics.h"
 #include "../Audio/AudioEngine.h"
+#include "../Scene/LightNode.h"
+#include "../Scene/Scene.h"
 
 #include <algorithm>
 

@@ -12,69 +12,88 @@
 #ifndef SCENE_H
 #define SCENE_H
 
-#include "ISceneNode.h"
-#include "RootNode.h"
 #include "MatrixStack.h"
-#include "Camera.h"
-#include "LightManager.h"
-#include "../Renderer/Renderer.h"
-#include "../Renderer/TextRenderer.h"
-#include "../Renderer/ParticleEmitter.h"
-#include <map>
+#include "ISceneNode.h"
+
 #include <string>
 #include <vector>
 #include <memory>
+#include <map>
 
+class ParticleEmitter;
+class LightManager;
+class Renderer;
+class RootNode;
+class Camera;
 
 typedef std::map<unsigned int, std::shared_ptr<ISceneNode>> SceneActorMap; // relates actor's to SceneNodes
 
+/*
+    Represents the renderable portion of the game. Holds a scene graph of differently
+    typed scene nodes with parent-child relationships. Rendering starts at the root
+    node that manages different render passes. The scene also holds a camera object
+    that represents the render-region/viewport of the scene. The light manager and
+    particle emitter add to the graphic fidelity of the scene.
+*/
 class Scene
 {
 protected:
-    std::shared_ptr<RootNode>        m_Root;
-    std::shared_ptr<Camera>          m_Camera;
-	std::shared_ptr<LightManager>    m_LightManager;
-    std::shared_ptr<ParticleEmitter> m_ParticleEmitter; 
+    std::shared_ptr<RootNode>        m_Root;            // manages different render passes and the whole scenegraph render-setup as a whole
+    std::shared_ptr<Camera>          m_Camera;          // represents the user render region of the scene
+	std::shared_ptr<LightManager>    m_LightManager;    // represents all light sources in a scene and organizes them for efficient rendering
+    std::shared_ptr<ParticleEmitter> m_ParticleEmitter; // renders particle effects in an efficient fashion to the scene
 
-    MatrixStack   m_MatrixStack;
-    SceneActorMap m_ActorMap;
+    MatrixStack   m_MatrixStack; // holds a stack of matrices to represent parent-child matrix transformation relations
+    SceneActorMap m_ActorMap;    // holds a map relating unique actor IDs to their respective scene nodes, seperating game logic from render logic
 
-	int m_SceneWidth, m_SceneHeight;
-    std::string m_SceneIntro;
-    std::string m_ScenePath;
-    std::string m_AmbientPath;
+	int m_SceneWidth, m_SceneHeight; // the width and height of the scene
+    std::string m_SceneIntro;        // the text displayed at the introduction of the scene
+    std::string m_ScenePath;         // the path the scene scene/level was generated from
+    std::string m_AmbientPath;       // the path to the ambient background music file
 public:
     Scene();
     virtual ~Scene();
 
-    void Initialize();
-    void Clear();
-    void Restore();
-    void Update(float deltaTime);
-    void Render(Renderer *renderer);
-
+    // getters
     std::shared_ptr<ISceneNode> GetSceneNode(unsigned int ActorID);
-    bool AddChild(unsigned int ActorID, std::shared_ptr<ISceneNode> child);
-    bool RemoveChild(unsigned int ActorID);
 
-    std::shared_ptr<Camera>       const GetCamera()         { return m_Camera; }
-    std::shared_ptr<LightManager> const GetLightManager()   { return m_LightManager; }
-	std::shared_ptr<RootNode>	  const GetRootNode()		{ return m_Root; }
+    std::shared_ptr<Camera>       const GetCamera()       { return m_Camera; }
+    std::shared_ptr<LightManager> const GetLightManager() { return m_LightManager; }
+    std::shared_ptr<RootNode>	  const GetRootNode()     { return m_Root; }
 
-	int         GetSceneWidth()  const { return m_SceneWidth; }
-	int         GetSceneHeight() const { return m_SceneHeight; }
+    int         GetSceneWidth()  const { return m_SceneWidth; }
+    int         GetSceneHeight() const { return m_SceneHeight; }
     std::string GetSceneIntro()        { return m_SceneIntro; }
     std::string GetScenePath()         { return m_ScenePath; }
     std::string GetAmbientPath()       { return m_AmbientPath; }
-	void SetSceneWidth(int width)         { m_SceneWidth = width; }
-	void SetSceneHeight(int height)       { m_SceneHeight = height; }
+    // setters
+    void SetSceneWidth(int width)         { m_SceneWidth = width; }
+    void SetSceneHeight(int height)       { m_SceneHeight = height; }
     void SetSceneIntro(std::string intro) { m_SceneIntro = intro; }
     void SetScenePath(std::string path)   { m_ScenePath = path; }
     void SetAmbientPath(std::string path) { m_AmbientPath = path; }
 
+    // initializes the scene 
+    void Initialize();
+    // resets the scene to its default initialized state
+    void Clear();
+    // restores the scene and all nodes after a process/focus switch or change of configuration 
+    void Restore();
+    // updates the scene and all nodes
+    void Update(float deltaTime);
+    // renders the scene with all its nodes
+    void Render(Renderer *renderer);
+
+    // adds a child node to the scene graph
+    bool AddChild(unsigned int ActorID, std::shared_ptr<ISceneNode> child);
+    // removes a child node from the scene graph
+    bool RemoveChild(unsigned int ActorID);
+
+    // pushes a matrix on top of the transformation stack
     void PushAndSetMatrix(const glm::mat4 model);
+    // pops a matrix from the transformation stack
     void PopMatrix();
+    // returns the top matrix on the transformation stack
     const glm::mat4& GetTopMatrix();
 };
-
 #endif

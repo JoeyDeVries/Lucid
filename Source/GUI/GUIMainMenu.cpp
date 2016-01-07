@@ -24,6 +24,9 @@
 #include "../Renderer/Animation.h"
 #include "../Audio/AudioEngine.h"
 #include "../Communication/EventManager.h"
+#include "../Scene/Camera.h"
+#include "../Scene/Scene.h"
+
 
 #include <fstream>
 

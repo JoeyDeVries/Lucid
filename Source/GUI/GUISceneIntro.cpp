@@ -18,6 +18,8 @@
 #include "../Renderer/Shader.h"
 #include "../Renderer/Texture2D.h"
 #include "../Audio/AudioEngine.h"
+#include "../Scene/Camera.h"
+#include "../Scene/Scene.h"
 
 #include <memory>
 

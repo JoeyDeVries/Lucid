@@ -15,7 +15,7 @@
 #include "GameState.h"
 
 //#include "../Renderer/Renderer.h"
-#include "../Scene/Scene.h"
+//#include "../Scene/Scene.h"
 #include "../Components/ActorFactory.h"
 #include "../Components/Actor.h"
 //#include "../Communication/EventManager.h"
@@ -31,7 +31,10 @@ class GUIContainer;
 class AudioEngine;
 class EventManager;
 class Box2DPhysics;
+class TextRenderer;
+class IEventData;
 class Renderer;
+class Scene;
 
 /*
     The (singleton) application class for the game; manages the coupling

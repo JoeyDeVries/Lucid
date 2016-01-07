@@ -65,7 +65,6 @@ void Camera::CalculateViewMatrix()
         m_CurrentPos = glm::mix(m_CurrentPos, m_CameraCenter, 0.04f);
     }
     glm::mat4 view;
-	//view = glm::translate(view, -glm::vec3(-center.x + targetPos.x + 0.5 * targetScale.x, -center.y + targetPos.y + 0.5 * targetScale.y, 0.0)); // center at target matrix
 	view = glm::translate(view, -glm::vec3(-center.x + m_CurrentPos.x, -center.y + m_CurrentPos.y, 0.0));
     m_View = view;
 }

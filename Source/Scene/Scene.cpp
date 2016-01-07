@@ -11,10 +11,17 @@
 *******************************************************************/
 #include "Scene.h"
 
+#include "LightManager.h"
+#include "RootNode.h"
+#include "Camera.h"
+
 #include "../Application/GameApplication.h"
 #include "../Resources/ResourceManager.h"
-#include "../Scene/LightNode.h"
+#include "../Renderer/ParticleEmitter.h"
+#include "../Renderer/TextRenderer.h"
+#include "../Renderer/Renderer.h"
 #include "../Audio/AudioEngine.h"
+#include "../Scene/LightNode.h"
 
 Scene::Scene()
 {

@@ -11,8 +11,6 @@
 *******************************************************************/
 #include "MatrixStack.h"
 
-
-
 MatrixStack::MatrixStack()
 {
     m_Matrices.push_back(glm::mat4()); // add identity matrix on top of stack

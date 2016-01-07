@@ -17,7 +17,10 @@
 #include "Scene.h"
 
 #include "../Renderer/Renderer.h"
+#include "../Renderer/Material.h"
+#include "../Renderer/Renderer.h"
 #include "../Renderer/shader.h"
+#include "../Scene/Camera.h"
 
 BackgroundNode::BackgroundNode(unsigned int ActorID) : SceneNode(ActorID, "Background", "BACKGROUND", glm::vec2(0.0), 0)
 {

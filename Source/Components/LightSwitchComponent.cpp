@@ -14,6 +14,8 @@
 #include "../Application/GameApplication.h"
 #include "../Communication/EventManager.h"
 #include "../Audio/AudioEngine.h"
+#include "../Scene/LightNode.h"
+#include "../Scene/Scene.h"
 
 LightSwitchComponent::LightSwitchComponent() : m_LightState(LightState::OFF), m_Initialized(false)
 {
