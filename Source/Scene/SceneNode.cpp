@@ -15,10 +15,8 @@
 
 #include "Scene.h"
 
-#include "../Application/GameApplication.h"
+#include "../Scene/MatrixStack.h"
 #include "../Scene/Camera.h"
-
-#include <iostream>
 
 const float PI = 3.14159265359;
 
@@ -39,8 +37,8 @@ void SceneNode::CalculateModel()
     glm::mat4 model;
     model = glm::translate(model, glm::vec3(m_Position, -m_Depth)); 
 
-    model = glm::translate(model, glm::vec3(0.5f * m_Scale.x, 0.5f * m_Scale.y, 0.0f)); // Move origin of rotation to center of quad
-    model = glm::rotate(model, m_Rotation * 180.0f/PI, glm::vec3(0.0f, 0.0f, 1.0f)); // Then rotate
+    model = glm::translate(model, glm::vec3(0.5f * m_Scale.x, 0.5f * m_Scale.y, 0.0f));   // Move origin of rotation to center of quad
+    model = glm::rotate(model, m_Rotation * 180.0f/PI, glm::vec3(0.0f, 0.0f, 1.0f));      // Then rotate
     model = glm::translate(model, glm::vec3(-0.5f * m_Scale.x, -0.5f * m_Scale.y, 0.0f)); // Move origin back
 
     model = glm::scale(model, glm::vec3(m_Scale, 1.0));
@@ -120,7 +118,7 @@ bool  SceneNode::AddChild(std::shared_ptr<ISceneNode> child)
 {
     m_Children.push_back(child);
     
-    // Re-update radius of current node's sphere based on child's radius
+    // IDEA(Joey): re-update visiblity dimensions of current node's sphere based on child's radius
     // [...]
     return true;
 }

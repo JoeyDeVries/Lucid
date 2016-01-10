@@ -14,6 +14,8 @@
 #define GLEW_STATIC
 #include <GL/glew.h>
 
+#include "../Application/GameApplication.h"
+
 Renderer::Renderer()
 {
     m_PostProcessor = new PostProcessor;
@@ -30,6 +32,7 @@ void Renderer::Initialize()
     m_PostProcessor->Initialize();
 
     // Configure default OpenGL state
+    glViewport(0, 0, GameApplication::GetInstance()->ScreenWidth(), GameApplication::GetInstance()->ScreenHeight());
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     //glEnable(GL_DEPTH_TEST);
     glEnable(GL_BLEND);

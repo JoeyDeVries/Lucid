@@ -23,6 +23,7 @@
 #include "../Scene/TextNode.h"
 #include "../Renderer/Renderer.h"
 #include "../Renderer/Material.h"
+#include "../Renderer/Animation.h"
 #include "../Components/StateBlockComponent.h"
 #include "../Components/CompleteCheckComponent.h"
 #include "../Components/TextOnTouchComponent.h"

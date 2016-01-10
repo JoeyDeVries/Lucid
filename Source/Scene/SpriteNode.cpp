@@ -17,6 +17,7 @@
 #include "../Communication/EventManager.h"
 #include "../Physics/Event_ActorMoved.h"
 #include "../Physics/Box2DPhysics.h"
+#include "../Renderer/Animation.h"
 #include "../Renderer/Renderer.h"
 #include "../Renderer/Material.h"
 #include "../Renderer//shader.h"
@@ -83,9 +84,6 @@ void SpriteNode::Render(Scene *scene, Renderer *renderer)
 		{
 			m_Material->GetShader()->SetInteger("animation", true);
 			m_Animations[m_ActiveAnimation]->ToShader(m_Material->GetShader());
-            //m_Material->SetDiffuse(m_Animations[m_ActiveAnimation]->GetDiffuse());
-            //m_Material->SetSpecular(m_Animations[m_ActiveAnimation]->GetSpecular());
-            //m_Material->SetNormal(m_Animations[m_ActiveAnimation]->GetNormal());
 		}
 
         if(m_Reverse)
@@ -125,16 +123,21 @@ void SpriteNode::AddAnimation(std::shared_ptr<Animation> animation, std::string 
 
 std::shared_ptr<Animation> SpriteNode::GetAnimation(std::string state)
 {
-	return m_Animations[state];
+    if(m_Animations.find(state) != m_Animations.end())
+	    return m_Animations[state];
+    return std::shared_ptr<Animation>();
 }
 
 void SpriteNode::ActivateAnimation(std::string state)
 {
-	m_ActiveAnimation = state;
-    // also set current spritesheets as active
-    m_Material->SetDiffuse(m_Animations[m_ActiveAnimation]->GetDiffuse());
-    m_Material->SetSpecular(m_Animations[m_ActiveAnimation]->GetSpecular());
-    m_Material->SetNormal(m_Animations[m_ActiveAnimation]->GetNormal());
+    if (m_Animations.find(state) != m_Animations.end())
+    {
+        m_ActiveAnimation = state;
+        // also set current spritesheets as active
+        m_Material->SetDiffuse(m_Animations[m_ActiveAnimation]->GetDiffuse());
+        m_Material->SetSpecular(m_Animations[m_ActiveAnimation]->GetSpecular());
+        m_Material->SetNormal(m_Animations[m_ActiveAnimation]->GetNormal());
+    }
 }
 
 
@@ -143,7 +146,6 @@ void SpriteNode::ActorMoved(std::shared_ptr<IEventData> eventData)
     std::shared_ptr<Event_ActorMoved> eventActorMoved = std::dynamic_pointer_cast<Event_ActorMoved>(eventData);
     if (eventActorMoved->GetActorID() == GetActorID())
     {
-        //std::cout << "(" << eventActorMoved->GetNewPosition().x << ", " << eventActorMoved->GetNewPosition().y << std::endl;
         SetPosition(eventActorMoved->GetNewPosition());
         SetRotation(eventActorMoved->GetNewRotation());
     }

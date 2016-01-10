@@ -12,36 +12,53 @@
 #ifndef SPRITE_NODE_H
 #define SPRITE_NODE_H
 #include "SceneNode.h"
-#include "../Renderer/Animation.h"
+
 #include <memory>
 #include <map>
 
+class IEventData;
+class Animation;
 class Scene;
+
+/*
+    SpriteNode is a derivation of scene node specifically for rendering 2D sprites with
+    or without animations. If an animation has been given, sprite node uses the 
+    animation's corresponding material instead of its default material for rendering.
+*/
 class SpriteNode : public SceneNode
 {
 protected:
-	bool m_Animation;
-    bool m_Reverse;
-	std::string m_ActiveAnimation;
-	std::map<std::string, std::shared_ptr<Animation>> m_Animations; // <anim-state, animation>
+	std::string m_ActiveAnimation;  // states which animation (if any) is currently active/rendered
+	bool        m_Animation;        // states whether this sprite node uses animations
+    bool        m_Reverse;          // states whether the graphics should be reversed on x-axis (sprite moving opposite direction)
+
+	std::map<std::string, std::shared_ptr<Animation>> m_Animations; // holds list of animations: <anim-state, animation>
 public:
     SpriteNode(unsigned int ActorID, std::string name, std::string renderPass, glm::vec2 position, int depth, glm::vec2 scale = glm::vec2(1.0), float rotation = 0.0f);
     ~SpriteNode();
 
-    virtual void Initialize(Scene *scene);
-    virtual void Update(Scene *scene, float deltaTime);
-    virtual void Render(Scene *scene, Renderer *renderer);
+    // getters
+    bool HasAnimation();
+    bool GetReverse();
+    // setters
+    void SetAnimation(bool enable);
+    void SetReverse(bool reverse);
 
-	void					   SetAnimation(bool enable);
-	bool					   HasAnimation();
-    void                       SetReverse(bool reverse);
-    bool                       GetReverse();
-	void					   AddAnimation(std::shared_ptr<Animation> animation, std::string state = "idle");
+    // initializes the sprite node and its children
+    virtual void Initialize(Scene *scene);
+    // updates the sprite node and all its children
+    virtual void Update(Scene *scene, float deltaTime);
+    // renders the sprite node and its children
+    virtual void Render(Scene *scene, Renderer *renderer);
+  
+    // returns an animation part of a specific state of the sprite node
 	std::shared_ptr<Animation> GetAnimation(std::string state);
+    // adds an animation as a given state of the sprite node
+	void					   AddAnimation(std::shared_ptr<Animation> animation, std::string state = "idle");
+    // activates a given animation state of the spritenode; the animation that corresponds to this state is now active
 	void					   ActivateAnimation(std::string state);	
 
-
+    // fires whenever an actor was moved from the physics system
     void ActorMoved(std::shared_ptr<IEventData> eventData);
 };
-
 #endif

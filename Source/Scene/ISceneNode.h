@@ -82,7 +82,7 @@ public:
     // updates the scene node and all its children
     virtual void Update(Scene *scene, float deltaTime) = 0;
 
-    // determines if the scene node is visible based on its raduis
+    // determines if the scene node is visible based on its dimensions
     virtual bool IsVisible(Scene *scene) const = 0;
     // does pre-render configuration before rendering (and its children)
     virtual void PreRender(Scene *scene) = 0;

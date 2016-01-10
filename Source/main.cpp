@@ -9,44 +9,46 @@
 ** Creative Commons, either version 4 of the License, or (at your
 ** option) any later version.
 *******************************************************************/
-#include <iostream>
 
-// GLEW
+// 3rd party
 #define GLEW_STATIC
 #include <GL/glew.h>
-// GLFW
 #include <GLFW/glfw3.h>
-// GLM
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
-// SOIL
 #include <SOIL.h>
 
-// Lantarn
+// lucid
 #include "Application/GameApplication.h"
 #include "Resources/ResourceManager.h"
-#include "Renderer/shader.h"
 #include "Renderer/texture2D.h"
 #include "Components/Actor.h"
+#include "Renderer/shader.h"
 
-// Physics test
-#include <Box2D/Box2D.h>
-b2Vec2 test;
+// standard
+#include <iostream>
+
 const GLuint GAME_WIDTH = 800, GAME_HEIGHT = 600;
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
 void mouse_move_callback(GLFWwindow *window, double x, double y);
 void mouse_button_callback(GLFWwindow *window, int button, int action, int mods);
 
+/*
+    The main entry point for Lucid. Here the cross-platform window is configured and an
+    OpenGL context is requested. After a window is configured, the game is initialized
+    and the game loop is run. The windowing system also continously delegates keyboard
+    and mouse events to the game.
+*/
 int main(int argc, char *argv[])
 {
-    // - initialize GLFW
+    // initialize GLFW
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_COMPAT_PROFILE);
     glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
-    GLFWwindow *window = glfwCreateWindow(GAME_WIDTH, GAME_HEIGHT, "Lantern - prototype v0.2153", nullptr, nullptr);
+    GLFWwindow *window = glfwCreateWindow(GAME_WIDTH, GAME_HEIGHT, "Lucid - Game/Engine - Joey de Vries", nullptr, nullptr);
     if (window == nullptr)
     {
         std::cout << "-- failed to initialize GLFW..." << std::endl;
@@ -55,12 +57,12 @@ int main(int argc, char *argv[])
     }
     glfwMakeContextCurrent(window);
 
-    // - callbacks
+    // configure event callbacks
     glfwSetKeyCallback(window, key_callback);
     glfwSetCursorPosCallback(window, mouse_move_callback);
     glfwSetMouseButtonCallback(window, mouse_button_callback);
 
-    // - initialize GLEW
+    // initialize GLEW
     glewExperimental = GL_TRUE;
     if (glewInit() != GLEW_OK)
     {
@@ -68,22 +70,18 @@ int main(int argc, char *argv[])
         glfwTerminate();
         return -1;
     }
+    // call glGetError once to remove the GLEW error code that's always returned due to a bug in GLEW; now all 
+    // glGetError codes belong to Lucid only.
     glGetError();
 
-    // OpenGL settings
-    glViewport(0, 0, GAME_WIDTH, GAME_HEIGHT);
-    glClearColor(0.3f, 0.2f, 0.1f, 1.0f);
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    // initialize the game and all its game sub-systems
+    GameApplication::GetInstance()->Initialize(GAME_WIDTH, GAME_HEIGHT); 
 
-    // Initialize
-    GameApplication::GetInstance()->Initialize(GAME_WIDTH, GAME_HEIGHT); // TODO: replace with current framebuffer size, not initial size
-
-    // deltatime variables
+    // time management
     GLfloat currentFrame = glfwGetTime(), deltaTime = 0.0, lastFrame = 0.0;
-
-	GLuint fps = 0;
 	GLfloat time = 0.0f;
+	GLuint  fps = 0;
+
     // - game loop
     while (!glfwWindowShouldClose(window) && GameApplication::GetInstance()->GetActive())
     {
@@ -92,24 +90,23 @@ int main(int argc, char *argv[])
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
 		
+        // - periodcally display the FPS the game is running in
 		time += deltaTime;
 		++fps;
 		if (time >= 1.0f)
 		{
 			time = 1.0 - time;
-			glfwSetWindowTitle(window, std::string("Lantern - prototype v0.2153 || FPS: " + std::to_string(fps)).c_str());
+			//glfwSetWindowTitle(window, std::string("Lucid - Game/Engine - Joey de Vries || FPS: " + std::to_string(fps)).c_str());
 			fps = 0;
 		}
-		
-		
 
-        // - events
+        // - poll events
         glfwPollEvents();
 
         // - update game 
         GameApplication::GetInstance()->Update(deltaTime);
 
-        //// - render game
+        // - render game
         GameApplication::GetInstance()->Render();
         
         // - frame end: double buffer swap
@@ -117,8 +114,6 @@ int main(int argc, char *argv[])
     }
 
     GameApplication::GetInstance()->CleanUp();   
-
-
 
     glfwTerminate();
     return 0;
