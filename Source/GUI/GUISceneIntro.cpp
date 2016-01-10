@@ -83,6 +83,9 @@ void GUISceneIntro::RenderBackground(Renderer *renderer, TextRenderer *textRende
     m_BackgroundTexture->Bind(0);
     renderer->RenderQuad();
     // 2. then text
+    // note that here the sentence is instantly broken as soon as the max char limit per row is reached.
+    // in a future system we'd look for \n symbols and then break the text; this should be build in the
+    // text renderer.
     std::vector<std::string> subTexts;
     int charsPerNewline = 50;
     std::string line;

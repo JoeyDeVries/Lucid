@@ -54,7 +54,7 @@ public:
     void SetScale(glm::vec2 scale);
 
     // initializes the GUI container; this should generate all GUI elements corresponding to specific GUI
-    // overlays; this can either be hardcoded or generated from file.
+    // overlays; this can either be hard-coded or generated from file.
     virtual bool Init() = 0;
     // updates the container and all GUI elements
     virtual void Update(float deltaTime) = 0;

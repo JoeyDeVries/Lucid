@@ -11,12 +11,12 @@
 *******************************************************************/
 #include "TextOnTouchComponent.h"
 
-#include "../Physics/Event_PostCollisionRemove.h"
-#include "../Physics/Event_PostCollisionAdd.h"
 #include "../Application/GameApplication.h"
 #include "../Communication/EventManager.h"
-#include "../Renderer/TextRenderer.h"
+#include "../Physics/Event_PostCollisionRemove.h"
+#include "../Physics/Event_PostCollisionAdd.h"
 #include "../Physics/Box2DPhysics.h"
+#include "../Renderer/TextRenderer.h"
 
 TextOnTouchComponent::TextOnTouchComponent() : m_DisplayText(""), m_IsActive(false)
 {

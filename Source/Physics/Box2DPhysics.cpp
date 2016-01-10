@@ -11,10 +11,10 @@
 *******************************************************************/
 #include "Box2DPhysics.h"
 
-#include "Event_PostCollisionRemove.h";
-#include "Event_PostCollisionAdd.h";
 #include "Box2DContactListener.h"
 #include "Box2DDebugDrawer.h"
+#include "Event_PostCollisionRemove.h";
+#include "Event_PostCollisionAdd.h";
 #include "Event_ActorMoved.h"
 
 #include "../Application/GameApplication.h"

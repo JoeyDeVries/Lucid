@@ -29,7 +29,7 @@ class ActorComponent
 {
     friend class ActorFactory;
 public:
-    std::string            m_Type; // the type of component
+    std::string            m_Type;  // the type of component
 protected:
     std::shared_ptr<Actor> m_Owner; // the Actor that owns the component
 public:

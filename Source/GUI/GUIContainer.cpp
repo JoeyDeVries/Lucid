@@ -12,8 +12,8 @@
 #include "GUIContainer.h"
 
 #include "../Resources/ResourceManager.h"
-#include "../Renderer/Renderer.h"
 #include "../Renderer/TextRenderer.h"
+#include "../Renderer/Renderer.h"
 #include "../Renderer/shader.h"
 #include "../Scene/Camera.h"
 

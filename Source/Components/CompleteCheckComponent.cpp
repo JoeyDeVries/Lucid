@@ -11,10 +11,10 @@
 *******************************************************************/
 #include "CompleteCheckComponent.h"
 
-#include "../Physics/Event_PostCollisionAdd.h"
 #include "../Application/Event_StartLevel.h"
 #include "../Application/GameApplication.h"
 #include "../Communication/EventManager.h"
+#include "../Physics/Event_PostCollisionAdd.h"
 #include "../Physics/Box2DPhysics.h"
 
 CompleteCheckComponent::CompleteCheckComponent()

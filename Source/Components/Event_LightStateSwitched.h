@@ -43,7 +43,7 @@ public:
     const std::string GetName() const { return "Event_LightStateSwitched"; }
     // copies the event 
     std::shared_ptr<IEventData> Copy() const { return std::shared_ptr<IEventData>(new Event_LightStateSwitched(m_LightState)); }
-    // returns the 
+    // returns the current state of the light
     const LightState GetLightState() const { return m_LightState; }
 };
 #endif

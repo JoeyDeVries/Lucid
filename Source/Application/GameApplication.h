@@ -14,13 +14,8 @@
 
 #include "GameState.h"
 
-//#include "../Renderer/Renderer.h"
-//#include "../Scene/Scene.h"
 #include "../Components/ActorFactory.h"
 #include "../Components/Actor.h"
-//#include "../Communication/EventManager.h"
-//#include "../Physics/Box2DPhysics.h"
-//#include "../Audio/AudioEngine.h"
 
 #include <memory>
 #include <vector>
@@ -28,10 +23,10 @@
 #include <string>
 
 class GUIContainer;
-class AudioEngine;
 class EventManager;
 class Box2DPhysics;
 class TextRenderer;
+class AudioEngine;
 class IEventData;
 class Renderer;
 class Scene;

@@ -21,7 +21,7 @@
 #include "LifeComponent.h"
 #include "AIComponent.h"
 
-#include<iostream>
+#include <iostream>
 
 // actor component creator functions
 ActorComponent *CreateCompleteCheckComponent() { return new CompleteCheckComponent; }

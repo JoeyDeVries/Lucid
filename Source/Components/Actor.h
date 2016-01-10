@@ -11,6 +11,7 @@
 *******************************************************************/
 #ifndef ACTOR_H
 #define ACTOR_H
+
 #include <glm/glm.hpp>
 
 #include "ActorComponentDefinitions.h"
@@ -48,7 +49,7 @@ private:
     int       m_Depth;    // the world-space depth of the actor
     float     m_Rotation; // the world-space rotation angle of the actor
 
-                          // adds a component to the actor which should be called from ActorFactory only
+    // adds a component to the actor which should be called from ActorFactory only
     void addComponent(std::shared_ptr<ActorComponent> component);
     // sets the ID of the current actor
     void setID(ActorID id);

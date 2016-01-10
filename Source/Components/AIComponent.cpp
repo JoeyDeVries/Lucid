@@ -16,8 +16,6 @@
 #include "../Application/GameApplication.h"
 #include "../Physics/Box2DPhysics.h"
 
-#include <iostream>
-
 AIComponent::AIComponent() : m_AttackRadius(0.0f), m_BeginPosition(0.0f), m_EndPosition(0.0f), m_OldPos(0.0f), m_RestoreIterations(0)
 {
 
@@ -108,7 +106,7 @@ void AIComponent::VUpdate(float deltaTime)
             GameApplication::GetInstance()->GetPhysics()->SetLinearVelocity(m_Owner->GetID(), diff * 40.0f);
             m_RestoreIterations--;
             if (m_RestoreIterations == 0)
-            { // if a loop componenti s present, resume normal loop movement             
+            { // if a loop component is present, resume normal loop movement             
                 std::weak_ptr<MoveLoopComponent> pWeak = m_Owner->GetComponent<MoveLoopComponent>("MoveLoop");
                 if (!pWeak.expired())
                 {
@@ -118,6 +116,4 @@ void AIComponent::VUpdate(float deltaTime)
             }
         }
     }
-
-    
 }

@@ -11,10 +11,6 @@
 *******************************************************************/
 #include "GUIElement.h"
 
-#include "../Application/GameApplication.h"
-
-#include <iostream>
-
 GUIElement::GUIElement() : m_MouseEntered(false), m_ForeColor(1.0f), m_BackColor(1.0f)
 {
 

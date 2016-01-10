@@ -14,14 +14,12 @@
 #include "ControlComponent.h"
 
 #include "../Application/GameApplication.h"
+#include "../Communication/EventManager.h"
 #include "../Physics/Event_PostCollisionAdd.h"
 #include "../Physics/Event_PostCollisionRemove.h"
-#include "../Communication/EventManager.h"
 #include "../Physics/Box2DPhysics.h"
 #include "../Renderer/Material.h"
 #include "../Scene/Scene.h"
-
-#include <iostream>
 
 StateBlockComponent::StateBlockComponent() : m_BlockColor(LightState::WHITE), m_LastLightState(LightState::WHITE), m_PlayerContact(false)
 {

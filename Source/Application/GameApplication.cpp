@@ -18,24 +18,23 @@
 #include "Event_StartLevel.h"
 #include "Event_QuitGame.h"
 
+#include "../Communication/EventManager.h"
 #include "../Resources/ResourceManager.h"
-#include "../Renderer/Renderer.h"
-#include "../Renderer//shader.h"
-#include "../Scene/Scene.h"
+#include "../Physics/Box2DPhysics.h"
 #include "../Scene/BackgroundNode.h"
 #include "../Scene/SpriteNode.h"
+#include "../Scene/Camera.h"
+#include "../Scene/Scene.h"
+#include "../Renderer/TextRenderer.h"
+#include "../Renderer/Renderer.h"
+#include "../Renderer/shader.h"
 #include "../Components/Event_DestroyActor.h"
-//#include "../Components/Event_LevelComplete.h"
 #include "../Components/Event_DestroyActor.h"
-#include "../Communication/EventManager.h"
-#include "../Physics/Box2DPhysics.h"
-#include "../Audio/AudioEngine.h"
 #include "../GUI/GUIContainer.h"
 #include "../GUI/GUIMainMenu.h"
 #include "../GUI/GUISceneIntro.h"
 #include "../GUI/GUIGameMenu.h"
-#include "../Scene/Camera.h"
-#include "../Renderer/TextRenderer.h"
+#include "../Audio/AudioEngine.h"
 
 #include <iostream>
 
@@ -54,17 +53,18 @@ GameApplication::GameApplication() : m_Active(true)
 
 GameApplication::~GameApplication()
 {
-    // can't delete pointers here as other destructors still need GameApplication (for de-registering events for example)
+    // can't delete memory here (yet) as other destructors still need GameApplication (de-registering events for example)
 }
 
 void GameApplication::Initialize(float width, float height)
 {
     m_ScreenWidth = width;
     m_ScreenHeight = height;
-    // Initialize physics
+
+    // initialize physics
     m_Physics->Initialize();
 
-    // Initialize renderer
+    // initialize renderer
     m_Renderer->Initialize();
     m_Scene->GetCamera()->SetProjection(width, height, 0.0, 50.0f); // has to be initialized first as its projection is also used by GUI menus
 
@@ -86,9 +86,9 @@ void GameApplication::Initialize(float width, float height)
 	m_TextRenderer->Initialize(font);
 
     // initialize GUI
-    m_GUIContainers["main_menu"] = std::shared_ptr<GUIContainer>(new GUIMainMenu);
+    m_GUIContainers["main_menu"]   = std::shared_ptr<GUIContainer>(new GUIMainMenu);
 	m_GUIContainers["scene_intro"] = std::shared_ptr<GUISceneIntro>(new GUISceneIntro);
-    m_GUIContainers["game_menu"] = std::shared_ptr<GUIGameMenu>(new GUIGameMenu);
+    m_GUIContainers["game_menu"]   = std::shared_ptr<GUIGameMenu>(new GUIGameMenu);
     for(auto it = m_GUIContainers.begin(); it != m_GUIContainers.end(); ++it)
         it->second->Init();
 
@@ -120,13 +120,12 @@ std::shared_ptr<Actor> GameApplication::CreateActor(DEFAULT_ACTOR_TYPES type)
 
 std::shared_ptr<Actor> GameApplication::GetActor(ActorID actorID)
 {
-	return m_Actors[actorID];
+	return m_Actors[actorID]; // note that key exist check is removed here for performance reasons (this function is mostly called for actors that already exist)
 	// iterating through a list is too slow for its real-time purpose and query frequency
 	// make a performance-memory tradeoff here by storing actors in a hashmap.
     /*for (auto it = m_Actors.begin(); it != m_Actors.end(); ++it)
         if((*it)->GetID() == actorID)
             return (*it);*/
-    return std::shared_ptr<Actor>();
 }
 
 void GameApplication::SetImportantActor(std::string name, std::shared_ptr<Actor> actor)

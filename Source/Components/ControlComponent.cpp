@@ -16,9 +16,9 @@
 #include <glfw/glfw3.h>
 
 #include "../Application/GameApplication.h" 
+#include "../Communication/EventManager.h"
 #include "../Physics/Event_PostCollisionAdd.h" 
 #include "../Physics/Event_PostCollisionRemove.h" 
-#include "../Communication/EventManager.h"
 #include "../Physics/Box2DPhysics.h"
 #include "../Audio/AudioEngine.h"
 #include "../Scene/LightNode.h"

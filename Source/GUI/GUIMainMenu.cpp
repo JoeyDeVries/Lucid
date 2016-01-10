@@ -13,20 +13,19 @@
 
 #include "GUIButton.h"
 
-#include "../Resources/ResourceManager.h"
 #include "../Application/GameApplication.h"
 #include "../Application/Event_StartLevel.h"
 #include "../Application/Event_QuitGame.h"
+#include "../Communication/EventManager.h"
+#include "../Resources/ResourceManager.h"
 #include "../Renderer/TextRenderer.h"
 #include "../Renderer/Renderer.h"
 #include "../Renderer/Texture2D.h"
 #include "../Renderer/shader.h"
 #include "../Renderer/Animation.h"
 #include "../Audio/AudioEngine.h"
-#include "../Communication/EventManager.h"
 #include "../Scene/Camera.h"
 #include "../Scene/Scene.h"
-
 
 #include <fstream>
 

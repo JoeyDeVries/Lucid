@@ -14,16 +14,9 @@
 #define GLEW_STATIC
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <SOIL.h>
 
 // lucid
 #include "Application/GameApplication.h"
-#include "Resources/ResourceManager.h"
-#include "Renderer/texture2D.h"
-#include "Components/Actor.h"
-#include "Renderer/shader.h"
 
 // standard
 #include <iostream>

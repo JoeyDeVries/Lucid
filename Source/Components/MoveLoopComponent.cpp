@@ -14,8 +14,6 @@
 #include "../Application/GameApplication.h"
 #include "../Physics/Box2DPhysics.h"
 
-#include <iostream>
-
 MoveLoopComponent::MoveLoopComponent() : m_BeginPosition(0.0f), m_EndPosition(0.0f), m_Speed(0.25f), m_CurrentPosition(0.0f), m_Forward(true)
 {
 
