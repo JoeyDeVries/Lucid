@@ -5,4 +5,8 @@ all subfolders are subject under the terms of the CC BY-NC 4.0
 license as published by Creative Commons, either version 4 of 
 the License, or (at your option) any later version.
 
+CC BY-NC human-readable format:
+http://creativecommons.org/licenses/by-nc/4.0/
 
+CC BY-NC full license:
+http://creativecommons.org/licenses/by-nc/4.0/legalcode

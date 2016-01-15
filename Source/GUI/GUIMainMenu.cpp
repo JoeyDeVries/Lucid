@@ -42,24 +42,24 @@ bool GUIMainMenu::Init()
     // start game
     std::shared_ptr<GUIButton> btnStartGame(new GUIButton);
     btnStartGame->SetName("btnStartGame");
-    btnStartGame->SetPosition(glm::vec2(250.0f, 200.0f));
-    btnStartGame->SetScale(glm::vec2(300.0f, 50.0f));
+    btnStartGame->SetPosition(glm::vec2(m_Scale.x * 0.3f, m_Scale.y * 0.3f));
+    btnStartGame->SetScale(glm::vec2(m_Scale.x * 0.4f, 50.0f));
     btnStartGame->SetForeColor(glm::vec4(glm::vec3(0.6f), 1.0f));
     btnStartGame->SetHoverColor(glm::vec4(1.0f));
     btnStartGame->SetText("Start Game");
     // load game
     std::shared_ptr<GUIButton> btnContinue(new GUIButton);
     btnContinue->SetName("btnContinue");
-    btnContinue->SetPosition(glm::vec2(250.0f, 275.0f));
-    btnContinue->SetScale(glm::vec2(300.0f, 50.0f));
+    btnContinue->SetPosition(glm::vec2(m_Scale.x * 0.3f, m_Scale.y * 0.4f));
+    btnContinue->SetScale(glm::vec2(m_Scale.x * 0.4f, 50.0f));
     btnContinue->SetForeColor(glm::vec4(glm::vec3(0.6f), 1.0f));
     btnContinue->SetHoverColor(glm::vec4(1.0f));
     btnContinue->SetText("Continue");
     // quit
     std::shared_ptr<GUIButton> btnQuit(new GUIButton);
     btnQuit->SetName("btnQuit");
-    btnQuit->SetPosition(glm::vec2(250.0f, 350.0f));
-    btnQuit->SetScale(glm::vec2(300.0f, 50.0f));
+    btnQuit->SetPosition(glm::vec2(m_Scale.x * 0.3f, m_Scale.y * 0.5f));
+    btnQuit->SetScale(glm::vec2(m_Scale.x * 0.4f, 50.0f));
     btnQuit->SetForeColor(glm::vec4(glm::vec3(0.6f), 1.0f));
     btnQuit->SetHoverColor(glm::vec4(1.0f));
     btnQuit->SetText("Quit Game");
@@ -82,7 +82,7 @@ void GUIMainMenu::Update(float deltaTime)
 void GUIMainMenu::RenderBackground(Renderer *renderer, TextRenderer *textRenderer)
 {
     // render title
-    textRenderer->RenderText("Lucid", glm::vec2(0.0f, 0.0f), 7.0f, false, glm::vec4(1.0, 1.0, 1.0, 1.0f), glm::vec2(m_Scale.x, 100.0f));
+    textRenderer->RenderText("LUCID", glm::vec2(0.0f, 0.0f), 10.0f, false, glm::vec4(1.0, 1.0, 1.0, 0.25f), glm::vec2(m_Scale.x, m_Scale.y * 0.15f));
 
     // render background image + three animated sprites
     std::shared_ptr<Shader> spriteShader = ResourceManager::GetInstance()->GetShader("sprite");
@@ -93,7 +93,7 @@ void GUIMainMenu::RenderBackground(Renderer *renderer, TextRenderer *textRendere
     spriteShader->SetVector4f("ColorOverride", glm::vec4(1.0f));
     // render background
     glm::mat4 model;
-    model *= glm::scale(glm::vec3(800.0f, 600.0f, 1.0f));
+    model *= glm::scale(glm::vec3(m_Scale, 1.0f));
     spriteShader->SetMatrix4("model", model);
     m_BackgroundTexture->Bind(0);
     renderer->RenderQuad();

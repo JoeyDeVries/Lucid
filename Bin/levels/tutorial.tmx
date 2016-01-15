@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="27" height="25" tilewidth="128" tileheight="128" nextobjectid="39">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="27" height="18" tilewidth="128" tileheight="128" nextobjectid="39">
  <properties>
   <property name="Ambient" value="audio/ambient2.mp3"/>
   <property name="IntroText" value="&quot;In darkness, there is only light...&quot;                 Crumbling rocks, lingering dust and a humid       atmosphere; you have no memory of previous      events, nor anything related to your past. Lying cold on the floor, you wonder what happened here, and especially... why?"/>
@@ -49,197 +49,8 @@
    <image width="128" height="128" source="../textures/objects/grass.png"/>
   </tile>
  </tileset>
- <layer name="Physics" width="27" height="25">
+ <layer name="Physics" width="27" height="18">
   <data>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="2"/>
@@ -728,197 +539,8 @@
    <tile gid="2"/>
   </data>
  </layer>
- <layer name="Tiles" width="27" height="25">
+ <layer name="Tiles" width="27" height="18">
   <data>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
    <tile gid="2"/>
    <tile gid="2"/>
    <tile gid="0"/>
@@ -1408,18 +1030,18 @@
   </data>
  </layer>
  <objectgroup name="GameObjects">
-  <object id="1" name="Player" type="Spawn" x="512" y="2688" width="128" height="128"/>
-  <object id="2" name="Sign" type="Sign" x="640" y="2688" width="128" height="128">
+  <object id="1" name="Player" type="Spawn" x="512" y="1792" width="128" height="128"/>
+  <object id="2" name="Sign" type="Sign" x="640" y="1792" width="128" height="128">
    <properties>
     <property name="Text" value="Press '1' to light your lantern"/>
    </properties>
   </object>
-  <object id="3" name="Sign" type="Sign" x="896" y="2688" width="128" height="128">
+  <object id="3" name="Sign" type="Sign" x="896" y="1792" width="128" height="128">
    <properties>
     <property name="Text" value="The lantern's red lid can be opened with '2'"/>
    </properties>
   </object>
-  <object id="4" name="Text" type="Text" x="430.303" y="2454.67" width="512" height="128">
+  <object id="4" name="Text" type="Text" x="430.303" y="1558.67" width="512" height="128">
    <properties>
     <property name="B" value="0.15"/>
     <property name="G" value="0.15"/>
@@ -1428,55 +1050,55 @@
     <property name="Text" value="where... am I?"/>
    </properties>
   </object>
-  <object id="5" name="R" type="StateBlock" x="1024" y="2816" width="128" height="128">
+  <object id="5" name="R" type="StateBlock" x="1024" y="1920" width="128" height="128">
    <properties>
     <property name="Color" value="R"/>
    </properties>
   </object>
-  <object id="6" name="R" type="StateBlock" x="1152" y="2816" width="128" height="128">
+  <object id="6" name="R" type="StateBlock" x="1152" y="1920" width="128" height="128">
    <properties>
     <property name="Color" value="R"/>
    </properties>
   </object>
-  <object id="7" name="R" type="StateBlock" x="1280" y="2816" width="128" height="128">
+  <object id="7" name="R" type="StateBlock" x="1280" y="1920" width="128" height="128">
    <properties>
     <property name="Color" value="R"/>
    </properties>
   </object>
-  <object id="8" name="R" type="StateBlock" x="1408" y="2816" width="128" height="128">
+  <object id="8" name="R" type="StateBlock" x="1408" y="1920" width="128" height="128">
    <properties>
     <property name="Color" value="R"/>
    </properties>
   </object>
-  <object id="9" name="Sign" type="Sign" x="1664" y="2688" width="128" height="128">
+  <object id="9" name="Sign" type="Sign" x="1664" y="1792" width="128" height="128">
    <properties>
     <property name="Text" value="Try shutting different lids with '3' and '4'"/>
    </properties>
   </object>
-  <object id="11" name="R" type="StateBlock" x="1920" y="2816" width="128" height="128">
+  <object id="11" name="R" type="StateBlock" x="1920" y="1920" width="128" height="128">
    <properties>
     <property name="Color" value="R"/>
    </properties>
   </object>
-  <object id="12" name="G" type="StateBlock" x="2048" y="2816" width="128" height="128">
+  <object id="12" name="G" type="StateBlock" x="2048" y="1920" width="128" height="128">
    <properties>
     <property name="Color" value="G"/>
    </properties>
   </object>
-  <object id="13" name="B" type="StateBlock" x="2176" y="2816" width="128" height="128">
+  <object id="13" name="B" type="StateBlock" x="2176" y="1920" width="128" height="128">
    <properties>
     <property name="Color" value="B"/>
    </properties>
   </object>
-  <object id="15" name="Platform" type="Moveable" x="2816" y="2176" width="128" height="640">
+  <object id="15" name="Platform" type="Moveable" x="2816" y="1280" width="128" height="640">
    <properties>
     <property name="Color" value="-"/>
    </properties>
   </object>
-  <object id="16" name="Death" type="Deathtouch" x="1024" y="2944" width="512" height="128"/>
-  <object id="17" name="Death" type="Deathtouch" x="1920" y="2944" width="512" height="128"/>
-  <object id="18" name="Death" type="Deathtouch" x="2816" y="2816" width="128" height="128"/>
-  <object id="19" name="Light" type="Light" x="2432" y="2048" width="128" height="128">
+  <object id="16" name="Death" type="Deathtouch" x="1024" y="2048" width="512" height="128"/>
+  <object id="17" name="Death" type="Deathtouch" x="1920" y="2048" width="512" height="128"/>
+  <object id="18" name="Death" type="Deathtouch" x="2816" y="1920" width="128" height="128"/>
+  <object id="19" name="Light" type="Light" x="2432" y="1152" width="128" height="128">
    <properties>
     <property name="Animation" value="textures/lights/light.anim"/>
     <property name="D_B" value="1.0"/>
@@ -1488,7 +1110,7 @@
    </properties>
    <ellipse/>
   </object>
-  <object id="20" name="Light" type="Light" x="1536" y="1408" width="128" height="128">
+  <object id="20" name="Light" type="Light" x="1536" y="512" width="128" height="128">
    <properties>
     <property name="Animation" value="textures/lights/light.anim"/>
     <property name="D_B" value="2.0"/>
@@ -1500,7 +1122,7 @@
    </properties>
    <ellipse/>
   </object>
-  <object id="21" name="Light" type="Light" x="512" y="1536" width="128" height="128">
+  <object id="21" name="Light" type="Light" x="512" y="640" width="128" height="128">
    <properties>
     <property name="Animation" value="textures/lights/light.anim"/>
     <property name="D_B" value="1.0"/>
@@ -1512,12 +1134,12 @@
    </properties>
    <ellipse/>
   </object>
-  <object id="22" name="Finish" type="Finish" x="384" y="1536" width="128" height="128">
+  <object id="22" name="Finish" type="Finish" x="384" y="640" width="128" height="128">
    <properties>
     <property name="NextLevel" value="levels/2.tmx"/>
    </properties>
   </object>
-  <object id="23" name="Text" type="Text" x="1408" y="1536" width="512" height="128">
+  <object id="23" name="Text" type="Text" x="1408" y="640" width="512" height="128">
    <properties>
     <property name="B" value="0.05"/>
     <property name="G" value="0.05"/>
@@ -1526,27 +1148,27 @@
     <property name="Text" value="It feels... familiar..."/>
    </properties>
   </object>
-  <object id="24" name="R" type="StateBlock" x="2048" y="2048" width="128" height="128">
+  <object id="24" name="R" type="StateBlock" x="2048" y="1152" width="128" height="128">
    <properties>
     <property name="Color" value="R"/>
    </properties>
   </object>
-  <object id="25" name="B" type="StateBlock" x="1920" y="1920" width="128" height="128">
+  <object id="25" name="B" type="StateBlock" x="1920" y="1024" width="128" height="128">
    <properties>
     <property name="Color" value="B"/>
    </properties>
   </object>
-  <object id="26" name="B" type="StateBlock" x="1280" y="1792" width="128" height="128">
+  <object id="26" name="B" type="StateBlock" x="1280" y="896" width="128" height="128">
    <properties>
     <property name="Color" value="B"/>
    </properties>
   </object>
-  <object id="27" name="G" type="StateBlock" x="1152" y="1664" width="128" height="128">
+  <object id="27" name="G" type="StateBlock" x="1152" y="768" width="128" height="128">
    <properties>
     <property name="Color" value="G"/>
    </properties>
   </object>
-  <object id="28" name="Text" type="Text" x="2174.55" y="2326.67" width="512" height="128">
+  <object id="28" name="Text" type="Text" x="2174.55" y="1430.67" width="512" height="128">
    <properties>
     <property name="B" value="0.10"/>
     <property name="G" value="0.10"/>
@@ -1555,12 +1177,12 @@
     <property name="Text" value="Is this real?"/>
    </properties>
   </object>
-  <object id="30" name="Can" type="Prop" x="2248" y="2112" width="50" height="58">
+  <object id="30" name="Can" type="Prop" x="2248" y="1216" width="50" height="58">
    <properties>
     <property name="Image" value="textures/props/can.png"/>
    </properties>
   </object>
-  <object id="35" name="Box" type="Prop" x="890.758" y="1575.76" width="77.6364" height="77.6364">
+  <object id="35" name="Box" type="Prop" x="890.758" y="679.76" width="77.6364" height="77.6364">
    <properties>
     <property name="Image" value="textures/objects/crate.png"/>
    </properties>

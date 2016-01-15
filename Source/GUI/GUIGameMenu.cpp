@@ -41,24 +41,24 @@ bool GUIGameMenu::Init()
     // continue game
     std::shared_ptr<GUIButton> btnContinue(new GUIButton);
     btnContinue->SetName("btnContinue");
-    btnContinue->SetPosition(glm::vec2(250.0f, 200.0f));
-    btnContinue->SetScale(glm::vec2(300.0f, 50.0f));
+    btnContinue->SetPosition(glm::vec2(m_Scale.x * 0.3f, m_Scale.y * 0.3f));
+    btnContinue->SetScale(glm::vec2(m_Scale.x * 0.4f, 50.0f));
     btnContinue->SetForeColor(glm::vec4(glm::vec3(0.6f), 1.0f));
     btnContinue->SetHoverColor(glm::vec4(1.0f));
     btnContinue->SetText("Continue");
     // save
     std::shared_ptr<GUIButton> btnSave(new GUIButton);
     btnSave->SetName("btnSave");
-    btnSave->SetPosition(glm::vec2(250.0f, 275.0f));
-    btnSave->SetScale(glm::vec2(300.0f, 50.0f));
+    btnSave->SetPosition(glm::vec2(m_Scale.x * 0.3f, m_Scale.y * 0.4f));
+    btnSave->SetScale(glm::vec2(m_Scale.x * 0.4f, 50.0f));
     btnSave->SetForeColor(glm::vec4(glm::vec3(0.6f), 1.0f));
     btnSave->SetHoverColor(glm::vec4(1.0f));
     btnSave->SetText("Save");
     // quit
     std::shared_ptr<GUIButton> btnQuit(new GUIButton);
     btnQuit->SetName("btnQuit");
-    btnQuit->SetPosition(glm::vec2(250.0f, 340.0f));
-    btnQuit->SetScale(glm::vec2(300.0f, 50.0f));
+    btnQuit->SetPosition(glm::vec2(m_Scale.x * 0.3f, m_Scale.y * 0.5f));
+    btnQuit->SetScale(glm::vec2(m_Scale.x * 0.4f, 50.0f));
     btnQuit->SetForeColor(glm::vec4(glm::vec3(0.6f), 1.0f));
     btnQuit->SetHoverColor(glm::vec4(1.0f));
     btnQuit->SetText("Quit Game");
