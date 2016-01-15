@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="27" height="14" tilewidth="128" tileheight="128" nextobjectid="41">
  <properties>
-  <property name="Ambient" value="audio/ambient2.mp3"/>
+  <property name="Ambient" value="audio/ambient1.mp3"/>
   <property name="IntroText" value="&quot;In darkness, there is only light...&quot;                 Crumbling rocks, lingering dust and a humid       atmosphere; you have no memory of previous      events, nor anything related to your past. Lying cold on the floor, you wonder what happened here, and especially... why?"/>
   <property name="background" value="textures/backgrounds/background.png"/>
  </properties>
