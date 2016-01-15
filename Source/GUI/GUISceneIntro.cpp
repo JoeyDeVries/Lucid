@@ -52,16 +52,16 @@ void GUISceneIntro::Update(float deltaTime)
         {
             m_TextAlpha += deltaTime * 0.1f;
         }
-        else if (m_TimeActive > 10.0f && m_TimeActive < 12.0f)
+        else if (m_TimeActive > 10.0f && m_TimeActive < 12.5f)
         {
-            m_Alpha -= deltaTime * 0.5f;
-            m_TextAlpha -= deltaTime * 0.5f;
+            m_Alpha -= deltaTime * 0.4f;
+            m_TextAlpha -= deltaTime * 0.4f;
         }
-        else if (m_TimeActive > 15.0f)
+        else if (m_TimeActive > 12.5f)
         {
             SetActive(false);
         }
-        //else
+        //else // quick hack for disabling intro @ start for quicker live debugging
             //SetActive(false);
 
         m_TimeActive += deltaTime;

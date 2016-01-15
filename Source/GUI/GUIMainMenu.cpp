@@ -107,12 +107,12 @@ void GUIMainMenu::RenderBackground(Renderer *renderer, TextRenderer *textRendere
 void GUIMainMenu::OnActivate()
 {
     GameApplication::GetInstance()->GetAudio()->StopAll();
-    GameApplication::GetInstance()->GetAudio()->PlaySound("audio/ambient.wav", true);
+    GameApplication::GetInstance()->GetAudio()->PlaySound("audio/menu.mp3", true);
 }
 
 void GUIMainMenu::OnDeactivate()
 {
-    GameApplication::GetInstance()->GetAudio()->StopSound("audio/ambient.wav");
+    GameApplication::GetInstance()->GetAudio()->StopSound("audio/menu.mp3");
 }
 
 void GUIMainMenu::ButtonPressed(std::shared_ptr<GUIButton> pButton)

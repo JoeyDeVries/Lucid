@@ -66,9 +66,15 @@ void AudioEngine::SetPlayerPosition(glm::vec2 position)
 
 void AudioEngine::PreLoad()
 {
-    m_AudioEngine->addSoundSourceFromFile("audio/audio/death.mp3", irrklang::E_STREAM_MODE::ESM_AUTO_DETECT, true);
-    m_AudioEngine->addSoundSourceFromFile("audio/audio/death.mp3", irrklang::E_STREAM_MODE::ESM_AUTO_DETECT, true);
-    m_AudioEngine->addSoundSourceFromFile("audio/audio/death.mp3", irrklang::E_STREAM_MODE::ESM_AUTO_DETECT, true);
-    m_AudioEngine->addSoundSourceFromFile("audio/audio/death.mp3", irrklang::E_STREAM_MODE::ESM_AUTO_DETECT, true);
-	m_AudioEngine->addSoundSourceFromFile("audio/end_hit.wav", irrklang::E_STREAM_MODE::ESM_AUTO_DETECT, true);
+    m_AudioEngine->addSoundSourceFromFile("audio/menu.mp3",         irrklang::E_STREAM_MODE::ESM_AUTO_DETECT, true);
+    m_AudioEngine->addSoundSourceFromFile("audio/ambient1.mp3",     irrklang::E_STREAM_MODE::ESM_AUTO_DETECT, true);
+    m_AudioEngine->addSoundSourceFromFile("audio/ambient2.mp3",     irrklang::E_STREAM_MODE::ESM_AUTO_DETECT, true);
+    m_AudioEngine->addSoundSourceFromFile("audio/ambient3.mp3",     irrklang::E_STREAM_MODE::ESM_AUTO_DETECT, true);
+    m_AudioEngine->addSoundSourceFromFile("audio/scene_intro.mp3",  irrklang::E_STREAM_MODE::ESM_AUTO_DETECT, true);
+    m_AudioEngine->addSoundSourceFromFile("audio/death.mp3",        irrklang::E_STREAM_MODE::ESM_AUTO_DETECT, true);
+    m_AudioEngine->addSoundSourceFromFile("audio/fire.mp3",         irrklang::E_STREAM_MODE::ESM_AUTO_DETECT, true);
+    m_AudioEngine->addSoundSourceFromFile("audio/jump.mp3",         irrklang::E_STREAM_MODE::ESM_AUTO_DETECT, true);
+    m_AudioEngine->addSoundSourceFromFile("audio/light_switch.mp3", irrklang::E_STREAM_MODE::ESM_AUTO_DETECT, true);
+    m_AudioEngine->addSoundSourceFromFile("audio/enemy1.mp3",       irrklang::E_STREAM_MODE::ESM_AUTO_DETECT, true);
+    m_AudioEngine->addSoundSourceFromFile("audio/enemy2.mp3",       irrklang::E_STREAM_MODE::ESM_AUTO_DETECT, true);
 }

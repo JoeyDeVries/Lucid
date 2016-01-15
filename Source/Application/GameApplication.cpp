@@ -85,6 +85,9 @@ void GameApplication::Initialize(float width, float height)
 	std::shared_ptr<Font> font = ResourceManager::GetInstance()->LoadFont("gui/font.fnt");
 	m_TextRenderer->Initialize(font);
 
+    // initialize audio
+    m_Audio->PreLoad();
+
     // initialize GUI
     m_GUIContainers["main_menu"]   = std::shared_ptr<GUIContainer>(new GUIMainMenu);
 	m_GUIContainers["scene_intro"] = std::shared_ptr<GUISceneIntro>(new GUISceneIntro);
