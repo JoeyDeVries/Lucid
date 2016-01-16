@@ -1090,7 +1090,7 @@
     <property name="Color" value="B"/>
    </properties>
   </object>
-  <object id="15" name="Platform" type="Moveable" x="2816" y="1280" width="128" height="640">
+  <object id="15" name="Platform" type="Moveable" x="2816" y="1280" width="128" height="634">
    <properties>
     <property name="Color" value="-"/>
    </properties>

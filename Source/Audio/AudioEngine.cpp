@@ -15,8 +15,8 @@ AudioEngine::AudioEngine()
 {
     m_AudioEngine = irrklang::createIrrKlangDevice();
     // specify the audio fall-off factor as Lucid isn't based on real-world parameters
-    m_AudioEngine->setDefault3DSoundMinDistance(10.0f);
-    m_AudioEngine->setRolloffFactor(0.2f);
+    m_AudioEngine->setDefault3DSoundMinDistance(15.0f);
+    m_AudioEngine->setRolloffFactor(0.1f);
 }
 
 AudioEngine::~AudioEngine()

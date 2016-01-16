@@ -82,7 +82,7 @@ void GUIMainMenu::Update(float deltaTime)
 void GUIMainMenu::RenderBackground(Renderer *renderer, TextRenderer *textRenderer)
 {
     // render title
-    textRenderer->RenderText("LUCID", glm::vec2(0.0f, 0.0f), 10.0f, false, glm::vec4(1.0, 1.0, 1.0, 0.25f), glm::vec2(m_Scale.x, m_Scale.y * 0.15f));
+    textRenderer->RenderText("LUCID", glm::vec2(0.0f, 25.0f), 9.0f, false, glm::vec4(1.0, 1.0, 1.0, 0.35f), glm::vec2(m_Scale.x, m_Scale.y * 0.15f));
 
     // render background image + three animated sprites
     std::shared_ptr<Shader> spriteShader = ResourceManager::GetInstance()->GetShader("sprite");
@@ -107,12 +107,12 @@ void GUIMainMenu::RenderBackground(Renderer *renderer, TextRenderer *textRendere
 void GUIMainMenu::OnActivate()
 {
     GameApplication::GetInstance()->GetAudio()->StopAll();
-    GameApplication::GetInstance()->GetAudio()->PlaySound("audio/ambient.wav", true);
+    GameApplication::GetInstance()->GetAudio()->PlaySound("audio/menu.mp3", true);
 }
 
 void GUIMainMenu::OnDeactivate()
 {
-    GameApplication::GetInstance()->GetAudio()->StopSound("audio/ambient.wav");
+    GameApplication::GetInstance()->GetAudio()->StopSound("audio/menu.mp3");
 }
 
 void GUIMainMenu::ButtonPressed(std::shared_ptr<GUIButton> pButton)

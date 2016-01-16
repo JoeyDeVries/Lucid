@@ -52,12 +52,12 @@ void GUISceneIntro::Update(float deltaTime)
         {
             m_TextAlpha += deltaTime * 0.1f;
         }
-        else if (m_TimeActive > 10.0f && m_TimeActive < 12.5f)
+        else if (m_TimeActive >= 10.0f && m_TimeActive < 11.0f)
         {
-            m_Alpha -= deltaTime * 0.4f;
-            m_TextAlpha -= deltaTime * 0.4f;
+            m_Alpha     -= deltaTime * 0.9f; // not 1.0 as to make it more clear we're entering game state
+            m_TextAlpha -= deltaTime * 0.9f;
         }
-        else if (m_TimeActive > 12.5f)
+        else if (m_TimeActive >= 11.0f)
         {
             SetActive(false);
         }

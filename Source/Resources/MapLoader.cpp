@@ -335,13 +335,13 @@ bool MapLoader::processGameObject(ResourceManager *resources, Scene *scene, XMLE
             // set actor/scene/physucs to tile dimensions and not given scale (as this will always be equal or larger than tile dimensions)
             actor->SetPosition(position);
             actor->SetScale(tileScale);
-            actor->SetDepth(2);
+            actor->SetDepth(5);
             // set material
             material->SetDiffuse(resources->LoadTexture("block_color", "textures/objects/stone_color.png"));
             material->SetSpecular(resources->LoadTexture("block_specular", "textures/objects/stone_specular.png"));
             material->SetNormal(resources->LoadTexture("block_normal", "textures/objects/stone_normal.png"));
             // create node
-            std::shared_ptr<SpriteNode> node(new SpriteNode(actor->GetID(), "sign", "main", position, actor->GetDepth(), actor->GetScale()));
+            std::shared_ptr<SpriteNode> node(new SpriteNode(actor->GetID(), color != "-" ? "state_block" : "moveable", "main", position, actor->GetDepth(), actor->GetScale()));
             node->SetMaterial(material);
             scene->AddChild(actor->GetID(), node);
             // set physics
@@ -528,7 +528,7 @@ bool MapLoader::processGameObject(ResourceManager *resources, Scene *scene, XMLE
             float G = std::atof(getProperty(gameObject, "G").c_str());
             float B = std::atof(getProperty(gameObject, "B").c_str());
             int fontScale = std::atoi(getProperty(gameObject, "Scale").c_str());
-            glm::vec4 color(R, G, B, 1.0f);
+            glm::vec4 color(R, G, B, 0.4f);
             // define actor
             std::shared_ptr<Actor> actor = GameApplication::GetInstance()->CreateActor(DEFAULT_ACTOR_TYPES::ACTOR_EMPTY);
             // create node
