@@ -51,18 +51,18 @@ class TextRenderer
 private:
     std::vector<CharRenderInfo> m_RenderDataInPlace; // text data required for rendering text in world-space coordinates
     std::vector<CharRenderInfo> m_RenderData;        // text data required for rendering text in clip-space coordinates
-	std::shared_ptr<Shader>     m_Shader;            // the shader used for rendering signed distance fields
-	std::shared_ptr<Font>       m_Font;              // the loaded font to use for rendering text
+    std::shared_ptr<Shader>     m_Shader;            // the shader used for rendering signed distance fields
+    std::shared_ptr<Font>       m_Font;              // the loaded font to use for rendering text
 
     unsigned int m_VAO, m_VBO;                             // the OpenGL render state required for rendering a single character
 public:
-	TextRenderer();
-	~TextRenderer();
+    TextRenderer();
+    ~TextRenderer();
 
     // initializes the text renderer and the loaded font
-	bool Initialize(std::shared_ptr<Font> font);
+    bool Initialize(std::shared_ptr<Font> font);
     // queues text into the renderData queue for deferred rendering
-	void RenderText(std::string text, glm::vec2 position, float userScale = 30.0f, bool inPlace = false, glm::vec4 color = glm::vec4(1.0f), glm::vec2 centerBox = glm::vec2(1.0f));
+    void RenderText(std::string text, glm::vec2 position, float userScale = 30.0f, bool inPlace = false, glm::vec4 color = glm::vec4(1.0f), glm::vec2 centerBox = glm::vec2(1.0f));
     // renders all queued text data with a single draw call (one for in-place and one for clip-space)
     void Render(glm::mat4 projection, glm::mat4 view = glm::mat4());
 };

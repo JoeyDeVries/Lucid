@@ -23,7 +23,7 @@ class Renderer;
 class Scene;
 
 /*
-    a single particle and its state.
+    A single particle and its state.
 */
 struct Particle {
     glm::vec2 Position, Velocity, Scale; // per-particle world position state

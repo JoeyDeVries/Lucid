@@ -102,7 +102,7 @@ void GUIContainer::OnDeactivate()
 
 void GUIContainer::RenderBackground(Renderer *renderer, TextRenderer *textRenderer)
 {
-    // by default there is no background, initialize in derivated classes if necessary
+    // by default there is no background, initialize in derived classes if necessary
 }
 
 void GUIContainer::OnKeyPressed(char key)

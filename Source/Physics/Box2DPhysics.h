@@ -54,7 +54,7 @@ class Box2DPhysics : public IPhysics
     std::map<ActorID, b2Body*> m_ActorIDToBody; // stores the relationships between unique actor IDs and their bodies in the physics world
     std::map<b2Body*, ActorID> m_BodyToActorID; // stores the relationship between bodies in the physics world and their unique actor IDs
     // collisions
-	std::list<b2Contact*> m_Collisions;         // collisions occuring each frame
+    std::list<b2Contact*> m_Collisions;         // collisions occuring each frame
     std::list<ActorID>    m_RemovalQueue;       // actors/bodies scheduled for removal (shouldn't be instantly removed as to not disrupt the physics system)
 
     // sends a collision add event to all interested game sub-systems
@@ -83,7 +83,7 @@ public:
     void RemoveActor(unsigned int ActorID);
     // removes bodies that were scheduled for removal; this is done at a later stage to prevent disrupting the state of the physics world
     void RemoveQueuedItems();
-    
+
     // links a sphere collision shape to the supplied actor
     void AddSphere(float radius, std::shared_ptr<Actor> actor, float density, bool dynamic = false, bool isSensor = false);
     // links a box collision shape to the supplied actor
@@ -103,14 +103,14 @@ public:
     // applies a rotational force to a body linked w/ the given actor ID
     void ApplyTorque(unsigned int ActorID, glm::vec2 direction, float newtons);
 
-	// returns the current linear velocity of a body linked to the given actor ID
-	glm::vec2 GetLinearVelocity(unsigned int ActorID);
+    // returns the current linear velocity of a body linked to the given actor ID
+    glm::vec2 GetLinearVelocity(unsigned int ActorID);
     // sets the linear velocity of a body linked to the given actor ID
     void SetLinearVelocity(unsigned int ActorID, glm::vec2 velocity);
     // returns the total body mass of the body linked to the given actor ID
-	float GetBodyMass(unsigned int ActorID);
+    float GetBodyMass(unsigned int ActorID);
 
-	// returns whether two bodies are colliding by manually verifying all active collisions
-	bool IsBodiesColliding(const b2Body* bodyA, const b2Body* bodyB);	
+    // returns whether two bodies are colliding by manually verifying all active collisions
+    bool IsBodiesColliding(const b2Body* bodyA, const b2Body* bodyB);
 };
 #endif

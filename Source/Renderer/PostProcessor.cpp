@@ -11,13 +11,13 @@
 *******************************************************************/
 #include "PostProcesser.h"
 
-#include "Renderer.h"
-#include "texture2D.h"
 #include "Framebuffer.h"
+#include "texture2D.h"
+#include "Renderer.h"
 #include "shader.h"
 
-#include "../Resources/ResourceManager.h"
 #include "../Application/GameApplication.h"
+#include "../Resources/ResourceManager.h"
 
 PostProcessor::PostProcessor()
 {

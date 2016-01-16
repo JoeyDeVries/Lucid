@@ -19,11 +19,11 @@
 */
 enum LightState
 {
-	OFF,
-	WHITE,
-	RED,
-	GREEN,
-	BLUE
+    OFF,
+    WHITE,
+    RED,
+    GREEN,
+    BLUE
 };
 
 /*
@@ -32,10 +32,10 @@ enum LightState
 class Event_LightStateSwitched : public IEventData
 {
 private:
-	LightState m_LightState; // the state the actor's light is currently in
+    LightState m_LightState; // the state the actor's light is currently in
 public:
-	static const EventType s_EventType;
-	Event_LightStateSwitched(LightState lightState) : m_LightState(lightState) { }
+    static const EventType s_EventType;
+    Event_LightStateSwitched(LightState lightState) : m_LightState(lightState) { }
 
     // returns the type of event
     const EventType& GetEventType() { return s_EventType; }

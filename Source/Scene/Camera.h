@@ -22,8 +22,8 @@ class SceneNode;
     Defines a 2D AABB for fast collision/boundary checks
 */
 struct BoundingBox {
-	glm::vec2 Center;
-	glm::vec2 HalfExtents;
+    glm::vec2 Center;
+    glm::vec2 HalfExtents;
 };
 
 /* 
@@ -38,7 +38,7 @@ protected:
     float     m_Width, m_Height; // the width and height of the game
     glm::mat4 m_Projection;      // the projection matrix of the scene
     glm::mat4 m_View;            // the per-frame generated view matrix
-	glm::vec2 m_CameraCenter;    // the center of the camera within the bounding box
+    glm::vec2 m_CameraCenter;    // the center of the camera within the bounding box
     glm::vec2 m_CurrentPos;      // stores the current position for adaptive camera movement to m_CameraCenter
 public:
     Camera();
@@ -55,6 +55,6 @@ public:
     // sets the projection matrix of the scene
     void SetProjection(float width, float height, float near = 0.0f, float far = 10.0f);
     // (re-)calculates the view matrix
-    void CalculateViewMatrix();	
+    void CalculateViewMatrix();
 };
 #endif

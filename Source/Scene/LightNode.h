@@ -35,11 +35,11 @@ public:
     glm::vec3& const GetSpecular()    { return m_Specular; }
     float&     const GetAttenuation() { return m_Attenuation; }
     // setters
-	void SetDiffuse(const glm::vec3& diffuse)     { m_Diffuse = diffuse; }
-	void SetSpecular(const glm::vec3& specular)   { m_Specular = specular; }
-	void SetAttenuation(const float& attenuation) { m_Attenuation = attenuation; }
+    void SetDiffuse(const glm::vec3& diffuse)     { m_Diffuse = diffuse; }
+    void SetSpecular(const glm::vec3& specular)   { m_Specular = specular; }
+    void SetAttenuation(const float& attenuation) { m_Attenuation = attenuation; }
 
     // determines whether the light source is visible from the camera's perspective, including its attenuation equation.
-	bool IsVisible(Scene *scene) const;
+    bool IsVisible(Scene *scene) const;
 };
 #endif

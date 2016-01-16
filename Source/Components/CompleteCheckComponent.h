@@ -24,10 +24,10 @@
 class CompleteCheckComponent : public ActorComponent
 {
 private:
-	std::string m_NextLevelString; // holds the string path to the next level
+    std::string m_NextLevelString; // holds the string path to the next level
 public:
-	CompleteCheckComponent();
-	~CompleteCheckComponent();
+    CompleteCheckComponent();
+    ~CompleteCheckComponent();
 
     // getters
     std::string GetNextLevelString();
@@ -35,11 +35,11 @@ public:
     void SetNextLevelString(std::string levelPath);
 
     // initializes the complete check component
-	virtual bool VInit();
+    virtual bool VInit();
     // updates the complete check component
-	virtual void VUpdate(float delta);
+    virtual void VUpdate(float delta);
 
     // listens for post collision events to determine the owning actor-player collision
-	void OnPostCollisionAdd(std::shared_ptr<IEventData> eventData);
+    void OnPostCollisionAdd(std::shared_ptr<IEventData> eventData);
 };
 #endif

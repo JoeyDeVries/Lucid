@@ -31,8 +31,8 @@ void Camera::SetProjection(float width, float height, float near, float far)
 
 void Camera::SetTarget(std::shared_ptr<SceneNode> target)
 {
-	m_Target = target;
-	m_CameraCenter = target->GetPosition();
+    m_Target = target;
+    m_CameraCenter = target->GetPosition();
     m_CurrentPos = m_CameraCenter;
 }
 
@@ -43,7 +43,7 @@ void Camera::SetTarget(std::shared_ptr<SceneNode> target)
 // camera system. System can easily be tweaked from here.
 void Camera::CalculateViewMatrix()
 {
-	glm::vec2 center = glm::vec2(m_Width * 0.5f, m_Height * 0.5f);
+    glm::vec2 center = glm::vec2(m_Width * 0.5f, m_Height * 0.5f);
     if (m_Target)
     {
         glm::vec2 targetPos = m_Target->GetPosition();
@@ -65,25 +65,24 @@ void Camera::CalculateViewMatrix()
         m_CurrentPos = glm::mix(m_CurrentPos, m_CameraCenter, 0.04f);
     }
     glm::mat4 view;
-	view = glm::translate(view, -glm::vec3(-center.x + m_CurrentPos.x, -center.y + m_CurrentPos.y, 0.0));
+    view = glm::translate(view, -glm::vec3(-center.x + m_CurrentPos.x, -center.y + m_CurrentPos.y, 0.0));
     m_View = view;
 }
 
 glm::mat4 Camera::GetProjection()
 {
-	return m_Projection;
+    return m_Projection;
 }
 
 glm::mat4 Camera::GetView()
 {
-	return m_View;
+    return m_View;
 }
 
 BoundingBox Camera::GetBoundingBox()
 {
-	BoundingBox box;
-	box.Center = m_CameraCenter;
-	box.HalfExtents = glm::vec2(m_Width * 0.5f, m_Height * 0.5f);
-	return box;
+    BoundingBox box;
+    box.Center = m_CameraCenter;
+    box.HalfExtents = glm::vec2(m_Width * 0.5f, m_Height * 0.5f);
+    return box;
 }
-

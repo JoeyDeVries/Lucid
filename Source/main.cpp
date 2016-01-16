@@ -68,12 +68,12 @@ int main(int argc, char *argv[])
     glGetError();
 
     // initialize the game and all its game sub-systems
-    GameApplication::GetInstance()->Initialize(GAME_WIDTH, GAME_HEIGHT); 
+    GameApplication::GetInstance()->Initialize(GAME_WIDTH, GAME_HEIGHT);
 
     // time management
     GLfloat currentFrame = glfwGetTime(), deltaTime = 0.0, lastFrame = 0.0;
-	GLfloat time = 0.0f;
-	GLuint  fps = 0;
+    GLfloat time = 0.0f;
+    GLuint  fps = 0;
 
     // - game loop
     while (!glfwWindowShouldClose(window) && GameApplication::GetInstance()->GetActive())
@@ -82,16 +82,16 @@ int main(int argc, char *argv[])
         currentFrame = glfwGetTime();
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
-		
+
         // - periodcally display the FPS the game is running in
-		time += deltaTime;
-		++fps;
-		if (time >= 1.0f)
-		{
-			time = 1.0 - time;
-			//glfwSetWindowTitle(window, std::string("Lucid - Game/Engine - Joey de Vries || FPS: " + std::to_string(fps)).c_str());
-			fps = 0;
-		}
+        time += deltaTime;
+        ++fps;
+        if (time >= 1.0f)
+        {
+            time = 1.0 - time;
+            //glfwSetWindowTitle(window, std::string("Lucid - Game/Engine - Joey de Vries || FPS: " + std::to_string(fps)).c_str());
+            fps = 0;
+        }
 
         // - poll events
         glfwPollEvents();
@@ -101,12 +101,12 @@ int main(int argc, char *argv[])
 
         // - render game
         GameApplication::GetInstance()->Render();
-        
+
         // - frame end: double buffer swap
         glfwSwapBuffers(window);
     }
 
-    GameApplication::GetInstance()->CleanUp();   
+    GameApplication::GetInstance()->CleanUp();
 
     glfwTerminate();
     return 0;

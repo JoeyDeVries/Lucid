@@ -14,14 +14,14 @@
 #include <SOIL.h>
 
 #include "../Application/GameApplication.h"
+#include "../Scene/BackgroundNode.h"
+#include "../Scene/SpriteNode.h"
+#include "../Scene/LightNode.h"
+#include "../Scene/Scene.h"
 #include "../Renderer/texture2D.h"
 #include "../Renderer/Animation.h"
-#include "../Renderer/shader.h"
-#include "../Scene/Scene.h"
 #include "../Renderer/Material.h"
-#include "../Scene/SpriteNode.h"
-#include "../Scene/BackgroundNode.h"
-#include "../Scene/LightNode.h"
+#include "../Renderer/shader.h"
 #include "../Components/StateBlockComponent.h"
 
 #include <iostream>
@@ -97,10 +97,10 @@ std::shared_ptr<Shader> ResourceManager::GetShader(std::string name)
 
 std::shared_ptr<Texture2D> ResourceManager::LoadTexture(std::string name, const char* textureSource, bool alpha)
 {
-	// first check if texture has been loader already, if so; return earlier loaded texture
-	auto it = m_Textures.find(name);
-		if (it != m_Textures.end())
-			return it->second;
+    // first check if texture has been loader already, if so; return earlier loaded texture
+    auto it = m_Textures.find(name);
+    if (it != m_Textures.end())
+        return it->second;
 
     std::shared_ptr<Texture2D> texture(new Texture2D);
     // Generate texture from file
@@ -133,13 +133,13 @@ std::shared_ptr<Texture2D> ResourceManager::GetTexture(std::string name)
 
 bool ResourceManager::LoadLevel(Scene* scene, const char* levelSource, float levelScale)
 {
-	return m_MapLoader.LoadMap(this, scene, levelSource, levelScale);
+    return m_MapLoader.LoadMap(this, scene, levelSource, levelScale);
 }
 
 std::vector<std::shared_ptr<Animation>> ResourceManager::LoadAnimation(const char *animPath)
 {
-	std::ifstream file(animPath);
-	std::string line;
+    std::ifstream file(animPath);
+    std::string line;
     std::vector<std::shared_ptr<Animation>> animations;
     std::string directory = std::string(animPath).substr(0, std::string(animPath).find_last_of('/'));
     while (std::getline(file, line))
@@ -147,8 +147,8 @@ std::vector<std::shared_ptr<Animation>> ResourceManager::LoadAnimation(const cha
         // get name
         std::string name = line;
         // get texture(s)
-        std::getline(file, line); 
-        std::shared_ptr<Texture2D> diffuse = LoadTexture("animation_" + line, (directory + "/" + line).c_str(), true);     
+        std::getline(file, line);
+        std::shared_ptr<Texture2D> diffuse = LoadTexture("animation_" + line, (directory + "/" + line).c_str(), true);
         // get duration
         std::getline(file, line);
         float duration = std::atof(line.c_str());
@@ -188,82 +188,82 @@ std::vector<std::shared_ptr<Animation>> ResourceManager::LoadAnimation(const cha
 
 std::shared_ptr<Font> ResourceManager::LoadFont(const char *fontPath)
 {
-	std::shared_ptr<Font> font(new Font);
-	std::shared_ptr<Texture2D> fontAtlas;
-	std::map<char, CharInfo> charInfo;
+    std::shared_ptr<Font> font(new Font);
+    std::shared_ptr<Texture2D> fontAtlas;
+    std::map<char, CharInfo> charInfo;
 
-	std::ifstream file(fontPath);
-	std::string line, word;
+    std::ifstream file(fontPath);
+    std::string line, word;
 
-	// base path
-	std::string directory = std::string(fontPath).substr(0, std::string(fontPath).find_last_of('/'));
-	
-	// header 1
-	std::getline(file, line); 
-	std::stringstream ss(line);
-	ss >> word >> word >> word; // read size=...
-	std::string size = word.substr(word.find_last_of('=') + 1, (word.size() - word.find_last_of('='))); 
-	int charSize = atoi(size.c_str());
+    // base path
+    std::string directory = std::string(fontPath).substr(0, std::string(fontPath).find_last_of('/'));
 
-	// header 2
-	std::getline(file, line);
-	ss.clear();
-	ss.str(line);
-	ss >> word >> word >> word >> word; // read scaleW=...
-	std::string width = word.substr(word.find_last_of('=') + 1, (word.size() - word.find_last_of('=')));
-	int fontWidth = atoi(width.c_str());
-	ss >> word;
-	width = word.substr(word.find_last_of('=') + 1, (word.size() - word.find_last_of('=')));
-	int fontHeight = atoi(width.c_str());
+    // header 1
+    std::getline(file, line);
+    std::stringstream ss(line);
+    ss >> word >> word >> word; // read size=...
+    std::string size = word.substr(word.find_last_of('=') + 1, (word.size() - word.find_last_of('=')));
+    int charSize = atoi(size.c_str());
 
-	// header 3
-	std::getline(file, line);
-	ss.clear();
-	ss.str(line);
-	ss >> word >> word >> word; // read file=...
-	std::string atlasPath = word.substr(word.find_last_of('=') + 2, (word.size() - word.find_last_of('=') - 3));
-	fontAtlas = LoadTexture("fontAtlas", (directory + "/" + atlasPath).c_str(), true);
+    // header 2
+    std::getline(file, line);
+    ss.clear();
+    ss.str(line);
+    ss >> word >> word >> word >> word; // read scaleW=...
+    std::string width = word.substr(word.find_last_of('=') + 1, (word.size() - word.find_last_of('=')));
+    int fontWidth = atoi(width.c_str());
+    ss >> word;
+    width = word.substr(word.find_last_of('=') + 1, (word.size() - word.find_last_of('=')));
+    int fontHeight = atoi(width.c_str());
 
-	// header 4
-	std::getline(file, line);
-	ss.clear();
-	ss.str(line);
-	ss >> word >> word; // read count=...
-	std::string count = word.substr(word.find_last_of('=') + 1, (word.size() - word.find_last_of('=')));
-	int charCount = atoi(count.c_str());
+    // header 3
+    std::getline(file, line);
+    ss.clear();
+    ss.str(line);
+    ss >> word >> word >> word; // read file=...
+    std::string atlasPath = word.substr(word.find_last_of('=') + 2, (word.size() - word.find_last_of('=') - 3));
+    fontAtlas = LoadTexture("fontAtlas", (directory + "/" + atlasPath).c_str(), true);
 
-	for(;charCount > 0; --charCount)
-	{
-		std::getline(file, line);
-		CharInfo chInfo;
-		ss.clear();
-		ss.str(line);
-		// char
-		ss >> word >> word; // read id=...
-		char id = atoi((word.substr(word.find_last_of('=') + 1, (word.size() - word.find_last_of('=')))).c_str());
-		// x
-		ss >> word; // read x=...
-		chInfo.Position.x = atoi((word.substr(word.find_last_of('=') + 1, (word.size() - word.find_last_of('=')))).c_str());
-		// y
-		ss >> word; // read y=...
-		chInfo.Position.y = atoi((word.substr(word.find_last_of('=') + 1, (word.size() - word.find_last_of('=')))).c_str());
-		// width
-		ss >> word; // read width=...
-		chInfo.Scale.x = atoi((word.substr(word.find_last_of('=') + 1, (word.size() - word.find_last_of('=')))).c_str());
-		// height
-		ss >> word; // read height=...
-		chInfo.Scale.y = atoi((word.substr(word.find_last_of('=') + 1, (word.size() - word.find_last_of('=')))).c_str());
-		// x offset
-		ss >> word; // read xoffset=...
-		chInfo.Offset.x = atoi((word.substr(word.find_last_of('=') + 1, (word.size() - word.find_last_of('=')))).c_str());
-		// y offset
-		ss >> word; // read yoffset=...
-		chInfo.Offset.y = atoi((word.substr(word.find_last_of('=') + 1, (word.size() - word.find_last_of('=')))).c_str());
-		// xadvance
-		ss >> word; // read xadvance=...
-		chInfo.XAdvance = atoi((word.substr(word.find_last_of('=') + 1, (word.size() - word.find_last_of('=')))).c_str());
-		charInfo[id] = chInfo;
-	}
-	font->Load(fontAtlas, charInfo, charSize, fontWidth, fontHeight);
-	return font;
+    // header 4
+    std::getline(file, line);
+    ss.clear();
+    ss.str(line);
+    ss >> word >> word; // read count=...
+    std::string count = word.substr(word.find_last_of('=') + 1, (word.size() - word.find_last_of('=')));
+    int charCount = atoi(count.c_str());
+
+    for (; charCount > 0; --charCount)
+    {
+        std::getline(file, line);
+        CharInfo chInfo;
+        ss.clear();
+        ss.str(line);
+        // char
+        ss >> word >> word; // read id=...
+        char id = atoi((word.substr(word.find_last_of('=') + 1, (word.size() - word.find_last_of('=')))).c_str());
+        // x
+        ss >> word; // read x=...
+        chInfo.Position.x = atoi((word.substr(word.find_last_of('=') + 1, (word.size() - word.find_last_of('=')))).c_str());
+        // y
+        ss >> word; // read y=...
+        chInfo.Position.y = atoi((word.substr(word.find_last_of('=') + 1, (word.size() - word.find_last_of('=')))).c_str());
+        // width
+        ss >> word; // read width=...
+        chInfo.Scale.x = atoi((word.substr(word.find_last_of('=') + 1, (word.size() - word.find_last_of('=')))).c_str());
+        // height
+        ss >> word; // read height=...
+        chInfo.Scale.y = atoi((word.substr(word.find_last_of('=') + 1, (word.size() - word.find_last_of('=')))).c_str());
+        // x offset
+        ss >> word; // read xoffset=...
+        chInfo.Offset.x = atoi((word.substr(word.find_last_of('=') + 1, (word.size() - word.find_last_of('=')))).c_str());
+        // y offset
+        ss >> word; // read yoffset=...
+        chInfo.Offset.y = atoi((word.substr(word.find_last_of('=') + 1, (word.size() - word.find_last_of('=')))).c_str());
+        // xadvance
+        ss >> word; // read xadvance=...
+        chInfo.XAdvance = atoi((word.substr(word.find_last_of('=') + 1, (word.size() - word.find_last_of('=')))).c_str());
+        charInfo[id] = chInfo;
+    }
+    font->Load(fontAtlas, charInfo, charSize, fontWidth, fontHeight);
+    return font;
 }

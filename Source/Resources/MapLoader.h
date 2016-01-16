@@ -33,27 +33,26 @@ class Scene;
 class MapLoader
 {
 private:
-	std::map<int, std::shared_ptr<Material>> m_IDToMaterial; // holds a list of generated materials from the pre-processed map data
+    std::map<int, std::shared_ptr<Material>> m_IDToMaterial; // holds a list of generated materials from the pre-processed map data
 
     // processes a shared tile render node 
-	bool processTileNode(ResourceManager *resources, Scene *scene, XMLElement *tileNode);
+    bool processTileNode(ResourceManager *resources, Scene *scene, XMLElement *tileNode);
     // processes each individual tile
-	bool processTileData(ResourceManager *resources, Scene *scene, XMLElement *tileData, glm::vec2 pos, glm::vec2 scale, int depth, bool physics);
+    bool processTileData(ResourceManager *resources, Scene *scene, XMLElement *tileData, glm::vec2 pos, glm::vec2 scale, int depth, bool physics);
     // processes the individual game objects
-	bool processGameObject(ResourceManager *resources, Scene *scene, XMLElement *gameObject, glm::vec2 tileScale, float mapScale);
+    bool processGameObject(ResourceManager *resources, Scene *scene, XMLElement *gameObject, glm::vec2 tileScale, float mapScale);
     // processes the global static defaults of each map
-	bool processStaticDefaults(ResourceManager *resources, Scene *scene, XMLElement *map);
+    bool processStaticDefaults(ResourceManager *resources, Scene *scene, XMLElement *map);
 
     // getters
     std::string                getProperty(XMLElement *object, std::string property);
     std::shared_ptr<Texture2D> getSpecularMapIfExists(ResourceManager *resources, std::string diffusePath);
     std::shared_ptr<Texture2D> getNormalMapIfExists(ResourceManager *resources, std::string diffusePath);
 public:
-	MapLoader();
-	~MapLoader();
+    MapLoader();
+    ~MapLoader();
 
     // loads a map from a .tmx file, generating a complete scenegraph
-	bool LoadMap(ResourceManager *resources, Scene *scene, const char *tmxPath, float levelScale = 1.0f);
-
+    bool LoadMap(ResourceManager *resources, Scene *scene, const char *tmxPath, float levelScale = 1.0f);
 };
 #endif

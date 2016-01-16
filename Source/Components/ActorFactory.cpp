@@ -37,13 +37,13 @@ ActorComponent *CreateAIComponent()            { return new AIComponent; }
 
 ActorFactory::ActorFactory()
 {
-	m_actorComponentCreators["CompleteCheck"] = CreateCompleteCheckComponent;
-	m_actorComponentCreators["LightSwitch"]   = CreateLightSwitchComponent;
+    m_actorComponentCreators["CompleteCheck"] = CreateCompleteCheckComponent;
+    m_actorComponentCreators["LightSwitch"]   = CreateLightSwitchComponent;
     m_actorComponentCreators["TextOnTouch"]   = CreateTextOnTouchComponent;
     m_actorComponentCreators["DamageTouch"]   = CreateDamageTouchComponent;
-	m_actorComponentCreators["StateBlock"]    = CreateStateBlockComponent;
+    m_actorComponentCreators["StateBlock"]    = CreateStateBlockComponent;
     m_actorComponentCreators["MoveLoop"]      = CreateMoveLoopComponent;
-	m_actorComponentCreators["Control"]       = CreateControlComponent;
+    m_actorComponentCreators["Control"]       = CreateControlComponent;
     m_actorComponentCreators["Life"]          = CreateLifeComponent;
     m_actorComponentCreators["AI"]            = CreateAIComponent;
 }

@@ -17,15 +17,15 @@
 #include "../Communication/IEventData.h"
 
 /*
-    Fires when a collision occured
+    Fires when a collision occured.
 */
 class Event_PostCollisionAdd : public IEventData
 {
 private:
-	b2Contact* m_Contact; // the collision contact of the collision
+    b2Contact* m_Contact; // the collision contact of the collision
 public:
-	static const EventType s_EventType;
-	Event_PostCollisionAdd(b2Contact* contact) : m_Contact(contact) { }
+    static const EventType s_EventType;
+    Event_PostCollisionAdd(b2Contact* contact) : m_Contact(contact) { }
 
     // returns the type of event
     const EventType& GetEventType() { return s_EventType; }
@@ -35,6 +35,6 @@ public:
     std::shared_ptr<IEventData> Copy() const { return std::shared_ptr<IEventData>(new Event_PostCollisionAdd(m_Contact)); }
 
     // getters
-	const b2Contact* GetContact() const { return m_Contact; }
+    const b2Contact* GetContact() const { return m_Contact; }
 };
 #endif

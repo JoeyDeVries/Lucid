@@ -13,7 +13,7 @@
 
 AudioEngine::AudioEngine()
 {
-	m_AudioEngine = irrklang::createIrrKlangDevice();
+    m_AudioEngine = irrklang::createIrrKlangDevice();
     // specify the audio fall-off factor as Lucid isn't based on real-world parameters
     m_AudioEngine->setDefault3DSoundMinDistance(10.0f);
     m_AudioEngine->setRolloffFactor(0.2f);
@@ -26,28 +26,28 @@ AudioEngine::~AudioEngine()
 
 void AudioEngine::PlaySound(std::string name, bool loop, float volume)
 {
-	// IDEA(Joey): create ring buffer of audio play requests that are only played during 
-	// engine's update call; at the end of each frame. This allows us to only query
-	// the driver at one point of time and allows us to dismiss/combine overlapping
-	// audio requests...
-    if(loop && m_AudioEngine->isCurrentlyPlaying(m_AudioEngine->getSoundSource(name.c_str())))
+    // IDEA(Joey): create ring buffer of audio play requests that are only played during 
+    // engine's update call; at the end of each frame. This allows us to only query
+    // the driver at one point of time and allows us to dismiss/combine overlapping
+    // audio requests...
+    if (loop && m_AudioEngine->isCurrentlyPlaying(m_AudioEngine->getSoundSource(name.c_str())))
         return;
-	irrklang::ISound *sound = m_AudioEngine->play2D(name.c_str(), loop, true);
-	if (sound)
-	{
-		sound->setVolume(volume);
-		sound->setIsPaused(false);
-	}
+    irrklang::ISound *sound = m_AudioEngine->play2D(name.c_str(), loop, true);
+    if (sound)
+    {
+        sound->setVolume(volume);
+        sound->setIsPaused(false);
+    }
 }
 
 void AudioEngine::PlaySoundLocation(std::string name, glm::vec2 location, bool loop, float volume)
 {
-	irrklang::ISound *sound = m_AudioEngine->play3D(name.c_str(), irrklang::vec3df(location.x, location.y, 0.0), loop, true);
-	if (sound)
-	{
-		sound->setVolume(volume);
-		sound->setIsPaused(false);
-	}
+    irrklang::ISound *sound = m_AudioEngine->play3D(name.c_str(), irrklang::vec3df(location.x, location.y, 0.0), loop, true);
+    if (sound)
+    {
+        sound->setVolume(volume);
+        sound->setIsPaused(false);
+    }
 }
 
 void AudioEngine::StopSound(std::string name)

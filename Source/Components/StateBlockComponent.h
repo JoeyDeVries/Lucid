@@ -25,27 +25,27 @@
 class StateBlockComponent : public ActorComponent
 {
 private:
-	LightState m_BlockColor;     // specifies at which light state this block enables its collision
-	LightState m_LastLightState; // stores the last sent light state to make sure we don't enable collisions when the player is inside the shape
-	bool       m_PlayerContact;  // stores whether the player is currently in contact with the block; then we don't enable collisions
+    LightState m_BlockColor;     // specifies at which light state this block enables its collision
+    LightState m_LastLightState; // stores the last sent light state to make sure we don't enable collisions when the player is inside the shape
+    bool       m_PlayerContact;  // stores whether the player is currently in contact with the block; then we don't enable collisions
 
 public:
-	StateBlockComponent();
-	~StateBlockComponent();
+    StateBlockComponent();
+    ~StateBlockComponent();
 
     // initializes the state block component
-	virtual bool VInit();
+    virtual bool VInit();
     // updates the state block component
-	virtual void VUpdate(float delta);
+    virtual void VUpdate(float delta);
 
     // sets the color state the actor reacts to
-	void SetBlockColor(LightState blockColor);
+    void SetBlockColor(LightState blockColor);
 
     // fires as soon as the light state's switched to update collision shapes if possible
-	void OnLightSwitched(std::shared_ptr<IEventData> eventData);
+    void OnLightSwitched(std::shared_ptr<IEventData> eventData);
     // determines whether the player is inside the actor's collision shape 
-	void OnPostCollisionAdd(std::shared_ptr<IEventData> eventData);
+    void OnPostCollisionAdd(std::shared_ptr<IEventData> eventData);
     // determines whether the player left the actor's collision shape so actor collisions can be (re-)enabled
-	void OnPostCollisionRemove(std::shared_ptr<IEventData> eventData);
+    void OnPostCollisionRemove(std::shared_ptr<IEventData> eventData);
 };
 #endif

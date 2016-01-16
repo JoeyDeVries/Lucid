@@ -16,7 +16,7 @@
 
 Animation::Animation(std::vector<AnimationData> &data) : m_Duration(1.0f)
 {
-	m_AnimationData = data;
+    m_AnimationData = data;
 }
 
 std::string Animation::GetName()
@@ -42,7 +42,7 @@ void Animation::SetName(std::string name)
 }
 void Animation::SetDuration(float duration)
 {
-	m_Duration = duration;
+    m_Duration = duration;
 }
 void Animation::SetDiffuse(std::shared_ptr<Texture2D> diffuse)
 {
@@ -64,27 +64,27 @@ void Animation::Init(std::shared_ptr<Shader> shader)
 
 void Animation::Normalize(int width, int height)
 {
-	for (auto it = m_AnimationData.begin(); it != m_AnimationData.end(); ++it)
-	{
-		it->XOffset = it->XOffset / width;
-		it->YOffset = it->YOffset / height;
-		it->Width   = it->Width / width;
-		it->Height  = it->Height / height;
-	}
+    for (auto it = m_AnimationData.begin(); it != m_AnimationData.end(); ++it)
+    {
+        it->XOffset = it->XOffset / width;
+        it->YOffset = it->YOffset / height;
+        it->Width   = it->Width / width;
+        it->Height  = it->Height / height;
+    }
 }
 
 void Animation::Update(float deltaTime)
 {
-	m_CurrentTime += deltaTime;
-	m_CurrentTime = fmod(m_CurrentTime, m_Duration);
+    m_CurrentTime += deltaTime;
+    m_CurrentTime = fmod(m_CurrentTime, m_Duration);
 }
 
 void Animation::ToShader(std::shared_ptr<Shader> shader)
 {
-	// calculate current frame
-	float unit = m_CurrentTime / m_Duration;
-	int nr_frames = m_AnimationData.size();
-	int current_frame = static_cast<int>(unit * nr_frames);
-	// send relevant animation data to shader
-	shader->SetVector4f("animationData", m_AnimationData[current_frame].ToVec4(), true);
+    // calculate current frame
+    float unit = m_CurrentTime / m_Duration;
+    int nr_frames = m_AnimationData.size();
+    int current_frame = static_cast<int>(unit * nr_frames);
+    // send relevant animation data to shader
+    shader->SetVector4f("animationData", m_AnimationData[current_frame].ToVec4(), true);
 }

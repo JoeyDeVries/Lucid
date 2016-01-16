@@ -80,13 +80,13 @@ void Scene::Render(Renderer *renderer)
 {
     if (m_Root && m_Camera)
     {
-		m_Camera->CalculateViewMatrix();
+        m_Camera->CalculateViewMatrix();
 
         // Update lighting parameters
         GetLightManager()->UpdateShader(this, ResourceManager::GetInstance()->GetShader("sprite"));
         GetLightManager()->UpdateShader(this, m_ParticleEmitter->GetShader());
 
-		m_Root->Render(this, renderer);
+        m_Root->Render(this, renderer);
 
         m_ParticleEmitter->Render(renderer, m_Camera->GetView());
     }
@@ -109,7 +109,7 @@ bool Scene::AddChild(unsigned int ActorID, std::shared_ptr<ISceneNode> child)
     std::shared_ptr<LightNode> pLight = std::dynamic_pointer_cast<LightNode>(child);
     if (pLight)
     {   // child is a LightNode; also add a reference to the LightManager
-         GetLightManager()->AddLight(pLight);  
+        GetLightManager()->AddLight(pLight);  
     }
     // otherwise add it as child to Root node
     return m_Root->AddChild(child);

@@ -12,16 +12,12 @@
 #ifndef FRAMEBUFFER_H
 #define FRAMEBUFFER_H
 
-//#define GLEW_STATIC
-//#include <GL/glew.h>
-//#include "texture2D.h"
-
 #include <memory>
 
 class Texture2D;
 
 /*
-    A conventient class for managing framebuffer objects.
+    A conventience class for managing framebuffer objects.
 */
 class Framebuffer
 {

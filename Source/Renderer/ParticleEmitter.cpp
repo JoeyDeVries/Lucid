@@ -12,9 +12,9 @@
 #include "ParticleEmitter.h"
 
 #include "../Resources/ResourceManager.h"
+#include "../Renderer/texture2D.h"
 #include "../Renderer/Renderer.h"
 #include "../Renderer/shader.h"
-#include "../Renderer/texture2D.h"
 #include "../Scene/Scene.h"
 
 #include <random>
@@ -99,7 +99,7 @@ void ParticleEmitter::Update(Scene *scene, float deltaTime, int newParticles)
         Particle &p = m_Particles[i];
         p.Life -= deltaTime; // reduce life
         if (p.Life > 0.0f)
-        {	// particle is alive, thus update
+        {   // particle is alive, thus update
             p.Position += p.Velocity * deltaTime;
             p.Color.a -= p.Life > 5.0f ? deltaTime * -0.2f : deltaTime * 0.2f; // reduce transparency over time
         }
@@ -142,7 +142,7 @@ void ParticleEmitter::respawnParticle(Particle &particle, glm::vec2 range)
     particle.Position = glm::vec2(dist(e2) * range.x, dist(e2) * range.y);
     particle.Color = glm::vec4(1.0f, 1.0f, 1.0f, 0.0f);
     particle.Life = 10.0f;
-    particle.Velocity = glm::vec2((dist(e2) * 2.0f - 1.0f) * 15.0f, (dist(e2) * 2.0f - 1.0f) * 7.0f); // TODO(Joey): random!
+    particle.Velocity = glm::vec2((dist(e2) * 2.0f - 1.0f) * 15.0f, (dist(e2) * 2.0f - 1.0f) * 7.0f); 
     particle.Scale = glm::vec2(10.0f);
 }
 

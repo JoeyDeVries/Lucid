@@ -12,6 +12,7 @@
 #include "RootNode.h"
 
 #include "Scene.h"
+
 #include "../Resources/ResourceManager.h"
 #include "../Scene/LightManager.h"
 #include "../Renderer/Renderer.h"
@@ -49,14 +50,14 @@ void RootNode::PreRender(Scene *scene)
 //     ID to shader.
 bool SortSceneNodes(std::shared_ptr<ISceneNode> a, std::shared_ptr<ISceneNode> b)
 {
-	return a->GetDepth() < b->GetDepth();
+    return a->GetDepth() < b->GetDepth();
 }
 
 void RootNode::Render(Scene *scene, Renderer *renderer)
 {
-	// first sort children before rendering based on depth (shader|material)
-	std::sort(m_Children.begin(), m_Children.end(), SortSceneNodes);
-	
+    // first sort children before rendering based on depth (shader|material)
+    std::sort(m_Children.begin(), m_Children.end(), SortSceneNodes);
+
     // configure all render passes here
     // - render all children into post-processing framebuffer
     renderer->PrePostProcessRender();

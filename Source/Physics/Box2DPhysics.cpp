@@ -72,20 +72,20 @@ void Box2DPhysics::SyncVisibleScene()
 {
     for (std::map<ActorID, b2Body*>::const_iterator it = m_ActorIDToBody.begin(); it != m_ActorIDToBody.end(); ++it)
     {
-		ActorID id = it->first;
+        ActorID id = it->first;
         glm::vec2 bodyPos = glm::vec2(MetersToPixels(it->second->GetPosition().x), MetersToPixels(it->second->GetPosition().y));
         float     bodyRot = it->second->GetAngle();
-		std::shared_ptr<Actor> actor = GameApplication::GetInstance()->GetActor(id);
-		// bodyPos is from center of object, first transform to top-left of object so it corresponds with game-logic 
+        std::shared_ptr<Actor> actor = GameApplication::GetInstance()->GetActor(id);
+        // bodyPos is from center of object, first transform to top-left of object so it corresponds with game-logic 
         bodyPos -= actor->GetScale() * 0.5f;
-		// due to floating point precision I can't directly compare the positions, compare them given some range interval
+        // due to floating point precision I can't directly compare the positions, compare them given some range interval
         if (!IsVec2Equal(actor->GetPosition(), bodyPos)) // something changed, update scene
         {
             // set actor to correct position and start event that actor has moved (scene will listen to this event for render changes)
             actor->SetPosition(bodyPos);
             actor->SetRotation(bodyRot);
             // send event
-			GameApplication::GetInstance()->GetEventManager()->QueueEvent(std::shared_ptr<Event_ActorMoved>(new Event_ActorMoved(id, bodyPos, bodyRot)));
+            GameApplication::GetInstance()->GetEventManager()->QueueEvent(std::shared_ptr<Event_ActorMoved>(new Event_ActorMoved(id, bodyPos, bodyRot)));
         }
     }
 }
@@ -148,9 +148,9 @@ void Box2DPhysics::AddBox(std::shared_ptr<Actor> actor, float density, std::stri
 {
     b2BodyDef bodyDef;
     bodyDef.position.Set(PixelsToMeters(actor->GetPosition().x + actor->GetScale().x * 0.5), PixelsToMeters(actor->GetPosition().y + actor->GetScale().y * 0.5)); // position should be center of object instead of top-left
-    if(type == "dynamic")
+    if (type == "dynamic")
         bodyDef.type = b2_dynamicBody;
-    else if(type == "kinematic")
+    else if (type == "kinematic")
         bodyDef.type = b2_kinematicBody;
     bodyDef.fixedRotation = fixedRotation;
     b2Body* body = m_World->CreateBody(&bodyDef);
@@ -162,12 +162,12 @@ void Box2DPhysics::AddBox(std::shared_ptr<Actor> actor, float density, std::stri
 
     b2PolygonShape shape;
     shape.SetAsBox(PixelsToMeters(hitboxScale * actor->GetScale().x * 0.5), PixelsToMeters(hitboxScale * actor->GetScale().y * 0.5));
-   
+
     b2FixtureDef fixture;
     fixture.shape = &shape;
     fixture.density = density;
-	fixture.isSensor = isSensor;
-    
+    fixture.isSensor = isSensor;
+
     body->CreateFixture(&fixture);
 
     m_BodyToActorID[body] = actor->GetID();
@@ -211,9 +211,9 @@ void Box2DPhysics::AddCharacter(std::shared_ptr<Actor> actor, float density)
     bodyDef.position.Set(PixelsToMeters(actor->GetPosition().x + actor->GetScale().x * 0.5), PixelsToMeters(actor->GetPosition().y + actor->GetScale().y * 0.5)); // position should be center of object instead of top-left
     bodyDef.type = b2_dynamicBody;
     bodyDef.fixedRotation = true;
-	bodyDef.allowSleep = false;
+    bodyDef.allowSleep = false;
     b2Body* body = m_World->CreateBody(&bodyDef);
-	body->SetBullet(true);
+    body->SetBullet(true);
 
     BodyUserData *userData = new BodyUserData;
     userData->Physics = this;
@@ -243,18 +243,18 @@ void Box2DPhysics::AddCharacter(std::shared_ptr<Actor> actor, float density)
     fixture2.friction = 1.9f;
     body->CreateFixture(&fixture2);
 
-	// Create bottom sensor to detect floor-collisions
-	b2PolygonShape sensorShape;
-	b2Vec2 origin = b2Vec2(0.0, PixelsToMeters(actor->GetScale().y * 0.44));
-	sensorShape.SetAsBox(PixelsToMeters(actor->GetScale().x * 0.05), PixelsToMeters(actor->GetScale().y * 0.05), origin, 0.0f);
-	b2FixtureDef fixture3;
-	fixture3.shape = &sensorShape;
-	fixture3.isSensor = true;
-	body->CreateFixture(&fixture3);
+    // Create bottom sensor to detect floor-collisions
+    b2PolygonShape sensorShape;
+    b2Vec2 origin = b2Vec2(0.0, PixelsToMeters(actor->GetScale().y * 0.44));
+    sensorShape.SetAsBox(PixelsToMeters(actor->GetScale().x * 0.05), PixelsToMeters(actor->GetScale().y * 0.05), origin, 0.0f);
+    b2FixtureDef fixture3;
+    fixture3.shape = &sensorShape;
+    fixture3.isSensor = true;
+    body->CreateFixture(&fixture3);
 
-	
-	m_BodyToActorID[body] = actor->GetID();
-    m_ActorIDToBody[actor->GetID()] = body;    
+
+    m_BodyToActorID[body] = actor->GetID();
+    m_ActorIDToBody[actor->GetID()] = body;
 }
 
 void Box2DPhysics::RemoveActor(unsigned int ActorID)
@@ -284,22 +284,22 @@ void Box2DPhysics::ApplyTorque(unsigned int ActorID, glm::vec2 direction, float 
 
 void Box2DPhysics::SendCollisionAddEvent(b2Contact* contact)
 {
-	m_Collisions.push_back(contact);
-	// Send collision event to event system
-	GameApplication::GetInstance()->GetEventManager()->QueueEvent(std::shared_ptr<Event_PostCollisionAdd>(new Event_PostCollisionAdd(contact)));
+    m_Collisions.push_back(contact);
+    // Send collision event to event system
+    GameApplication::GetInstance()->GetEventManager()->QueueEvent(std::shared_ptr<Event_PostCollisionAdd>(new Event_PostCollisionAdd(contact)));
 }
 
 void Box2DPhysics::SendCollisionRemoveEvent(b2Contact* contact)
 {
-	m_Collisions.remove(contact);
-	// Send collision event to event system
-	GameApplication::GetInstance()->GetEventManager()->QueueEvent(std::shared_ptr<Event_PostCollisionRemove>(new Event_PostCollisionRemove(contact)));
+    m_Collisions.remove(contact);
+    // Send collision event to event system
+    GameApplication::GetInstance()->GetEventManager()->QueueEvent(std::shared_ptr<Event_PostCollisionRemove>(new Event_PostCollisionRemove(contact)));
 }
 
 glm::vec2 Box2DPhysics::GetLinearVelocity(unsigned int ActorID)
 {
-	b2Vec2 linVel = FindBody(ActorID)->GetLinearVelocity();
-	return glm::vec2(MetersToPixels(linVel.x), MetersToPixels(linVel.y));
+    b2Vec2 linVel = FindBody(ActorID)->GetLinearVelocity();
+    return glm::vec2(MetersToPixels(linVel.x), MetersToPixels(linVel.y));
 }
 void Box2DPhysics::SetLinearVelocity(unsigned int ActorID, glm::vec2 velocity)
 {
@@ -332,5 +332,3 @@ bool Box2DPhysics::IsBodiesColliding(const b2Body* bodyA, const b2Body* bodyB)
     }
     return isColliding;
 }
-
-

@@ -5,7 +5,7 @@
 - Project and librarires (if relevant) built with MSVC 140 (Visual Studio Community 2015)
 - Pre-compiled libraries added, but building 3rd party libraries yourself is advised.
 - Copy .DLLs from Libs/Pre-compiled DLLs/ over to executable folder or retrieve/compile them yourself.
-- Repository is not built around supporting many different run-time configurations.
+- Repository is not built around supporting different run-time configurations.
 
 ### Lucid
 
@@ -23,7 +23,7 @@ and uses an event queue system for sub-system communication. The goal of the sys
 irrelevant components and finding a strong balance between well-regarded design patterns and the 
 system's requirements.
 
-For more information regarding the project: see [joeydevries.com](http://joeydevries.com/portfolio/lucid).
+For more information (including media) regarding Lucid: see [joeydevries.com](http://joeydevries.com/portfolio/lucid) { not yet live }.
 
 ### Features
 
@@ -31,7 +31,8 @@ For more information regarding the project: see [joeydevries.com](http://joeydev
 - Dynamic physics collision state management
 - Challenging puzzles
 - 2D spritesheet animation 
+- Fully working 2D physics system
 - Location-based audio falloff
-- Custom levels can be built by anyone using the [Tiled](http://tiled.com) level editor due to Lucid's
+- Custom levels can be built by anyone using the [Tiled](http://www.mapeditor.org/) level editor due to Lucid's
 seamless integration with the Tiled XML format. See Bin/levels/tutorial.tmx for Lucid's Tiled components.
 - 2D particle system

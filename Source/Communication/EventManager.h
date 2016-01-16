@@ -29,7 +29,7 @@
 */
 class EventManager
 {
-    typedef std::list<EventListenerDelegate> EventListenerList; 
+    typedef std::list<EventListenerDelegate>       EventListenerList; 
     typedef std::map<EventType, EventListenerList> EventListenerMap;
     typedef std::list<std::shared_ptr<IEventData>> EventQueue;
 private:

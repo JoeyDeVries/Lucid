@@ -22,15 +22,15 @@
 class LightSwitchComponent : public ActorComponent
 {
 private:
-	LightState m_LightState;  // the current state of light the actor has enabled    
+    LightState m_LightState;  // the current state of light the actor has enabled    
     bool       m_Initialized; // disable the light the first update run (light is off by default)
 public:
-	LightSwitchComponent();
-	~LightSwitchComponent();
+    LightSwitchComponent();
+    ~LightSwitchComponent();
 
     // initializes the light switch component
-	bool VInit();
+    bool VInit();
     // updates the light switch component
-	void VUpdate(float deltaTime);	
+    void VUpdate(float deltaTime);
 };
 #endif

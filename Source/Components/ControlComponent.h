@@ -23,12 +23,12 @@ class ControlComponent : public ActorComponent
 private:
     float m_Velocity;  // the maximum velocity of movement
     bool  m_IsJumping; // states whether the actor is currently jumping
-	bool  m_OnGround;  // states whether the actor is currently on the ground
+    bool  m_OnGround;  // states whether the actor is currently on the ground
 
     int m_NrGroundCollisionsAdd;    // the number of collision events of the owning actor with the ground
     int m_NrGroundCollisionsRemove; // the number of collision removed events between the actor and the ground
 public:
-	ControlComponent();
+    ControlComponent();
     ~ControlComponent();
 
     // setter
@@ -39,6 +39,6 @@ public:
     // updates the control component, reading user input and reacting accordingly
     void VUpdate(float deltaTime);
     // determines ground collisions between actor and environment
-	void PostCollisionAdd(std::shared_ptr<IEventData> eventData);
+    void PostCollisionAdd(std::shared_ptr<IEventData> eventData);
 };
 #endif

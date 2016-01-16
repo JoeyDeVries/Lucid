@@ -82,20 +82,20 @@ void SceneNode::Update(Scene *scene, float deltaTime)
 
 bool  SceneNode::IsVisible(Scene *scene) const
 {
-	BoundingBox cameraBox = scene->GetCamera()->GetBoundingBox();
+    BoundingBox cameraBox = scene->GetCamera()->GetBoundingBox();
     // extend the camera bounding box a bit as it lags behind the player
-    glm::vec2 halfExtendsOffset(30.0f, 75.0f); 
+    glm::vec2 halfExtendsOffset(30.0f, 75.0f);
     cameraBox.HalfExtents += halfExtendsOffset;
-	// determine if current node is within the camera's visible frustum
-	bool visible = true;
-	if(m_Position.x > cameraBox.Center.x + cameraBox.HalfExtents.x)
-		visible = false; // node is outside right camera edge
-	else if(m_Position.x + m_Scale.x < cameraBox.Center.x - cameraBox.HalfExtents.x)
-		visible = false; // node is outside left camera edge
-	else if(m_Position.y > cameraBox.Center.y + cameraBox.HalfExtents.y)
-		visible = false; // node is outside bottom camera edge
-	else if(m_Position.y + m_Scale.y < cameraBox.Center.y - cameraBox.HalfExtents.y)
-		visible = false;
+    // determine if current node is within the camera's visible frustum
+    bool visible = true;
+    if (m_Position.x > cameraBox.Center.x + cameraBox.HalfExtents.x)
+        visible = false; // node is outside right camera edge
+    else if (m_Position.x + m_Scale.x < cameraBox.Center.x - cameraBox.HalfExtents.x)
+        visible = false; // node is outside left camera edge
+    else if (m_Position.y > cameraBox.Center.y + cameraBox.HalfExtents.y)
+        visible = false; // node is outside bottom camera edge
+    else if (m_Position.y + m_Scale.y < cameraBox.Center.y - cameraBox.HalfExtents.y)
+        visible = false;
     return visible;
 }
 

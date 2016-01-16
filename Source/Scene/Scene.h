@@ -40,13 +40,13 @@ class Scene
 protected:
     std::shared_ptr<RootNode>        m_Root;            // manages different render passes and the whole scenegraph render-setup as a whole
     std::shared_ptr<Camera>          m_Camera;          // represents the user render region of the scene
-	std::shared_ptr<LightManager>    m_LightManager;    // represents all light sources in a scene and organizes them for efficient rendering
+    std::shared_ptr<LightManager>    m_LightManager;    // represents all light sources in a scene and organizes them for efficient rendering
     std::shared_ptr<ParticleEmitter> m_ParticleEmitter; // renders particle effects in an efficient fashion to the scene
 
     MatrixStack   m_MatrixStack; // holds a stack of matrices to represent parent-child matrix transformation relations
     SceneActorMap m_ActorMap;    // holds a map relating unique actor IDs to their respective scene nodes, seperating game logic from render logic
 
-	int m_SceneWidth, m_SceneHeight; // the width and height of the scene
+    int m_SceneWidth, m_SceneHeight; // the width and height of the scene
     std::string m_SceneIntro;        // the text displayed at the introduction of the scene
     std::string m_ScenePath;         // the path the scene scene/level was generated from
     std::string m_AmbientPath;       // the path to the ambient background music file

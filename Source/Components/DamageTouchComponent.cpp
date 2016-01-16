@@ -10,6 +10,7 @@
 ** option) any later version.
 *******************************************************************/
 #include "DamageTouchComponent.h"
+
 #include "LifeComponent.h"
 
 #include "../Application/GameApplication.h"
@@ -79,4 +80,3 @@ void DamageTouchComponent::OnPostCollisionAdd(std::shared_ptr<IEventData> eventD
         }
     }
 }
-

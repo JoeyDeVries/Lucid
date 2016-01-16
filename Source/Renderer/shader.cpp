@@ -23,13 +23,13 @@ Shader &Shader::Use()
 
 void Shader::Compile(const GLchar* vertexSource, const GLchar* fragmentSource, std::string directory)
 {
-	// first pre-process shaders with preprocessor (includes, pragma defines etc.)
-	std::string vsCodeProcessed = PreProcess(std::string(vertexSource), directory);
-	std::string fsCodeProcessed = PreProcess(std::string(fragmentSource), directory);
-	const GLchar* vsCode = vsCodeProcessed.c_str();
-	const GLchar* fsCode = fsCodeProcessed.c_str();
-	
-	// then process pre-processed shader source
+    // first pre-process shaders with preprocessor (includes, pragma defines etc.)
+    std::string vsCodeProcessed = PreProcess(std::string(vertexSource), directory);
+    std::string fsCodeProcessed = PreProcess(std::string(fragmentSource), directory);
+    const GLchar* vsCode = vsCodeProcessed.c_str();
+    const GLchar* fsCode = fsCodeProcessed.c_str();
+
+    // then process pre-processed shader source
     GLuint sVertex, sFragment;
     // Vertex Shader
     sVertex = glCreateShader(GL_VERTEX_SHADER);
@@ -54,26 +54,26 @@ void Shader::Compile(const GLchar* vertexSource, const GLchar* fragmentSource, s
 
 std::string Shader::PreProcess(std::string shaderCode, std::string directory)
 {
-	std::stringstream input(shaderCode);
-	std::stringstream output;
-	std::string line;
-	while(std::getline(input, line))
-	{
-		if(line.substr(0, 15) == "#pragma include")
-		{
-			std::string filepath = line.substr(16);
-			if(filepath != "")
-				filepath = directory + "/" + filepath;
-			std::ifstream file(filepath);			
-			while(std::getline(file, line))
-				output << line << std::endl;
-		}
-		else
-		{
-			output << line << std::endl;
-		}
-	}
-	return output.str();
+    std::stringstream input(shaderCode);
+    std::stringstream output;
+    std::string line;
+    while (std::getline(input, line))
+    {
+        if (line.substr(0, 15) == "#pragma include")
+        {
+            std::string filepath = line.substr(16);
+            if (filepath != "")
+                filepath = directory + "/" + filepath;
+            std::ifstream file(filepath);
+            while (std::getline(file, line))
+                output << line << std::endl;
+        }
+        else
+        {
+            output << line << std::endl;
+        }
+    }
+    return output.str();
 }
 
 void Shader::SetFloat(std::string name, GLfloat value, GLboolean useShader)

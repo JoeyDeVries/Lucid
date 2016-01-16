@@ -35,7 +35,7 @@ class IEventData
 {
 private:
     // default event state
-    const float m_TimeStamp;
+    const float m_TimeStamp; // time in ms (since application launch) of when the event fired
 public:
     IEventData(const float timestamp = 0.0) : m_TimeStamp(timestamp) { }
     ~IEventData() { }

@@ -47,8 +47,8 @@ GameApplication::GameApplication() : m_Active(true)
     m_EventManager = new EventManager;
     m_ActorFactory = new ActorFactory;
     m_Physics      = new Box2DPhysics;
-	m_Audio		   = new AudioEngine;
-	m_TextRenderer = new TextRenderer;
+    m_Audio		   = new AudioEngine;
+    m_TextRenderer = new TextRenderer;
 }
 
 GameApplication::~GameApplication()
@@ -69,7 +69,7 @@ void GameApplication::Initialize(float width, float height)
     m_Scene->GetCamera()->SetProjection(width, height, 0.0, 50.0f); // has to be initialized first as its projection is also used by GUI menus
 
     // Load default placeholder textures/shaders before loading level
-	ResourceManager::GetInstance()->LoadShader("sprite", "shaders/sprite.vs", "shaders/sprite.frag")->SetInteger("EnableLighting", 1, true);
+    ResourceManager::GetInstance()->LoadShader("sprite", "shaders/sprite.vs", "shaders/sprite.frag")->SetInteger("EnableLighting", 1, true);
     ResourceManager::GetInstance()->LoadTexture("specular", "textures/specular.png");
     ResourceManager::GetInstance()->LoadTexture("normal", "textures/normal.png");
 
@@ -81,22 +81,22 @@ void GameApplication::Initialize(float width, float height)
     eventListener = fastdelegate::MakeDelegate(this, &GameApplication::OnDestroyActor);
     GetEventManager()->AddListener(eventListener, Event_DestroyActor::s_EventType);
 
-	// load font(s) and initialize text-renderer
-	std::shared_ptr<Font> font = ResourceManager::GetInstance()->LoadFont("gui/font.fnt");
-	m_TextRenderer->Initialize(font);
+    // load font(s) and initialize text-renderer
+    std::shared_ptr<Font> font = ResourceManager::GetInstance()->LoadFont("gui/font.fnt");
+    m_TextRenderer->Initialize(font);
 
     // initialize audio
     m_Audio->PreLoad();
 
     // initialize GUI
     m_GUIContainers["main_menu"]   = std::shared_ptr<GUIContainer>(new GUIMainMenu);
-	m_GUIContainers["scene_intro"] = std::shared_ptr<GUISceneIntro>(new GUISceneIntro);
+    m_GUIContainers["scene_intro"] = std::shared_ptr<GUISceneIntro>(new GUISceneIntro);
     m_GUIContainers["game_menu"]   = std::shared_ptr<GUIGameMenu>(new GUIGameMenu);
     for(auto it = m_GUIContainers.begin(); it != m_GUIContainers.end(); ++it)
         it->second->Init();
 
     // Start game in main menu
-	SwitchState(GameState::GAME_MAIN_MENU);
+    SwitchState(GameState::GAME_MAIN_MENU);
 }
 
 void GameApplication::CleanUp()
@@ -117,15 +117,15 @@ std::shared_ptr<Actor> GameApplication::CreateActor(DEFAULT_ACTOR_TYPES type)
     // if we have an emtpy actor type, no need to add it to list of actors.
     // empty actors act merely as decoration and don't need processing
     if(type != DEFAULT_ACTOR_TYPES::ACTOR_EMPTY) 
-	    m_Actors[actor->GetID()] = actor;
+         m_Actors[actor->GetID()] = actor;
     return actor;
 }
 
 std::shared_ptr<Actor> GameApplication::GetActor(ActorID actorID)
 {
-	return m_Actors[actorID]; // note that key exist check is removed here for performance reasons (this function is mostly called for actors that already exist)
-	// iterating through a list is too slow for its real-time purpose and query frequency
-	// make a performance-memory tradeoff here by storing actors in a hashmap.
+    return m_Actors[actorID]; // note that key exist check is removed here for performance reasons (this function is mostly called for actors that already exist)
+    // iterating through a list is too slow for its real-time purpose and query frequency
+    // make a performance-memory tradeoff here by storing actors in a hashmap.
     /*for (auto it = m_Actors.begin(); it != m_Actors.end(); ++it)
         if((*it)->GetID() == actorID)
             return (*it);*/
@@ -133,15 +133,15 @@ std::shared_ptr<Actor> GameApplication::GetActor(ActorID actorID)
 
 void GameApplication::SetImportantActor(std::string name, std::shared_ptr<Actor> actor)
 {
-	m_ImportantActors[name] = actor;
+    m_ImportantActors[name] = actor;
 }
 
 std::shared_ptr<Actor> GameApplication::GetImportantActor(std::string name)
 {
-	if(m_ImportantActors.find(name) != m_ImportantActors.end())
-		return m_ImportantActors[name];
-	else
-		return std::shared_ptr<Actor>();
+    if(m_ImportantActors.find(name) != m_ImportantActors.end())
+        return m_ImportantActors[name];
+    else
+        return std::shared_ptr<Actor>();
 }
 
 void GameApplication::SwitchState(GameState state)
@@ -151,21 +151,21 @@ void GameApplication::SwitchState(GameState state)
     // by default de-activate all GUI containers and only activate what is relevant
     for (auto it = m_GUIContainers.begin(); it != m_GUIContainers.end(); ++it)
         it->second->SetActive(false);
-	switch (m_GameState)
-	{
-	case GameState::GAME_MAIN_MENU:
-		m_GUIContainers["main_menu"]->SetActive(true);
-		break;
-	case GameState::GAME_INTRO:
-	{
-		std::shared_ptr<GUISceneIntro> pGUI = std::dynamic_pointer_cast<GUISceneIntro>(m_GUIContainers["scene_intro"]);
-		if (pGUI)
-		{
-			pGUI->SetIntroText(m_Scene->GetSceneIntro());
-			pGUI->SetActive(true);
-		}
-		break;
-	}
+    switch (m_GameState)
+    {
+    case GameState::GAME_MAIN_MENU:
+        m_GUIContainers["main_menu"]->SetActive(true);
+        break;
+    case GameState::GAME_INTRO:
+    {
+        std::shared_ptr<GUISceneIntro> pGUI = std::dynamic_pointer_cast<GUISceneIntro>(m_GUIContainers["scene_intro"]);
+        if (pGUI)
+        {
+            pGUI->SetIntroText(m_Scene->GetSceneIntro());
+            pGUI->SetActive(true);
+        }
+        break;
+    }
     case GameState::GAME_MAIN:
         break;
     case GameState::GAME_GAME_MENU:

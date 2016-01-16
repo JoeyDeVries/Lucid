@@ -37,7 +37,7 @@ public:
     // compiles the shader from source code from file
     void         Compile(const GLchar *vertexSource, const GLchar *fragmentSource, std::string directory); 
     // pre-processes the source code for custom #pragma directives
-	std::string  PreProcess(std::string shaderCode, std::string directory);
+    std::string  PreProcess(std::string shaderCode, std::string directory);
 
     // uniform utility functions
     void         SetFloat   (std::string name, GLfloat value, GLboolean useShader = false);

@@ -19,7 +19,6 @@
 #include <memory>
 #include <vector>
 
-
 class Renderer;
 class Material;
 class Scene;
@@ -68,8 +67,8 @@ public:
     void SetScale(glm::vec2 scale)        { m_Scale    = scale;    CalculateModel(); }
     void SetDepth(int depth)              { m_Depth    = depth;    CalculateModel(); }
     void SetRotation(float rotation)      { m_Rotation = rotation; CalculateModel(); }
-	void SetName(const std::string& name) { m_Name = name; }
-	void SetRenderPass(const std::string& renderPass)    { m_RenderPass = renderPass; }    
+    void SetName(const std::string& name) { m_Name = name; }
+    void SetRenderPass(const std::string& renderPass)    { m_RenderPass = renderPass; }    
     void SetMaterial(std::shared_ptr<Material> material) { m_Material = material; }
 
     // (re-)calculates the model matrix based on the scene node positional properties
@@ -99,6 +98,6 @@ public:
     virtual void RenderChildren(Scene *scene, Renderer *renderer) = 0;
 
     // returns a list of the scene node's children
-	virtual std::vector<std::shared_ptr<ISceneNode>> GetChildren() const = 0;
+    virtual std::vector<std::shared_ptr<ISceneNode>> GetChildren() const = 0;
 };
 #endif

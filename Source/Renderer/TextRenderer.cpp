@@ -32,9 +32,9 @@ TextRenderer::~TextRenderer()
 
 bool TextRenderer::Initialize(std::shared_ptr<Font> font)
 {
-	m_Shader = ResourceManager::GetInstance()->LoadShader("text", "shaders/text.vs", "shaders/text.frag");
+    m_Shader = ResourceManager::GetInstance()->LoadShader("text", "shaders/text.vs", "shaders/text.frag");
     m_Shader->SetInteger("fontAtlas", 0, true);
-	m_Font = font;
+    m_Font = font;
 
     // initialize render data
     glGenVertexArrays(1, &m_VAO);
@@ -49,7 +49,7 @@ bool TextRenderer::Initialize(std::shared_ptr<Font> font)
         glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
 
-	return true;
+    return true;
 }
 
 void TextRenderer::RenderText(std::string text, glm::vec2 position, float userScale, bool inPlace, glm::vec4 color, glm::vec2 centerBox)
@@ -93,12 +93,12 @@ void TextRenderer::Render(glm::mat4 projection, glm::mat4 view)
     m_Shader->Use();
     m_Font->GetFontAtlas()->Bind(0);
     glBindVertexArray(m_VAO);
-        //   fill buffer with render data
+        // fill buffer with render data
         glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
         if (m_RenderData.size() > 0)
         {
             glBufferData(GL_ARRAY_BUFFER, m_RenderData.size() * sizeof(CharRenderInfo), &m_RenderData[0], GL_DYNAMIC_DRAW);
-            //   set projection
+            // set projection
             m_Shader->SetMatrix4("projection", projection);
             glDrawArrays(GL_TRIANGLES, 0, m_RenderData.size() * 6);
         }
@@ -106,7 +106,7 @@ void TextRenderer::Render(glm::mat4 projection, glm::mat4 view)
         {
             // then in-place text
             glBufferData(GL_ARRAY_BUFFER, m_RenderDataInPlace.size() * sizeof(CharRenderInfo), &m_RenderDataInPlace[0], GL_DYNAMIC_DRAW);
-            //   set projection (+ camera transform)
+            // set projection (+ camera transform)
             m_Shader->SetMatrix4("projection", projection * view);
             glDrawArrays(GL_TRIANGLES, 0, m_RenderDataInPlace.size() * 6);
         }

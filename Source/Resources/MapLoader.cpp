@@ -14,26 +14,26 @@
 #include "ResourceManager.h"
 
 #include "../Application/GameApplication.h"
-#include "../Components/ActorFactory.h"
-#include "../Components/Actor.h"
-#include "../Scene/Scene.h"
+#include "../Scene/BackgroundNode.h"
+#include "../Scene/LightManager.h"
 #include "../Scene/SpriteNode.h"
 #include "../Scene/LightNode.h"
-#include "../Scene/BackgroundNode.h"
 #include "../Scene/TextNode.h"
+#include "../Scene/Camera.h"
+#include "../Scene/Scene.h"
+#include "../Renderer/Animation.h"
 #include "../Renderer/Renderer.h"
 #include "../Renderer/Material.h"
-#include "../Renderer/Animation.h"
-#include "../Components/StateBlockComponent.h"
 #include "../Components/CompleteCheckComponent.h"
 #include "../Components/TextOnTouchComponent.h"
-#include "../Components/MoveLoopComponent.h"
-#include "../Components/AIComponent.h"
 #include "../Components/DamageTouchComponent.h"
-#include "../Audio/AudioEngine.h"
+#include "../Components/StateBlockComponent.h"
+#include "../Components/MoveLoopComponent.h"
+#include "../Components/ActorFactory.h"
+#include "../Components/AIComponent.h"
+#include "../Components/Actor.h"
 #include "../Physics/Box2DPhysics.h"
-#include "../Scene/Camera.h"
-#include "../Scene/LightManager.h"
+#include "../Audio/AudioEngine.h"
 
 #include <iostream>
 #include <fstream>
@@ -49,152 +49,152 @@ MapLoader::~MapLoader()
 bool MapLoader::LoadMap(ResourceManager *resources, Scene *scene, const char * tmxPath, float levelScale)
 {
     scene->SetScenePath(std::string(tmxPath));
-	XMLDocument doc;
-	if(doc.LoadFile(tmxPath) != XML_NO_ERROR)
-	{
-		std::cout << "Failed reading map w/ error name: " << doc.ErrorName() << std::endl;
-		return false;
-	}
-	XMLElement *map = doc.FirstChildElement("map");
-	int width = map->IntAttribute("width");
-	int height = map->IntAttribute("height");
-	float tileWidth = map->IntAttribute("tilewidth") * levelScale;
-	float tileHeight = map->IntAttribute("tileheight") * levelScale;
-	// set scene dimensions
-	scene->SetSceneWidth(width * tileWidth);
-	scene->SetSceneHeight(height * tileHeight);
+    XMLDocument doc;
+    if (doc.LoadFile(tmxPath) != XML_NO_ERROR)
+    {
+        std::cout << "Failed reading map w/ error name: " << doc.ErrorName() << std::endl;
+        return false;
+    }
+    XMLElement *map = doc.FirstChildElement("map");
+    int width = map->IntAttribute("width");
+    int height = map->IntAttribute("height");
+    float tileWidth = map->IntAttribute("tilewidth") * levelScale;
+    float tileHeight = map->IntAttribute("tileheight") * levelScale;
+    // set scene dimensions
+    scene->SetSceneWidth(width * tileWidth);
+    scene->SetSceneHeight(height * tileHeight);
 
     // get map properties and process static objects
     processStaticDefaults(resources, scene, map);
 
 
-	// process tile entities
-	XMLElement *tileset = map->FirstChildElement("tileset");
-	XMLElement *tile = tileset->FirstChildElement("tile");
-	while (tile)
-	{
-		if (!processTileNode(resources, scene, tile))
-		{
-			std::cout << "Failed processing TileNode" << std::endl;
-			return false;
-		}
-		tile = tile->NextSiblingElement();
-	}
-	// process layers
-	XMLElement *layer = map->FirstChildElement("layer");
-	int depth = 1; // start from depth 1, 0 is reserved for backgrounds
-	while (layer)
-	{
-		std::string name = std::string(layer->Attribute("name"));
-		XMLElement* data = layer->FirstChildElement();
-		XMLElement* tile = data->FirstChildElement();
-		int rowCounter = 0;
-		int columnCounter = 0;
-		while (tile)
-		{
-			// calculate scale, position based on column/rows and depth
-			glm::vec2 pos = glm::vec2(columnCounter * tileWidth, rowCounter * tileHeight);
-			glm::vec2 scale = glm::vec2(tileWidth, tileHeight);
-			if (!processTileData(resources, scene, tile, pos, scale, depth, name == "Physics"))
-			{
-				std::cout << "Failed processing TileData" << std::endl;
-				return false;
-			}
-			if (++columnCounter == width)
-			{
-				columnCounter = 0;
-				++rowCounter;
-			}
-			tile = tile->NextSiblingElement();
-		}
-		layer = layer->NextSiblingElement("layer");
-		depth++;
-	}
-	// then process gameobjects
-	XMLElement *gameObjects = map->FirstChildElement("objectgroup");
-	if (gameObjects)
-	{
-		XMLElement *object = gameObjects->FirstChildElement("object");
-		while (object)
-		{
-			if (!processGameObject(resources, scene, object, glm::vec2(tileWidth, tileHeight), levelScale))
-			{
-				std::cout << "Failed processing GameObject" << std::endl;
-				return false;
-			}
+    // process tile entities
+    XMLElement *tileset = map->FirstChildElement("tileset");
+    XMLElement *tile = tileset->FirstChildElement("tile");
+    while (tile)
+    {
+        if (!processTileNode(resources, scene, tile))
+        {
+            std::cout << "Failed processing TileNode" << std::endl;
+            return false;
+        }
+        tile = tile->NextSiblingElement();
+    }
+    // process layers
+    XMLElement *layer = map->FirstChildElement("layer");
+    int depth = 1; // start from depth 1, 0 is reserved for backgrounds
+    while (layer)
+    {
+        std::string name = std::string(layer->Attribute("name"));
+        XMLElement* data = layer->FirstChildElement();
+        XMLElement* tile = data->FirstChildElement();
+        int rowCounter = 0;
+        int columnCounter = 0;
+        while (tile)
+        {
+            // calculate scale, position based on column/rows and depth
+            glm::vec2 pos = glm::vec2(columnCounter * tileWidth, rowCounter * tileHeight);
+            glm::vec2 scale = glm::vec2(tileWidth, tileHeight);
+            if (!processTileData(resources, scene, tile, pos, scale, depth, name == "Physics"))
+            {
+                std::cout << "Failed processing TileData" << std::endl;
+                return false;
+            }
+            if (++columnCounter == width)
+            {
+                columnCounter = 0;
+                ++rowCounter;
+            }
+            tile = tile->NextSiblingElement();
+        }
+        layer = layer->NextSiblingElement("layer");
+        depth++;
+    }
+    // then process gameobjects
+    XMLElement *gameObjects = map->FirstChildElement("objectgroup");
+    if (gameObjects)
+    {
+        XMLElement *object = gameObjects->FirstChildElement("object");
+        while (object)
+        {
+            if (!processGameObject(resources, scene, object, glm::vec2(tileWidth, tileHeight), levelScale))
+            {
+                std::cout << "Failed processing GameObject" << std::endl;
+                return false;
+            }
 
-			object = object->NextSiblingElement();
-		}
-	}
+            object = object->NextSiblingElement();
+        }
+    }
 
-	return true;
+    return true;
 }
 
 
 bool MapLoader::processTileNode(ResourceManager *resources, Scene *scene, XMLElement *tileNode)
 {
-	int id = tileNode->IntAttribute("id");
-	XMLElement *image = tileNode->FirstChildElement("image");
-	std::string imageSource = std::string(image->Attribute("source"));
-	imageSource = "levels/" + imageSource; // add levels directory so relative paths make sense
-	std::shared_ptr<Texture2D> texture = resources->LoadTexture("tex_node_" + std::to_string(id), imageSource.c_str(), true); 
-	// configure a material
-	std::shared_ptr<Material> material = std::shared_ptr<Material>(new Material());
-	material->SetShader(resources->GetShader("sprite"));
-	material->SetDiffuse(texture);
-	// - check if specular/normal texture exists and if so, add to material; otherwise use default
-	material->SetSpecular(getSpecularMapIfExists(resources, imageSource));
-	material->SetNormal(getNormalMapIfExists(resources, imageSource));
-	// store material properties for re-use by data objects
-	m_IDToMaterial[id] = material;
-	return true;
+    int id = tileNode->IntAttribute("id");
+    XMLElement *image = tileNode->FirstChildElement("image");
+    std::string imageSource = std::string(image->Attribute("source"));
+    imageSource = "levels/" + imageSource; // add levels directory so relative paths make sense
+    std::shared_ptr<Texture2D> texture = resources->LoadTexture("tex_node_" + std::to_string(id), imageSource.c_str(), true);
+    // configure a material
+    std::shared_ptr<Material> material = std::shared_ptr<Material>(new Material());
+    material->SetShader(resources->GetShader("sprite"));
+    material->SetDiffuse(texture);
+    // - check if specular/normal texture exists and if so, add to material; otherwise use default
+    material->SetSpecular(getSpecularMapIfExists(resources, imageSource));
+    material->SetNormal(getNormalMapIfExists(resources, imageSource));
+    // store material properties for re-use by data objects
+    m_IDToMaterial[id] = material;
+    return true;
 }
 
 bool MapLoader::processTileData(ResourceManager *resources, Scene *scene, XMLElement *tile, glm::vec2 pos, glm::vec2 scale, int depth, bool physics)
 {
-	int gid = tile->IntAttribute("gid"); // note: GID are 1-based indices, 0 means empty tile
-	if (gid != 0)
-	{
-		// retrieve material from gid
-		std::shared_ptr<Material> material = m_IDToMaterial[gid - 1];
-		// create game actor
-		std::shared_ptr<Actor> actor = GameApplication::GetInstance()->CreateActor(physics ? DEFAULT_ACTOR_TYPES::ACTOR_STATIC : DEFAULT_ACTOR_TYPES::ACTOR_EMPTY);
-		actor->SetPosition(pos);
-		actor->SetScale(scale);
-		actor->SetDepth(depth);
-		// create sprite node
-		std::shared_ptr<SpriteNode> node = std::shared_ptr<SpriteNode>(
-			new SpriteNode(
-				actor->GetID(),
-				"sprite",
-				"main",
-				pos,
-				depth,
-				scale)
-			);
-		node->SetMaterial(material);
-		scene->AddChild(actor->GetID(), node);
-		// if in physics layers, also add collision shapes for each tile
-		if (physics)
-		{
-			GameApplication::GetInstance()->GetPhysics()->AddBox(actor, 1.0f);
-		}
-	}
-	return true;
+    int gid = tile->IntAttribute("gid"); // note: GID are 1-based indices, 0 means empty tile
+    if (gid != 0)
+    {
+        // retrieve material from gid
+        std::shared_ptr<Material> material = m_IDToMaterial[gid - 1];
+        // create game actor
+        std::shared_ptr<Actor> actor = GameApplication::GetInstance()->CreateActor(physics ? DEFAULT_ACTOR_TYPES::ACTOR_STATIC : DEFAULT_ACTOR_TYPES::ACTOR_EMPTY);
+        actor->SetPosition(pos);
+        actor->SetScale(scale);
+        actor->SetDepth(depth);
+        // create sprite node
+        std::shared_ptr<SpriteNode> node = std::shared_ptr<SpriteNode>(
+            new SpriteNode(
+                actor->GetID(),
+                "sprite",
+                "main",
+                pos,
+                depth,
+                scale)
+            );
+        node->SetMaterial(material);
+        scene->AddChild(actor->GetID(), node);
+        // if in physics layers, also add collision shapes for each tile
+        if (physics)
+        {
+            GameApplication::GetInstance()->GetPhysics()->AddBox(actor, 1.0f);
+        }
+    }
+    return true;
 }
 
 bool MapLoader::processGameObject(ResourceManager *resources, Scene *scene, XMLElement *gameObject, glm::vec2 tileScale, float mapScale)
 {
-	std::string type = std::string(gameObject->Attribute("type"));
-	int x = gameObject->IntAttribute("x");
-	int y = gameObject->IntAttribute("y");
-	int width = gameObject->IntAttribute("width");
-	int height = gameObject->IntAttribute("height");
-	glm::vec2 position(x * mapScale, y * mapScale);
-	glm::vec2 scale(width * mapScale, height * mapScale);
-	// process gameobjects differently based on type
-	std::shared_ptr<Material> material = std::shared_ptr<Material>(new Material());
-	material->SetShader(resources->GetShader("sprite"));
+    std::string type = std::string(gameObject->Attribute("type"));
+    int x = gameObject->IntAttribute("x");
+    int y = gameObject->IntAttribute("y");
+    int width = gameObject->IntAttribute("width");
+    int height = gameObject->IntAttribute("height");
+    glm::vec2 position(x * mapScale, y * mapScale);
+    glm::vec2 scale(width * mapScale, height * mapScale);
+    // process gameobjects differently based on type
+    std::shared_ptr<Material> material = std::shared_ptr<Material>(new Material());
+    material->SetShader(resources->GetShader("sprite"));
     if (type == "Deathtouch")
     {
         // define actor
@@ -241,9 +241,9 @@ bool MapLoader::processGameObject(ResourceManager *resources, Scene *scene, XMLE
         std::shared_ptr<AIComponent> pAIComponent(pWeakAIComponent);
         if (pAIComponent)
         {
-           pAIComponent->SetBeginPosition(beginPos);
-           pAIComponent->SetEndPosition(endPos);
-           pAIComponent->SetAttackRadius(100.0f);
+            pAIComponent->SetBeginPosition(beginPos);
+            pAIComponent->SetEndPosition(endPos);
+            pAIComponent->SetAttackRadius(100.0f);
         }
         std::weak_ptr<DamageTouchComponent> pWeakDmgComponent = actor->GetComponent<DamageTouchComponent>("DamageTouch");
         std::shared_ptr<DamageTouchComponent> pDmgComponent(pWeakDmgComponent);
@@ -252,8 +252,8 @@ bool MapLoader::processGameObject(ResourceManager *resources, Scene *scene, XMLE
             pDmgComponent->SetDamageAmount(25.0f);
         }
     }
-	else if (type == "Finish") // end point
-	{
+    else if (type == "Finish") // end point
+    {
         std::string NextLevel = getProperty(gameObject, "NextLevel");
         if (NextLevel != "")
         {
@@ -280,7 +280,7 @@ bool MapLoader::processGameObject(ResourceManager *resources, Scene *scene, XMLE
                 pComponent->SetNextLevelString(NextLevel);
             }
         }
-	}
+    }
     else if (type == "Light")
     {
         XMLElement *properties = gameObject->FirstChildElement("properties");
@@ -300,7 +300,7 @@ bool MapLoader::processGameObject(ResourceManager *resources, Scene *scene, XMLE
             std::shared_ptr<Actor> actor = GameApplication::GetInstance()->CreateActor(DEFAULT_ACTOR_TYPES::ACTOR_STATIC);
             actor->SetPosition(position);
             actor->SetScale(scale);
-            actor->SetDepth(10);  
+            actor->SetDepth(10);
             if (animation == "")
             {
                 material->SetDiffuse(resources->LoadTexture("light-animz", "textures/lights/fire-anim.png", true));
@@ -313,7 +313,7 @@ bool MapLoader::processGameObject(ResourceManager *resources, Scene *scene, XMLE
             scene->AddChild(actor->GetID(), node);
             // light has animation, specify animation
             std::vector<std::shared_ptr<Animation>> lightAnim = resources->LoadAnimation(animation.c_str());
-            if(lightAnim.size() > 0)
+            if (lightAnim.size() > 0)
             {
                 node->SetAnimation(true);
                 node->AddAnimation(lightAnim[0], lightAnim[0]->GetName());
@@ -441,12 +441,12 @@ bool MapLoader::processGameObject(ResourceManager *resources, Scene *scene, XMLE
         node->SetMaterial(material);
         // get player animations
         std::vector<std::shared_ptr<Animation>> animations = resources->LoadAnimation("textures/player/player.anim");
-        for(int i = 0; i < animations.size(); ++i)
+        for (int i = 0; i < animations.size(); ++i)
         {
             node->SetAnimation(true);
             node->AddAnimation(animations[i], animations[i]->GetName());
         }
-        if(animations.size() > 0)
+        if (animations.size() > 0)
             node->ActivateAnimation("idle");
         // ---------------------------------------------
         // create lantern and attach to player
@@ -522,13 +522,13 @@ bool MapLoader::processGameObject(ResourceManager *resources, Scene *scene, XMLE
     else if (type == "Text")
     {
         std::string Text = getProperty(gameObject, "Text");
-        if(Text != "")
+        if (Text != "")
         {
             float R = std::atof(getProperty(gameObject, "R").c_str());
             float G = std::atof(getProperty(gameObject, "G").c_str());
             float B = std::atof(getProperty(gameObject, "B").c_str());
             int fontScale = std::atoi(getProperty(gameObject, "Scale").c_str());
-            glm::vec4 color(R,G,B, 1.0f);
+            glm::vec4 color(R, G, B, 1.0f);
             // define actor
             std::shared_ptr<Actor> actor = GameApplication::GetInstance()->CreateActor(DEFAULT_ACTOR_TYPES::ACTOR_EMPTY);
             // create node
@@ -540,7 +540,7 @@ bool MapLoader::processGameObject(ResourceManager *resources, Scene *scene, XMLE
         }
     }
 
-	return true;
+    return true;
 }
 
 bool MapLoader::processStaticDefaults(ResourceManager *resources, Scene *scene, XMLElement *map)

@@ -78,7 +78,7 @@ public:
     void SetDepth(int depth) { m_Depth = depth; }
     void SetRotation(float rotation) { m_Rotation = rotation; }
 
-    // NOTE(Joey): unfortunately in C++ template functions need to be declared and defined in the same file
+    // NOTE(Joey): in C++ template functions need to be declared and defined in the same file
     // retrieves a weak pointer to the component of an actor if it exists
     template<class ComponentType> std::weak_ptr<ComponentType> GetComponent(std::string type)
     {

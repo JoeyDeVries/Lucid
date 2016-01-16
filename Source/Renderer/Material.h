@@ -31,8 +31,8 @@ private:
     std::shared_ptr<Texture2D> m_Diffuse;       // the diffuse material color
     std::shared_ptr<Texture2D> m_Specular;      // the specular material color
     std::shared_ptr<Texture2D> m_Normal;        // the normal material color
-	glm::vec3				   m_ColorOverride; // a color to override the final render color (direct multiplication)
-	float					   m_Alpha;         // the alpha value of the material
+    glm::vec3                  m_ColorOverride; // a color to override the final render color (direct multiplication)
+    float                      m_Alpha;         // the alpha value of the material
 public:
     Material();
 
@@ -41,8 +41,8 @@ public:
     std::shared_ptr<Texture2D> GetDiffuse()       { return m_Diffuse; }
     std::shared_ptr<Texture2D> GetSpecular()      { return m_Specular; }
     std::shared_ptr<Texture2D> GetNormal()        { return m_Normal; }
-    const glm::vec3&		   GetColorOverride() { return m_ColorOverride; }
-    const float				   GetAlpha()         { return m_Alpha; }
+    const glm::vec3&           GetColorOverride() { return m_ColorOverride; }
+    const float                GetAlpha()         { return m_Alpha; }
     // setters
     void SetShader(std::shared_ptr<Shader> shader);
     void SetDiffuse(std::shared_ptr<Texture2D> diffuse);
