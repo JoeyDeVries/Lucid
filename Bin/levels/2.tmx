@@ -2,7 +2,7 @@
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="27" height="14" tilewidth="128" tileheight="128" nextobjectid="41">
  <properties>
   <property name="Ambient" value="audio/ambient1.mp3"/>
-  <property name="IntroText" value="&quot;In darkness, there is only light...&quot;                 Crumbling rocks, lingering dust and a humid       atmosphere; you have no memory of previous      events, nor anything related to your past. Lying cold on the floor, you wonder what happened here, and especially... why?"/>
+  <property name="IntroText" value="You try to remember, but all that comes to light   are faint memories of a long drop. Thrown from   the light onto the dark... Did someone throw you   in here?"/>
   <property name="background" value="textures/backgrounds/background.png"/>
  </properties>
  <tileset firstgid="1" name="Tiles" tilewidth="128" tileheight="128" tilecount="14">
@@ -859,7 +859,7 @@
   </object>
   <object id="22" name="Finish" type="Finish" x="256" y="640" width="128" height="128">
    <properties>
-    <property name="NextLevel" value="levels/start.tmx"/>
+    <property name="NextLevel" value="levels/3.tmx"/>
    </properties>
   </object>
   <object id="23" name="Text" type="Text" x="1408" y="512" width="512" height="128">
@@ -868,7 +868,7 @@
     <property name="G" value="0.05"/>
     <property name="R" value="0.25"/>
     <property name="Scale" value="3.0"/>
-    <property name="Text" value="I remember ... someone crying"/>
+    <property name="Text" value="My head hurts"/>
    </properties>
   </object>
   <object id="24" name="R" type="StateBlock" x="1280" y="768" width="128" height="128">
