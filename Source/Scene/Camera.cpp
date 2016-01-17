@@ -50,7 +50,7 @@ void Camera::CalculateViewMatrix()
         glm::vec2 targetScale = m_Target->GetScale();
         // define a bounding box around the screen's center
         glm::vec2 AABBCenter = m_CameraCenter;
-        glm::vec2 AABBHalfWidths = glm::vec2(m_Width * 0.2f, m_Height * 0.2f);
+        glm::vec2 AABBHalfWidths = glm::vec2(m_Width * 0.15f, m_Height * 0.15f);
         // - check if target is outside AABB and if so change center accordingly 
         if (targetPos.x + targetScale.x * 0.5 >= AABBCenter.x + AABBHalfWidths.x) // target at right side of box
             m_CameraCenter.x += (targetPos.x + targetScale.x * 0.5) - (AABBCenter.x + AABBHalfWidths.x);
