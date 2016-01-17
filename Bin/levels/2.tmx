@@ -2,7 +2,7 @@
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="27" height="14" tilewidth="128" tileheight="128" nextobjectid="41">
  <properties>
   <property name="Ambient" value="audio/ambient1.mp3"/>
-  <property name="IntroText" value="You try to remember, but all that comes to light   are faint memories of a long drop. Thrown from   the light onto the dark... Did someone throw you   in here?"/>
+  <property name="IntroText" value="You try to remember, but all that comes to light   are the faint memories of a long drop.              Thrown from the light onto the dark...           &quot;Am I atoning for my sins?&quot;"/>
   <property name="background" value="textures/backgrounds/background.png"/>
  </properties>
  <tileset firstgid="1" name="Tiles" tilewidth="128" tileheight="128" tilecount="14">
@@ -824,9 +824,9 @@
   <object id="19" name="Light" type="Light" x="2492.61" y="241.939" width="128" height="128">
    <properties>
     <property name="Animation" value="textures/lights/light.anim"/>
-    <property name="D_B" value="1.0"/>
-    <property name="D_G" value="1.0"/>
-    <property name="D_R" value="1.0"/>
+    <property name="D_B" value="1.5"/>
+    <property name="D_G" value="1.5"/>
+    <property name="D_R" value="1.5"/>
     <property name="S_B" value="0.5"/>
     <property name="S_G" value="0.5"/>
     <property name="S_R" value="0.5"/>
@@ -864,9 +864,9 @@
   </object>
   <object id="23" name="Text" type="Text" x="1408" y="512" width="512" height="128">
    <properties>
-    <property name="B" value="0.05"/>
-    <property name="G" value="0.05"/>
-    <property name="R" value="0.25"/>
+    <property name="B" value="0.1"/>
+    <property name="G" value="0.1"/>
+    <property name="R" value="0.35"/>
     <property name="Scale" value="3.0"/>
     <property name="Text" value="My head hurts"/>
    </properties>

@@ -1030,7 +1030,7 @@
   </data>
  </layer>
  <objectgroup name="GameObjects">
-  <object id="1" name="Player" type="Spawn" x="512" y="1792" width="128" height="128"/>
+  <object id="1" name="Player" type="Spawn" x="510.667" y="1772" width="128" height="128"/>
   <object id="2" name="Sign" type="Sign" x="640" y="1792" width="128" height="128">
    <properties>
     <property name="Text" value="Press '1' to light your lantern"/>
@@ -1038,14 +1038,14 @@
   </object>
   <object id="3" name="Sign" type="Sign" x="896" y="1792" width="128" height="128">
    <properties>
-    <property name="Text" value="The lantern's red lid can be opened with '2'"/>
+    <property name="Text" value="Lit the latern's red candle with '2'"/>
    </properties>
   </object>
   <object id="4" name="Text" type="Text" x="430.303" y="1558.67" width="512" height="128">
    <properties>
-    <property name="B" value="0.15"/>
-    <property name="G" value="0.15"/>
-    <property name="R" value="0.25"/>
+    <property name="B" value="0.1"/>
+    <property name="G" value="0.1"/>
+    <property name="R" value="0.35"/>
     <property name="Scale" value="3.0"/>
     <property name="Text" value="where... am I?"/>
    </properties>
@@ -1072,7 +1072,7 @@
   </object>
   <object id="9" name="Sign" type="Sign" x="1664" y="1792" width="128" height="128">
    <properties>
-    <property name="Text" value="Try shutting different lids with '3' and '4'"/>
+    <property name="Text" value="Or its green and blue candle with '3' and '4'"/>
    </properties>
   </object>
   <object id="11" name="R" type="StateBlock" x="1920" y="1920" width="128" height="128">
@@ -1090,7 +1090,7 @@
     <property name="Color" value="B"/>
    </properties>
   </object>
-  <object id="15" name="Platform" type="Moveable" x="2816" y="1280" width="128" height="634">
+  <object id="15" name="Platform" type="Moveable" x="2816" y="1280" width="128" height="668">
    <properties>
     <property name="Color" value="-"/>
    </properties>
@@ -1101,9 +1101,9 @@
   <object id="19" name="Light" type="Light" x="2432" y="1152" width="128" height="128">
    <properties>
     <property name="Animation" value="textures/lights/light.anim"/>
-    <property name="D_B" value="1.0"/>
-    <property name="D_G" value="1.0"/>
-    <property name="D_R" value="1.0"/>
+    <property name="D_B" value="1.5"/>
+    <property name="D_G" value="1.5"/>
+    <property name="D_R" value="1.5"/>
     <property name="S_B" value="0.5"/>
     <property name="S_G" value="0.5"/>
     <property name="S_R" value="0.5"/>
@@ -1143,9 +1143,9 @@
    <properties>
     <property name="B" value="0.05"/>
     <property name="G" value="0.05"/>
-    <property name="R" value="0.25"/>
+    <property name="R" value="0.35"/>
     <property name="Scale" value="3.0"/>
-    <property name="Text" value="It feels... familiar..."/>
+    <property name="Text" value="It feels... familiar"/>
    </properties>
   </object>
   <object id="24" name="R" type="StateBlock" x="2048" y="1152" width="128" height="128">
@@ -1172,17 +1172,12 @@
    <properties>
     <property name="B" value="0.10"/>
     <property name="G" value="0.10"/>
-    <property name="R" value="0.25"/>
+    <property name="R" value="0.35"/>
     <property name="Scale" value="3.0"/>
     <property name="Text" value="Is this real?"/>
    </properties>
   </object>
-  <object id="30" name="Can" type="Prop" x="2248" y="1216" width="50" height="58">
-   <properties>
-    <property name="Image" value="textures/props/can.png"/>
-   </properties>
-  </object>
-  <object id="35" name="Box" type="Prop" x="890.758" y="679.76" width="77.6364" height="77.6364">
+  <object id="35" name="Box" type="Prop" x="2259.21" y="1230.73" width="44.7879" height="47.9394">
    <properties>
     <property name="Image" value="textures/objects/crate.png"/>
    </properties>

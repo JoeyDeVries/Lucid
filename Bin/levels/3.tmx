@@ -2,7 +2,7 @@
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="33" height="18" tilewidth="128" tileheight="128" nextobjectid="60">
  <properties>
   <property name="Ambient" value="audio/ambient3.mp3"/>
-  <property name="IntroText" value="You remember feelings of disgust and anger. It's   not a coincidence you arrived here, someone threw you in these peculiar caverns."/>
+  <property name="IntroText" value="You remember feelings of disgust and anger.         It's not a coincidence you arrived here, someone       dropped you in these horrid caverns."/>
   <property name="background" value="textures/backgrounds/background.png"/>
  </properties>
  <tileset firstgid="1" name="Tiles" tilewidth="128" tileheight="128" tilecount="14">
@@ -1092,7 +1092,7 @@
    <tile gid="14"/>
    <tile gid="14"/>
    <tile gid="14"/>
-   <tile gid="12"/>
+   <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="1"/>
@@ -1267,9 +1267,9 @@
   </object>
   <object id="23" name="Text" type="Text" x="896" y="1408" width="512" height="128">
    <properties>
-    <property name="B" value="0.05"/>
-    <property name="G" value="0.05"/>
-    <property name="R" value="0.25"/>
+    <property name="B" value="0.1"/>
+    <property name="G" value="0.1"/>
+    <property name="R" value="0.35"/>
     <property name="Scale" value="3.0"/>
     <property name="Text" value="I remember"/>
    </properties>
@@ -1315,9 +1315,9 @@
   </object>
   <object id="43" name="Text" type="Text" x="2176" y="896" width="384" height="128">
    <properties>
-    <property name="B" value="0.05"/>
-    <property name="G" value="0.05"/>
-    <property name="R" value="0.25"/>
+    <property name="B" value="0.1"/>
+    <property name="G" value="0.1"/>
+    <property name="R" value="0.35"/>
     <property name="Scale" value="3.0"/>
     <property name="Text" value="So much violence"/>
    </properties>
@@ -1358,7 +1358,7 @@
   </object>
   <object id="55" name="Sign" type="Sign" x="1920" y="640" width="128" height="128">
    <properties>
-    <property name="Text" value="High heights are not an issue"/>
+    <property name="Text" value="Don't be afraid of high heights"/>
    </properties>
   </object>
   <object id="56" name="G" type="StateBlock" x="2432" y="1664" width="128" height="128">
