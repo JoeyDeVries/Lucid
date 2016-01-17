@@ -93,6 +93,8 @@ void GUISceneIntro::RenderBackground(Renderer *renderer, TextRenderer *textRende
     {
         if (i % charsPerNewline == 0 || i == m_IntroText.size() - 1)
         {
+            if(i == m_IntroText.size() - 1)
+                line += m_IntroText[i]; // in case of last character; add to line before creating new line memory
             if(line != "")
                 subTexts.push_back(line);
             line = std::string();

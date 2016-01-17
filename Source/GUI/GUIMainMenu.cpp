@@ -82,7 +82,7 @@ void GUIMainMenu::Update(float deltaTime)
 void GUIMainMenu::RenderBackground(Renderer *renderer, TextRenderer *textRenderer)
 {
     // render title
-    textRenderer->RenderText("LUCID", glm::vec2(0.0f, 25.0f), 9.0f, false, glm::vec4(1.0, 1.0, 1.0, 0.35f), glm::vec2(m_Scale.x, m_Scale.y * 0.15f));
+    textRenderer->RenderText("LUCID", glm::vec2(0.0f, 25.0f), 8.0f, false, glm::vec4(1.0, 1.0, 1.0, 0.45f), glm::vec2(m_Scale.x, m_Scale.y * 0.15f));
 
     // render background image + three animated sprites
     std::shared_ptr<Shader> spriteShader = ResourceManager::GetInstance()->GetShader("sprite");

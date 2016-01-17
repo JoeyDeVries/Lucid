@@ -528,7 +528,7 @@ bool MapLoader::processGameObject(ResourceManager *resources, Scene *scene, XMLE
             float G = std::atof(getProperty(gameObject, "G").c_str());
             float B = std::atof(getProperty(gameObject, "B").c_str());
             int fontScale = std::atoi(getProperty(gameObject, "Scale").c_str());
-            glm::vec4 color(R, G, B, 0.4f);
+            glm::vec4 color(R, G, B, 0.2f);
             // define actor
             std::shared_ptr<Actor> actor = GameApplication::GetInstance()->CreateActor(DEFAULT_ACTOR_TYPES::ACTOR_EMPTY);
             // create node

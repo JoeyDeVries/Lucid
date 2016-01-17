@@ -81,7 +81,7 @@ void LightSwitchComponent::VUpdate(float deltaTime)
                 lightNode->SetDiffuse(glm::vec3(0.2, 1.0, 0.2));
                 break;
             case LightState::BLUE:
-                lightNode->SetDiffuse(glm::vec3(0.2, 0.2, 1.0));
+                lightNode->SetDiffuse(glm::vec3(0.3, 0.3, 1.5)); // blue slightly more dominant due to eyes being less sensitive to blue
                 break;
             }
         }

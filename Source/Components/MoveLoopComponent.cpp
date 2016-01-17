@@ -14,7 +14,7 @@
 #include "../Application/GameApplication.h"
 #include "../Physics/Box2DPhysics.h"
 
-MoveLoopComponent::MoveLoopComponent() : m_BeginPosition(0.0f), m_EndPosition(0.0f), m_Speed(0.25f), m_CurrentPosition(0.0f), m_Forward(true)
+MoveLoopComponent::MoveLoopComponent() : m_BeginPosition(0.0f), m_EndPosition(0.0f), m_Speed(0.25f), m_CurrentPosition(0.0f), m_Forward(true), m_Switched(false), m_Paused(false)
 {
 
 }
@@ -68,9 +68,17 @@ void MoveLoopComponent::VUpdate(float deltaTime)
 {
     if (!m_Paused)
     {
-        // first check if we need to switch movement direction
-        if (m_CurrentPosition > 1.0f || m_CurrentPosition < 0.0f)
-            m_Forward = !m_Forward;
+        // check if we're allowed to switch to the other direction again (in some cases the update is quick enough to change direction twice within 2 frames)
+        if (m_Switched && (!m_Forward && m_CurrentPosition < 1.0f || m_Forward && m_CurrentPosition > 0.0f))
+            m_Switched = false;
+
+        // check if we need to switch movement direction
+        if (m_CurrentPosition > 1.0f || m_CurrentPosition < 0.0f && !m_Switched)
+        {
+            m_Switched = true;
+            m_Forward  = !m_Forward;
+        }
+
 
         // lerp between begin and end position and reverse if end position is reached (get current pos from m_Owner)
         if (m_Forward)

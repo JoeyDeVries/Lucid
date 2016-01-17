@@ -31,6 +31,7 @@ private:
     float     m_Speed;           // the speed at which the actor moves
     float     m_CurrentPosition; // the current position of the actor
     bool      m_Forward;         // whether it is currently moving from begin to end
+    bool      m_Switched;        // prevents the component from switching directon twice within several frames
     bool      m_Paused;          // whether the looping movement is put on halt
 public:
     MoveLoopComponent();
