@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="33" height="18" tilewidth="128" tileheight="128" nextobjectid="74">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="33" height="18" tilewidth="128" tileheight="128" nextobjectid="93">
  <properties>
   <property name="Ambient" value="audio/ambient3.mp3"/>
-  <property name="IntroText" value="&quot;There is darkness in life and there is light, and you are one of the      lights, the light of all lights.&quot;                     The lids close and the darkness dissapears.        You open your eyes and find yourself in a straight jacket            The darkness is gone... rehabilitation is over."/>
+  <property name="IntroText" value="&quot;There is darkness in life and there is light,    and you are one of the lights,                    the light of all lights.&quot;                             The lids close and the darkness dissapears.        You open your eyes and find yourself in a     straight jacket                                             The darkness is gone... rehabilitation is over. "/>
   <property name="background" value="textures/backgrounds/background.png"/>
  </properties>
  <tileset firstgid="1" name="Tiles" tilewidth="128" tileheight="128" tilecount="14">
@@ -1247,12 +1247,12 @@
  </layer>
  <objectgroup name="GameObjects">
   <object id="1" name="Player" type="Spawn" x="512.667" y="1638" width="128" height="128"/>
-  <object id="16" name="Death" type="Deathtouch" x="1538.67" y="2134.36" width="251.33" height="39.2703"/>
-  <object id="23" name="Text" type="Text" x="768" y="1408" width="512" height="84">
+  <object id="16" name="Death" type="Deathtouch" x="1408" y="2134.36" width="382" height="169.64"/>
+  <object id="23" name="Text" type="Text" x="1408" y="1408" width="512" height="84">
    <properties>
     <property name="B" value="0.05"/>
     <property name="G" value="0.05"/>
-    <property name="R" value="0.25"/>
+    <property name="R" value="0.35"/>
     <property name="Scale" value="3.0"/>
     <property name="Text" value="Programming:"/>
    </properties>
@@ -1289,7 +1289,7 @@
     <property name="Color" value="-"/>
    </properties>
   </object>
-  <object id="63" name="Text" type="Text" x="772" y="1496" width="512" height="84">
+  <object id="63" name="Text" type="Text" x="1412" y="1496" width="512" height="84">
    <properties>
     <property name="B" value="0.5"/>
     <property name="G" value="0.5"/>
@@ -1298,16 +1298,16 @@
     <property name="Text" value="Joey de Vries"/>
    </properties>
   </object>
-  <object id="64" name="Text" type="Text" x="1920" y="1408" width="512" height="84">
+  <object id="64" name="Text" type="Text" x="2176" y="1408" width="512" height="84">
    <properties>
-    <property name="B" value="0.25"/>
-    <property name="G" value="0.05"/>
-    <property name="R" value="0.05"/>
+    <property name="B" value="0.75"/>
+    <property name="G" value="0.25"/>
+    <property name="R" value="0.25"/>
     <property name="Scale" value="3.0"/>
     <property name="Text" value="Art:"/>
    </properties>
   </object>
-  <object id="65" name="Text" type="Text" x="1924" y="1496" width="512" height="84">
+  <object id="65" name="Text" type="Text" x="2180" y="1496" width="512" height="84">
    <properties>
     <property name="B" value="0.5"/>
     <property name="G" value="0.5"/>
@@ -1328,14 +1328,14 @@
   <object id="67" name="Text" type="Text" x="2944" y="1408" width="512" height="84">
    <properties>
     <property name="B" value="0.05"/>
-    <property name="G" value="0.25"/>
+    <property name="G" value="0.325"/>
     <property name="R" value="0.05"/>
     <property name="Scale" value="3.0"/>
     <property name="Text" value="Level design:"/>
    </properties>
   </object>
-  <object id="68" name="Death" type="Deathtouch" x="2690.67" y="2131.36" width="251.33" height="39.2703"/>
-  <object id="69" name="Death" type="Deathtouch" x="1924.67" y="2130.36" width="635.33" height="39.2703"/>
+  <object id="68" name="Death" type="Deathtouch" x="2690.67" y="2131.36" width="251.33" height="172.64"/>
+  <object id="69" name="Death" type="Deathtouch" x="1924.67" y="2130.36" width="635.33" height="173.64"/>
   <object id="70" name="Light" type="Light" x="1792" y="1664" width="128" height="128">
    <properties>
     <property name="Animation" value="textures/lights/light.anim"/>
@@ -1383,6 +1383,50 @@
     <property name="S_R" value="0.5"/>
    </properties>
    <ellipse/>
+  </object>
+  <object id="75" name="Text" type="Text" x="256" y="1408" width="640" height="128">
+   <properties>
+    <property name="B" value="0.5"/>
+    <property name="G" value="0.5"/>
+    <property name="R" value="0.5"/>
+    <property name="Scale" value="4.0"/>
+    <property name="Text" value="Thank you for playing!"/>
+   </properties>
+  </object>
+  <object id="85" name="Box" type="Prop" x="1152.5" y="1743.44" width="44.7879" height="47.9394">
+   <properties>
+    <property name="Image" value="textures/objects/crate.png"/>
+   </properties>
+  </object>
+  <object id="86" name="Box" type="Prop" x="1173.58" y="1694" width="44.7879" height="47.9394">
+   <properties>
+    <property name="Image" value="textures/objects/crate.png"/>
+   </properties>
+  </object>
+  <object id="87" name="Box" type="Prop" x="1199.08" y="1743" width="44.7879" height="47.9394">
+   <properties>
+    <property name="Image" value="textures/objects/crate.png"/>
+   </properties>
+  </object>
+  <object id="88" name="Box" type="Prop" x="1165.08" y="1644" width="44.7879" height="47.9394">
+   <properties>
+    <property name="Image" value="textures/objects/crate.png"/>
+   </properties>
+  </object>
+  <object id="89" name="Box" type="Prop" x="1177.08" y="1594.5" width="44.7879" height="47.9394">
+   <properties>
+    <property name="Image" value="textures/objects/crate.png"/>
+   </properties>
+  </object>
+  <object id="90" name="Box" type="Prop" x="1163.08" y="1545.5" width="44.7879" height="47.9394">
+   <properties>
+    <property name="Image" value="textures/objects/crate.png"/>
+   </properties>
+  </object>
+  <object id="91" name="Box" type="Prop" x="1129.5" y="1496" width="108.368" height="47.9394">
+   <properties>
+    <property name="Image" value="textures/objects/crate.png"/>
+   </properties>
   </object>
  </objectgroup>
 </map>

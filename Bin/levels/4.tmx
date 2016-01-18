@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="36" height="18" tilewidth="128" tileheight="128" nextobjectid="66">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="36" height="18" tilewidth="128" tileheight="128" nextobjectid="67">
  <properties>
   <property name="Ambient" value="audio/ambient2.mp3"/>
   <property name="IntroText" value="&quot;I remember death&quot;                                  A 6 feet male of young age, bludgeoned to death. Sleeping with your wife.                                          Your hands are bleedy... "/>
@@ -1397,9 +1397,9 @@
   </object>
   <object id="43" name="Text" type="Text" x="896" y="896" width="384" height="128">
    <properties>
-    <property name="B" value="0.05"/>
-    <property name="G" value="0.05"/>
-    <property name="R" value="0.25"/>
+    <property name="B" value="0.1"/>
+    <property name="G" value="0.1"/>
+    <property name="R" value="0.35"/>
     <property name="Scale" value="3.0"/>
     <property name="Text" value="So much darkness"/>
    </properties>
@@ -1434,11 +1434,6 @@
   <object id="52" name="G" type="StateBlock" x="1792" y="1152" width="128" height="128">
    <properties>
     <property name="Color" value="G"/>
-   </properties>
-  </object>
-  <object id="55" name="Sign" type="Sign" x="2560" y="384" width="128" height="128">
-   <properties>
-    <property name="Text" value="You find a torn newspaper article"/>
    </properties>
   </object>
   <object id="59" name="B" type="StateBlock" x="1280" y="1280" width="128" height="128">
@@ -1482,6 +1477,11 @@
     <property name="S_R" value="0.5"/>
    </properties>
    <ellipse/>
+  </object>
+  <object id="66" name="Box" type="Prop" x="2963" y="450" width="65" height="58.2121">
+   <properties>
+    <property name="Image" value="textures/objects/crate.png"/>
+   </properties>
   </object>
  </objectgroup>
 </map>

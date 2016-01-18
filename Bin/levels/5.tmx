@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="36" height="18" tilewidth="128" tileheight="128" nextobjectid="77">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="36" height="18" tilewidth="128" tileheight="128" nextobjectid="79">
  <properties>
-  <property name="Ambient" value="audio/ambient2.mp3"/>
-  <property name="IntroText" value="Anger and rage envelops, darkness consumes       Accept the light or let it be your tomb"/>
+  <property name="Ambient" value="audio/ambient1.mp3"/>
+  <property name="IntroText" value="Anger and rage envelops, darkness consumes         Accept the light or may it be your tomb"/>
   <property name="background" value="textures/backgrounds/background.png"/>
  </properties>
  <tileset firstgid="1" name="Tiles" tilewidth="128" tileheight="128" tilecount="14">
@@ -1358,7 +1358,7 @@
   <object id="16" name="Death" type="Deathtouch" x="0" y="1740" width="4608" height="52"/>
   <object id="22" name="Finish" type="Finish" x="4096" y="1280" width="128" height="128">
    <properties>
-    <property name="NextLevel" value="levels/5.tmx"/>
+    <property name="NextLevel" value="levels/6.tmx"/>
    </properties>
   </object>
   <object id="39" name="Platform" type="Moveable" x="896" y="768" width="256" height="128">
@@ -1378,13 +1378,13 @@
    </properties>
    <ellipse/>
   </object>
-  <object id="43" name="Text" type="Text" x="642.667" y="384" width="384" height="128">
+  <object id="43" name="Text" type="Text" x="896" y="512" width="640" height="128">
    <properties>
-    <property name="B" value="0.05"/>
-    <property name="G" value="0.05"/>
-    <property name="R" value="0.25"/>
+    <property name="B" value="0.15"/>
+    <property name="G" value="0.15"/>
+    <property name="R" value="0.35"/>
     <property name="Scale" value="3.0"/>
-    <property name="Text" value="So much darkness"/>
+    <property name="Text" value="It's... calling to me"/>
    </properties>
   </object>
   <object id="44" name="Light" type="Light" x="3072" y="1024" width="128" height="128">
@@ -1399,19 +1399,9 @@
    </properties>
    <ellipse/>
   </object>
-  <object id="50" name="G" type="StateBlock" x="3584" y="640" width="128" height="128">
-   <properties>
-    <property name="Color" value="G"/>
-   </properties>
-  </object>
   <object id="55" name="Sign" type="Sign" x="1664" y="640" width="128" height="128">
    <properties>
     <property name="Text" value="Beware... not fed for years"/>
-   </properties>
-  </object>
-  <object id="59" name="B" type="StateBlock" x="3712" y="512" width="128" height="128">
-   <properties>
-    <property name="Color" value="B"/>
    </properties>
   </object>
   <object id="64" name="Platform" type="Moveable" x="2560" y="768" width="384" height="384">
@@ -1419,7 +1409,7 @@
     <property name="Color" value="B"/>
    </properties>
   </object>
-  <object id="65" name="Light" type="Light" x="1152" y="512" width="128" height="128">
+  <object id="65" name="Light" type="Light" x="1152" y="640" width="128" height="128">
    <properties>
     <property name="Animation" value="textures/lights/light.anim"/>
     <property name="D_B" value="1.5"/>
@@ -1433,10 +1423,8 @@
   </object>
   <object id="66" name="Enemy" type="Enemy" x="1792" y="896" width="384" height="128"/>
   <object id="68" name="Enemy" type="Enemy" x="1920" y="896" width="384" height="128"/>
-  <object id="69" name="Enemy" type="Enemy" x="1792" y="896" width="512" height="128"/>
-  <object id="70" name="Enemy" type="Enemy" x="2048" y="896" width="256" height="128"/>
-  <object id="71" name="Enemy" type="Enemy" x="1792" y="896" width="256" height="128"/>
-  <object id="72" name="Platform" type="Moveable" x="1280" y="768" width="256" height="128">
+  <object id="69" name="Enemy" type="Enemy" x="2048" y="896" width="256" height="128"/>
+  <object id="72" name="Platform" type="Moveable" x="1152" y="768" width="384" height="128">
    <properties>
     <property name="Color" value="G"/>
    </properties>
@@ -1451,7 +1439,7 @@
     <property name="Color" value="R"/>
    </properties>
   </object>
-  <object id="75" name="Platform" type="Moveable" x="2944" y="1408" width="896" height="128">
+  <object id="75" name="Platform" type="Moveable" x="3200" y="1408" width="640" height="128">
    <properties>
     <property name="Color" value="R"/>
    </properties>
@@ -1467,6 +1455,16 @@
     <property name="S_R" value="0.5"/>
    </properties>
    <ellipse/>
+  </object>
+  <object id="77" name="Box" type="Prop" x="1878.97" y="985" width="35.5261" height="33.2121">
+   <properties>
+    <property name="Image" value="textures/objects/crate.png"/>
+   </properties>
+  </object>
+  <object id="78" name="Box" type="Prop" x="2412.97" y="729" width="35.5261" height="33.2121">
+   <properties>
+    <property name="Image" value="textures/objects/crate.png"/>
+   </properties>
   </object>
  </objectgroup>
 </map>

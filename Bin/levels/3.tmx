@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="33" height="18" tilewidth="128" tileheight="128" nextobjectid="60">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="33" height="18" tilewidth="128" tileheight="128" nextobjectid="61">
  <properties>
   <property name="Ambient" value="audio/ambient3.mp3"/>
   <property name="IntroText" value="You remember feelings of disgust and anger.         It's not a coincidence you arrived here, someone       dropped you in these horrid caverns."/>
