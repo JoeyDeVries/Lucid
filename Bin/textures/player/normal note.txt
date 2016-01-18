@@ -1,3 +1,0 @@
-non-invert
-5x5
-scale: 2
