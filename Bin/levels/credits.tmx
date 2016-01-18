@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="33" height="18" tilewidth="128" tileheight="128" nextobjectid="93">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="33" height="18" tilewidth="128" tileheight="128" nextobjectid="95">
  <properties>
   <property name="Ambient" value="audio/ambient3.mp3"/>
   <property name="IntroText" value="&quot;There is darkness in life and there is light,    and you are one of the lights,                    the light of all lights.&quot;                             The lids close and the darkness dissapears.        You open your eyes and find yourself in a     straight jacket                                             The darkness is gone... rehabilitation is over. "/>
@@ -1246,8 +1246,8 @@
   </data>
  </layer>
  <objectgroup name="GameObjects">
-  <object id="1" name="Player" type="Spawn" x="512.667" y="1638" width="128" height="128"/>
-  <object id="16" name="Death" type="Deathtouch" x="1408" y="2134.36" width="382" height="169.64"/>
+  <object id="1" name="Player" type="Spawn" x="512.667" y="1620" width="128" height="128"/>
+  <object id="16" name="Death" type="Deathtouch" x="1408" y="2134.36" width="512" height="169.64"/>
   <object id="23" name="Text" type="Text" x="1408" y="1408" width="512" height="84">
    <properties>
     <property name="B" value="0.05"/>
@@ -1334,7 +1334,7 @@
     <property name="Text" value="Level design:"/>
    </properties>
   </object>
-  <object id="68" name="Death" type="Deathtouch" x="2690.67" y="2131.36" width="251.33" height="172.64"/>
+  <object id="68" name="Death" type="Deathtouch" x="2560" y="2131.36" width="512" height="172.64"/>
   <object id="69" name="Death" type="Deathtouch" x="1924.67" y="2130.36" width="635.33" height="173.64"/>
   <object id="70" name="Light" type="Light" x="1792" y="1664" width="128" height="128">
    <properties>
@@ -1428,5 +1428,7 @@
     <property name="Image" value="textures/objects/crate.png"/>
    </properties>
   </object>
+  <object id="93" name="Death" type="Deathtouch" x="0" y="1664" width="384" height="128"/>
+  <object id="94" name="Death" type="Deathtouch" x="3840" y="1664" width="384" height="128"/>
  </objectgroup>
 </map>

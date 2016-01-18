@@ -1516,11 +1516,6 @@
     <property name="Color" value="R"/>
    </properties>
   </object>
-  <object id="83" name="Box" type="Prop" x="1565.4" y="1358.27" width="44.7879" height="47.9394">
-   <properties>
-    <property name="Image" value="textures/objects/crate.png"/>
-   </properties>
-  </object>
   <object id="84" name="Box" type="Prop" x="4030.97" y="601" width="35.5261" height="33.2121">
    <properties>
     <property name="Image" value="textures/objects/crate.png"/>

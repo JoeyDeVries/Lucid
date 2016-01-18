@@ -2,7 +2,7 @@
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="36" height="18" tilewidth="128" tileheight="128" nextobjectid="79">
  <properties>
   <property name="Ambient" value="audio/ambient1.mp3"/>
-  <property name="IntroText" value="Anger and rage envelops, darkness consumes         Accept the light or may it be your tomb"/>
+  <property name="IntroText" value="&quot;Anger and rage envelops, darkness consumes         Accept the light or may it be your tomb&quot;"/>
   <property name="background" value="textures/backgrounds/background.png"/>
  </properties>
  <tileset firstgid="1" name="Tiles" tilewidth="128" tileheight="128" tilecount="14">
@@ -1455,16 +1455,6 @@
     <property name="S_R" value="0.5"/>
    </properties>
    <ellipse/>
-  </object>
-  <object id="77" name="Box" type="Prop" x="1878.97" y="985" width="35.5261" height="33.2121">
-   <properties>
-    <property name="Image" value="textures/objects/crate.png"/>
-   </properties>
-  </object>
-  <object id="78" name="Box" type="Prop" x="2412.97" y="729" width="35.5261" height="33.2121">
-   <properties>
-    <property name="Image" value="textures/objects/crate.png"/>
-   </properties>
   </object>
  </objectgroup>
 </map>

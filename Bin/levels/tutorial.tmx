@@ -1038,7 +1038,7 @@
   </object>
   <object id="3" name="Sign" type="Sign" x="896" y="1792" width="128" height="128">
    <properties>
-    <property name="Text" value="Lit the latern's red candle with '2'"/>
+    <property name="Text" value="Lit the lantern's red candle with '2'"/>
    </properties>
   </object>
   <object id="4" name="Text" type="Text" x="430.303" y="1558.67" width="512" height="128">

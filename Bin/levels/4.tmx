@@ -2,7 +2,7 @@
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="36" height="18" tilewidth="128" tileheight="128" nextobjectid="67">
  <properties>
   <property name="Ambient" value="audio/ambient2.mp3"/>
-  <property name="IntroText" value="&quot;I remember death&quot;                                  A 6 feet male of young age, bludgeoned to death. Sleeping with your wife.                                          Your hands are bleedy... "/>
+  <property name="IntroText" value="&quot;I remember death&quot;                                  A 6 feet male of young age, bludgeoned to death; sleeping with your wife.                                          Your hands are bleedy... "/>
   <property name="background" value="textures/backgrounds/background.png"/>
  </properties>
  <tileset firstgid="1" name="Tiles" tilewidth="128" tileheight="128" tilecount="14">
