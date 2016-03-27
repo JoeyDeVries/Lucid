@@ -89,7 +89,7 @@ int main(int argc, char *argv[])
         if (time >= 1.0f)
         {
             time = 1.0 - time;
-            //glfwSetWindowTitle(window, std::string("Lucid - Game/Engine - Joey de Vries || FPS: " + std::to_string(fps)).c_str());
+            glfwSetWindowTitle(window, std::string("Lucid - Game/Engine - Joey de Vries || FPS: " + std::to_string(fps)).c_str());
             fps = 0;
         }
 

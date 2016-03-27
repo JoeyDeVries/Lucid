@@ -225,7 +225,7 @@ void GameApplication::Render()
             glm::mat4 viewProjection = m_Scene->GetCamera()->GetProjection() * m_Scene->GetCamera()->GetView();
             glLoadMatrixf((const GLfloat*)&viewProjection[0]);
             glUseProgram(0);
-            //m_Physics->RenderDiagnostics();
+            m_Physics->RenderDiagnostics();
         }
 
         // render all gameplay-related text (clears queue before GUI text rendering)

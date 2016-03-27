@@ -25,7 +25,7 @@ Framebuffer::Framebuffer(unsigned int width, unsigned int height) : m_Width(widt
     // Generate/configure framebuffer
     glGenFramebuffers(1, &m_FBO);
     // - Configure color buffer
-    m_ColorBuffer->InternalFormat = GL_RGB16F; // Use floating point precision color attachment
+    m_ColorBuffer->InternalFormat = GL_RGBA16F; // Use floating point precision color attachment
     m_ColorBuffer->FilterMin = GL_LINEAR;
     m_ColorBuffer->Generate(width, height, NULL);
     // - Configure depth buffer
