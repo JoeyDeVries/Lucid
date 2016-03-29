@@ -35,12 +35,8 @@ void AudioEngine::PlaySound(std::string name, bool loop, float volume, bool star
     irrklang::ISound *sound = m_AudioEngine->play2D(name.c_str(), loop, true);
     if (sound)
     {
-        // TODO(Joey): if start random, start audio at random buffer offset
-        if (startRandom)
-        {
-            int randPlayPosition = rand() % (sound->getPlayLength() - 1);
-            bool success = sound->setPlayPosition(randPlayPosition);
-        }
+        if (startRandom) // if start random, start audio at random buffer offset
+           sound->setPlayPosition(rand() % (sound->getPlayLength() - 1));
         sound->setVolume(volume);
         sound->setIsPaused(false);
     }
@@ -51,12 +47,8 @@ void AudioEngine::PlaySoundLocation(std::string name, glm::vec2 location, bool l
     irrklang::ISound *sound = m_AudioEngine->play3D(name.c_str(), irrklang::vec3df(location.x, location.y, 0.0), loop, true);
     if (sound)
     {
-        if (startRandom)
-        {
-            
-            int randPlayPosition = rand() % (sound->getPlayLength() - 1);
-            bool success = sound->setPlayPosition(randPlayPosition);
-        }
+        if (startRandom) // if start random, start audio at random buffer offset
+            sound->setPlayPosition(rand() % (sound->getPlayLength() - 1));
         sound->setVolume(volume);
         sound->setIsPaused(false);
     }

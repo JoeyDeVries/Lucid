@@ -21,7 +21,7 @@
 // standard
 #include <iostream>
 
-const GLuint GAME_WIDTH = 800, GAME_HEIGHT = 600;
+const GLuint GAME_WIDTH = 1280, GAME_HEIGHT = 720;
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
 void mouse_move_callback(GLFWwindow *window, double x, double y);
