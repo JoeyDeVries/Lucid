@@ -30,9 +30,9 @@ public:
     ~AudioEngine();
 
     // plays a sound with or without loop and a given volume
-    void PlaySound(std::string name, bool loop = false, float volume = 1.0f);
+    void PlaySound(std::string name, bool loop = false, float volume = 1.0f, bool startRandom = false);
     // plays a sound with or without loop and a give volume at a given location; volume will be reduced at range
-    void PlaySoundLocation(std::string name, glm::vec2 location, bool loop = false, float volume = 1.0f);
+    void PlaySoundLocation(std::string name, glm::vec2 location, bool loop = false, float volume = 1.0f, bool startRandom = false);
     // stops playing a sound
     void StopSound(std::string name);
     // stops playing all sounds

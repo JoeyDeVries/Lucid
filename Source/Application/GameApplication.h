@@ -43,6 +43,8 @@ private:
     bool  m_Active;                      // whether the game is currently active
     bool  m_Keys[1024];                  // ASCII keyboard keys currently pressed
     bool  m_KeysPressed[1024];           // ASCII keyboard keys that have been pressed without release
+    float m_GameTime;                    // total time in seconds the game has run (reset per level)
+    float m_PhysicsTime;                 // separate time counter next to m_GameTime for maintaining consistent physics state
 
     GameState m_GameState;                                           // current state of the game
     std::map<ActorID, std::shared_ptr<Actor>>     m_Actors;          // a list of all the game's actors/entities

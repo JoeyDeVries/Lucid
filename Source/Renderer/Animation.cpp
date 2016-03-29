@@ -59,7 +59,9 @@ void Animation::SetNormal(std::shared_ptr<Texture2D> normal)
 
 void Animation::Init(std::shared_ptr<Shader> shader)
 {
-
+    // set m_CurrentTime to random position s.t. similar animations seem more natural
+    float randomOffset = (rand() % 100) / 100.0f;
+    m_CurrentTime = randomOffset;
 }
 
 void Animation::Normalize(int width, int height)

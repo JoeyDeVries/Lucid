@@ -194,11 +194,23 @@ void GameApplication::Update(float deltaTime)
             // Process physics
             if (m_Physics)
             {
-                m_Physics->Update();
+                // check deltaTime for updates larger than target physics framerate (60) and update physics more/less based on deltaTime
+                float target = 1.0f / 60.0f;
+                int physicsCount = 0;
+                for (float i = m_PhysicsTime; i <= m_GameTime + deltaTime + 0.0005f; i += target)
+                {
+                    m_Physics->Update();
+                    m_PhysicsTime += target;
+                    physicsCount++;
+                }
+                std::cout << "physics count per frame: " << physicsCount << std::endl;
                 m_Physics->SyncVisibleScene();
                 // process any deletes if occured
                 m_Physics->RemoveQueuedItems();
             }
+
+            // Add deltaTime to total game time
+            m_GameTime += deltaTime;
         }
 
         // Update all scene components
@@ -225,7 +237,7 @@ void GameApplication::Render()
             glm::mat4 viewProjection = m_Scene->GetCamera()->GetProjection() * m_Scene->GetCamera()->GetView();
             glLoadMatrixf((const GLfloat*)&viewProjection[0]);
             glUseProgram(0);
-            m_Physics->RenderDiagnostics();
+            //m_Physics->RenderDiagnostics();
         }
 
         // render all gameplay-related text (clears queue before GUI text rendering)
@@ -305,6 +317,9 @@ void GameApplication::OnStartLevel(std::shared_ptr<IEventData> eventData)
         m_EventManager->Clear();
         ResourceManager::GetInstance()->LoadLevel(m_Scene, pEvent->GetLevelPath().c_str());
         m_Scene->Initialize();
+
+        m_GameTime    = 0.0f;
+        m_PhysicsTime = 0.0f;
 
         SwitchState(GameState::GAME_INTRO);
     }

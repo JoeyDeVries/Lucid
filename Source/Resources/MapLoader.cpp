@@ -217,7 +217,7 @@ bool MapLoader::processGameObject(ResourceManager *resources, Scene *scene, XMLE
         node->SetMaterial(material);
         scene->AddChild(actor->GetID(), node);
         // set physics
-        GameApplication::GetInstance()->GetPhysics()->AddBox(actor, 1.0, "kinematic", true, true, 0.5f);
+        GameApplication::GetInstance()->GetPhysics()->AddBox(actor, 1.0, "kinematic", true, true, 0.4f);
         // load animation
         std::vector<std::shared_ptr<Animation>> animations = resources->LoadAnimation("textures/enemies/blob.anim");
         for (int i = 0; i < animations.size(); ++i)
@@ -319,7 +319,7 @@ bool MapLoader::processGameObject(ResourceManager *resources, Scene *scene, XMLE
                 node->AddAnimation(lightAnim[0], lightAnim[0]->GetName());
                 node->ActivateAnimation("idle");
             }
-            GameApplication::GetInstance()->GetAudio()->PlaySoundLocation("audio/fire.mp3", actor->GetPosition(), true);
+            GameApplication::GetInstance()->GetAudio()->PlaySoundLocation("audio/fire.mp3", actor->GetPosition(), true, 1.0f, true);
         }
     }
     else if (type == "Moveable")
