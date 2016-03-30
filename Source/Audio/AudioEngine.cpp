@@ -79,6 +79,6 @@ void AudioEngine::PreLoad()
     m_AudioEngine->addSoundSourceFromFile("audio/fire.mp3",         irrklang::E_STREAM_MODE::ESM_AUTO_DETECT, true);
     m_AudioEngine->addSoundSourceFromFile("audio/jump.mp3",         irrklang::E_STREAM_MODE::ESM_AUTO_DETECT, true);
     m_AudioEngine->addSoundSourceFromFile("audio/light_switch.mp3", irrklang::E_STREAM_MODE::ESM_AUTO_DETECT, true);
-    m_AudioEngine->addSoundSourceFromFile("audio/enemy1.mp3",       irrklang::E_STREAM_MODE::ESM_AUTO_DETECT, true);
-    m_AudioEngine->addSoundSourceFromFile("audio/enemy2.mp3",       irrklang::E_STREAM_MODE::ESM_AUTO_DETECT, true);
+    //m_AudioEngine->addSoundSourceFromFile("audio/enemy1.mp3",       irrklang::E_STREAM_MODE::ESM_AUTO_DETECT, true);
+    //m_AudioEngine->addSoundSourceFromFile("audio/enemy2.mp3",       irrklang::E_STREAM_MODE::ESM_AUTO_DETECT, true);
 }
