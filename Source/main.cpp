@@ -9,9 +9,6 @@
 ** Creative Commons, either version 4 of the License, or (at your
 ** option) any later version.
 *******************************************************************/
-// platform
-#include <Windows.h> 
-
 // 3rd party
 #define GLEW_STATIC
 #include <GL/glew.h>
@@ -37,11 +34,6 @@ void mouse_button_callback(GLFWwindow *window, int button, int action, int mods)
 */
 int main(int argc, char *argv[])
 {
-    // prevent console from popping up 
-    #ifdef WIN32 
-    FreeConsole();
-    #endif 
-
     // initialize GLFW
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
